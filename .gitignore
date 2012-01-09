@@ -1,0 +1,5 @@
+*.class
+j2meclasses/
+build/
+suite/
+nbproject/private/
