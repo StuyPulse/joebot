@@ -1,12 +1,16 @@
-
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package edu.stuy.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
+ * @author Kevin Wang
  */
-public class ExampleSubsystem extends Subsystem {
+public class Tusks extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -15,4 +19,3 @@ public class ExampleSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 }
-

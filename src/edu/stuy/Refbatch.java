@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.ExampleCommand;
-import edu.stuy.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,7 +30,7 @@ public class Refbatch extends IterativeRobot {
      */
     public void robotInit() {
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        // autonomousCommand = new ExampleCommand();
 
         // Initialize all subsystems
         CommandBase.init();
