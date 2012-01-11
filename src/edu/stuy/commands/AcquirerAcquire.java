@@ -9,6 +9,8 @@ package edu.stuy.commands;
  * @author Kevin Wang
  */
 public class AcquirerAcquire extends CommandBase {
+    boolean hasTimeout = false;
+    double timeout;
     
     public AcquirerAcquire() {
         // Use requires() here to declare subsystem dependencies
@@ -16,8 +18,17 @@ public class AcquirerAcquire extends CommandBase {
         requires(acquirer);
     }
 
+    public AcquirerAcquire(double timeout) {
+        this();
+        hasTimeout = true;
+        this.timeout = timeout;
+    }
+
     // Called just before this Command runs the first time
     protected void initialize() {
+        if (hasTimeout) {
+            setTimeout(timeout);
+        }
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,11 +38,15 @@ public class AcquirerAcquire extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+        if (hasTimeout) {
+            return isTimedOut();
+        }
         return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        acquirer.rollRoller(0);
     }
 
     // Called when another command which requires one or more of the same

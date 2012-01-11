@@ -8,6 +8,7 @@
 package edu.stuy;
 
 
+import edu.stuy.commands.Autonomous;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,7 +23,7 @@ import edu.stuy.commands.CommandBase;
  */
 public class Refbatch extends IterativeRobot {
 
-    Command autonomousCommand;
+    Command autonomousCommand = new Autonomous();
 
     /**
      * This function is run when the robot is first started up and should be
