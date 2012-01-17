@@ -26,6 +26,12 @@ public class RobotMap {
     
     public static final int UPPER_SHOOTER_ROLLER = 7;
     public static final int LOWER_SHOOTER_ROLLER = 8;
+    public static final int UPPER_ROLLER_ENCODER_A = 10;
+    public static final int UPPER_ROLLER_ENCODER_B = 11;
+    public static final int LOWER_ROLLER_ENCODER_A = 12;
+    public static final int LOWER_ROLLER_ENCODER_B = 13;
+    
+    public static final int DISTANCE_PER_PULSE = 0;
     
     public static final int ACQUIRER_ROLLER = 9;
 }
