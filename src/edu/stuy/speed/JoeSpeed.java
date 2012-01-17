@@ -9,5 +9,6 @@ package edu.stuy.speed;
  * @author admin
  */
 public interface JoeSpeed {
-    getRPM  
+    int getRPM ();
+    void setRPM (int rpm);
 }

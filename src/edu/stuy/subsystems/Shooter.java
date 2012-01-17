@@ -5,6 +5,7 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
+import edu.stuy.speed.JoeSpeed;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDController;
