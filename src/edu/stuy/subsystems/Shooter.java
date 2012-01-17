@@ -36,8 +36,8 @@ public class Shooter extends Subsystem {
         upperRoller = new Jaguar(RobotMap.UPPER_SHOOTER_ROLLER);
         lowerRoller = new Jaguar(RobotMap.LOWER_SHOOTER_ROLLER);
         
-        //upperEncoder = new Encoder(RobotMap.UPPER_ROLLER_ENCODER_A, RobotMap.UPPER_ROLLER_ENCODER_B, false, CounterBase.EncodingType.k); //TODO Fix this!
-        lowerEncoder = new Encoder(RobotMap.LOWER_ROLLER_ENCODER_A, RobotMap.LOWER_ROLLER_ENCODER_B);
+        upperEncoder = new Encoder(RobotMap.UPPER_ROLLER_ENCODER_A, RobotMap.UPPER_ROLLER_ENCODER_B, false, CounterBase.EncodingType.k4X);
+        lowerEncoder = new Encoder(RobotMap.LOWER_ROLLER_ENCODER_A, RobotMap.LOWER_ROLLER_ENCODER_B, false, CounterBase.EncodingType.k4X);
         
         upperController = new PIDController(KP, KI, KD, upperEncoder, upperRoller);
         lowerController = new PIDController(KP, KI, KD, lowerEncoder, upperRoller);
