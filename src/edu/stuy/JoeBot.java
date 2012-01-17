@@ -21,7 +21,7 @@ import edu.stuy.commands.CommandBase;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Refbatch extends IterativeRobot {
+public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand = new Autonomous();
 
