@@ -17,7 +17,7 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static Drivetrain drivetrain = new Drivetrain();
     public static Shooter shooter = new Shooter();
-    public static Turret turret = new Turret();
+    
     public static Tusks tusks = new Tusks();
     public static Acquirer acquirer = new Acquirer();
 
@@ -32,7 +32,7 @@ public abstract class CommandBase extends Command {
         // Show what command your subsystem is running on the SmartDashboard
         SmartDashboard.putData(drivetrain);
         SmartDashboard.putData(shooter);
-        SmartDashboard.putData(turret);
+        
         SmartDashboard.putData(tusks);
         SmartDashboard.putData(acquirer);
     }
