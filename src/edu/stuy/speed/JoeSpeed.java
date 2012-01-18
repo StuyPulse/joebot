@@ -11,6 +11,16 @@ package edu.stuy.speed;
 public interface JoeSpeed {
     final int ENCODER_CODES_PER_REV = 360;
     final double ENCODER_RPM_PER_PULSE = 60.0 / ENCODER_CODES_PER_REV;
-    double getRPM ();
-    void setRPM (double rpm);
+
+    /**
+     * Returns the RPM of the speed controller.
+     * @return RPM of the speed controller
+     */
+    double getRPM();
+
+    /**
+     * Sets the target RPM of the speed controller.
+     * @param rpm The target RPM of the speed controller
+     */
+    void setRPM(double rpm);
 }
