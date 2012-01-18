@@ -11,20 +11,40 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
  * Jaguar motor controller with speed methods
  * @author admin
  */
-public class JaguarSpeed implements JoeSpeed{
+public class JaguarSpeed implements JoeSpeed {
+    public static final double KP = 0.0;
+    public static final double KI = 0.0;
+    public static final double KD = 0.0;
+
     CANJaguar jaguar;
-    public JaguarSpeed (int id) {
-        jaguar = new CANJaguar(id,CANJaguar.ControlMode.kSpeed);
-        jaguar.configEncoderCodesPerRev(ENCODER_RPM_PER_REV);
-        jaguar.enableControl();
-    } 
+
+    /**
+     * Constructs a new CANJaguar using speed control.
+     * @param id CAN ID of the Jaguar
+     */
+    public JaguarSpeed(int id) {
+        try {
+            jaguar = new CANJaguar(id, CANJaguar.ControlMode.kSpeed);
+            jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            jaguar.setPID(KP, KI, KD);
+            jaguar.enableControl();
+        } catch(CANTimeoutException e) {
+        }
+
+    }
+
     public double getRPM() {
-        return jaguar.getSpeed();
+        try {
+            return jaguar.getSpeed();
+        } catch(CANTimeoutException e) {
+            return 0;
+        }
     }
 
     public void setRPM(double rpm) {
-        
+        try {
+            jaguar.setX(rpm);
+        } catch(CANTimeoutException e) {
+        }
     }
-    
-    
 }
