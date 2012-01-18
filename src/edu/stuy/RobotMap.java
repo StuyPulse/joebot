@@ -16,22 +16,26 @@ public class RobotMap {
     // number and the module. For example you with a rangefinder:
     // public static final int rangefinderPort = 1;
     // public static final int rangefinderModule = 1;
+
+    /* USB PORTS */
     public static final int LEFT_JOYSTICK_PORT = 1;
     public static final int RIGHT_JOYSTICK_PORT = 2;
-    
+
+    /* PWM OUTPUTS */
     public static final int FRONT_LEFT_MOTOR = 1;
     public static final int REAR_LEFT_MOTOR = 2;
     public static final int FRONT_RIGHT_MOTOR = 3;
     public static final int REAR_RIGHT_MOTOR = 4;
     
-    public static final int UPPER_SHOOTER_ROLLER = 7;
-    public static final int LOWER_SHOOTER_ROLLER = 8;
-    public static final int UPPER_ROLLER_ENCODER_A = 10;
-    public static final int UPPER_ROLLER_ENCODER_B = 11;
-    public static final int LOWER_ROLLER_ENCODER_A = 12;
-    public static final int LOWER_ROLLER_ENCODER_B = 13;
-    
-    public static final int DISTANCE_PER_PULSE = 0;
-    
-    public static final int ACQUIRER_ROLLER = 9;
+    public static final int UPPER_SHOOTER_ROLLER = 5;
+    public static final int LOWER_SHOOTER_ROLLER = 6;
+
+    public static final int ACQUIRER_ROLLER_A = 7;
+    public static final int ACQUIRER_ROLLER_B = 8;
+
+    /* DIGITAL INPUT */
+    public static final int UPPER_ROLLER_ENCODER_A = 1;
+    public static final int UPPER_ROLLER_ENCODER_B = 2;
+    public static final int LOWER_ROLLER_ENCODER_A = 3;
+    public static final int LOWER_ROLLER_ENCODER_B = 4;
 }
