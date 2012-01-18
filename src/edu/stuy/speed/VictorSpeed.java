@@ -32,10 +32,10 @@ public class VictorSpeed implements JoeSpeed {
 
     }
 
-    public int getRPM() {
+    public double getRPM() {
     }
 
-    public void setRPM(int rpm) {
+    public void setRPM(double rpm) {
     }
 
 }

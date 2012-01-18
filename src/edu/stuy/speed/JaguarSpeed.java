@@ -22,7 +22,7 @@ public class JaguarSpeed implements JoeSpeed{
         return jaguar.getSpeed();
     }
 
-    public void setRPM(int rpm) {
+    public void setRPM(double rpm) {
         
     }
     
