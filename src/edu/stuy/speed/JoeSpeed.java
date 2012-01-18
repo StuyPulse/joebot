@@ -5,7 +5,7 @@
 package edu.stuy.speed;
 
 /**
- * abstract class for making a common API for the jaguars and the victors
+ * abstract class for making a common API for the Jaguars and the victors
  * @author admin
  */
 public interface JoeSpeed {
