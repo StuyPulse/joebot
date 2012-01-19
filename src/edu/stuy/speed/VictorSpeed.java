@@ -25,9 +25,10 @@ public class VictorSpeed implements JoeSpeed {
     Victor victor;
     PIDController controller;
     double lastTime;
-    final double PROPORTIONAL                       = 0.00365;
-    final double INTEGRAL                       = 0.00;
-    final double DERIVATIVE                       = 0.000012;
+    
+    double PROPORTIONAL     = 0.00365;
+    double INTEGRAL         = 0.00;
+    double DERIVATIVE       = 0.000012;
     
     /**
      * Make an actual speed controller complete with a Victor, Encoder and PIDController
@@ -36,10 +37,10 @@ public class VictorSpeed implements JoeSpeed {
      * @param encoderBChannel Input for the other encoder.
      * @param reverse Not used.  Was for reversing encoder direction.
      */
-    public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel, boolean reverse) {
+    public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel) {
         victor = new Victor(victorChannel);
 
-        encoder = new Encoder(encoderAChannel, encoderBChannel, reverse, CounterBase.EncodingType.k2X);
+        encoder = new Encoder(encoderAChannel, encoderBChannel, false, CounterBase.EncodingType.k4X);
         encoder.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         encoder.start();
@@ -49,21 +50,6 @@ public class VictorSpeed implements JoeSpeed {
         controller.enable();
     }
 
-    /**
-     * Make a FAKE one just to construct dummy encoders.  Only the first, third,
-     * fifth and eighth encoders to be constructed will work properly when we
-     * call getRate(); this is an acknowledged bug in the NI software and requires
-     * us to make fake Encoders on a different slot.
-     * @param encoderAChannel
-     * @param encoderBChannel
-     * @param reverse
-     */
-    public VictorSpeed(int encoderAChannel, int encoderBChannel, boolean reverse) {
-        encoder = new Encoder(SECOND_SIDECAR_SLOT, encoderAChannel, SECOND_SIDECAR_SLOT, encoderBChannel, reverse, CounterBase.EncodingType.k2X);
-        encoder.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
-        encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
-        encoder.start();
-    }
     
     /**
      * Set the PWM value.
@@ -83,15 +69,6 @@ public class VictorSpeed implements JoeSpeed {
      */
     public void set(double speedRPM) {
         controller.setSetpoint(speedRPM);
-    }
-
-    /**
-     * Never call this method.  We need to have one in order to implement the
-     * SpeedController interface and pass this class into a DriveTrain, etc.,
-     * but we are using Victors which do not use syncGroups.
-     */
-    public void set(double speed, byte syncGroup) {
-        set(speed);
     }
 
     public double get() {
