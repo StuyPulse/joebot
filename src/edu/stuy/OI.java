@@ -1,6 +1,7 @@
 
 package edu.stuy;
 
+import edu.stuy.commands.SetGear;
 import edu.stuy.commands.ShooterShoot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -16,6 +17,9 @@ public class OI {
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
         
         new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot());
+        
+        new JoystickButton(leftStick, 2).whenPressed(new SetGear(false));
+        new JoystickButton(rightStick, 2).whenPressed(new SetGear(true));
     }
     
     public Joystick getLeftStick() {

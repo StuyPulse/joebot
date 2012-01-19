@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.stuy.commands.CommandBase;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,6 +33,8 @@ public class JoeBot extends IterativeRobot {
     public void robotInit() {
         // instantiate the command used for the autonomous period
         // autonomousCommand = new ExampleCommand();
+        Compressor compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
+        compressor.start();
 
         // Initialize all subsystems
         CommandBase.init();

@@ -34,9 +34,18 @@ public class RobotMap {
     public static final int ACQUIRER_INTAKE_ROLLER_B = 8;
     public static final int ACQUIRER_HOPPER_ROLLER = 9;
 
-    /* DIGITAL INPUT */
+    /* DIGITAL INPUTS */
     public static final int UPPER_ROLLER_ENCODER_A = 1;
     public static final int UPPER_ROLLER_ENCODER_B = 2;
     public static final int LOWER_ROLLER_ENCODER_A = 3;
     public static final int LOWER_ROLLER_ENCODER_B = 4;
+    
+    public static final int PRESSURE_SWITCH_CHANNEL = 5;
+
+    /* RELAY OUTPUTS */
+    public static final int COMPRESSOR_RELAY_CHANNEL = 1;
+
+    /* SOLENOID */
+    public static final int LEFT_GEAR_SHIFT = 1;
+    public static final int RIGHT_GEAR_SHIFT = 2;
 }

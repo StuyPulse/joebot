@@ -7,6 +7,7 @@ package edu.stuy.subsystems;
 import edu.stuy.RobotMap;
 import edu.stuy.commands.ManualJoystickDriveControl;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,12 +16,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drivetrain extends Subsystem {
     RobotDrive drive;
+    Solenoid leftShift;
+    Solenoid rightShift;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public Drivetrain() {
         drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
+        leftShift = new Solenoid(RobotMap.LEFT_GEAR_SHIFT);
+        rightShift = new Solenoid(RobotMap.RIGHT_GEAR_SHIFT);
     }
 
     public void initDefaultCommand() {
@@ -31,5 +36,10 @@ public class Drivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
+    }
+
+    public void setGear(boolean high) {
+        leftShift.set(high);
+        rightShift.set(high);
     }
 }
