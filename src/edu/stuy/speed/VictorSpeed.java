@@ -12,15 +12,14 @@ import edu.wpi.first.wpilibj.*;
 public class VictorSpeed implements JoeSpeed {
 
     public double getRPM() {
-        return m_RPM;
+        double circumference = 2 * Math.PI * WHEEL_RADIUS;
+        int seconds = 60;
+        return (seconds * encoder.getRate()/(circumference));  //Converted from Distance/Second to RPM
     }
 
     public void setRPM(double rpm) {
-        m_RPM = rpm;
+        set(rpm);
     }
-    
-    int SECOND_SIDECAR_SLOT = 6;
-    double m_RPM;
     Encoder encoder;
     Victor victor;
     PIDController controller;

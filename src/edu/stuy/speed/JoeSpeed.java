@@ -9,8 +9,9 @@ package edu.stuy.speed;
  * @author admin
  */
 public interface JoeSpeed {
-    final int ENCODER_CODES_PER_REV = 360;
+    final int ENCODER_CODES_PER_REV    = 360;
     final double ENCODER_RPM_PER_PULSE = 60.0 / ENCODER_CODES_PER_REV;
+    final int WHEEL_RADIUS             = 3;
 
     /**
      * Returns the RPM of the speed controller.
