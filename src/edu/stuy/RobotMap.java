@@ -30,9 +30,8 @@ public class RobotMap {
     public static final int UPPER_SHOOTER_ROLLER = 5;
     public static final int LOWER_SHOOTER_ROLLER = 6;
 
-    public static final int ACQUIRER_INTAKE_ROLLER_A = 7;
-    public static final int ACQUIRER_INTAKE_ROLLER_B = 8;
-    public static final int ACQUIRER_HOPPER_ROLLER = 9;
+    public static final int ACQUIRER_ROLLER_LOWER = 7;
+    public static final int ACQUIRER_ROLLER_UPPER = 8;
 
     /* DIGITAL INPUTS */
     public static final int UPPER_ROLLER_ENCODER_A = 1;
