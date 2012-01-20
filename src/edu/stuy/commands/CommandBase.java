@@ -19,6 +19,7 @@ public abstract class CommandBase extends Command {
     public static Shooter shooter = new Shooter();
     public static Tusks tusks = new Tusks();
     public static Acquirer acquirer = new Acquirer();
+    public static Conveyor conveyor = new Conveyor();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -33,6 +34,7 @@ public abstract class CommandBase extends Command {
         SmartDashboard.putData(shooter);
         SmartDashboard.putData(tusks);
         SmartDashboard.putData(acquirer);
+        SmartDashboard.putData(conveyor);
     }
 
     public CommandBase(String name) {
