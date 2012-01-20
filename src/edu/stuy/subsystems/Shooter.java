@@ -20,8 +20,8 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Shooter() {
-        upperRoller = new JaguarSpeed(RobotMap.UPPER_SHOOTER_ROLLER);
-        lowerRoller = new JaguarSpeed(RobotMap.LOWER_SHOOTER_ROLLER);
+        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER);
+        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER);
     }
 
     public void initDefaultCommand() {

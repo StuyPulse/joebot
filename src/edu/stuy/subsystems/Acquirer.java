@@ -13,15 +13,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Acquirer extends Subsystem {
-    Victor lowerRoller;
     Victor upperRoller;
+    Victor lowerRoller;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
     public Acquirer() {
-        lowerRoller = new Victor(RobotMap.ACQUIRER_ROLLER_LOWER);
-        upperRoller = new Victor(RobotMap.ACQUIRER_ROLLER_UPPER);
+        upperRoller = new Victor(RobotMap.ACQUIRER_UPPER_ROLLER);
+        lowerRoller = new Victor(RobotMap.ACQUIRER_LOWER_ROLLER);
     }
 
     public void initDefaultCommand() {
@@ -29,8 +29,8 @@ public class Acquirer extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void roll(double lowerSpeed, double upperSpeed) {
-        lowerRoller.set(lowerSpeed);
+    public void roll(double upperSpeed, double lowerSpeed) {
         upperRoller.set(upperSpeed);
+        lowerRoller.set(lowerSpeed);
     }
 }

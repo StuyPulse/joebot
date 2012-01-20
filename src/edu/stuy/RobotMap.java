@@ -27,17 +27,17 @@ public class RobotMap {
     public static final int FRONT_RIGHT_MOTOR = 3;
     public static final int REAR_RIGHT_MOTOR = 4;
     
-    public static final int UPPER_SHOOTER_ROLLER = 5;
-    public static final int LOWER_SHOOTER_ROLLER = 6;
+    public static final int SHOOTER_UPPER_ROLLER = 5;
+    public static final int SHOOTER_LOWER_ROLLER = 6;
 
-    public static final int ACQUIRER_ROLLER_LOWER = 7;
-    public static final int ACQUIRER_ROLLER_UPPER = 8;
+    public static final int ACQUIRER_UPPER_ROLLER = 7;
+    public static final int ACQUIRER_LOWER_ROLLER = 8;
 
     /* DIGITAL INPUTS */
-    public static final int UPPER_ROLLER_ENCODER_A = 1;
-    public static final int UPPER_ROLLER_ENCODER_B = 2;
-    public static final int LOWER_ROLLER_ENCODER_A = 3;
-    public static final int LOWER_ROLLER_ENCODER_B = 4;
+    public static final int SHOOTER_UPPER_ROLLER_ENCODER_A = 1;
+    public static final int SHOOTER_UPPER_ROLLER_ENCODER_B = 2;
+    public static final int SHOOTER_LOWER_ROLLER_ENCODER_A = 3;
+    public static final int SHOOTER_LOWER_ROLLER_ENCODER_B = 4;
     
     public static final int PRESSURE_SWITCH_CHANNEL = 5;
 
