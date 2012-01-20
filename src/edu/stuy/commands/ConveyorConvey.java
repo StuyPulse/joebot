@@ -12,6 +12,9 @@ public class ConveyorConvey extends CommandBase {
     boolean hasTimeout = false;
     double timeout;
     
+    boolean hasTimeout = false;
+    double timeout;
+    
     public ConveyorConvey() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
