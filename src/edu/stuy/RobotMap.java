@@ -51,6 +51,5 @@ public class RobotMap {
     public static final int LEFT_GEAR_SHIFT = 1;
     public static final int RIGHT_GEAR_SHIFT = 2;
     
-    public static final int TUSKS_SOLENOID_A = 3;
-    public static final int TUSKS_SOLENOID_B = 4;
+    public static final int TUSKS_SOLENOID = 2;
 }
