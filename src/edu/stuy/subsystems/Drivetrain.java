@@ -16,16 +16,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drivetrain extends Subsystem {
     RobotDrive drive;
-    Solenoid leftShift;
-    Solenoid rightShift;
+    Solenoid gearShift;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public Drivetrain() {
         drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
-        leftShift = new Solenoid(RobotMap.LEFT_GEAR_SHIFT);
-        rightShift = new Solenoid(RobotMap.RIGHT_GEAR_SHIFT);
+        gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
     }
 
     public void initDefaultCommand() {
@@ -39,7 +37,6 @@ public class Drivetrain extends Subsystem {
     }
 
     public void setGear(boolean high) {
-        leftShift.set(high);
-        rightShift.set(high);
+        gearShift.set(high);
     }
 }

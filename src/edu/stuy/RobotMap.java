@@ -48,8 +48,7 @@ public class RobotMap {
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
 
     /* SOLENOID */
-    public static final int LEFT_GEAR_SHIFT = 1;
-    public static final int RIGHT_GEAR_SHIFT = 2;
+    public static final int GEAR_SHIFT = 1;
     
     public static final int TUSKS_SOLENOID = 2;
 }
