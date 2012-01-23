@@ -5,7 +5,7 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.stuy.commands.ManualJoystickDriveControl;
+import edu.stuy.commands.DriveManualJoystickControl;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -29,7 +29,7 @@ public class Drivetrain extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new ManualJoystickDriveControl());
+        setDefaultCommand(new DriveManualJoystickControl());
     }
 
     public void tankDrive(double leftValue, double rightValue) {
