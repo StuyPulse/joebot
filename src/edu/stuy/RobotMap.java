@@ -42,7 +42,7 @@ public class RobotMap {
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_A = 3;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_B = 4;
     
-    public static final int PRESSURE_SWITCH_CHANNEL = 5;
+    public static final int PRESSURE_SWITCH_CHANNEL = 5; // For pneumatics compressor
 
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
