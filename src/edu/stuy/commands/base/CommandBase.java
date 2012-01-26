@@ -1,5 +1,6 @@
 package edu.stuy.commands.base;
 
+import edu.stuy.Devmode;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.stuy.OI;
@@ -15,11 +16,21 @@ public abstract class CommandBase extends Command {
     public static OI oi;
     
     // Create a single static instance of all of your subsystems
-    public static Drivetrain drivetrain = new Drivetrain();
-    public static Shooter shooter = new Shooter();
-    public static Tusks tusks = new Tusks();
-    public static Acquirer acquirer = new Acquirer();
-    public static Conveyor conveyor = new Conveyor();
+    public static Drivetrain drivetrain;
+    public static Shooter shooter;
+    public static Tusks tusks;
+    public static Acquirer acquirer;
+    public static Conveyor conveyor;
+
+    static {
+        if (!Devmode.DEV_MODE) {
+            drivetrain = new Drivetrain();
+            shooter = new Shooter();
+            tusks = new Tusks();
+            acquirer = new Acquirer();
+            conveyor = new Conveyor();
+        }
+    }
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -29,12 +40,14 @@ public abstract class CommandBase extends Command {
         // news. Don't move it.
         oi = new OI();
 
-        // Show what command your subsystem is running on the SmartDashboard
-        SmartDashboard.putData(drivetrain);
-        SmartDashboard.putData(shooter);
-        SmartDashboard.putData(tusks);
-        SmartDashboard.putData(acquirer);
-        SmartDashboard.putData(conveyor);
+        if (!Devmode.DEV_MODE) {
+            // Show what command your subsystem is running on the SmartDashboard
+            SmartDashboard.putData(drivetrain);
+            SmartDashboard.putData(shooter);
+            SmartDashboard.putData(tusks);
+            SmartDashboard.putData(acquirer);
+            SmartDashboard.putData(conveyor);
+        }
     }
 
     public CommandBase(String name) {

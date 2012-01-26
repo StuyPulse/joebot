@@ -4,6 +4,7 @@
  */
 package edu.stuy.subsystems;
 
+import edu.stuy.Devmode;
 import edu.stuy.RobotMap;
 import edu.stuy.commands.DriveManualJoystickControl;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -23,7 +24,9 @@ public class Drivetrain extends Subsystem {
 
     public Drivetrain() {
         drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
-        gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
+        if (!Devmode.DEV_MODE) {
+            gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
+        }
     }
 
     public void initDefaultCommand() {
