@@ -35,7 +35,7 @@ public class ConveyorConvey extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        shooter.rollRollers(1, 1);
+        conveyor.roll(1, 1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -48,7 +48,7 @@ public class ConveyorConvey extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        shooter.rollRollers(0, 0);
+        conveyor.roll(0, 0);
     }
 
     // Called when another command which requires one or more of the same
