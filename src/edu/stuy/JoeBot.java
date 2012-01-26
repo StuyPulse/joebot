@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.Compressor;
  */
 public class JoeBot extends IterativeRobot {
 
-    Command autonomousCommand = new Autonomous();
+    Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -35,6 +35,7 @@ public class JoeBot extends IterativeRobot {
         // autonomousCommand = new ExampleCommand();
 
         if (!Devmode.DEV_MODE) {
+            autonomousCommand = new Autonomous();
             Compressor compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
             compressor.start();
         }
