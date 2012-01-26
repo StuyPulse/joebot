@@ -23,8 +23,8 @@ public abstract class CommandBase extends Command {
     public static Conveyor conveyor;
 
     static {
+        drivetrain = new Drivetrain();
         if (!Devmode.DEV_MODE) {
-            drivetrain = new Drivetrain();
             shooter = new Shooter();
             tusks = new Tusks();
             acquirer = new Acquirer();
