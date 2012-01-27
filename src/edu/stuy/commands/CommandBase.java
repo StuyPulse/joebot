@@ -1,4 +1,4 @@
-package edu.stuy.commands.base;
+package edu.stuy.commands;
 
 import edu.stuy.Devmode;
 import edu.wpi.first.wpilibj.command.Command;
