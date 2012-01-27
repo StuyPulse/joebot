@@ -20,6 +20,14 @@
                 <clean-target>clean</clean-target>
                 <id>jar</id>
             </reference>
+            <reference>
+                <foreign-project>joebot</foreign-project>
+                <artifact-type>folder</artifact-type>
+                <script>build.xml</script>
+                <target>jar-app</target>
+                <clean-target>clean</clean-target>
+                <id>jar-app</id>
+            </reference>
         </references>
     </configuration>
 </project>

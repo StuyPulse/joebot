@@ -9,15 +9,15 @@ import edu.stuy.RobotMap;
 import edu.stuy.commands.DriveManualJoystickControl;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.*;
 
 /**
  *
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
-    RobotDrive drive;
-    Solenoid gearShift;
+    public RobotDrive drive;
+    public Solenoid gearShift;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -41,5 +41,9 @@ public class Drivetrain extends Subsystem {
 
     public void setGear(boolean high) {
         gearShift.set(high);
+    }
+
+    public Command getDefaultCommand(){
+        return super.getDefaultCommand();
     }
 }
