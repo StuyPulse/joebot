@@ -28,18 +28,15 @@ public class Drivetrain extends Subsystem {
     Encoder encoderLeft;
     Encoder encoderRight;
     Gyro gyro;
-    
     SendablePIDController controller;
-
-    final int WHEEL_RADIUS                 = 3; 
-    final double CIRCUMFERENCE             = 2 * Math.PI * WHEEL_RADIUS;
-    final int ENCODER_CODES_PER_REV        = 360;
-    final double DISTANCE_PER_PULSE        = CIRCUMFERENCE / ENCODER_CODES_PER_REV;
-    
+    final int WHEEL_RADIUS = 3;
+    final double CIRCUMFERENCE = 2 * Math.PI * WHEEL_RADIUS;
+    final int ENCODER_CODES_PER_REV = 360;
+    final double DISTANCE_PER_PULSE = CIRCUMFERENCE / ENCODER_CODES_PER_REV;
     double Kp = 0.035;
     double Ki = 0.0005;
     double Kd = 1.0;
-    
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
@@ -58,7 +55,6 @@ public class Drivetrain extends Subsystem {
             public void pidWrite(double output) {
                 drive.arcadeDrive(-1, -output);
             }
-
         }, 0.005);
 
         if (!Devmode.DEV_MODE) {
@@ -82,7 +78,12 @@ public class Drivetrain extends Subsystem {
         gearShift.set(high);
     }
     
-    public void driveStraight(int distance) {
-        
+    public void initController() {
+        controller.setSetpoint(0);
+        controller.enable();
+    }
+
+    public void driveStraight() {
+        controller.setSetpoint(0);  // Go straight
     }
 }
