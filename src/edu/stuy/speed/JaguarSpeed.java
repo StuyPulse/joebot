@@ -16,7 +16,7 @@ public class JaguarSpeed implements JoeSpeed {
     public static final double KI = 0.0;
     public static final double KD = 0.0;
 
-    CANJaguar jaguar;
+    private CANJaguar jaguar;
 
     /**
      * Constructs a new CANJaguar using speed control.

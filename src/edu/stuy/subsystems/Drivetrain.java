@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
-    RobotDrive drive;
-    Solenoid gearShift;
+    private RobotDrive drive;
+    private Solenoid gearShift;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

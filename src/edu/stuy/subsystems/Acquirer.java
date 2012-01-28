@@ -5,7 +5,7 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Acquirer extends Subsystem {
-    Victor upperRoller;
-    Victor lowerRoller;
+    private Victor upperRoller;
+    private Victor lowerRoller;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

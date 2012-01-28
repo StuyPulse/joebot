@@ -3,7 +3,7 @@ package edu.stuy;
 
 import edu.stuy.commands.DrivetrainSetGear;
 import edu.stuy.commands.ShooterShoot;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {

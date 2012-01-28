@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Shooter extends Subsystem {
-    JoeSpeed upperRoller;
-    JoeSpeed lowerRoller;
+    private JoeSpeed upperRoller;
+    private JoeSpeed lowerRoller;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

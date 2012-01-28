@@ -14,12 +14,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Danny
  */
 public class Conveyor extends Subsystem {
+    private Victor upperRoller;
+    private Victor lowerRoller;
+    private DigitalInput upperSensor;
+    private DigitalInput lowerSensor;
+    
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    Victor upperRoller;
-    Victor lowerRoller;
-    DigitalInput upperSensor;
-    DigitalInput lowerSensor;
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

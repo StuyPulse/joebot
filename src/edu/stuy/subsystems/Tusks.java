@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Tusks extends Subsystem {
-    Solenoid solenoid;
+    private Solenoid solenoid;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
