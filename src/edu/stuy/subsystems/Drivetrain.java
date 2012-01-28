@@ -41,7 +41,7 @@ public class Drivetrain extends Subsystem {
     // here. Call these from Commands.
     public Drivetrain() {
         drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
-
+        drive.setSafetyEnabled(false);
         encoderLeft = new Encoder(RobotMap.ENCODER_CHANNEL_1A, RobotMap.ENCODER_CHANNEL_1B, true);
         encoderRight = new Encoder(RobotMap.ENCODER_CHANNEL_2A, RobotMap.ENCODER_CHANNEL_2B, true);
 
@@ -100,6 +100,14 @@ public class Drivetrain extends Subsystem {
 
         return (encoderLeft.getDistance() + encoderRight.getDistance()) / 2.0;
 
+    }
+    
+    /**
+     * Reset both encoders's tick, distance, etc. count to zero
+     */
+    public void resetEncoders() {
+        encoderLeft.reset();
+        encoderRight.reset();
     }
 
 }
