@@ -38,19 +38,19 @@ public class Conveyor extends Subsystem {
         lowerRoller.set(lowerSpeed);
     }
 
-    public DigitalInput getUpperSensor() {
-        return upperSensor;
+    public boolean getUpperSensor() {
+        return upperSensor.get();
     }
 
-    public DigitalInput getLowerSensor() {
-        return lowerSensor;
+    public boolean getLowerSensor() {
+        return lowerSensor.get();
     }
 
-    public Victor getUpperRoller() {
-        return upperRoller;
+    public double getUpperRoller() {
+        return upperRoller.get();
     }
 
-    public Victor getLowerRoller() {
-        return lowerRoller;
+    public double getLowerRoller() {
+        return lowerRoller.get();
     }
 }
