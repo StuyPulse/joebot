@@ -10,24 +10,14 @@ import edu.wpi.first.wpilibj.*;
  * @author admin
  */
 public class VictorSpeed implements JoeSpeed {
-
-    public double getRPM() {
-        double circumference = 2 * Math.PI * WHEEL_RADIUS;
-        int seconds = 60;
-        return (seconds * encoder.getRate()/(circumference));  //Converted from Distance/Second to RPM
-    }
-
-    public void setRPM(double rpm) {
-        set(rpm);
-    }
+    public static final double KP = 0.00365;
+    public static final double KI = 0.00;
+    public static final double KD = 0.000012;
+    
     Encoder encoder;
     Victor victor;
     PIDController controller;
     double lastTime;
-    
-    double PROPORTIONAL     = 0.00365;
-    double INTEGRAL         = 0.00;
-    double DERIVATIVE       = 0.000012;
     
     /**
      * Make an actual speed controller complete with a Victor, Encoder and PIDController
@@ -44,7 +34,7 @@ public class VictorSpeed implements JoeSpeed {
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         encoder.start();
 
-        controller = new PIDController(PROPORTIONAL, INTEGRAL, DERIVATIVE, encoder, victor);
+        controller = new PIDController(KP, KI, KD, encoder, victor);
         controller.setOutputRange(-1, 1);
         controller.enable();
     }
@@ -76,5 +66,15 @@ public class VictorSpeed implements JoeSpeed {
 
     public void disable() {
         victor.disable();
+    }
+
+    public double getRPM() {
+        double circumference = 2 * Math.PI * WHEEL_RADIUS;
+        int seconds = 60;
+        return (seconds * encoder.getRate()/(circumference));  //Converted from Distance/Second to RPM
+    }
+
+    public void setRPM(double rpm) {
+        set(rpm);
     }
 }
