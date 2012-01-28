@@ -11,7 +11,7 @@ public class RobotMap {
     // following variables to use with your drivetrain subsystem.
     // public static final int leftMotor = 1;
     // public static final int rightMotor = 2;
-    
+
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:
     // public static final int rangefinderPort = 1;
@@ -26,13 +26,10 @@ public class RobotMap {
     public static final int REAR_LEFT_MOTOR = 2;
     public static final int FRONT_RIGHT_MOTOR = 3;
     public static final int REAR_RIGHT_MOTOR = 4;
-    
     public static final int SHOOTER_UPPER_ROLLER = 5;
     public static final int SHOOTER_LOWER_ROLLER = 6;
-
     public static final int ACQUIRER_UPPER_ROLLER = 7;
     public static final int ACQUIRER_LOWER_ROLLER = 8;
-    
     public static final int CONVEYOR_UPPER_ROLLER = 9;
     public static final int CONVEYOR_LOWER_ROLLER = 10;
 
@@ -41,9 +38,7 @@ public class RobotMap {
     public static final int SHOOTER_UPPER_ROLLER_ENCODER_B = 2;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_A = 3;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_B = 4;
-    
     public static final int PRESSURE_SWITCH_CHANNEL = 5; // Switches when pneumatics pressure exceeds limit
-
     public static final int UPPER_CONVEYOR_SENSOR = 6;
     public static final int LOWER_CONVEYOR_SENSOR = 7;
 
@@ -52,6 +47,22 @@ public class RobotMap {
 
     /* SOLENOID */
     public static final int GEAR_SHIFT = 1;
-    
     public static final int TUSKS_SOLENOID = 2;
+
+    public static int[] VIRSYS_OUTPUT_MAP = new int[11];
+    public static int[] VIRSYS_INPUT_MAP = new int[10];
+
+    static {
+        for (int i = 0; i < VIRSYS_OUTPUT_MAP.length; i++) {
+            VIRSYS_OUTPUT_MAP[i] = -1;
+        }
+        VIRSYS_OUTPUT_MAP[FRONT_LEFT_MOTOR] = 0;
+        VIRSYS_OUTPUT_MAP[REAR_LEFT_MOTOR] = 0;
+        VIRSYS_OUTPUT_MAP[FRONT_RIGHT_MOTOR] = 1;
+        VIRSYS_OUTPUT_MAP[REAR_RIGHT_MOTOR] = 1;
+
+        for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
+            VIRSYS_OUTPUT_MAP[i] = 0;
+        }
+    }
 }

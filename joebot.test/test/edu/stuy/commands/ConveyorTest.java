@@ -58,9 +58,9 @@ public class ConveyorTest {
         while (Timer.getFPGATimestamp() - startTime < 1) {
             cmd.execute();
         }
-        assertEquals(1, DigitalSidecar.register[8], 0);
+        assertEquals(1, CommandBase.conveyor.getUpperRoller().get(), 0.01);
         cmd.end();
-        assertEquals(1, DigitalSidecar.register[8], 0);
+        assertEquals(0, CommandBase.conveyor.getUpperRoller().get(), 0.01);
     }
 
     @Test
@@ -70,8 +70,17 @@ public class ConveyorTest {
     }
 
     @Test
-    public void testStopButtonAndConveyorSpeed() {
-        // CommandBase.oi.getStopButton().set(1); // Button is pressed
+    public void testConveyorStop() {
+        ConveyorConvey cmd = new ConveyorConvey();
+        cmd.initialize();
+        ConveyorStop cmd2 = new ConveyorStop();
+        cmd2.initialize();
+        double startTime = Timer.getFPGATimestamp();
+        while (Timer.getFPGATimestamp() - startTime < 1) {
+            cmd.execute();
+        }
+        cmd2.execute();
+        // assertTrue(CommandBase.oi.isConveyorStopButtonPressed());
         // Call conveyor to check if button is pressed.
         assertEquals(0, CommandBase.conveyor.getUpperRoller().get(), 0.01);
         assertEquals(0, CommandBase.conveyor.getLowerRoller().get(), 0.01);

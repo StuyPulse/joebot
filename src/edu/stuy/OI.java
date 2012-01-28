@@ -31,5 +31,9 @@ public class OI {
     public Joystick getRightStick() {
         return rightStick;
     }
+
+    public boolean isConveyorStopButtonPressed() {
+        return false;
+    }
 }
 
