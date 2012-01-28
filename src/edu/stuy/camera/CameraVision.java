@@ -3,6 +3,7 @@ package edu.stuy.camera;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.CriteriaCollection;
@@ -55,9 +56,9 @@ public class CameraVision {
              * "10ft2.jpg"
              *
              */
-            //ColorImage image = camera.getImage();     // comment if using stored images
-            ColorImage image;                           // next 2 lines read image from flash on cRIO
-            image = new RGBImage("/10ft2.jpg");
+            ColorImage image = camera.getImage();
+            BinaryImage rectImages = image.thresholdHSL(136, 182, 45, 255, 116, 255);
+            // TODO: fill in the gaps
             BinaryImage thresholdImage = image.thresholdRGB(25, 255, 0, 45, 0, 47);   // keep only red objects
             BinaryImage bigObjectsImage = thresholdImage.removeSmallObjects(false, 2);  // remove small artifacts
             BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
@@ -81,8 +82,8 @@ public class CameraVision {
             thresholdImage.free();
             image.free();
 
-//            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
-//                ex.printStackTrace();
+            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
+                ex.printStackTrace();
         } catch (NIVisionException ex) {
             ex.printStackTrace();
         }
