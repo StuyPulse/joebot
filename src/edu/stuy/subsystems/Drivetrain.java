@@ -9,6 +9,7 @@ import edu.stuy.RobotMap;
 import edu.stuy.commands.DriveManualJoystickControl;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,6 +25,7 @@ public class Drivetrain extends Subsystem {
     AnalogChannel sonar;
     Encoder encoderLeft;
     Encoder encoderRight;
+    Gyro gyro;
     final int WHEEL_RADIUS                 = 3; 
     final double CIRCUMFERENCE             = 2 * Math.PI * WHEEL_RADIUS;
     final int ENCODER_CODES_PER_REV        = 360;
@@ -39,6 +41,8 @@ public class Drivetrain extends Subsystem {
 
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
+
+        gyro = new Gyro(RobotMap.GYRO_CHANNEL);
 
         if (!Devmode.DEV_MODE) {
             gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
