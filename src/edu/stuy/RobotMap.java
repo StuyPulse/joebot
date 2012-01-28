@@ -51,4 +51,8 @@ public class RobotMap {
     public static final int GEAR_SHIFT = 1;
     
     public static final int TUSKS_SOLENOID = 2;
+
+    /* ANALOG INPUTS */
+    public static final int GYRO_CHANNEL = 1;
+    public static final int SONAR_CHANNEL = 2;
 }

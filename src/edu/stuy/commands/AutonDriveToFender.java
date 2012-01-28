@@ -10,9 +10,9 @@ package edu.stuy.commands;
  */
 public class AutonDriveToFender extends CommandBase {
     
-    public AutonDriveToFender() {
+    public AutonDriveToFender(int inches) {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(drivetrain);
     }
 
     // Called just before this Command runs the first time
