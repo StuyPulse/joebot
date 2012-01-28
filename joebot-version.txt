@@ -1,2 +1,3 @@
-Joebot's length (bumper-bumper): 	44 inches
-Bumper width:				3  inches
+Joebot's length (bumper-bumper): 	44  inches
+Bumper width:				3   inches
+Distance (bumper edge-wheel center)	9.5 inches
