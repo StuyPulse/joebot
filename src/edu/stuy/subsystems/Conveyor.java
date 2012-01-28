@@ -38,6 +38,14 @@ public class Conveyor extends Subsystem {
         lowerRoller.set(lowerSpeed);
     }
 
+    public void convey() {
+        roll(1, 1);
+    }
+
+    public void stop() {
+        roll(0, 0);
+    }
+
     public boolean getUpperSensor() {
         return upperSensor.get();
     }
