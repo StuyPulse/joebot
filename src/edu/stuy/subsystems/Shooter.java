@@ -33,4 +33,8 @@ public class Shooter extends Subsystem {
         upperRoller.setRPM(upperRPM);
         lowerRoller.setRPM(lowerRPM);
     }
+    
+    public boolean isSpeedGood() {
+        return false;
+    }
 }
