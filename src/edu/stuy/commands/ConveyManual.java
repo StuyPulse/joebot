@@ -8,17 +8,17 @@ package edu.stuy.commands;
  *
  * @author Danny
  */
-public class ConveyorConvey extends CommandBase {
+public class ConveyManual extends CommandBase {
     boolean hasTimeout = false;
     double timeout;
     
-    public ConveyorConvey() {
+    public ConveyManual() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(conveyor);
     }
     
-    public ConveyorConvey(double timeout){
+    public ConveyManual(double timeout){
         this();
         hasTimeout = true;
         this.timeout = timeout;

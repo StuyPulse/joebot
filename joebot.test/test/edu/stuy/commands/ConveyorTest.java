@@ -52,7 +52,7 @@ public class ConveyorTest {
     
     @Test
     public void testConveyorTurnsOn() {
-        ConveyorConvey cmd = new ConveyorConvey();
+        ConveyManual cmd = new ConveyManual();
         cmd.initialize();
         double startTime = Timer.getFPGATimestamp();
         while (Timer.getFPGATimestamp() - startTime < 1) {
@@ -71,7 +71,7 @@ public class ConveyorTest {
 
     @Test
     public void testConveyorStop() {
-        ConveyorConvey cmd = new ConveyorConvey();
+        ConveyManual cmd = new ConveyManual();
         cmd.initialize();
         ConveyorStop cmd2 = new ConveyorStop();
         cmd2.initialize();
