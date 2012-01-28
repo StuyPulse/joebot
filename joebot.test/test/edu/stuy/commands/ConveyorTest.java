@@ -65,8 +65,8 @@ public class ConveyorTest {
 
     @Test
     public void sensorsExists() {
-        assertNotNull(CommandBase.conveyor.getUpperSensor());
-        assertNotNull(CommandBase.conveyor.getLowerSensor());
+        assertNotNull(CommandBase.conveyor.ballAtTop());
+        assertNotNull(CommandBase.conveyor.ballAtBottom());
     }
 
     @Test
@@ -84,5 +84,11 @@ public class ConveyorTest {
         // Call conveyor to check if button is pressed.
         assertEquals(0, CommandBase.conveyor.getUpperRoller().get(), 0.01);
         assertEquals(0, CommandBase.conveyor.getLowerRoller().get(), 0.01);
+    }
+
+    @Test
+    public void testSensors() {
+        assertEquals(false, CommandBase.conveyor.ballAtTop().get());
+        assertEquals(false, CommandBase.conveyor.ballAtBottom().get());
     }
 }

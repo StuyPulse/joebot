@@ -46,11 +46,11 @@ public class Conveyor extends Subsystem {
         roll(0, 0);
     }
 
-    public boolean getUpperSensor() {
+    public boolean ballAtTop() {
         return upperSensor.get();
     }
 
-    public boolean getLowerSensor() {
+    public boolean ballAtBottom() {
         return lowerSensor.get();
     }
 
