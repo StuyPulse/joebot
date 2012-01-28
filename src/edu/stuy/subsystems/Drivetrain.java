@@ -50,6 +50,7 @@ public class Drivetrain extends Subsystem {
 
         gyro = new Gyro(RobotMap.GYRO_CHANNEL);
         gyro.setSensitivity(0.007);
+
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
@@ -82,8 +83,23 @@ public class Drivetrain extends Subsystem {
         controller.setSetpoint(0);
         controller.enable();
     }
+    
+    public void endController() {
+        controller.disable();
+    }
 
     public void driveStraight() {
         controller.setSetpoint(0);  // Go straight
     }
+
+    /**
+     * Calculate average distance of the two encoders.  
+     * @return Average of the distances (inches) read by each encoder since they were last reset.
+     */
+    public double getAvgDistance() {
+
+        return (encoderLeft.getDistance() + encoderRight.getDistance()) / 2.0;
+
+    }
+
 }
