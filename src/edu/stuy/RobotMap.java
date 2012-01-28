@@ -42,6 +42,12 @@ public class RobotMap {
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_A = 3;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_B = 4;
     
+    
+    public static final int LEFT_ENCODER_A = 5;
+    public static final int LEFT_ENCODER_B = 6;
+    public static final int RIGHT_ENCODER_A = 7;
+    public static final int RIGHT_ENCODER_B = 8;
+    
     public static final int PRESSURE_SWITCH_CHANNEL = 5; // Switches when pneumatics pressure exceeds limit
 
     /* RELAY OUTPUTS */
@@ -51,4 +57,24 @@ public class RobotMap {
     public static final int GEAR_SHIFT = 1;
     
     public static final int TUSKS_SOLENOID = 2;
+    
+    public static int[] VIRSYS_OUTPUT_MAP = new int[11];
+    public static int[] VIRSYS_INPUT_MAP = new int[10];
+    static {
+        for (int i = 0; i < VIRSYS_OUTPUT_MAP.length; i++) {
+            VIRSYS_OUTPUT_MAP[i] = 4;
+        }
+        VIRSYS_OUTPUT_MAP[FRONT_LEFT_MOTOR] = 0;
+        VIRSYS_OUTPUT_MAP[REAR_LEFT_MOTOR] = 0;
+        VIRSYS_OUTPUT_MAP[FRONT_RIGHT_MOTOR] = 1;
+        VIRSYS_OUTPUT_MAP[REAR_RIGHT_MOTOR] = 1;
+        
+        for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
+            VIRSYS_OUTPUT_MAP[i] = 0;
+        }
+        VIRSYS_INPUT_MAP[LEFT_ENCODER_A] = 1;
+        VIRSYS_INPUT_MAP[LEFT_ENCODER_B] = 1;
+        VIRSYS_INPUT_MAP[RIGHT_ENCODER_A] = 2;
+        VIRSYS_INPUT_MAP[RIGHT_ENCODER_A] = 2;
+    }
 }

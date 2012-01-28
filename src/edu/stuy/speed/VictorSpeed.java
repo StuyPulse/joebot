@@ -5,18 +5,27 @@
 package edu.stuy.speed;
 
 import edu.wpi.first.wpilibj.*;
+
 /**
  *
  * @author admin
  */
 public class VictorSpeed implements JoeSpeed {
 
+    /**
+     * Returns the RPM of the speed controller.
+     * @return RPM of the speed controller
+     */
     public double getRPM() {
         double circumference = 2 * Math.PI * WHEEL_RADIUS;
         int seconds = 60;
-        return (seconds * encoder.getRate()/(circumference));  //Converted from Distance/Second to RPM
+        return (seconds * encoder.getRate() / (circumference));  //Converted from Distance/Second to RPM
     }
 
+    /**
+     * Sets the target RPM of the speed controller.
+     * @param rpm The target RPM of the speed controller
+     */
     public void setRPM(double rpm) {
         set(rpm);
     }
@@ -24,11 +33,10 @@ public class VictorSpeed implements JoeSpeed {
     Victor victor;
     PIDController controller;
     double lastTime;
-    
-    double PROPORTIONAL     = 0.00365;
-    double INTEGRAL         = 0.00;
-    double DERIVATIVE       = 0.000012;
-    
+    double PROPORTIONAL = 0.00365;
+    double INTEGRAL = 0.00;
+    double DERIVATIVE = 0.000012;
+
     /**
      * Make an actual speed controller complete with a Victor, Encoder and PIDController
      * @param victorChannel The PWM channel for the victor.
@@ -49,7 +57,6 @@ public class VictorSpeed implements JoeSpeed {
         controller.enable();
     }
 
-    
     /**
      * Set the PWM value.
      *
