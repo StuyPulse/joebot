@@ -44,6 +44,9 @@ public class RobotMap {
     
     public static final int PRESSURE_SWITCH_CHANNEL = 5; // Switches when pneumatics pressure exceeds limit
 
+    public static final int UPPER_CONVEYOR_SENSOR = 6;
+    public static final int LOWER_CONVEYOR_SENSOR = 7;
+
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
 

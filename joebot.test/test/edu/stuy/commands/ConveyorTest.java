@@ -62,4 +62,18 @@ public class ConveyorTest {
         cmd.end();
         assertEquals(1, DigitalSidecar.register[8], 0);
     }
+
+    @Test
+    public void sensorsExists() {
+        assertNotNull(CommandBase.conveyor.getUpperSensor());
+        assertNotNull(CommandBase.conveyor.getLowerSensor());
+    }
+
+    @Test
+    public void testStopButtonAndConveyorSpeed() {
+        // CommandBase.oi.getStopButton().set(1); // Button is pressed
+        // Call conveyor to check if button is pressed.
+        assertEquals(0, CommandBase.conveyor.getUpperRoller().get(), 0.01);
+        assertEquals(0, CommandBase.conveyor.getLowerRoller().get(), 0.01);
+    }
 }

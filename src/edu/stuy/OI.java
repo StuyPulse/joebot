@@ -15,7 +15,7 @@ public class OI {
     public OI() {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
-        
+
         if (!Devmode.DEV_MODE) {
             new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot());
         
