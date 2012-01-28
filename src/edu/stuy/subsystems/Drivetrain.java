@@ -30,7 +30,7 @@ public class Drivetrain extends Subsystem {
             gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
         }
         
-        sonar = new AnalogChannel(SONAR_CHANNEL);
+        sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
 
     public void initDefaultCommand() {
