@@ -57,10 +57,10 @@ public class CameraVision {
              *
              */
             ColorImage image = camera.getImage();
-            BinaryImage rectImages = image.thresholdHSL(136, 182, 45, 255, 116, 255);
-            // TODO: fill in the gaps
-            BinaryImage thresholdImage = image.thresholdRGB(25, 255, 0, 45, 0, 47);   // keep only red objects
-            BinaryImage bigObjectsImage = thresholdImage.removeSmallObjects(false, 2);  // remove small artifacts
+            BinaryImage rectImage = image.thresholdHSL(136, 182, 45, 255, 116, 255);
+            rectImage.write("myimage.jpg");
+            //BinaryImage thresholdImage = rectImage.thresholdRGB(25, 255, 0, 45, 0, 47);   // keep only red objects
+            BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
             BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
             BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
 
@@ -79,7 +79,7 @@ public class CameraVision {
             filteredImage.free();
             convexHullImage.free();
             bigObjectsImage.free();
-            thresholdImage.free();
+            rectImage.free();
             image.free();
 
             } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
