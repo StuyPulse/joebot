@@ -24,10 +24,10 @@ public class ConveyAutomatic extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (shooter.isSpeedGood() || conveyor.getUpperSensor()) {
-            conveyor.roll(1, 1);
+            conveyor.convey();
         }
         else {
-            conveyor.roll(0, 0);
+            conveyor.stop();
         }
     }
 
