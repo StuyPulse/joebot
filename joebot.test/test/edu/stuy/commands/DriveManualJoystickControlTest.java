@@ -15,6 +15,7 @@ import java.io.*;
 import edu.stuy.*;
 import edu.wpi.first.wpilibj.*;
 import crio.hardware.*;
+import edu.stuy.commands.CommandBase;
 
 /**
  *
@@ -22,18 +23,20 @@ import crio.hardware.*;
  */
 public class DriveManualJoystickControlTest {
     
+    static JoeBot j;
+    
     public DriveManualJoystickControlTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         InitTests.setUpTests();
-        JoeBot j = new JoeBot();
+        j = new JoeBot();
         j.robotInit();
 
         // "Drive" the joysticks
-        Joystick.setStickAxis(RobotMap.LEFT_JOYSTICK_PORT, 1, -1);
-        Joystick.setStickAxis(RobotMap.RIGHT_JOYSTICK_PORT, 1, -1);
+        Joystick.setStickAxis(RobotMap.LEFT_JOYSTICK_PORT, 1, 1);
+        Joystick.setStickAxis(RobotMap.RIGHT_JOYSTICK_PORT, 1, 1);
     }
 
     @AfterClass
@@ -69,8 +72,8 @@ public class DriveManualJoystickControlTest {
         cmd.end();
 
         // TODO: get encoder readings from drivetrain object
-        double leftDist = CRIO.client.getdata()[1];
-        double rightDist = CRIO.client.getdata()[2];
+        double leftDist = CommandBase.drivetrain.leftEnc.getDistance();
+        double rightDist = CommandBase.drivetrain.rightEnc.getDistance();
         System.out.println(leftDist + " " + rightDist);
         assertTrue(leftDist > 0);
         assertTrue(rightDist > 0);

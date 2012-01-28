@@ -38,6 +38,12 @@ public class RobotMap {
     public static final int SHOOTER_UPPER_ROLLER_ENCODER_B = 2;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_A = 3;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_B = 4;
+
+    public static final int LEFT_ENCODER_A = 5;
+    public static final int LEFT_ENCODER_B = 6;
+    public static final int RIGHT_ENCODER_A = 7;
+    public static final int RIGHT_ENCODER_B = 8;
+
     public static final int PRESSURE_SWITCH_CHANNEL = 5; // Switches when pneumatics pressure exceeds limit
     public static final int UPPER_CONVEYOR_SENSOR = 6;
     public static final int LOWER_CONVEYOR_SENSOR = 7;
@@ -64,5 +70,13 @@ public class RobotMap {
         for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
             VIRSYS_OUTPUT_MAP[i] = 0;
         }
+        
+        for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
+            VIRSYS_OUTPUT_MAP[i] = 0;
+        }
+        VIRSYS_INPUT_MAP[LEFT_ENCODER_A] = 1;
+        VIRSYS_INPUT_MAP[LEFT_ENCODER_B] = 1;
+        VIRSYS_INPUT_MAP[RIGHT_ENCODER_A] = 2;
+        VIRSYS_INPUT_MAP[RIGHT_ENCODER_A] = 2;
     }
 }

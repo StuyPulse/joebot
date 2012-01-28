@@ -4,16 +4,14 @@
  */
 package edu.stuy.speed;
 
-import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.*;
 
 /**
  *
  * @author admin
  */
 public class VictorSpeed implements JoeSpeed {
+
     public static final double KP = 0.00365;
     public static final double KI = 0.00;
     public static final double KD = 0.000012;
@@ -21,7 +19,7 @@ public class VictorSpeed implements JoeSpeed {
     private Encoder encoder;
     private Victor victor;
     private PIDController controller;
-    
+
     /**
      * Make an actual speed controller complete with a Victor, Encoder and PIDController
      * @param victorChannel The PWM channel for the victor.
@@ -42,7 +40,6 @@ public class VictorSpeed implements JoeSpeed {
         controller.enable();
     }
 
-    
     /**
      * Set the PWM value.
      *
