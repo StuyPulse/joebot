@@ -21,7 +21,7 @@ public class ConveyorTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        InitTests.setUpTests(InitTests.WITH_PHYSICS);
+        InitTests.setUpTests(InitTests.NO_PHYSICS);
         JoeBot j = new JoeBot();
         j.robotInit();
     }
@@ -53,10 +53,7 @@ public class ConveyorTest {
     public void testConveyorTurnsOn() {
         ConveyManual cmd = new ConveyManual();
         cmd.initialize();
-        double startTime = Timer.getFPGATimestamp();
-        while (Timer.getFPGATimestamp() - startTime < 1) {
-            cmd.execute();
-        }
+        cmd.execute();
         assertEquals(1, CommandBase.conveyor.getUpperRoller(), 0.01);
         cmd.end();
         assertEquals(0, CommandBase.conveyor.getUpperRoller(), 0.01);
@@ -70,17 +67,12 @@ public class ConveyorTest {
 
     @Test
     public void testConveyorStop() {
-        ConveyManual cmd = new ConveyManual();
-        cmd.initialize();
-        ConveyorStop cmd2 = new ConveyorStop();
-        cmd2.initialize();
-        double startTime = Timer.getFPGATimestamp();
-        while (Timer.getFPGATimestamp() - startTime < 1) {
-            cmd.execute();
-        }
-        cmd2.execute();
-        // assertTrue(CommandBase.oi.isConveyorStopButtonPressed());
-        // Call conveyor to check if button is pressed.
+        ConveyManual convey = new ConveyManual();
+        convey.initialize();
+        ConveyorStop stop = new ConveyorStop();
+        stop.initialize();
+        convey.execute();
+        stop.execute();
         assertEquals(0, CommandBase.conveyor.getUpperRoller(), 0.01);
         assertEquals(0, CommandBase.conveyor.getLowerRoller(), 0.01);
     }
