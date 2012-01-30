@@ -5,8 +5,7 @@
 package edu.stuy.commands;
 
 import crio.hardware.DigitalSidecar;
-import edu.stuy.InitTests;
-import edu.stuy.JoeBot;
+import edu.stuy.*;
 import edu.wpi.first.wpilibj.Timer;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -22,7 +21,7 @@ public class ConveyorTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        InitTests.setUpTests();
+        InitTests.setUpTests(InitTests.WITH_PHYSICS);
         JoeBot j = new JoeBot();
         j.robotInit();
     }

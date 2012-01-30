@@ -66,13 +66,9 @@ public class RobotMap {
         VIRSYS_OUTPUT_MAP[REAR_LEFT_MOTOR] = 0;
         VIRSYS_OUTPUT_MAP[FRONT_RIGHT_MOTOR] = 1;
         VIRSYS_OUTPUT_MAP[REAR_RIGHT_MOTOR] = 1;
-
-        for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
-            VIRSYS_OUTPUT_MAP[i] = 0;
-        }
         
         for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
-            VIRSYS_OUTPUT_MAP[i] = 0;
+            VIRSYS_INPUT_MAP[i] = 0;
         }
         VIRSYS_INPUT_MAP[LEFT_ENCODER_A] = 1;
         VIRSYS_INPUT_MAP[LEFT_ENCODER_B] = 1;

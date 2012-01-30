@@ -1,10 +1,9 @@
-
 package edu.stuy;
 
 import edu.stuy.commands.DrivetrainSetGear;
 import edu.stuy.commands.ShooterShoot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.*;
 
 public class OI {
     private Joystick leftStick;
@@ -18,7 +17,6 @@ public class OI {
 
         if (!Devmode.DEV_MODE) {
             new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot());
-        
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
         }
