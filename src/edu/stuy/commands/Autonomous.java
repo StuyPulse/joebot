@@ -11,7 +11,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * @author Kevin Wang
  */
 public class Autonomous extends CommandGroup {
-    
+
+    /* For inches to fender */
+    private static final int DIST_FENDER_TO_KEY = 110;
+    private static final double BUMPER_EDGE_TO_WHEEL_CENTER = 9.5;
+    private static final int BOT_LENGTH_WITH_BUMPERS = 44;
+    public static final double INCHES_TO_FENDER = DIST_FENDER_TO_KEY - (BOT_LENGTH_WITH_BUMPERS - BUMPER_EDGE_TO_WHEEL_CENTER);
+
+    /* For inches to bridge from fender */
+    public static final double INCHES_TO_BRIDGE = 5.0;
+
     public Autonomous() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -29,6 +38,7 @@ public class Autonomous extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+
 
     }
 }
