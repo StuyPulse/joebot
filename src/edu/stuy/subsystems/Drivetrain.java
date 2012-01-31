@@ -72,6 +72,10 @@ public class Drivetrain extends Subsystem {
         setDefaultCommand(new DriveManualJoystickControl());
     }
 
+    public Command getDefaultCommand(){
+        return super.getDefaultCommand();
+    }
+
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
     }
