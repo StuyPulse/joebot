@@ -4,17 +4,16 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.commands.base.CommandBase;
-
 /**
  *
  * @author Kevin Wang
  */
 public class AutonBackUpToBridge extends CommandBase {
-    
-    public AutonBackUpToBridge() {
+    private double inches_to_travel;
+    public AutonBackUpToBridge(double inches) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        inches_to_travel = inches;
     }
 
     // Called just before this Command runs the first time

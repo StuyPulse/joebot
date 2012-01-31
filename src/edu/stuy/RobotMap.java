@@ -41,8 +41,14 @@ public class RobotMap {
     public static final int SHOOTER_UPPER_ROLLER_ENCODER_B = 2;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_A = 3;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_B = 4;
-    
-    public static final int PRESSURE_SWITCH_CHANNEL = 5; // Switches when pneumatics pressure exceeds limit
+
+    public static final int ENCODER_CHANNEL_1A = 5;
+    public static final int ENCODER_CHANNEL_1B = 6;
+    public static final int ENCODER_CHANNEL_2A = 7;
+    public static final int ENCODER_CHANNEL_2B = 8;
+
+
+    public static final int PRESSURE_SWITCH_CHANNEL = 9; // Switches when pneumatics pressure exceeds limit
 
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
@@ -51,4 +57,8 @@ public class RobotMap {
     public static final int GEAR_SHIFT = 1;
     
     public static final int TUSKS_SOLENOID = 2;
+
+    /* ANALOG INPUTS */
+    public static final int GYRO_CHANNEL = 1;
+    public static final int SONAR_CHANNEL = 2;
 }

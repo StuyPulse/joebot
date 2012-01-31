@@ -4,7 +4,7 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.commands.base.CommandBase;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
