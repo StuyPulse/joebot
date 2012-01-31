@@ -4,6 +4,7 @@
  */
 package edu.stuy.speed;
 
+import edu.stuy.subsystems.Shooter;
 import edu.wpi.first.wpilibj.*;
 
 /**
@@ -69,12 +70,23 @@ public class VictorSpeed implements JoeSpeed {
     }
 
     public double getRPM() {
-        double circumference = 2 * Math.PI * WHEEL_RADIUS;
+        double circumference = 2 * Math.PI * ROLLER_RADIUS;
         int seconds = 60;
         return (seconds * encoder.getRate()/(circumference));  //Converted from Distance/Second to RPM
     }
 
     public void setRPM(double rpm) {
         set(rpm);
+    }
+
+    public boolean isAtSetPoint() {
+        boolean atSetPoint = false;
+
+        if(getRPM() == Shooter.upperRoller.getRPM() && getRPM() == Shooter.lowerRoller.getRPM()) {
+            atSetPoint = true;
+        } else {
+            atSetPoint = false;}
+
+        return atSetPoint;
     }
 }

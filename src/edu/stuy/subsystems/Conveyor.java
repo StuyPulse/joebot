@@ -5,6 +5,7 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
+import edu.stuy.speed.VictorSpeed;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -18,7 +19,7 @@ public class Conveyor extends Subsystem {
     private Victor lowerRoller;
     private DigitalInput upperSensor;
     private DigitalInput lowerSensor;
-    
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -41,6 +42,10 @@ public class Conveyor extends Subsystem {
 
     public void convey() {
         roll(1, 1);
+    }
+
+    public void conveyReverse() {
+        roll(-1, -1);
     }
 
     public void stop() {
