@@ -50,6 +50,11 @@ public class RobotMap {
 
     public static final int PRESSURE_SWITCH_CHANNEL = 9; // Switches when pneumatics pressure exceeds limit
 
+
+    /* SECOND DIGITAL INPUTS */
+    public static final int TUSKS_EXTENDED_SWITCH = 1;
+    public static final int TUSKS_RETRACTED_SWITCH = 2;
+
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
 
