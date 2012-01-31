@@ -21,6 +21,10 @@ public class VictorSpeed implements JoeSpeed {
     private Victor victor;
     private PIDController controller;
 
+    private double speedSetpoint;
+    //This is wrong. Need to run calculations for the real one.
+    private static final double TOLERANCE_RPM = 4;
+
     /**
      * Make an actual speed controller complete with a Victor, Encoder and PIDController
      * @param victorChannel The PWM channel for the victor.
@@ -29,6 +33,7 @@ public class VictorSpeed implements JoeSpeed {
      * @param reverse Not used.  Was for reversing encoder direction.
      */
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel) {
+        speedSetpoint = 0;
         victor = new Victor(victorChannel);
 
         encoder = new Encoder(encoderAChannel, encoderBChannel, false, CounterBase.EncodingType.k4X);
@@ -58,6 +63,7 @@ public class VictorSpeed implements JoeSpeed {
      * @param speedRPM The desired wheel speed in RPM (revolutions per minute).
      */
     public void set(double speedRPM) {
+        speedSetpoint = speedRPM;
         controller.setSetpoint(speedRPM);
     }
 
@@ -81,12 +87,9 @@ public class VictorSpeed implements JoeSpeed {
 
     public boolean isAtSetPoint() {
         boolean atSetPoint = false;
-
-        if(getRPM() == Shooter.upperRoller.getRPM() && getRPM() == Shooter.lowerRoller.getRPM()) {
+        if (Math.abs(getRPM() - speedSetpoint) < TOLERANCE_RPM) {
             atSetPoint = true;
-        } else {
-            atSetPoint = false;}
-
+        }
         return atSetPoint;
     }
 }
