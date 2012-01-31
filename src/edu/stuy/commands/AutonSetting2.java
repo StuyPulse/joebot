@@ -21,7 +21,7 @@ public class AutonSetting2 extends CommandGroup {
         // TODO: Get tusks running concurrently with backing up, have them retract after backuptobridge is done
         addSequential(new TusksExtend());
 
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE));
+        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
 
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_BRIDGE));
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
