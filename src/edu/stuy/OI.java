@@ -8,6 +8,13 @@ import edu.wpi.first.wpilibj.buttons.*;
 public class OI {
     private Joystick leftStick;
     private Joystick rightStick;
+
+    public static final int DISTANCE_BUTTON_AUTO = 0;
+    public static final int DISTANCE_BUTTON_FAR = 1;
+    public static final int DISTANCE_BUTTON_FENDER_WIDE = 2;
+    public static final int DISTANCE_BUTTON_FENDER_NARROW = 3;
+    public static final int DISTANCE_BUTTON_FENDER_SIDE = 4;
+    public static final int DISTANCE_BUTTON_FENDER = 5;
     
     // Process operator interface input here.
     
@@ -30,8 +37,44 @@ public class OI {
         return rightStick;
     }
 
-    public boolean isConveyorStopButtonPressed() {
+    public boolean getShootButton() {
         return false;
+    }
+
+    public boolean getShootOverrideButton() {
+        return false;
+    }
+
+    public int getPressedDistanceButton() {
+        return 0;
+    }
+
+    public int getAutonSetting() {
+        return 0;
+    }
+
+    public boolean getAcquirerInSwitch() {
+        return false;
+    }
+
+    public boolean getAcquirerOutSwitch() {
+        return false;
+    }
+
+    public boolean getManualConveyInSwitch() {
+        return false;
+    }
+
+    public boolean getManualConveyOutSwitch() {
+        return false;
+    }
+
+    public double getSpeedPot() {
+        return 0.0;
+    }
+
+    public double getSpinPot() {
+        return 0.0;
     }
 }
 
