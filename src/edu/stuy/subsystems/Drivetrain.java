@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
+    private int forward;
     public RobotDrive drive;
     public Solenoid gearShift;
     AnalogChannel sonar;
@@ -39,6 +40,7 @@ public class Drivetrain extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
+        setForward();
         drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
         encoderLeft = new Encoder(RobotMap.ENCODER_CHANNEL_1A, RobotMap.ENCODER_CHANNEL_1B, true);
@@ -53,7 +55,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(-1, -output);
+                drive.arcadeDrive(forward, -output);
             }
         }, 0.005);
 
@@ -106,6 +108,14 @@ public class Drivetrain extends Subsystem {
     public void resetEncoders() {
         encoderLeft.reset();
         encoderRight.reset();
+    }
+
+    public final void setForward(){
+        forward = -1;
+    }
+
+    public final void setBackwards(){
+        forward = 1;
     }
 
 }
