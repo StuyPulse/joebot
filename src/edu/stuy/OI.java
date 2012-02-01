@@ -17,13 +17,34 @@ public class OI {
     public static final int DISTANCE_BUTTON_FENDER_NARROW = 3;
     public static final int DISTANCE_BUTTON_FENDER_SIDE = 4;
     public static final int DISTANCE_BUTTON_FENDER = 5;
+    public static final int DISTANCE_BUTTON_STOP = 6;
     
     private DriverStationEnhancedIO enhancedIO;
     
-    // EnhancedIO digital I/O
-    private final int BIT_1_CHANNEL = 1;
-    private final int BIT_2_CHANNEL = 2;
-    private final int BIT_3_CHANNEL = 3;
+    // EnhancedIO digital input
+    private static final int BIT_1_CHANNEL = 1;
+    private static final int BIT_2_CHANNEL = 2;
+    private static final int BIT_3_CHANNEL = 3;
+    private static final int ACQUIRER_IN_SWITCH_CHANNEL = 4;
+    private static final int ACQUIRER_OUT_SWITCH_CHANNEL = 5;
+    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 6;
+    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 7;
+    private static final int SHOOT_BUTTON_CHANNEL = 8;
+    private static final int OVERRIDE_BUTTON_CHANNEL = 9;
+    
+    // EnhancedIO digital output
+    private static final int DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL = 10;
+    private static final int DISTANCE_BUTTON_FAR_LIGHT_CHANNEL = 11;
+    private static final int DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL = 12;
+    private static final int DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL = 13;
+    private static final int DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL = 14;
+    private static final int DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL = 15;
+    private static final int DISTANCE_BUTTON_STOP_LIGHT_CHANNEL = 16;
+    
+    // EnhancedIO analog input
+    private static final int DISTANCE_BUTTONS_CHANNEL = 1;
+    private static final int SPEED_TRIM_POT_CHANNEL = 2;
+    private static final int SPIN_TRIM_POT_CHANNEL = 3;
     
     public OI() {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
