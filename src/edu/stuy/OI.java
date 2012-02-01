@@ -2,6 +2,8 @@ package edu.stuy;
 
 import edu.stuy.commands.DrivetrainSetGear;
 import edu.stuy.commands.ShooterShoot;
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.*;
 
@@ -16,11 +18,26 @@ public class OI {
     public static final int DISTANCE_BUTTON_FENDER_SIDE = 4;
     public static final int DISTANCE_BUTTON_FENDER = 5;
     
+    DriverStationEnhancedIO enhancedIO;
+    
+    private final int BIT_1_CHANNEL = 1;
+    private final int BIT_2_CHANNEL = 2;
+    private final int BIT_3_CHANNEL = 3;
+    private final int BIT_4_CHANNEL = 4;
+    
     // Process operator interface input here.
     
     public OI() {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
+        
+        try {
+            enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+        } catch (EnhancedIOException e) {
+        }
 
         if (!Devmode.DEV_MODE) {
             new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot());
@@ -50,7 +67,34 @@ public class OI {
     }
 
     public int getAutonSetting() {
-        return 0;
+        try {
+            int switchNum = 0;
+            int[] binaryValue = new int[4];
+
+            boolean[] dIO = {!enhancedIO.getDigital(BIT_1_CHANNEL), !enhancedIO.getDigital(BIT_2_CHANNEL), !enhancedIO.getDigital(BIT_3_CHANNEL), !enhancedIO.getDigital(BIT_4_CHANNEL)};
+
+            for (int i = 0; i < 4; i++) {
+                if (dIO[i]) {
+                    binaryValue[i] = 1;
+                }
+                else {
+                    binaryValue[i] = 0;
+                }
+            }
+
+            binaryValue[0] *= 8; // convert all binaryValues to decimal values
+            binaryValue[1] *= 4;
+            binaryValue[2] *= 2;
+
+            for (int i = 0; i < 4; i++) { // finish binary -> decimal conversion
+                switchNum += binaryValue[i];
+            }
+
+            return switchNum;
+        }
+        catch (EnhancedIOException e) {
+            return -1; // Do nothing in case of failure
+        }
     }
 
     public boolean getAcquirerInSwitch() {
