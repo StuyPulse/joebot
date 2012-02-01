@@ -5,6 +5,7 @@
 package edu.stuy.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.stuy.subsystems.Shooter;
 
 /**
  *
@@ -24,15 +25,7 @@ public class Autonomous extends CommandGroup {
     /* For inches to bridge from fender */
     public static final double INCHES_TO_BRIDGE = DIST_ALLIANCESTATION_TO_BRIDGE - FENDER_DEPTH - BOT_LENGTH_WITH_BUMPERS -TOLERANCE;
 
-    public static double FENDER_SPEED = 5;
-    public static double FENDER_WIDE_SPEED = 5;
-    public static double FENDER_NARROW_SPEED = 5;
-    public static double SIDE_SPEED = 5;
-    public static double KEY_SPEED = 5; // For auton only
-    public static double MAX_DIST_SPEED = 5;
-
     public Autonomous() {
         addSequential(new DrivetrainSetGear(true));
-
     }
 }

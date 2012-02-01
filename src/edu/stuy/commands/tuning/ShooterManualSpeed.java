@@ -2,17 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.stuy.commands;
+package edu.stuy.commands.tuning;
+
+import edu.stuy.commands.CommandBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author Kevin Wang
+ * @author 694
  */
-public class ShooterStop extends CommandBase {
-    
-    public ShooterStop() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+public class ShooterManualSpeed extends CommandBase {
+
+    public ShooterManualSpeed() {
         requires(shooter);
     }
 
@@ -22,7 +23,18 @@ public class ShooterStop extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        shooter.setFlywheelSpeeds(0, 0);
+        setManualSpeed();
+    }
+
+    public void setManualSpeed() {
+        double rpm = 0;
+        try {
+            rpm = SmartDashboard.getDouble("setRPM");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        shooter.setFlywheelSpeeds(rpm, rpm);
     }
 
     // Make this return true when this Command no longer needs to run execute()

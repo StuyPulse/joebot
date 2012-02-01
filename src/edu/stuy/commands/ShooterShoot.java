@@ -4,26 +4,33 @@
  */
 package edu.stuy.commands;
 
+import edu.stuy.subsystems.Shooter;
+
 /**
  *
  * @author Kevin Wang
  */
 public class ShooterShoot extends CommandBase {
+
     boolean hasTimeout = false;
     double timeout;
-    double speed;
+    double distanceInches;
     
-    public ShooterShoot() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public ShooterShoot(double distanceInches) {
         requires(shooter);
+        setDistanceInches(distanceInches);
     }
     
-    public ShooterShoot(double timeout, double speed) {
-        this();
+    public ShooterShoot(double timeout, double distanceInches) {
+        this(distanceInches);
         hasTimeout = true;
         this.timeout = timeout;
-        this.speed = speed;
+    }
+
+    
+
+    public void setDistanceInches(double distanceInches) {
+        this.distanceInches = distanceInches;
     }
 
     // Called just before this Command runs the first time
@@ -33,9 +40,12 @@ public class ShooterShoot extends CommandBase {
         }
     }
 
+    
+
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        shooter.rollRollers(speed, speed);
+        double rpm = shooter.lookupRPM(distanceInches);
+        shooter.setFlywheelSpeeds(rpm, rpm);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -48,7 +58,7 @@ public class ShooterShoot extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        shooter.rollRollers(0, 0);
+        shooter.setFlywheelSpeeds(0, 0);
     }
 
     // Called when another command which requires one or more of the same
