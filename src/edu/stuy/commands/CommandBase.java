@@ -1,10 +1,10 @@
 package edu.stuy.commands;
 
 import edu.stuy.Devmode;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.stuy.OI;
 import edu.stuy.subsystems.*;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -24,11 +24,11 @@ public abstract class CommandBase extends Command {
 
     static {
         drivetrain = new Drivetrain();
+        conveyor = new Conveyor();
         if (!Devmode.DEV_MODE) {
             shooter = new Shooter();
             tusks = new Tusks();
             acquirer = new Acquirer();
-            conveyor = new Conveyor();
         }
     }
 

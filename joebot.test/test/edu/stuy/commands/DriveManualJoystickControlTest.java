@@ -4,17 +4,14 @@
  */
 package edu.stuy.commands;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import static org.junit.Assert.*;
 import java.io.*;
 
 import edu.stuy.*;
 import edu.wpi.first.wpilibj.*;
 import crio.hardware.*;
+import edu.stuy.commands.CommandBase;
 
 /**
  *
@@ -22,18 +19,20 @@ import crio.hardware.*;
  */
 public class DriveManualJoystickControlTest {
     
+    static JoeBot j;
+    
     public DriveManualJoystickControlTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        InitTests.setUpTests();
-        JoeBot j = new JoeBot();
+        InitTests.setUpTests(InitTests.WITH_PHYSICS);
+        j = new JoeBot();
         j.robotInit();
 
         // "Drive" the joysticks
-        Joystick.setStickAxis(RobotMap.LEFT_JOYSTICK_PORT, 1, -1);
-        Joystick.setStickAxis(RobotMap.RIGHT_JOYSTICK_PORT, 1, -1);
+        Joystick.setStickAxis(RobotMap.LEFT_JOYSTICK_PORT, 2, -1);
+        Joystick.setStickAxis(RobotMap.RIGHT_JOYSTICK_PORT, 2, -1);
     }
 
     @AfterClass
@@ -41,8 +40,8 @@ public class DriveManualJoystickControlTest {
         InitTests.tearDownTests();
 
         // "un-drive" the joysticks
-        Joystick.setStickAxis(RobotMap.LEFT_JOYSTICK_PORT, 1, 0);
-        Joystick.setStickAxis(RobotMap.RIGHT_JOYSTICK_PORT, 1, 0);
+        Joystick.setStickAxis(RobotMap.LEFT_JOYSTICK_PORT, 2, 0);
+        Joystick.setStickAxis(RobotMap.RIGHT_JOYSTICK_PORT, 2, 0);
     }
     
     @Before
@@ -69,8 +68,8 @@ public class DriveManualJoystickControlTest {
         cmd.end();
 
         // TODO: get encoder readings from drivetrain object
-        double leftDist = CRIO.client.getdata()[1];
-        double rightDist = CRIO.client.getdata()[2];
+        double leftDist = CommandBase.drivetrain.leftEnc.getDistance();
+        double rightDist = CommandBase.drivetrain.rightEnc.getDistance();
         System.out.println(leftDist + " " + rightDist);
         assertTrue(leftDist > 0);
         assertTrue(rightDist > 0);

@@ -4,31 +4,27 @@
  */
 package edu.stuy.speed;
 
+import edu.stuy.subsystems.Shooter;
 import edu.wpi.first.wpilibj.*;
+
 /**
  *
  * @author admin
  */
 public class VictorSpeed implements JoeSpeed {
 
-    public double getRPM() {
-        double circumference = 2 * Math.PI * WHEEL_RADIUS;
-        int seconds = 60;
-        return (seconds * encoder.getRate()/(circumference));  //Converted from Distance/Second to RPM
-    }
+    public static final double KP = 0.00365;
+    public static final double KI = 0.00;
+    public static final double KD = 0.000012;
+    
+    private Encoder encoder;
+    private Victor victor;
+    private PIDController controller;
 
-    public void setRPM(double rpm) {
-        set(rpm);
-    }
-    Encoder encoder;
-    Victor victor;
-    PIDController controller;
-    double lastTime;
-    
-    double PROPORTIONAL     = 0.00365;
-    double INTEGRAL         = 0.00;
-    double DERIVATIVE       = 0.000012;
-    
+    private double speedSetpoint;
+    //This is wrong. Need to run calculations for the real one.
+    private static final double TOLERANCE_RPM = 4;
+
     /**
      * Make an actual speed controller complete with a Victor, Encoder and PIDController
      * @param victorChannel The PWM channel for the victor.
@@ -37,6 +33,7 @@ public class VictorSpeed implements JoeSpeed {
      * @param reverse Not used.  Was for reversing encoder direction.
      */
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel) {
+        speedSetpoint = 0;
         victor = new Victor(victorChannel);
 
         encoder = new Encoder(encoderAChannel, encoderBChannel, false, CounterBase.EncodingType.k4X);
@@ -44,12 +41,11 @@ public class VictorSpeed implements JoeSpeed {
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         encoder.start();
 
-        controller = new PIDController(PROPORTIONAL, INTEGRAL, DERIVATIVE, encoder, victor);
+        controller = new PIDController(KP, KI, KD, encoder, victor);
         controller.setOutputRange(-1, 1);
         controller.enable();
     }
 
-    
     /**
      * Set the PWM value.
      *
@@ -67,6 +63,7 @@ public class VictorSpeed implements JoeSpeed {
      * @param speedRPM The desired wheel speed in RPM (revolutions per minute).
      */
     public void set(double speedRPM) {
+        speedSetpoint = speedRPM;
         controller.setSetpoint(speedRPM);
     }
 
@@ -76,5 +73,23 @@ public class VictorSpeed implements JoeSpeed {
 
     public void disable() {
         victor.disable();
+    }
+
+    public double getRPM() {
+        double circumference = 2 * Math.PI * ROLLER_RADIUS;
+        int seconds = 60;
+        return (seconds * encoder.getRate()/(circumference));  //Converted from Distance/Second to RPM
+    }
+
+    public void setRPM(double rpm) {
+        set(rpm);
+    }
+
+    public boolean isAtSetPoint() {
+        boolean atSetPoint = false;
+        if (Math.abs(getRPM() - speedSetpoint) < TOLERANCE_RPM) {
+            atSetPoint = true;
+        }
+        return atSetPoint;
     }
 }

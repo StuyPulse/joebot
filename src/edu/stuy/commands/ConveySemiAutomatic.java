@@ -6,14 +6,15 @@ package edu.stuy.commands;
 
 /**
  *
- * @author Danny
+ * @author Kevin Wang
  */
-public class TusksRetract extends CommandBase {
+public class ConveySemiAutomatic extends CommandBase {
     
-    public TusksRetract() {
+    public ConveySemiAutomatic() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(tusks);
+        requires(conveyor);
+        requires(shooter);
     }
 
     // Called just before this Command runs the first time
@@ -22,16 +23,17 @@ public class TusksRetract extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        tusks.retract();
+        conveyor.convey();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return tusks.getTuskState() < 0;
+        return !shooter.isSpeedGood();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        conveyor.stop();
     }
 
     // Called when another command which requires one or more of the same
