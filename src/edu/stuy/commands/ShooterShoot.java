@@ -11,6 +11,7 @@ package edu.stuy.commands;
 public class ShooterShoot extends CommandBase {
     boolean hasTimeout = false;
     double timeout;
+    double speed;
     
     public ShooterShoot() {
         // Use requires() here to declare subsystem dependencies
@@ -18,10 +19,11 @@ public class ShooterShoot extends CommandBase {
         requires(shooter);
     }
     
-    public ShooterShoot(double timeout) {
+    public ShooterShoot(double timeout, double speed) {
         this();
         hasTimeout = true;
         this.timeout = timeout;
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
@@ -33,7 +35,7 @@ public class ShooterShoot extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        shooter.rollRollers(1, 1);
+        shooter.rollRollers(speed, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

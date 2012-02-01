@@ -6,32 +6,47 @@ package edu.stuy.commands;
 
 /**
  *
- * @author Danny
+ * @author Eric Lam
  */
-public class TusksRetract extends CommandBase {
-    
-    public TusksRetract() {
+public class AcquirerReverse extends CommandBase {
+    boolean hasTimeout = false;
+    double timeout;
+
+    public AcquirerReverse() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(tusks);
+        requires(acquirer);
+    }
+
+    public AcquirerReverse(double timeout) {
+        this();
+        hasTimeout = true;
+        this.timeout = timeout;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        if (hasTimeout) {
+            setTimeout(timeout);
+        }
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        tusks.retract();
+        acquirer.roll(-1, -1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return tusks.getTuskState() < 0;
+        if (hasTimeout) {
+            return isTimedOut();
+        }
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        acquirer.roll(0, 0);
     }
 
     // Called when another command which requires one or more of the same

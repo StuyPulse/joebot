@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Shooter extends Subsystem {
-    private JoeSpeed upperRoller;
-    private JoeSpeed lowerRoller;
+    public static JoeSpeed upperRoller;
+    public static JoeSpeed lowerRoller;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -35,6 +35,10 @@ public class Shooter extends Subsystem {
     }
     
     public boolean isSpeedGood() {
-        return false;
+        boolean speedGood = false;
+        if(upperRoller.isAtSetPoint() && lowerRoller.isAtSetPoint()){
+            speedGood = true;
+        }
+        return speedGood;
     }
 }
