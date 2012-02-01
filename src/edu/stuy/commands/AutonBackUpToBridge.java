@@ -8,32 +8,14 @@ package edu.stuy.commands;
  *
  * @author Kevin Wang
  */
-public class AutonBackUpToBridge extends CommandBase {
-    
-    public AutonBackUpToBridge() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+public class AutonBackUpToBridge extends AutonDrive {
+    public AutonBackUpToBridge(double inches) {
+        super(inches);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
+        super.initialize(); // Enables "drive straight" controller
+        drivetrain.setBackwards();
     }
 }

@@ -39,6 +39,7 @@ public class RobotMap {
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_A = 3;
     public static final int SHOOTER_LOWER_ROLLER_ENCODER_B = 4;
 
+<<<<<<< HEAD
     public static final int LEFT_ENCODER_A = 5;
     public static final int LEFT_ENCODER_B = 6;
     public static final int RIGHT_ENCODER_A = 7;
@@ -47,6 +48,20 @@ public class RobotMap {
     public static final int PRESSURE_SWITCH_CHANNEL = 5; // Switches when pneumatics pressure exceeds limit
     public static final int UPPER_CONVEYOR_SENSOR = 6;
     public static final int LOWER_CONVEYOR_SENSOR = 7;
+=======
+    public static final int ENCODER_CHANNEL_1A = 5;
+    public static final int ENCODER_CHANNEL_1B = 6;
+    public static final int ENCODER_CHANNEL_2A = 7;
+    public static final int ENCODER_CHANNEL_2B = 8;
+
+
+    public static final int PRESSURE_SWITCH_CHANNEL = 9; // Switches when pneumatics pressure exceeds limit
+
+
+    /* SECOND DIGITAL INPUTS */
+    public static final int TUSKS_EXTENDED_SWITCH = 1;
+    public static final int TUSKS_RETRACTED_SWITCH = 2;
+>>>>>>> feature-autonomous
 
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
@@ -55,6 +70,7 @@ public class RobotMap {
     public static final int GEAR_SHIFT = 1;
     public static final int TUSKS_SOLENOID = 2;
 
+<<<<<<< HEAD
     public static int[] VIRSYS_OUTPUT_MAP = new int[11];
     public static int[] VIRSYS_INPUT_MAP = new int[10];
 
@@ -76,3 +92,9 @@ public class RobotMap {
         VIRSYS_INPUT_MAP[RIGHT_ENCODER_A] = 2;
     }
 }
+=======
+    /* ANALOG INPUTS */
+    public static final int GYRO_CHANNEL = 1;
+    public static final int SONAR_CHANNEL = 2;
+}
+>>>>>>> feature-autonomous
