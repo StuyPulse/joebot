@@ -18,13 +18,12 @@ public class OI {
     public static final int DISTANCE_BUTTON_FENDER_SIDE = 4;
     public static final int DISTANCE_BUTTON_FENDER = 5;
     
-    DriverStationEnhancedIO enhancedIO;
+    private DriverStationEnhancedIO enhancedIO;
     
+    // EnhancedIO digital I/O
     private final int BIT_1_CHANNEL = 1;
     private final int BIT_2_CHANNEL = 2;
     private final int BIT_3_CHANNEL = 3;
-    
-    // Process operator interface input here.
     
     public OI() {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
