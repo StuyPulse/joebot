@@ -13,17 +13,17 @@ import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
-
 /**
  *
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
-
     RobotDrive drive;
     Solenoid gearShift;
+    private int forward;
     Encoder encoderLeft;
     Encoder encoderRight;
     Gyro gyro;
@@ -39,6 +39,7 @@ public class Drivetrain extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
+        setForward();
         drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
         encoderLeft = new Encoder(RobotMap.ENCODER_CHANNEL_1A, RobotMap.ENCODER_CHANNEL_1B, true);
@@ -53,7 +54,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(-1, -output);
+                drive.arcadeDrive(forward, -output);
             }
         }, 0.005);
 
@@ -68,6 +69,10 @@ public class Drivetrain extends Subsystem {
         setDefaultCommand(new DriveManualJoystickControl());
     }
 
+    public Command getDefaultCommand(){
+        return super.getDefaultCommand();
+    }
+
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
     }
@@ -75,7 +80,6 @@ public class Drivetrain extends Subsystem {
     public void setGear(boolean high) {
         gearShift.set(high);
     }
-    
     public void initController() {
         controller.setSetpoint(0);
         controller.enable();
@@ -105,6 +109,17 @@ public class Drivetrain extends Subsystem {
     public void resetEncoders() {
         encoderLeft.reset();
         encoderRight.reset();
+    }
+
+    
+    /* Defines direction for autonomus as forwards */
+    public final void setForward(){
+        forward = -1;
+    }
+
+    /* Defines direction for autonomus as backwards */
+    public final void setBackwards(){
+        forward = 1;
     }
 
 }
