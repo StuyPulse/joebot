@@ -1,5 +1,6 @@
 package edu.stuy;
 
+import edu.stuy.commands.AcquirerAcquire;
 import edu.stuy.commands.DrivetrainSetGear;
 import edu.stuy.commands.ShooterShoot;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
@@ -61,6 +62,8 @@ public class OI {
             new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot());
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
+            
+            new DigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
         }
     }
     
