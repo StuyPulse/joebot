@@ -37,19 +37,24 @@ public class Drivetrain extends Subsystem {
     double Kp = 0.035;
     double Ki = 0.0005;
     double Kd = 1.0;
+    Victor frontLeftMotor;
+    Victor rearLeftMotor;
+    Victor frontRightMotor;
+    Victor rearRightMotor;
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
-        Victor frontLeftMotor = new Victor(RobotMap.FRONT_LEFT_MOTOR);
-        Victor rearLeftMotor = new Victor(RobotMap.REAR_LEFT_MOTOR);
-        Victor frontRightMotor = new Victor(RobotMap.FRONT_RIGHT_MOTOR);
-        Victor rearRightMotor = new Victor(RobotMap.REAR_RIGHT_MOTOR);
+        frontLeftMotor = new Victor(RobotMap.FRONT_LEFT_MOTOR);
+        rearLeftMotor = new Victor(RobotMap.REAR_LEFT_MOTOR);
+        frontRightMotor = new Victor(RobotMap.FRONT_RIGHT_MOTOR);
+        rearRightMotor = new Victor(RobotMap.REAR_RIGHT_MOTOR);
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         
         setForward();
-        drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
+        drive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
         drive.setSafetyEnabled(false);
         encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
         encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
