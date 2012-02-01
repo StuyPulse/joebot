@@ -14,14 +14,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Tusks extends Subsystem {
-<<<<<<< HEAD
-    private Solenoid solenoid;
-=======
     Solenoid solenoid;
     DigitalInput extendedSwitch;
     DigitalInput retractedSwitch;
-
->>>>>>> feature-autonomous
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
