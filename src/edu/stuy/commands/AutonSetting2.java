@@ -25,7 +25,7 @@ public class AutonSetting2 extends CommandGroup {
 
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_BRIDGE));
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
-        addSequential(new ShooterShoot(2.0));
+        addSequential(new ShooterShoot(2.0, Autonomous.FENDER_SPEED));
 
         addSequential(new TusksRetract());
     }
