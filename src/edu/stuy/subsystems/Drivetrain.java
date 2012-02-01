@@ -28,6 +28,7 @@ public class Drivetrain extends Subsystem {
     public RobotDrive drive;
     public Solenoid gearShift;
     AnalogChannel sonar;
+
     Encoder encoderLeft;
     Encoder encoderRight;
     Gyro gyro;
@@ -77,8 +78,6 @@ public class Drivetrain extends Subsystem {
         if (!Devmode.DEV_MODE) {
             gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
         }
-
-        sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
 
     public void initDefaultCommand() {
