@@ -7,33 +7,21 @@ package edu.stuy.subsystems;
 import edu.stuy.Devmode;
 import edu.stuy.RobotMap;
 import edu.stuy.commands.DriveManualJoystickControl;
-<<<<<<< HEAD
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.command.*;
-
-=======
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
->>>>>>> feature-autonomous
 /**
  *
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
-<<<<<<< HEAD
-    private RobotDrive drive;
-    private Solenoid gearShift;
-
-    public Encoder leftEnc, rightEnc;
-    
-=======
     private int forward;
     public RobotDrive drive;
     public Solenoid gearShift;
@@ -50,27 +38,21 @@ public class Drivetrain extends Subsystem {
     double Ki = 0.0005;
     double Kd = 1.0;
 
->>>>>>> feature-autonomous
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
-<<<<<<< HEAD
         Victor frontLeftMotor = new Victor(RobotMap.FRONT_LEFT_MOTOR);
         Victor rearLeftMotor = new Victor(RobotMap.REAR_LEFT_MOTOR);
         Victor frontRightMotor = new Victor(RobotMap.FRONT_RIGHT_MOTOR);
         Victor rearRightMotor = new Victor(RobotMap.REAR_RIGHT_MOTOR);
-        drive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         
-        leftEnc = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B);
-        rightEnc = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B);
-=======
         setForward();
         drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
-        encoderLeft = new Encoder(RobotMap.ENCODER_CHANNEL_1A, RobotMap.ENCODER_CHANNEL_1B, true);
-        encoderRight = new Encoder(RobotMap.ENCODER_CHANNEL_2A, RobotMap.ENCODER_CHANNEL_2B, true);
+        encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
+        encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
 
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
@@ -85,7 +67,6 @@ public class Drivetrain extends Subsystem {
             }
         }, 0.005);
 
->>>>>>> feature-autonomous
         if (!Devmode.DEV_MODE) {
             gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
         }

@@ -11,10 +11,6 @@ package edu.stuy.commands;
  */
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- * @author admin
- */
 public class AutonSetting2 extends CommandGroup {
 
     public AutonSetting2() {
