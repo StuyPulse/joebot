@@ -23,7 +23,6 @@ public class OI {
     private final int BIT_1_CHANNEL = 1;
     private final int BIT_2_CHANNEL = 2;
     private final int BIT_3_CHANNEL = 3;
-    private final int BIT_4_CHANNEL = 4;
     
     // Process operator interface input here.
     
@@ -35,7 +34,6 @@ public class OI {
             enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
             enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
             enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
         } catch (EnhancedIOException e) {
         }
 
@@ -66,14 +64,18 @@ public class OI {
         return 0;
     }
 
+    /**
+     * Use a thumb wheel switch to set the autonomous mode setting.
+     * @return Autonomous setting to run.
+     */
     public int getAutonSetting() {
         try {
             int switchNum = 0;
-            int[] binaryValue = new int[4];
+            int[] binaryValue = new int[3];
 
-            boolean[] dIO = {!enhancedIO.getDigital(BIT_1_CHANNEL), !enhancedIO.getDigital(BIT_2_CHANNEL), !enhancedIO.getDigital(BIT_3_CHANNEL), !enhancedIO.getDigital(BIT_4_CHANNEL)};
+            boolean[] dIO = {!enhancedIO.getDigital(BIT_1_CHANNEL), !enhancedIO.getDigital(BIT_2_CHANNEL), !enhancedIO.getDigital(BIT_3_CHANNEL)};
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 3; i++) {
                 if (dIO[i]) {
                     binaryValue[i] = 1;
                 }
@@ -82,11 +84,10 @@ public class OI {
                 }
             }
 
-            binaryValue[0] *= 8; // convert all binaryValues to decimal values
-            binaryValue[1] *= 4;
-            binaryValue[2] *= 2;
+            binaryValue[0] *= 4; // convert all binaryValues to decimal values
+            binaryValue[1] *= 2;
 
-            for (int i = 0; i < 4; i++) { // finish binary -> decimal conversion
+            for (int i = 0; i < 3; i++) { // finish binary -> decimal conversion
                 switchNum += binaryValue[i];
             }
 
