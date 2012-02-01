@@ -1,6 +1,10 @@
 package edu.stuy;
 
 import edu.stuy.commands.AcquirerAcquire;
+import edu.stuy.commands.AcquirerReverse;
+import edu.stuy.commands.ConveyAutomatic;
+import edu.stuy.commands.ConveyManual;
+import edu.stuy.commands.ConveyReverseManual;
 import edu.stuy.commands.DrivetrainSetGear;
 import edu.stuy.commands.ShooterShoot;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
@@ -55,6 +59,20 @@ public class OI {
             enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
             enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
             enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(ACQUIRER_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(ACQUIRER_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(CONVEYOR_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(CONVEYOR_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(SHOOT_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(OVERRIDE_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            
+            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
         } catch (EnhancedIOException e) {
         }
 
@@ -63,7 +81,12 @@ public class OI {
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             
+            // OI box switches
             new DigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
+            new DigitalIOButton(ACQUIRER_OUT_SWITCH_CHANNEL).whileHeld(new AcquirerReverse());
+            new DigitalIOButton(CONVEYOR_IN_SWITCH_CHANNEL).whileHeld(new ConveyManual());
+            new DigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
+            new DigitalIOButton(SHOOT_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
         }
     }
     
