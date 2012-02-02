@@ -57,6 +57,8 @@ public class RobotMap {
     public static final int GEAR_SHIFT = 1;
     
     public static final int TUSKS_SOLENOID = 2;
+    //What do we write as the digital output 
+    public static final int SONAR_CHANNEL = 2;
     
     public static int[] VIRSYS_OUTPUT_MAP = new int[11];
     public static int[] VIRSYS_INPUT_MAP = new int[10];
@@ -77,4 +79,5 @@ public class RobotMap {
         VIRSYS_INPUT_MAP[RIGHT_ENCODER_A] = 2;
         VIRSYS_INPUT_MAP[RIGHT_ENCODER_A] = 2;
     }
+
 }

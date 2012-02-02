@@ -22,7 +22,7 @@ public class Drivetrain extends Subsystem {
     Solenoid gearShift;
     public Encoder leftEnc, rightEnc;
     AnalogChannel sonar;
-    
+    private double previousReading = -1.0;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -33,8 +33,20 @@ public class Drivetrain extends Subsystem {
         if (!Devmode.DEV_MODE) {
             gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
         }
+        sonar = new AnalogChannel (RobotMap.SONAR_CHANNEL);
+      }
+    public double getSonarVoltage () {
+        double newReading = sonar.getVoltage ();
+        double goodReading = previousReading;
+        if (previousReading - (-1) < .001 || (newReading - previousReading) < .5){
+            goodReading = newReading;
+            previousReading = newReading;
+        }else {
+            previousReading = newReading;
+        }
+        return goodReading;
     }
-
+            
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -43,6 +55,8 @@ public class Drivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
+        
+                System.out.println(getSonarVoltage());
     }
 
     public void setGear(boolean high) {
