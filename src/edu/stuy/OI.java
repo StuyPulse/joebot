@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.buttons.*;
 public class OI {
     private Joystick leftStick;
     private Joystick rightStick;
+    private Joystick shooterStick;
 
     public static final int DISTANCE_BUTTON_AUTO = 0;
     public static final int DISTANCE_BUTTON_FAR = 1;
@@ -54,6 +55,7 @@ public class OI {
     public OI() {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
+        shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
         
         try {
             enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
