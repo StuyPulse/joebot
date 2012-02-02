@@ -161,11 +161,19 @@ public class OI {
     }
 
     public double getSpeedPot() {
-        return 0.0;
+        try {
+            return enhancedIO.getAnalogIn(SPEED_TRIM_POT_CHANNEL);
+        } catch (EnhancedIOException ex) {
+            return 0.0;
+        }
     }
 
     public double getSpinPot() {
-        return 0.0;
+        try {
+            return enhancedIO.getAnalogIn(SPIN_TRIM_POT_CHANNEL);
+        } catch (EnhancedIOException ex) {
+            return 0.0;
+        }
     }
 }
 
