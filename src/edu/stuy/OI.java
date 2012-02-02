@@ -79,7 +79,6 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot());
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             
@@ -89,6 +88,12 @@ public class OI {
             new DigitalIOButton(CONVEYOR_IN_SWITCH_CHANNEL).whileHeld(new ConveyManual());
             new DigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
             new DigitalIOButton(SHOOT_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
+            
+            new JoystickButton(shooterStick, 1).whileHeld(new ConveyAutomatic());
+            new JoystickButton(shooterStick, 2).whileHeld(new AcquirerAcquire());
+            new JoystickButton(shooterStick, 3).whileHeld(new ConveyManual());
+            new JoystickButton(shooterStick, 8).whileHeld(new ConveyReverseManual());
+            new JoystickButton(shooterStick, 9).whileHeld(new AcquirerReverse());
         }
     }
     
@@ -100,12 +105,12 @@ public class OI {
         return rightStick;
     }
 
-    public boolean getShootButton() {
-        return false;
-    }
-
     public boolean getShootOverrideButton() {
-        return false;
+        try {
+            return !enhancedIO.getDigital(OVERRIDE_BUTTON_CHANNEL) || shooterStick.getRawButton(7);
+        } catch (EnhancedIOException ex) {
+            return shooterStick.getRawButton(7);
+        }
     }
 
     public int getPressedDistanceButton() {
