@@ -6,6 +6,7 @@ package edu.stuy.subsystems;
 
 import edu.stuy.Devmode;
 import edu.stuy.RobotMap;
+import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.DriveManualJoystickControl;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Encoder;
@@ -22,7 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
-    private int forward;
+    private double forward;
     public RobotDrive drive;
     public Solenoid gearShift;
     AnalogChannel sonar;
@@ -135,4 +136,8 @@ public class Drivetrain extends Subsystem {
         forward = 1;
     }
 
+    public double speedToDistance(double distance) {
+        forward = distance / Autonomous.INCHES_TO_FENDER;
+        return forward;
+    }
 }
