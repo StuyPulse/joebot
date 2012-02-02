@@ -151,22 +151,6 @@ public class OI {
         }
     }
 
-    public boolean getAcquirerInSwitch() {
-        return false;
-    }
-
-    public boolean getAcquirerOutSwitch() {
-        return false;
-    }
-
-    public boolean getManualConveyInSwitch() {
-        return false;
-    }
-
-    public boolean getManualConveyOutSwitch() {
-        return false;
-    }
-
     public double getSpeedPot() {
         try {
             return enhancedIO.getAnalogIn(SPEED_TRIM_POT_CHANNEL);
