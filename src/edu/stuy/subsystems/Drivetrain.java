@@ -138,10 +138,10 @@ public class Drivetrain extends Subsystem {
 
     // Updates speed relative to distance, the distance from the fender.
     public double speedToDistance(double distance) {
-        if(distance < 1){
+        if(distance < Autonomous.INCHES_TO_FENDER){
             forward = distance / Autonomous.INCHES_TO_FENDER;
         }
-        else if(distance > 1){
+        else if(distance > Autonomous.INCHES_TO_FENDER){
             forward = (distance - Autonomous.INCHES_TO_FENDER) / (Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER);
         }
         if(forward < 0.1){
