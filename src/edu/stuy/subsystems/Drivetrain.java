@@ -23,7 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
-    private double forward;
+    private int direction;
+    private double speed;
     public RobotDrive drive;
     public Solenoid gearShift;
     AnalogChannel sonar;
@@ -69,7 +70,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(speedToDistance(1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(profileSpeed(1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
@@ -129,24 +130,41 @@ public class Drivetrain extends Subsystem {
     }
 
     public final void setForward(){
-        forward = -1;
+        direction = -1;
     }
 
     public final void setBackwards(){
-        forward = 1;
+        direction = 1;
     }
 
     // Updates speed relative to distance, the distance from the fender.
-    public double speedToDistance(double distance) {
-        if(distance < Autonomous.INCHES_TO_FENDER){
-            forward = distance / Autonomous.INCHES_TO_FENDER;
+    public double profileSpeed(double sonarDistance) {
+        double oldSpeed = speed;
+        // If direction is forward, it is negative.
+        if(direction < 0){
+            // Distance at which ramping down occurs.
+            if(sonarDistance < 5){
+                speed = oldSpeed * 9 / 10;
+            }
+            else if(oldSpeed < 1){
+                speed = oldSpeed + 0.1;
+            }
+            if(speed < 0.1){
+                speed = 0.1;
+            }
         }
-        else if(distance > Autonomous.INCHES_TO_FENDER){
-            forward = (distance - Autonomous.INCHES_TO_FENDER) / (Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER);
+        // If direction is backward, it is positive.
+        else if(direction > 0){
+            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance < 5){
+                speed = oldSpeed * 9 / 10;
+            }
+            else if(oldSpeed < 1){
+                speed = oldSpeed + 0.1;
+            }
+            if(speed < 0.1){
+                speed = 0.1;
+            }
         }
-        if(forward < 0.1){
-            forward = 0.1;
-        }
-        return forward;
+        return speed * direction;
     }
 }
