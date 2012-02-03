@@ -69,7 +69,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(forward, -output);
+                drive.arcadeDrive(speedToDistance(1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
@@ -136,8 +136,17 @@ public class Drivetrain extends Subsystem {
         forward = 1;
     }
 
+    // Updates speed relative to distance, the distance from the fender.
     public double speedToDistance(double distance) {
-        forward = distance / Autonomous.INCHES_TO_FENDER;
+        if(distance < 1){
+            forward = distance / Autonomous.INCHES_TO_FENDER;
+        }
+        else if(distance > 1){
+            forward = (distance - Autonomous.INCHES_TO_FENDER) / (Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER);
+        }
+        if(forward < 0.1){
+            forward = 0.1;
+        }
         return forward;
     }
 }
