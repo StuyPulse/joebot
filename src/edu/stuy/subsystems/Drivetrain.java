@@ -100,6 +100,14 @@ public class Drivetrain extends Subsystem {
         }
         return goodReading;
     }
+    
+    /**
+     * Scales sonar voltage reading to centimeters
+     * @return distance from alliance wall in cm, as measured by sonar sensor
+     */
+    public double getSonarDistance_cm() {
+        return getSonarVoltage() * 1024 / 5;
+    }
             
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
