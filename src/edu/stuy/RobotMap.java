@@ -66,6 +66,7 @@ public class RobotMap {
 
     /* ANALOG INPUTS */
     public static final int GYRO_CHANNEL = 1;
+<<<<<<< HEAD
     public static final int SONAR_CHANNEL = 2;
 
     static {
@@ -86,3 +87,7 @@ public class RobotMap {
         VIRSYS_INPUT_MAP[RIGHT_ENCODER_CHANNEL_B] = 2;
     }
 }
+=======
+
+}
+>>>>>>> 3d04546a5ddc26e5130809614d254a92c25427ae

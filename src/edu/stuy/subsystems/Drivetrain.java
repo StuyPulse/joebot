@@ -128,10 +128,13 @@ public class Drivetrain extends Subsystem {
         encoderRight.reset();
     }
 
+    
+    /* Defines direction for autonomus as forwards */
     public final void setForward(){
         direction = -1;
     }
 
+    /* Defines direction for autonomus as backwards */
     public final void setBackwards(){
         direction = 1;
     }
@@ -142,8 +145,8 @@ public class Drivetrain extends Subsystem {
         // If direction is forward, it is negative.
         if(direction < 0){
             // Distance at which ramping down occurs.
-            if(sonarDistance < 5){
-                speed = oldSpeed * 9 / 10;
+            if(sonarDistance < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
+                speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
             }
             else if(oldSpeed < 1){
                 speed = oldSpeed + 0.1;
@@ -154,8 +157,8 @@ public class Drivetrain extends Subsystem {
         }
         // If direction is backward, it is positive.
         else if(direction > 0){
-            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance < 5){
-                speed = oldSpeed * 9 / 10;
+            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance < Autonomous.RAMPING_DISTANCE){
+                speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
             }
             else if(oldSpeed < 1){
                 speed = oldSpeed + 0.1;
