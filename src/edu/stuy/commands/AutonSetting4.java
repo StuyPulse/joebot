@@ -15,7 +15,7 @@ import edu.stuy.subsystems.*;
 public class AutonSetting4 extends CommandGroup {
 
     public AutonSetting4() {
-        double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
+        double distanceInches = Shooter.distances[Shooter.fenderIndex];
         addSequential(new ShooterShoot(2.0, distanceInches));
     }
 }
