@@ -44,14 +44,13 @@ public class RobotMap {
     public static final int RIGHT_ENCODER_CHANNEL_A = 7;
     public static final int RIGHT_ENCODER_CHANNEL_B = 8;
 
-    public static final int UPPER_CONVEYOR_SENSOR = 6;
-    public static final int LOWER_CONVEYOR_SENSOR = 7;
-
     public static final int PRESSURE_SWITCH_CHANNEL = 9; // Switches when pneumatics pressure exceeds limit
 
-    /* SECOND DIGITAL INPUTS */
-    public static final int TUSKS_EXTENDED_SWITCH = 1;
-    public static final int TUSKS_RETRACTED_SWITCH = 2;
+    public static final int UPPER_CONVEYOR_SENSOR = 10;
+    public static final int LOWER_CONVEYOR_SENSOR = 11;
+
+    public static final int TUSKS_EXTENDED_SWITCH = 12;
+    public static final int TUSKS_RETRACTED_SWITCH = 13;
 
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
