@@ -30,6 +30,7 @@ public class Drivetrain extends Subsystem {
     AnalogChannel sonar;
     public Encoder encoderLeft;
     public Encoder encoderRight;
+
     Gyro gyro;
     SendablePIDController controller;
     final int WHEEL_RADIUS = 3;
@@ -79,8 +80,9 @@ public class Drivetrain extends Subsystem {
             }
         }, 0.005);
 
-        gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
-
+        if (!Devmode.DEV_MODE) {
+            gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
+        }
         sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
 
@@ -132,10 +134,13 @@ public class Drivetrain extends Subsystem {
         encoderRight.reset();
     }
 
+    
+    /* Defines direction for autonomus as forwards */
     public final void setForward(){
         direction = -1;
     }
 
+    /* Defines direction for autonomus as backwards */
     public final void setBackwards(){
         direction = 1;
     }
