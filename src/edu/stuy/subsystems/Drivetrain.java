@@ -120,6 +120,11 @@ public class Drivetrain extends Subsystem {
     public void setGear(boolean high) {
         gearShift.set(high);
     }
+    
+    public boolean getGear() {
+        return gearShift.get();
+    }
+    
     public void initController() {
         controller.setSetpoint(0);
         controller.enable();

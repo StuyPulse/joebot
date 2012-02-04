@@ -29,7 +29,7 @@ public class DrivetrainSetGear extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return drivetrain.getGear()==high; // Checks if the gears are in the position that we set them to
     }
 
     // Called once after isFinished returns true
