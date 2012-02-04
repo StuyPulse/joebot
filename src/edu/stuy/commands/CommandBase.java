@@ -48,6 +48,8 @@ public abstract class CommandBase extends Command {
             SmartDashboard.putData(acquirer);
             SmartDashboard.putData(conveyor);
         }
+
+        System.out.println("drivetrain: " + drivetrain);
     }
 
     public CommandBase(String name) {

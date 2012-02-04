@@ -13,6 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import edu.stuy.*;
+import edu.stuy.subsystems.*;
 
 /**
  *
@@ -47,7 +48,7 @@ public class ShooterShootTest {
 
     @Test
     public void testdesiredExitRPM() {
-        System.out.println(ShooterShoot.desiredExitRPM(144));
+        System.out.println(Shooter.theoreticalDesiredExitRPM(144));
     }
 
 }

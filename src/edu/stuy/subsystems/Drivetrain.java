@@ -28,8 +28,8 @@ public class Drivetrain extends Subsystem {
     public RobotDrive drive;
     public Solenoid gearShift;
     AnalogChannel sonar;
-    Encoder encoderLeft;
-    Encoder encoderRight;
+    public Encoder encoderLeft;
+    public Encoder encoderRight;
     Gyro gyro;
     SendablePIDController controller;
     final int WHEEL_RADIUS = 3;
@@ -52,17 +52,22 @@ public class Drivetrain extends Subsystem {
         rearLeftMotor = new Victor(RobotMap.REAR_LEFT_MOTOR);
         frontRightMotor = new Victor(RobotMap.FRONT_RIGHT_MOTOR);
         rearRightMotor = new Victor(RobotMap.REAR_RIGHT_MOTOR);
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         
         setForward();
         drive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
         drive.setSafetyEnabled(false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        
         encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
         encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
 
+        encoderLeft.start();
+        encoderRight.start();
+
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
+
 
         gyro = new Gyro(RobotMap.GYRO_CHANNEL);
         gyro.setSensitivity(0.007);
@@ -74,9 +79,7 @@ public class Drivetrain extends Subsystem {
             }
         }, 0.005);
 
-        if (!Devmode.DEV_MODE) {
-            gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
-        }
+        gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
 
         sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
