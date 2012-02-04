@@ -15,9 +15,11 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.command.*;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
+
+
 /**
  *
  * @author Kevin Wang
@@ -45,6 +47,7 @@ public class Drivetrain extends Subsystem {
     Victor frontRightMotor;
     Victor rearRightMotor;
 
+    private double previousReading = -1.0;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -85,7 +88,19 @@ public class Drivetrain extends Subsystem {
         }
         sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
-
+    
+    public double getSonarVoltage () {
+        double newReading = sonar.getVoltage ();
+        double goodReading = previousReading;
+        if (previousReading - (-1) < .001 || (newReading - previousReading) < .5){
+            goodReading = newReading;
+            previousReading = newReading;
+        }else {
+            previousReading = newReading;
+        }
+        return goodReading;
+    }
+            
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -98,6 +113,8 @@ public class Drivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
+        
+                System.out.println(getSonarVoltage());
     }
 
     public void setGear(boolean high) {

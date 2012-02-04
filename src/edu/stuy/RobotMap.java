@@ -66,7 +66,6 @@ public class RobotMap {
 
     /* ANALOG INPUTS */
     public static final int GYRO_CHANNEL = 1;
-
     public static final int SONAR_CHANNEL = 2;
 
     static {
