@@ -7,7 +7,9 @@ package edu.stuy.subsystems;
 import edu.stuy.RobotMap;
 import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.speed.JoeSpeed;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.stuy.RobotMap;
 
 /**
  *
@@ -37,6 +39,9 @@ public class Shooter extends Subsystem {
 
     public static final double WIDE_BOT = 28.0;
     public static final double LONG_BOT = 38.0;
+    
+    private Relay speedLight;
+
 
     static {
         distances[FENDER_INDEX] = 34.0;
@@ -55,6 +60,9 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Shooter() {
+        speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
+        speedLight.setDirection(Relay.Direction.kForward);
+
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER);
         lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER);
     }
@@ -68,11 +76,19 @@ public class Shooter extends Subsystem {
         upperRoller.setRPM(upperRPM);
         lowerRoller.setRPM(lowerRPM);
     }
-    
+
+    /**
+     * Given a desired flywheel RPM, checks if the current RPM is
+     * within an acceptable range of the desired RPM, and turns
+     * on or off the speed light accordingly.
+     */
     public boolean isSpeedGood() {
         boolean speedGood = false;
-        if(upperRoller.isAtSetPoint() && lowerRoller.isAtSetPoint()){
+        if (upperRoller.isAtSetPoint() && lowerRoller.isAtSetPoint()) {
             speedGood = true;
+            speedLight.set(Relay.Value.kOff);  // Turn OFF the red "SPEED_BAD" light
+        } else {
+            speedLight.set(Relay.Value.kOn);
         }
         return speedGood;
     }
@@ -87,14 +103,13 @@ public class Shooter extends Subsystem {
         double topHoopHeightInches = 98.0;
         double h = topHoopHeightInches - shooterHeightInches; // height of hoop above the shooter: inches
         double thetaRadians = Math.toRadians(72.0);
-        double linearSpeedInchesPerSecond = (distanceInches * Math.sqrt(g)) /
-                (Math.sqrt(2)* Math.cos(thetaRadians) * Math.sqrt(distanceInches * Math.tan(thetaRadians) - h));
+        double linearSpeedInchesPerSecond = (distanceInches * Math.sqrt(g))
+                / (Math.sqrt(2) * Math.cos(thetaRadians) * Math.sqrt(distanceInches * Math.tan(thetaRadians) - h));
         double wheelRadiusInches = 3.0;
         double wheelCircumferenceInches = 2 * Math.PI * wheelRadiusInches;
         double RPM = 60 * linearSpeedInchesPerSecond / wheelCircumferenceInches;
         return RPM;
     }
-
 
     /**
      * Use the `speeds' lookup table.
@@ -115,6 +130,6 @@ public class Shooter extends Subsystem {
             }
         }
         return 0; // change this to find the intermediate value for a speed
-                // that we haven't tuned for.
+        // that we haven't tuned for.
     }
 }
