@@ -89,13 +89,17 @@ public class Drivetrain extends Subsystem {
         sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
     
+    /**
+     * Gets the analog voltage of the MaxBotics ultrasonic sensor, and debounces the input
+     * @return Analog voltage reading from 0 to 5
+     */
     public double getSonarVoltage () {
         double newReading = sonar.getVoltage ();
         double goodReading = previousReading;
         if (previousReading - (-1) < .001 || (newReading - previousReading) < .5){
             goodReading = newReading;
             previousReading = newReading;
-        }else {
+        } else {
             previousReading = newReading;
         }
         return goodReading;
