@@ -52,7 +52,7 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Shooter() {
-        speedLight = new Relay(RobotMap.TUBE_ACQUIRED_LIGHT);
+        speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
         speedLight.setDirection(Relay.Direction.kForward);
 
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER);
@@ -78,8 +78,10 @@ public class Shooter extends Subsystem {
         boolean speedGood = false;
         if (upperRoller.isAtSetPoint() && lowerRoller.isAtSetPoint()) {
             speedGood = true;
-            speedLight.set(Relay.Value.kOff);
-        } else speedLight.set(Relay.Value.kOn);
+            speedLight.set(Relay.Value.kOff);  // Turn OFF the red "SPEED_BAD" light
+        } else {
+            speedLight.set(Relay.Value.kOn);
+        }
         return speedGood;
     }
 

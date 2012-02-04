@@ -53,16 +53,15 @@ public class RobotMap {
     public static final int TUSKS_EXTENDED_SWITCH = 1;
     public static final int TUSKS_RETRACTED_SWITCH = 2;
 
-    // Light on robot; lights up when speed is bad
-    public static final int TUBE_ACQUIRED_LIGHT = 1;
-
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
+    public static final int SPEED_BAD_LIGHT = 2;
 
     /* SOLENOID */
     public static final int GEAR_SHIFT = 1;
     public static final int TUSKS_SOLENOID = 2;
 
+    /* VIRSYSJ */
     public static int[] VIRSYS_OUTPUT_MAP = new int[11];
     public static int[] VIRSYS_INPUT_MAP = new int[10];
 
