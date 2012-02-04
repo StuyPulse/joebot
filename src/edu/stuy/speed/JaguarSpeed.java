@@ -16,7 +16,7 @@ public class JaguarSpeed implements JoeSpeed {
     public static final double KP = 0.0;
     public static final double KI = 0.0;
     public static final double KD = 0.0;
-    private CANJaguar jaguar;
+    public CANJaguar jaguar;
     private double speedSetpoint;
     //This is wrong. Need to run calculations for the real one.
     private static final double TOLERANCE_RPM = 4;
@@ -29,6 +29,7 @@ public class JaguarSpeed implements JoeSpeed {
         speedSetpoint = 0;
         try {
             jaguar = new CANJaguar(id, CANJaguar.ControlMode.kSpeed);
+            jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
             jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
             jaguar.setPID(KP, KI, KD);
             jaguar.enableControl();

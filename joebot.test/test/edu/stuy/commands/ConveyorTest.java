@@ -55,8 +55,10 @@ public class ConveyorTest {
         cmd.initialize();
         cmd.execute();
         assertEquals(1, CommandBase.conveyor.getUpperRoller(), 0.01);
+        assertEquals(1, CommandBase.conveyor.getLowerRoller(), 0.01);
         cmd.end();
         assertEquals(0, CommandBase.conveyor.getUpperRoller(), 0.01);
+        assertEquals(0, CommandBase.conveyor.getLowerRoller(), 0.01);
     }
 
     @Test

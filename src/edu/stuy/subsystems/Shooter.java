@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shooter extends Subsystem {
 
-    public static JoeSpeed upperRoller;
-    public static JoeSpeed lowerRoller;
+    public static JaguarSpeed upperRoller;
+    public static JaguarSpeed lowerRoller;
 
     public static final double thetaDegrees = 72;
     public static final double thetaRadians = Math.toRadians(thetaDegrees);
@@ -28,10 +28,10 @@ public class Shooter extends Subsystem {
     public static int fenderIndex = 0;
     public static int fenderLongIndex = 1;
     public static int fenderWideIndex = 2;
-    static int fenderSideIndex = 3;
-    static int fenderSideLongIndex = 4;
-    static int fenderSideWideIndex = 5;
-    static int keyIndex = 6;
+    public static int fenderSideIndex = 3;
+    public static int fenderSideLongIndex = 4;
+    public static int fenderSideWideIndex = 5;
+    public static int keyIndex = 6;
 
     public static double[] speeds = new double[numDistances];
 

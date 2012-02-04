@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Danny
  */
 public class Conveyor extends Subsystem {
-    private Victor upperRoller;
-    private Victor lowerRoller;
-    private DigitalInput upperSensor;
-    private DigitalInput lowerSensor;
+    public Victor upperRoller;
+    public Victor lowerRoller;
+    public DigitalInput upperSensor;
+    public DigitalInput lowerSensor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
