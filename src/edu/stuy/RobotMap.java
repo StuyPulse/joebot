@@ -21,6 +21,7 @@ public class RobotMap {
     public static final int LEFT_JOYSTICK_PORT = 1;
     public static final int RIGHT_JOYSTICK_PORT = 2;
     public static final int SHOOTER_JOYSTICK_PORT = 3;
+    public static final int DEBUG_BOX_PORT = 4;
 
     /* PWM OUTPUTS */
     public static final int FRONT_LEFT_MOTOR = 1;

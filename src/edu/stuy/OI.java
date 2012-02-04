@@ -12,6 +12,7 @@ public class OI {
     private Joystick leftStick;
     private Joystick rightStick;
     private Joystick shooterStick;
+    private Joystick debugBox;
 
     public static final int DISTANCE_BUTTON_AUTO = 0;
     public static final int DISTANCE_BUTTON_FAR = 1;
@@ -54,6 +55,7 @@ public class OI {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
         shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
+        debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
         
         try {
             enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
