@@ -16,7 +16,7 @@ public class OI {
     public OI() {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
-        double distanceInches = Shooter.distances[Shooter.fenderIndex];
+        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
 
         if (!Devmode.DEV_MODE) {
             new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot(distanceInches));

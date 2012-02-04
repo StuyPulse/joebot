@@ -23,7 +23,7 @@ public class AutonSetting2 extends CommandGroup {
 
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_BRIDGE));
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
-        double distanceInches = Shooter.distances[Shooter.fenderIndex];
+        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
         addSequential(new ShooterShoot(2.0, distanceInches));
 
         addSequential(new TusksRetract());

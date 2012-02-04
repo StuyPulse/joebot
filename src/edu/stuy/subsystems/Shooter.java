@@ -18,34 +18,34 @@ public class Shooter extends Subsystem {
     public static JaguarSpeed upperRoller;
     public static JaguarSpeed lowerRoller;
 
-    public static final double thetaDegrees = 72;
-    public static final double thetaRadians = Math.toRadians(thetaDegrees);
+    public static final double THETA_DEGREES = 72;
+    public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
 
 
-    public static int numDistances = 7;
+    public static int NUM_DISTANCES = 7;
 
-    public static double[] distances = new double[numDistances]; // all inches
-    public static int fenderIndex = 0;
-    public static int fenderLongIndex = 1;
-    public static int fenderWideIndex = 2;
-    public static int fenderSideIndex = 3;
-    public static int fenderSideLongIndex = 4;
-    public static int fenderSideWideIndex = 5;
-    public static int keyIndex = 6;
+    public static double[] distances = new double[NUM_DISTANCES]; // all inches
+    public static final int FENDER_INDEX = 0;
+    public static final int FENDER_LONG_INDEX = 1;
+    public static final int FENDER_WIDE_INDEX = 2;
+    public static final int FENDER_SIDE_INDEX = 3;
+    public static final int FENDER_SIDE_LONG_INDEX = 4;
+    public static final int FENDER_SIDE_WIDE_INDEX = 5;
+    public static final int KEY_INDEX = 6;
 
-    public static double[] speeds = new double[numDistances];
+    public static double[] speeds = new double[NUM_DISTANCES];
 
-    static double wideBot = 28.0;
-    static double longBot = 38.0;
+    public static final double WIDE_BOT = 28.0;
+    public static final double LONG_BOT = 38.0;
 
     static {
-        distances[fenderIndex] = 34.0;
-        distances[fenderLongIndex] = distances[fenderIndex] + longBot;
-        distances[fenderWideIndex] = distances[fenderIndex] + wideBot;
-        distances[fenderSideIndex] = 50.5;
-        distances[fenderSideLongIndex] = distances[fenderSideIndex] + longBot;
-        distances[fenderSideWideIndex] = distances[fenderSideIndex] + wideBot;
-        distances[keyIndex] = 144.0;
+        distances[FENDER_INDEX] = 34.0;
+        distances[FENDER_LONG_INDEX] = distances[FENDER_INDEX] + LONG_BOT;
+        distances[FENDER_WIDE_INDEX] = distances[FENDER_INDEX] + WIDE_BOT;
+        distances[FENDER_SIDE_INDEX] = 50.5;
+        distances[FENDER_SIDE_LONG_INDEX] = distances[FENDER_SIDE_INDEX] + LONG_BOT;
+        distances[FENDER_SIDE_WIDE_INDEX] = distances[FENDER_SIDE_INDEX] + WIDE_BOT;
+        distances[KEY_INDEX] = 144.0;
 
         for (int i = 0; i < speeds.length; i++) {
             speeds[i] = theoreticalDesiredExitRPM(distances[i]);
