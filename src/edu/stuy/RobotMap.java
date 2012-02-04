@@ -55,11 +55,13 @@ public class RobotMap {
 
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
+    public static final int SPEED_BAD_LIGHT = 2;
 
     /* SOLENOID */
     public static final int GEAR_SHIFT = 1;
     public static final int TUSKS_SOLENOID = 2;
 
+    /* VIRSYSJ */
     public static int[] VIRSYS_OUTPUT_MAP = new int[11];
     public static int[] VIRSYS_INPUT_MAP = new int[10];
 
