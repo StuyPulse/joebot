@@ -58,7 +58,7 @@ public class DriveManualJoystickControlTest {
     // public void hello() {}
     
     @Test
-    public void testDriveForward() {
+    public void testDriveForward() throws Encoder.NotInitializedException {
         DriveManualJoystickControl cmd = new DriveManualJoystickControl();
         cmd.initialize();
         double startTime = Timer.getFPGATimestamp();
@@ -68,8 +68,8 @@ public class DriveManualJoystickControlTest {
         cmd.end();
 
         // TODO: get encoder readings from drivetrain object
-        double leftDist = CommandBase.drivetrain.leftEnc.getDistance();
-        double rightDist = CommandBase.drivetrain.rightEnc.getDistance();
+        double leftDist = CommandBase.drivetrain.encoderLeft.getDistance();
+        double rightDist = CommandBase.drivetrain.encoderRight.getDistance();
         System.out.println(leftDist + " " + rightDist);
         assertTrue(leftDist > 0);
         assertTrue(rightDist > 0);

@@ -1,16 +1,12 @@
 package edu.stuy;
 
-import edu.stuy.commands.AcquirerAcquire;
-import edu.stuy.commands.AcquirerReverse;
-import edu.stuy.commands.ConveyAutomatic;
-import edu.stuy.commands.ConveyManual;
-import edu.stuy.commands.ConveyReverseManual;
-import edu.stuy.commands.DrivetrainSetGear;
-import edu.stuy.commands.ShooterShoot;
+import edu.stuy.commands.*;
+import edu.stuy.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.*;
+import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
     private Joystick leftStick;
@@ -37,6 +33,8 @@ public class OI {
     private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 7;
     private static final int SHOOT_BUTTON_CHANNEL = 8;
     private static final int OVERRIDE_BUTTON_CHANNEL = 9;
+    
+    public double distanceInches;
     
     // EnhancedIO digital output
     private static final int DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL = 10;
@@ -78,7 +76,11 @@ public class OI {
         } catch (EnhancedIOException e) {
         }
 
+        // Defaults shooter speed to fender
+        distanceInches = Shooter.distances[Shooter.fenderIndex];
+
         if (!Devmode.DEV_MODE) {
+            new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot(distanceInches));
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             

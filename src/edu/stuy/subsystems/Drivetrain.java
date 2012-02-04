@@ -6,40 +6,30 @@ package edu.stuy.subsystems;
 
 import edu.stuy.Devmode;
 import edu.stuy.RobotMap;
+import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.DriveManualJoystickControl;
-<<<<<<< HEAD
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.command.*;
-
-=======
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
->>>>>>> feature-autonomous
 /**
  *
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
-<<<<<<< HEAD
-    private RobotDrive drive;
-    private Solenoid gearShift;
-
-    public Encoder leftEnc, rightEnc;
-    
-=======
-    private int forward;
+    private int direction;
+    private double speed;
     public RobotDrive drive;
     public Solenoid gearShift;
     AnalogChannel sonar;
-    Encoder encoderLeft;
-    Encoder encoderRight;
+    public Encoder encoderLeft;
+    public Encoder encoderRight;
     Gyro gyro;
     SendablePIDController controller;
     final int WHEEL_RADIUS = 3;
@@ -49,31 +39,35 @@ public class Drivetrain extends Subsystem {
     double Kp = 0.035;
     double Ki = 0.0005;
     double Kd = 1.0;
+    Victor frontLeftMotor;
+    Victor rearLeftMotor;
+    Victor frontRightMotor;
+    Victor rearRightMotor;
 
->>>>>>> feature-autonomous
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
-<<<<<<< HEAD
-        Victor frontLeftMotor = new Victor(RobotMap.FRONT_LEFT_MOTOR);
-        Victor rearLeftMotor = new Victor(RobotMap.REAR_LEFT_MOTOR);
-        Victor frontRightMotor = new Victor(RobotMap.FRONT_RIGHT_MOTOR);
-        Victor rearRightMotor = new Victor(RobotMap.REAR_RIGHT_MOTOR);
+        frontLeftMotor = new Victor(RobotMap.FRONT_LEFT_MOTOR);
+        rearLeftMotor = new Victor(RobotMap.REAR_LEFT_MOTOR);
+        frontRightMotor = new Victor(RobotMap.FRONT_RIGHT_MOTOR);
+        rearRightMotor = new Victor(RobotMap.REAR_RIGHT_MOTOR);
+        
+        setForward();
         drive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+        drive.setSafetyEnabled(false);
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         
-        leftEnc = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B);
-        rightEnc = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B);
-=======
-        setForward();
-        drive = new RobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
-        drive.setSafetyEnabled(false);
-        encoderLeft = new Encoder(RobotMap.ENCODER_CHANNEL_1A, RobotMap.ENCODER_CHANNEL_1B, true);
-        encoderRight = new Encoder(RobotMap.ENCODER_CHANNEL_2A, RobotMap.ENCODER_CHANNEL_2B, true);
+        encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
+        encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
+
+        encoderLeft.start();
+        encoderRight.start();
 
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
+
 
         gyro = new Gyro(RobotMap.GYRO_CHANNEL);
         gyro.setSensitivity(0.007);
@@ -81,14 +75,11 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(forward, -output);
+                drive.arcadeDrive(profileSpeed(1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
->>>>>>> feature-autonomous
-        if (!Devmode.DEV_MODE) {
-            gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
-        }
+        gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
 
         sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
@@ -142,11 +133,41 @@ public class Drivetrain extends Subsystem {
     }
 
     public final void setForward(){
-        forward = -1;
+        direction = -1;
     }
 
     public final void setBackwards(){
-        forward = 1;
+        direction = 1;
     }
 
+    // Updates speed relative to distance, the distance from the fender.
+    public double profileSpeed(double sonarDistance) {
+        double oldSpeed = speed;
+        // If direction is forward, it is negative.
+        if(direction < 0){
+            // Distance at which ramping down occurs.
+            if(sonarDistance < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
+                speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
+            }
+            else if(oldSpeed < 1){
+                speed = oldSpeed + 0.1;
+            }
+            if(speed < 0.1){
+                speed = 0.1;
+            }
+        }
+        // If direction is backward, it is positive.
+        else if(direction > 0){
+            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance < Autonomous.RAMPING_DISTANCE){
+                speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
+            }
+            else if(oldSpeed < 1){
+                speed = oldSpeed + 0.1;
+            }
+            if(speed < 0.1){
+                speed = 0.1;
+            }
+        }
+        return speed * direction;
+    }
 }

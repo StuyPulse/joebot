@@ -25,8 +25,8 @@ public abstract class CommandBase extends Command {
     static {
         drivetrain = new Drivetrain();
         conveyor = new Conveyor();
+        shooter = new Shooter();
         if (!Devmode.DEV_MODE) {
-            shooter = new Shooter();
             tusks = new Tusks();
             acquirer = new Acquirer();
         }
@@ -48,6 +48,8 @@ public abstract class CommandBase extends Command {
             SmartDashboard.putData(acquirer);
             SmartDashboard.putData(conveyor);
         }
+
+        System.out.println("drivetrain: " + drivetrain);
     }
 
     public CommandBase(String name) {

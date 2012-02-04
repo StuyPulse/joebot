@@ -175,14 +175,6 @@ is divided into following sections:
         </condition>
         <property name="javac.fork" value="false"/>
         <property name="jar.index" value="false"/>
-<<<<<<< HEAD
-        <property name="jar.index.metainf" value="${jar.index}"/>
-=======
-<<<<<<< HEAD
-=======
-        <property name="jar.index.metainf" value="${jar.index}"/>
->>>>>>> 2fa595de436ec5f9327b07606a472c6b2cdc05c7
->>>>>>> feature-autonomous
         <available file="${meta.inf.dir}/persistence.xml" property="has.persistence.xml"/>
     </target>
     <target name="-post-init">
@@ -341,11 +333,6 @@ is divided into following sections:
             </sequential>
         </macrodef>
     </target>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> feature-autonomous
     <target depends="-profile-pre-init, init, -profile-post-init, -profile-init-macrodef-profile, -profile-init-check" name="profile-init"/>
     <target name="-profile-pre-init">
         <!-- Empty placeholder for easier customization. -->
@@ -390,10 +377,6 @@ is divided into following sections:
         <fail unless="profiler.info.jvm">Must set JVM to use for profiling in profiler.info.jvm</fail>
         <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail>
     </target>
-<<<<<<< HEAD
-=======
->>>>>>> 2fa595de436ec5f9327b07606a472c6b2cdc05c7
->>>>>>> feature-autonomous
     <target depends="-init-debug-args" name="-init-macrodef-nbjpda">
         <macrodef name="nbjpdastart" uri="http://www.netbeans.org/ns/j2se-project/1">
             <attribute default="${main.class}" name="name"/>
@@ -503,21 +486,11 @@ is divided into following sections:
                     </chainedmapper>
                 </pathconvert>
                 <taskdef classname="org.netbeans.modules.java.j2seproject.copylibstask.CopyLibs" classpath="${libs.CopyLibs.classpath}" name="copylibs"/>
-<<<<<<< HEAD
-                <copylibs compress="${jar.compress}" index="${jar.index}" indexMetaInf="${jar.index.metainf}" jarfile="${dist.jar}" manifest="@{manifest}" runtimeclasspath="${run.classpath.without.build.classes.dir}">
-=======
-<<<<<<< HEAD
-                <copylibs compress="${jar.compress}" index="${jar.index}" jarfile="${dist.jar}" manifest="${manifest.file}" runtimeclasspath="${run.classpath.without.build.classes.dir}">
-=======
-                <copylibs compress="${jar.compress}" index="${jar.index}" indexMetaInf="${jar.index.metainf}" jarfile="${dist.jar}" manifest="@{manifest}" runtimeclasspath="${run.classpath.without.build.classes.dir}">
->>>>>>> 2fa595de436ec5f9327b07606a472c6b2cdc05c7
->>>>>>> feature-autonomous
                     <fileset dir="${build.classes.dir}"/>
                     <manifest>
                         <attribute name="Class-Path" value="${jar.classpath}"/>
                         <customize/>
                     </manifest>
-                </copylibs>
             </sequential>
         </macrodef>
     </target>

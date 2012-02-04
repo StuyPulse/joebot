@@ -30,7 +30,7 @@ public abstract class AutonDrive extends CommandBase{
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(drivetrain.getAvgDistance()) < inches_to_travel; // Check if we have traveled the right distance by encoder measure
+        return Math.abs(drivetrain.getAvgDistance()) > inches_to_travel; // Check if we have traveled the right distance by encoder measure
     }
 
     // Called once after isFinished returns true

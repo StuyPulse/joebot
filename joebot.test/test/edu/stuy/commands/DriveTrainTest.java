@@ -5,17 +5,12 @@
 
 package edu.stuy.commands;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
-import edu.stuy.subsystems.*;
-import edu.wpi.first.wpilibj.*;
-import crio.hardware.*;
-import edu.wpi.first.wpilibj.command.*;
+import edu.stuy.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.stuy.*;
+import org.junit.*;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -23,15 +18,21 @@ import edu.wpi.first.wpilibj.command.*;
  */
 public class DriveTrainTest {
 
+    static JoeBot theRobot;
+
     public DriveTrainTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        InitTests.setUpTests(InitTests.NO_PHYSICS);
+        theRobot = new JoeBot();
+        theRobot.robotInit();
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        InitTests.tearDownTests();
     }
 
     @Before
@@ -50,13 +51,9 @@ public class DriveTrainTest {
 
     @Test
     public void testInitDefaultCommand() {
-        Command result;
         Command expected = new DriveManualJoystickControl();
-        Drivetrain test = new Drivetrain();
-        test.initDefaultCommand();
-        result = test.getDefaultCommand();
-        assertNotNull(test);
-        assertEquals(result.getName(), expected.getName());
+
+        assertEquals(CommandBase.drivetrain.getDefaultCommand().getName(), expected.getName());
     }
 
     @Test
@@ -67,7 +64,7 @@ public class DriveTrainTest {
 
     @Test
     public void testSetGear(){
-        Drivetrain test = new Drivetrain();
+        Drivetrain test = CommandBase.drivetrain;
         test.setGear(false);
         assertFalse(test.gearShift.get());
         test.setGear(true);

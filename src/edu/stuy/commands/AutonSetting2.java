@@ -5,16 +5,14 @@
 
 package edu.stuy.commands;
 
+import edu.stuy.subsystems.Shooter;
+
 /**
  *
  * @author 694
  */
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- * @author admin
- */
 public class AutonSetting2 extends CommandGroup {
 
     public AutonSetting2() {
@@ -25,7 +23,8 @@ public class AutonSetting2 extends CommandGroup {
 
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_BRIDGE));
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
-        addSequential(new ShooterShoot(2.0, Autonomous.FENDER_SPEED));
+        double distanceInches = Shooter.distances[Shooter.fenderIndex];
+        addSequential(new ShooterShoot(2.0, distanceInches));
 
         addSequential(new TusksRetract());
     }
