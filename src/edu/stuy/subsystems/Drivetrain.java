@@ -4,17 +4,11 @@
  */
 package edu.stuy.subsystems;
 
-import edu.stuy.Devmode;
 import edu.stuy.RobotMap;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.DriveManualJoystickControl;
-import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
+import edu.stuy.util.VictorRobotDrive;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
@@ -42,23 +36,14 @@ public class Drivetrain extends Subsystem {
     double Kp = 0.035;
     double Ki = 0.0005;
     double Kd = 1.0;
-    Victor frontLeftMotor;
-    Victor rearLeftMotor;
-    Victor frontRightMotor;
-    Victor rearRightMotor;
 
     private double previousReading = -1.0;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
-        frontLeftMotor = new Victor(RobotMap.FRONT_LEFT_MOTOR);
-        rearLeftMotor = new Victor(RobotMap.REAR_LEFT_MOTOR);
-        frontRightMotor = new Victor(RobotMap.FRONT_RIGHT_MOTOR);
-        rearRightMotor = new Victor(RobotMap.REAR_RIGHT_MOTOR);
-        
         setForward();
-        drive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+        drive = new VictorRobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
