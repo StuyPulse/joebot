@@ -14,10 +14,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Shooter extends Subsystem {
+    /** Distances **/
+    static final double wideBot = 28.0;
+    static final double longBot = 38.0;
+    static final double shooterToBumper = 23.5;
+    static final double fenderDepth = 38.75;
+    static final double backboardToHoopCenter = 6 + 9;
+    static final double halfFenderWidth = 50.5;
+
+    public static final double thetaDegrees = 72;
+    public static final double thetaRadians = Math.toRadians(thetaDegrees);
+
+    public double lowerSetpoint;
+    public double upperSetpoint;
 
     public static JoeSpeed upperRoller;
     public static JoeSpeed lowerRoller;
-    
+
     /**
      * The two points that we're in between for shooting.
      * Set to the same value if you're at an exact point, like fenderIndex
@@ -25,85 +38,51 @@ public class Shooter extends Subsystem {
     public int indexSetPointLower;
     public int indexSetPointHigher;
     public double ratioBetweenDistances; // 0-1 position of distance setpoint between two closest points.
-    
-    // Fender special Variables
-    
-    
-    public double fenderDistance = fenderWidth + shooterToBumper + 13.35;
-    
-    public double fenderTopRPM = theoreticalDesiredExitRPM(fenderDistance);
-    public double fenderBottomRPM = theoreticalDesiredExitRPM(fenderDistance) + 0;
-    public double fenderTopUpperBoundTolerance = 1;
-    public double fenderTopLowerBoundTolerance = 1;
-    public double fenderBottomUpperBoundTolerance = 1;
-    public double fenderBottomLowerBoundTolerance = 1;
-    
-    
-    public static final double thetaDegrees = 72;
-    public static final double thetaRadians = Math.toRadians(thetaDegrees);
 
-    
-    public static int fenderSideIndex = 0;
-    public static int fenderWideIndex = 1;
-    public static int fenderLongIndex = 2;
-    public static int fenderSideWideIndex = 3;
-    public static int fenderSideLongIndex = 4;
-    public static int keyIndex = 5;
+    public static double rpmTolerance = 16;
 
-    public static int numDistances = 6;
+    /** Positions **/
+    public static int numDistances = 9;
 
+    public static double[] distances = new double[numDistances]; // all inches
+    public static double[] speeds = new double[numDistances];
     /**
      * How much faster should the lower flywheel run, to:
      *  A)  Produce spin
      *  B)  Account for lower wheel losing energy by being in contact with ball longer
-     * 
+     *
      */
-    public static double spinRPMDifference = 0; // We do not know
-    
-    public static double[] distances = new double[numDistances]; // all inches
-    public static double[] speeds = new double[numDistances];
-    
-    public static double[] Lowtolerance = new double[numDistances]; // values haven't been found yet
-    static{
-        Lowtolerance[fenderLongIndex] = 1;
-        Lowtolerance[fenderWideIndex] = 2;
-        Lowtolerance[fenderSideIndex] = 3;
-        Lowtolerance[fenderSideLongIndex] = 4;
-        Lowtolerance[fenderSideWideIndex] = 5;
-        Lowtolerance[keyIndex] = 6;
-    }
-       public static double[] Hightolerance = new double[numDistances]; // values haven't been found yet
-    static{
-        Hightolerance[fenderLongIndex] = 1;
-        Hightolerance[fenderSideIndex] = 2;
-        Hightolerance[fenderWideIndex] = 3;
-        Hightolerance[fenderSideLongIndex] = 4;
-        Hightolerance[fenderSideWideIndex] = 5;
-        Hightolerance[keyIndex] = 6;
-    }
+    public static double[] spinBottomMinusTopRPM = new double[numDistances];
 
-    static double wideBot = 28.0;
-    static double longBot = 38.0;
-    static double shooterToBumper = 23.5;
-    static double fenderWidth = 38.75;
-    static double backboardToHoopCenter = 6 + 9;
-    
-    
-//* 13.35 is the additional horizontal distance from the backboard to the center of the hoop  
-    
+    public static int fenderIndex = 0;
+    public static int fenderSideIndex = 1;
+    public static int fenderWideIndex = 2;
+    public static int highestBackboardIndex = 3;
+    public static int lowestSwishIndex = 4;
+    public static int fenderLongIndex = 5;
+    public static int fenderSideWideIndex = 6;
+    public static int fenderSideLongIndex = 7;
+    public static int keyIndex = 8;
+
     static {
-        distances[fenderSideIndex] = 50.5 + shooterToBumper; // 74
-        distances[fenderWideIndex] = distances[fenderIndex] + wideBot - backboardToHoopCenter; // 90.5
-        distances[fenderSideWideIndex] = distances[fenderSideIndex] + wideBot; // 102
-        distances[fenderLongIndex] = distances[fenderIndex] + longBot - backboardToHoopCenter; // 100.5
-        distances[fenderSideLongIndex] = distances[fenderSideIndex] + longBot; // 112
-        distances[keyIndex] = 144.0 + shooterToBumper - backboardToHoopCenter;
+        distances[fenderIndex] = fenderDepth + shooterToBumper;
+        distances[fenderSideIndex] = halfFenderWidth + shooterToBumper;
+        distances[fenderWideIndex] = distances[fenderIndex] + wideBot;
+        distances[highestBackboardIndex] = distances[fenderWideIndex];
+        distances[lowestSwishIndex] = distances[highestBackboardIndex];
+        distances[fenderSideWideIndex] = distances[fenderSideIndex] + wideBot;
+        distances[fenderLongIndex] = distances[fenderIndex] + longBot;
+        distances[fenderSideLongIndex] = distances[fenderSideIndex] + longBot;
+        distances[keyIndex] = 144.0 + shooterToBumper;
         
         for (int i = 0; i < distances.length; i++) {
             System.out.println(distances[i]);
         }
 
-        for (int i = 0; i < speeds.length; i++) {
+        for (int i = 0; i <= highestBackboardIndex; i++) {
+            speeds[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter);
+        }
+        for (int i = lowestSwishIndex; i < numDistances; i++) {
             speeds[i] = theoreticalDesiredExitRPM(distances[i]);
         }
     }
@@ -126,24 +105,8 @@ public class Shooter extends Subsystem {
     }
     
     public boolean isSpeedGood() {
-        
-        //if(upperRoller.isAtSetPoint() && lowerRoller.isAtSetPoint()){
-        //if (upperRoller.getRPM() - upperSetPoint < Hightolerance[fender])
-        boolean speedGood = true;
-        //}
-        
-        double highToleranceVal;
-        double lowToleranceVal;
-        
-        highToleranceVal = Hightolerance[indexSetPointLower] +
-                ratioBetweenDistances * (Hightolerance[indexSetPointHigher] - Hightolerance[indexSetPointLower]);
-        
-        
-        lowToleranceVal = Lowtolerance[indexSetPointLower] +
-                ratioBetweenDistances * (Lowtolerance[indexSetPointHigher] - Lowtolerance[indexSetPointLower]);
-        
-        
-        return speedGood;
+        return (Math.abs(upperSetpoint - upperRoller.getRPM()) < rpmTolerance) &&
+                (Math.abs(lowerSetpoint - lowerRoller.getRPM()) < rpmTolerance);
     }
 
     /**
@@ -179,28 +142,26 @@ public class Shooter extends Subsystem {
      */
     public double[] lookupRPM(double distanceInches) {
         double[] returnVal = new double[2];
-        
-        if (Math.abs(distanceInches - fenderDistance) < 0.1) {
-            returnVal[0] = fenderBottomRPM;
-            returnVal[1] = fenderTopRPM;
+        for (int i = 0; i < distances.length; i++) {
+            indexSetPointHigher = i;
+            indexSetPointLower = i-1;
+            if (distances[i] > distanceInches) break;
         }
-        else {
-            for (int i = 0; i < distances.length; i++) {
-                indexSetPointHigher = i;
-                indexSetPointLower = i-1;
-                if (distances[i] > distanceInches) break;            
-            }
-            ratioBetweenDistances = (distanceInches - distances[indexSetPointLower])
-                    /
-                    (distances[indexSetPointHigher] - distances[indexSetPointLower]);
+        ratioBetweenDistances = (distanceInches - distances[indexSetPointLower])
+                /
+                (distances[indexSetPointHigher] - distances[indexSetPointLower]);
 
-            double upperRPM = speeds[indexSetPointLower] +
-                    ((speeds[indexSetPointHigher] - speeds[indexSetPointLower]) * 
-                    (ratioBetweenDistances));
-            double lowerRPM = upperRPM + spinRPMDifference;
-            returnVal[0] = lowerRPM;
-            returnVal[1] = upperRPM;
-        }
+        double upperRPM = speeds[indexSetPointLower] +
+                ((speeds[indexSetPointHigher] - speeds[indexSetPointLower]) *
+                (ratioBetweenDistances));
+        double lowerRPM = upperRPM +
+                spinBottomMinusTopRPM[indexSetPointLower] +
+                (spinBottomMinusTopRPM[indexSetPointHigher] - spinBottomMinusTopRPM[indexSetPointLower]) *
+                ratioBetweenDistances;
+        returnVal[0] = lowerRPM;
+        returnVal[1] = upperRPM;
+        lowerSetpoint = lowerRPM;
+        upperSetpoint = upperRPM;
         return returnVal;
     }
 }
