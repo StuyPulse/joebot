@@ -69,5 +69,7 @@ public class JoeBot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        
+        // Debug box actions
     }
 }
