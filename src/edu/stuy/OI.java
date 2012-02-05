@@ -110,6 +110,10 @@ public class OI {
     public Joystick getRightStick() {
         return rightStick;
     }
+    
+    public Joystick getDebugBox() {
+        return debugBox;
+    }
 
     public boolean getShootOverrideButton() {
         try {
