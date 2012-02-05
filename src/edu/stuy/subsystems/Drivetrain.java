@@ -167,7 +167,7 @@ public class Drivetrain extends Subsystem {
         // If direction is forward, it is negative.
         if(direction < 0){
             // Distance at which ramping down occurs.
-            if(sonarDistance < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
+            if(sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
                 speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
             }
             else if(oldSpeed < 1){
@@ -179,7 +179,7 @@ public class Drivetrain extends Subsystem {
         }
         // If direction is backward, it is positive.
         else if(direction > 0){
-            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance < Autonomous.RAMPING_DISTANCE){
+            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.RAMPING_DISTANCE){
                 speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
             }
             else if(oldSpeed < 1){
