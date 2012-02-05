@@ -48,7 +48,27 @@ public class ShooterShootTest {
 
     @Test
     public void testdesiredExitRPM() {
-        System.out.println(Shooter.theoreticalDesiredExitRPM(144));
+        double min, mid, max;
+        
+        System.out.println("key-shots:");
+        min = Shooter.theoreticalDesiredExitRPM(129-5);
+        System.out.println(min);
+        mid = Shooter.theoreticalDesiredExitRPM(129);
+        System.out.println(mid);
+        max = Shooter.theoreticalDesiredExitRPM(129+5);
+        System.out.println(max);
+        System.out.println("error: " + (max - mid));
+        System.out.println("error: " + (mid - min));
+        
+        System.out.println("fender-shots:");
+        min = Shooter.theoreticalDesiredExitRPM(77.25-5);
+        System.out.println(min);
+        mid = Shooter.theoreticalDesiredExitRPM(77.25);
+        System.out.println(mid);
+        max = Shooter.theoreticalDesiredExitRPM(77.25+5);
+        System.out.println(max);
+        System.out.println("error: " + (max - mid));
+        System.out.println("error: " + (mid - min));
     }
 
 }

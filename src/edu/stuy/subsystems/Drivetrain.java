@@ -83,9 +83,7 @@ public class Drivetrain extends Subsystem {
             }
         }, 0.005);
 
-        if (!Devmode.DEV_MODE) {
-            gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
-        }
+        gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
         sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
     
@@ -125,8 +123,7 @@ public class Drivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
-        
-                System.out.println(getSonarVoltage());
+        System.out.println(getSonarVoltage());
     }
 
     public void setGear(boolean high) {
