@@ -5,7 +5,7 @@
 package edu.stuy.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.stuy.subsystems.Shooter;
+import edu.stuy.commands.CommandBase;
 
 /**
  *
@@ -30,5 +30,25 @@ public class Autonomous extends CommandGroup {
 
     public Autonomous() {
         addSequential(new DrivetrainSetGear(true));
+        switch(CommandBase.oi.getAutonSetting()){
+            case 0:
+                addSequential(new AutonSetting1());
+                break;
+            case 1:
+                addSequential(new AutonSetting2());
+                break;
+            case 2:
+                addSequential(new AutonSetting3());
+                break;
+            case 3:
+                addSequential(new AutonSetting4());
+                break;
+            case 4:
+                addSequential(new AutonSetting5());
+                break;
+            default:
+                addSequential(new AutonSetting6());
+                break;
+        }
     }
 }
