@@ -4,17 +4,11 @@
  */
 package edu.stuy.subsystems;
 
-import edu.stuy.Devmode;
 import edu.stuy.RobotMap;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.DriveManualJoystickControl;
-import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
+import edu.stuy.util.VictorRobotDrive;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
@@ -42,23 +36,14 @@ public class Drivetrain extends Subsystem {
     double Kp = 0.035;
     double Ki = 0.0005;
     double Kd = 1.0;
-    Victor frontLeftMotor;
-    Victor rearLeftMotor;
-    Victor frontRightMotor;
-    Victor rearRightMotor;
 
     private double previousReading = -1.0;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
-        frontLeftMotor = new Victor(RobotMap.FRONT_LEFT_MOTOR);
-        rearLeftMotor = new Victor(RobotMap.REAR_LEFT_MOTOR);
-        frontRightMotor = new Victor(RobotMap.FRONT_RIGHT_MOTOR);
-        rearRightMotor = new Victor(RobotMap.REAR_RIGHT_MOTOR);
-        
         setForward();
-        drive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+        drive = new VictorRobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
@@ -79,7 +64,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(profileSpeed(1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(profileSpeed(getSonarDistance_in()), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
@@ -104,11 +89,11 @@ public class Drivetrain extends Subsystem {
     }
     
     /**
-     * Scales sonar voltage reading to centimeters
-     * @return distance from alliance wall in cm, as measured by sonar sensor
+     * Scales sonar voltage reading to inches
+     * @return distance from alliance wall in in, as measured by sonar sensor
      */
-    public double getSonarDistance_cm() {
-        return getSonarVoltage() * 1024 / 5;
+    public double getSonarDistance_in() {
+        return getSonarVoltage() * 512 / 5;
     }
             
     public void initDefaultCommand() {
@@ -182,7 +167,7 @@ public class Drivetrain extends Subsystem {
         // If direction is forward, it is negative.
         if(direction < 0){
             // Distance at which ramping down occurs.
-            if(sonarDistance < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
+            if(sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
                 speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
             }
             else if(oldSpeed < 1){
@@ -194,7 +179,7 @@ public class Drivetrain extends Subsystem {
         }
         // If direction is backward, it is positive.
         else if(direction > 0){
-            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance < Autonomous.RAMPING_DISTANCE){
+            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.RAMPING_DISTANCE){
                 speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
             }
             else if(oldSpeed < 1){

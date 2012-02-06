@@ -62,12 +62,18 @@ public class JoeBot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
+
+                // Note that OI starts a bunch of other commands
+                // by attaching them to joystick buttons.  Check OI.java
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        //
         Scheduler.getInstance().run();
+        
+        // Debug box actions
     }
 }
