@@ -159,29 +159,76 @@ public class Shooter extends Subsystem {
      * Otherwise, this will use the line of best fit to find the optimal speed for the
      * intermediate distance.
      *
-     * Warning: intermediate distance calculations have not yet been implemented.
-     *
-     * @param distanceInches
-     * @return
+     * @param distanceInches Distance from robot's shooter to the backboard.
+     * @return Two-element array containing the speed in RPM that the shooter's
+     * bottom and top rollers should run, respectively.
+     * 
      */
     public double[] lookupRPM(double distanceInches) {
         double[] returnVal = new double[2];
-        for (int i = 0; i < distances.length; i++) {
+        
+        // Linear search for given distance in distances array.
+        // The distances[] array must be sorted from smallest to largest.
+        // Assuming the generic case of a distance that's not already in the table,
+        // this loop finds which two points it's in between.
+        for (int i = 1; i < distances.length; i++) {
             indexSetPointHigher = i;
             indexSetPointLower = i-1;
             if (distances[i] > distanceInches) break;
+            
+            /* Keep iterating through the loop until we find the two points that
+             * distanceInches is in-between.  We know we're finished when
+             *     distances[i-1] < distanceInches < distances[i]
+             *
+             * Suppose we're searching for distanceInches = 35, in this array:
+             *      | 10  | 20  | 30  | 40 | 50 |
+             * 
+             * First we try this (start at i=1, i-1 = 0):
+             *      | i-1 | i   |     |    |    |
+             *   distances[1] is 20, less than distance inches.  We want distances[i]
+             *   to be the nearest point *above* distanceInches, so if it's less than
+             *   distanceInches then we haven't found the right point yet.
+             * 
+             * So we continue:
+             *      |     | i-1 | i   |    |    |
+             *   distances[2] is 30, still less than distance inches.
+             * 
+             * Next:
+             *      |     |     | i-1 |  i |    |
+             * 
+             * Finally distances[3] > distanceInches, and since we already found
+             * distances[2] < distanceInches, we know that the two closest points
+             * for 35 are indices 2 and 3 (values 30 and 40).
+             */
         }
+        
+        /** ratioBetweenDistances gives a value between 0-1 describing where
+         *  distanceInches is between its two closest points.
+         *    0.0: exactly equal to distances[indexSetPointLower]
+         *    0.5: halfway between
+         *    1.0: exactly equal to distances[indexSetPointHigher]
+         */
         ratioBetweenDistances = (distanceInches - distances[indexSetPointLower])
                 /
                 (distances[indexSetPointHigher] - distances[indexSetPointLower]);
-
+        
+        /* Set upperRPM to be a speed between indexSetPointLower and indexSetPointHigher,
+         * in the same proportion as the distances.
+         * Basically plot an intermediate point on the line connecting the two closest points.
+         */
         double upperRPM = speeds[indexSetPointLower] +
                 ((speeds[indexSetPointHigher] - speeds[indexSetPointLower]) *
                 (ratioBetweenDistances));
+        
+        /* Add some backspin to lowerRPM, again using a value in between the two closest points.
+         * Interpolation doesn't do so much here, but at least it sets it to the
+         * correct spin for backboard vs. swish
+         */
         double lowerRPM = upperRPM +
                 spinBottomMinusTopRPM[indexSetPointLower] +
                 (spinBottomMinusTopRPM[indexSetPointHigher] - spinBottomMinusTopRPM[indexSetPointLower]) *
                 ratioBetweenDistances;
+        
         returnVal[0] = lowerRPM;
         returnVal[1] = upperRPM;
         lowerSetpoint = lowerRPM;
