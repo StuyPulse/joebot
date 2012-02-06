@@ -64,7 +64,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(profileSpeed(getSonarDistance_cm()), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(profileSpeed(getSonarDistance_in()), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
@@ -92,9 +92,10 @@ public class Drivetrain extends Subsystem {
      * Scales sonar voltage reading to centimeters
      * @return distance from alliance wall in centimeters, as measured by sonar sensor
      */
-    public double getSonarDistance_cm() {
+    public double getSonarDistance_in() {
         final int Vcc = 5; // 5 volts
-        return getSonarVoltage() * 1024 / Vcc; // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
+        double cm = getSonarVoltage() * 1024 / Vcc; // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
+        return cm / 2.54; // 1 cm is 1/2.54 inch
     }
             
     public void initDefaultCommand() {
