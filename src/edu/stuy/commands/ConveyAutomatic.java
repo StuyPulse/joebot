@@ -23,6 +23,8 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        System.out.println("shooter is at speed? " + shooter.isSpeedGood());
+        System.out.println("ball at top? " + conveyor.ballAtTop());
         if (shooter.isSpeedGood() || !conveyor.ballAtTop()) {
             conveyor.convey();
         }
