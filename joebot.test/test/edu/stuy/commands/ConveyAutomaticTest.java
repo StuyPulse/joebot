@@ -102,14 +102,14 @@ public class ConveyAutomaticTest {
     }
 
     public void makeSpeedGood() {
-        double distanceInches = Shooter.distances[Shooter.keyIndex];
+        double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
         ShooterShoot cmd = new ShooterShoot(distanceInches);
         cmd.initialize();
         cmd.execute();
     }
 
     public void makeSpeedBad() {
-        double distanceInches = Shooter.distances[Shooter.keyIndex]+50;
+        double distanceInches = Shooter.distances[Shooter.KEY_INDEX]+50;
         ShooterShoot cmd = new ShooterShoot(distanceInches);
         cmd.initialize();
         cmd.execute();

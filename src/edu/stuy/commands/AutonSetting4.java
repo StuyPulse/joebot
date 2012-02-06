@@ -18,7 +18,7 @@ public class AutonSetting4 extends CommandGroup {
      * Shoots at key.
      */
     public AutonSetting4() {
-        double distanceInches = Shooter.distances[Shooter.fenderIndex];
+        double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
         addSequential(new ShooterShoot(2.0, distanceInches));
     }
 }
