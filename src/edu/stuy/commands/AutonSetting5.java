@@ -20,6 +20,6 @@ public class AutonSetting5 extends CommandGroup {
 
         double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
         addSequential(new ShooterMoveFlyWheel(2.0, distanceInches));
-
+        addSequential(new ConveyAutomatic(4)); //value of 4 is hardcoded. Please change.
     }
 }

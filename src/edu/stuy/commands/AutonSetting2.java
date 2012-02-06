@@ -27,6 +27,6 @@ public class AutonSetting2 extends CommandGroup {
 
         double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
         addSequential(new ShooterMoveFlyWheel(2.0, distanceInches));
-
+        addSequential(new ConveyAutomatic(4));//4 second coded in raw. Needs to be changed.
     }
 }
