@@ -193,4 +193,55 @@ public class Drivetrain extends Subsystem {
         }
         return speed * direction;
     }
+    
+    
+    /**
+     * Profiles based on generic distance measurement to wall and the distance to travel.
+     * Speed/Distance follows the following profile:
+     * |
+     * |
+     * |     _________
+     * |    /         \ 
+     * |   /           \
+     * |__/             \__
+     * |               
+     * ------------------------------
+     * 
+     * NOTE: Possible issues include negative differences in case a sensor measures a greater
+     *       distance than actually exists.
+     * 
+     * TODO: Make this work in the backwards direction, i.e. towards the bridge.
+     * 
+     * @param distToWall Distance from the robot to the Alliance wall
+     * @param totalDistToTravel Total distance for the robot to travel
+     * @return The speed at which to drive the motors, from -1.0 to 1.0
+     */
+    public double profileSpeed_Bravo(double distToWall, double totalDistToTravel) {
+        double outputSpeed = 0;
+        double thirdOfDistToTravel = totalDistToTravel / 3;
+        double difference = totalDistToTravel - distToWall;
+        double stage = difference / totalDistToTravel;
+        
+        // If we are in the first third of travel, ramp up speed proportionally to distance from first third
+        if (stage < 1/3) {
+            outputSpeed = difference / (thirdOfDistToTravel); // Scales from 0->1, approaching 1 as the distance traveled 
+                                                                      //approaches the first third
+        }
+        else if (stage < 2/3) {
+            outputSpeed = 1.0;
+        }
+        else {
+            outputSpeed = distToWall / (thirdOfDistToTravel);
+        }
+        
+        
+        if (outputSpeed < 0.3) {  // Ensure the output is at minimum 0.3
+            outputSpeed = 0.3;
+        }
+        
+        //TODO: Make this work in the backwards direction
+        
+        return outputSpeed * direction;
+        
+    }
 }
