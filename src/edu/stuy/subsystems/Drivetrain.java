@@ -90,10 +90,12 @@ public class Drivetrain extends Subsystem {
     
     /**
      * Scales sonar voltage reading to inches
-     * @return distance from alliance wall in in, as measured by sonar sensor
+     * @return distance from alliance wall in inches, as measured by sonar sensor
      */
     public double getSonarDistance_in() {
-        return getSonarVoltage() * 512 / 5;
+        final int Vcc = 5; // 5 volts
+        return getSonarVoltage() * 512 / Vcc; // MaxSonar EZ1 input units are in (Vcc/512) / inch; multiply by (512/Vcc) to get inches
+                                              // TODO: Use constant 1024 instead of 512 when using the EZ4 MaxSonar instead.
     }
             
     public void initDefaultCommand() {
