@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package edu.stuy.commands;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
@@ -10,12 +11,22 @@ package edu.stuy.commands;
  */
 public class ConveyAutomatic extends CommandBase {
     
+    private double timer, begintime;
+
     public ConveyAutomatic() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(conveyor);
         requires(shooter);
+        begintime = Timer.getFPGATimestamp();
+        timer = 90000;
     }
+
+    public ConveyAutomatic(double time) {
+        this();
+        timer = time;
+    }
+
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -25,7 +36,7 @@ public class ConveyAutomatic extends CommandBase {
     protected void execute() {
         System.out.println("shooter is at speed? " + shooter.isSpeedGood());
         System.out.println("ball at top? " + conveyor.ballAtTop());
-        if (shooter.isSpeedGood() || !conveyor.ballAtTop()) {
+        if (shooter.isSpeedGood() || !conveyor.ballAtTop() || Timer.getFPGATimestamp() - begintime < timer) {
             conveyor.convey();
         }
         else {
