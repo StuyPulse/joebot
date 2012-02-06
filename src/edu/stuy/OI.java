@@ -82,7 +82,7 @@ public class OI {
         }
 
         // Defaults shooter speed to fender
-        double distanceInches = Shooter.distances[Shooter.fenderIndex];
+        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
 
 
         if (!Devmode.DEV_MODE) {

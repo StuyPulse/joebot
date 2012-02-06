@@ -70,34 +70,34 @@ public class Shooter extends Subsystem {
      */
     public static double[] spinBottomMinusTopRPM = new double[numDistances];
 
-    public static int fenderIndex = 0;
-    public static int fenderSideIndex = 1;
-    public static int fenderWideIndex = 2;
-    public static int highestBackboardIndex = 3;
-    public static int lowestSwishIndex = 4;
-    public static int fenderLongIndex = 5;
-    public static int fenderSideWideIndex = 6;
-    public static int fenderSideLongIndex = 7;
-    public static int keyIndex = 8;
+    public static final int FENDER_INDEX = 0;
+    public static final int FENDER_SIDE_INDEX = 1;
+    public static final int FENDER_WIDE_INDEX = 2;
+    public static final int HIGHEST_BACKBOARD_INDEX = 3;
+    public static final int LOWEST_SWISH_INDEX = 4;
+    public static final int FENDER_LONG_INDEX = 5;
+    public static final int FENDER_SIDE_WIDE_INDEX = 6;
+    public static final int FENDER_SIDE_LONG_INDEX = 7;
+    public static final int KEY_INDEX = 8;
 
     static {
-        distances[fenderIndex] = fenderDepth + shooterToBumper;
-        distances[fenderSideIndex] = halfFenderWidth + shooterToBumper;
-        distances[fenderWideIndex] = distances[fenderIndex] + wideBot;
-        distances[highestBackboardIndex] = distances[fenderWideIndex];
-        distances[lowestSwishIndex] = distances[highestBackboardIndex];
-        distances[fenderSideWideIndex] = distances[fenderSideIndex] + wideBot;
-        distances[fenderLongIndex] = distances[fenderIndex] + longBot;
-        distances[fenderSideLongIndex] = distances[fenderSideIndex] + longBot;
-        distances[keyIndex] = 144.0 + shooterToBumper;
+        distances[FENDER_INDEX] = fenderDepth + shooterToBumper;
+        distances[FENDER_SIDE_INDEX] = halfFenderWidth + shooterToBumper;
+        distances[FENDER_WIDE_INDEX] = distances[FENDER_INDEX] + wideBot;
+        distances[HIGHEST_BACKBOARD_INDEX] = distances[FENDER_WIDE_INDEX];
+        distances[LOWEST_SWISH_INDEX] = distances[HIGHEST_BACKBOARD_INDEX];
+        distances[FENDER_SIDE_WIDE_INDEX] = distances[FENDER_SIDE_INDEX] + wideBot;
+        distances[FENDER_LONG_INDEX] = distances[FENDER_INDEX] + longBot;
+        distances[FENDER_SIDE_LONG_INDEX] = distances[FENDER_SIDE_INDEX] + longBot;
+        distances[KEY_INDEX] = 144.0 + shooterToBumper;
         
         for (int i = 0; i < distances.length; i++) {
             System.out.println(distances[i]);
         }
-        for (int i = 0; i <= highestBackboardIndex; i++) {
+        for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speeds[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter);
         }
-        for (int i = lowestSwishIndex; i < numDistances; i++) {
+        for (int i = LOWEST_SWISH_INDEX; i < numDistances; i++) {
             speeds[i] = theoreticalDesiredExitRPM(distances[i]);
         }
     }
