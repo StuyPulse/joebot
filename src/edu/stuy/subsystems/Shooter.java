@@ -45,6 +45,16 @@ public class Shooter extends Subsystem {
     public int indexSetPointHigher;
     public double ratioBetweenDistances; // 0-1 position of distance setpoint between two closest points.
 
+    /**
+     * The maximum error in speed that will still result in a basket (5 inches
+     * leeway on either end). Technically this is different for each distance
+     * (both as a sheer RPM and as a percentage), but it is almost the same at
+     * the fender and the key, the closest and farthest shots.
+     * 
+     * Farther shots have slightly lower tolerance, so this number represents
+     * the minimum tolerance among all values (i.e. the tolerance at the key).
+     * This way any shot made from within this tolerance will go the correct distance.
+     */
     public static double rpmTolerance = 16;
 
     /** Positions **/
@@ -98,8 +108,8 @@ public class Shooter extends Subsystem {
         speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
         speedLight.setDirection(Relay.Direction.kForward);
 
-        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER);
-        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER);
+        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
+        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
     }
 
     public void initDefaultCommand() {
@@ -118,8 +128,8 @@ public class Shooter extends Subsystem {
      * on or off the speed light accordingly.
      */
     public boolean isSpeedGood() {
-        boolean speedGood = (Math.abs(upperSetpoint - upperRoller.getRPM()) < rpmTolerance) &&
-                            (Math.abs(lowerSetpoint - lowerRoller.getRPM()) < rpmTolerance);
+        boolean speedGood = upperRoller.isAtSetPoint() &&
+                            lowerRoller.isAtSetPoint();
         speedLight.set(speedGood ? Relay.Value.kOff : Relay.Value.kOn);
         return speedGood;
     }
