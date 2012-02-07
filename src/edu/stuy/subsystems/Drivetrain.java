@@ -13,13 +13,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
 
-
 /**
  *
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
+
     public static class SpeedRamp {
+
         /**
          * Profiles based on generic distance measurement to wall and the distance to travel.
          * Speed/Distance follows the following profile:
@@ -49,14 +50,12 @@ public class Drivetrain extends Subsystem {
             double stage = difference / totalDistToTravel;
 
             // If we are in the first third of travel, ramp up speed proportionally to distance from first third
-            if (stage < 1.0/3.0) {
+            if (stage < 1.0 / 3.0) {
                 outputSpeed = difference / (thirdOfDistToTravel); // Scales from 0->1, approaching 1 as the distance traveled 
-                                                                          //approaches the first third
-            }
-            else if (stage < 2.0/3.0) {
+                //approaches the first third
+            } else if (stage < 2.0 / 3.0) {
                 outputSpeed = 1.0;
-            }
-            else {
+            } else {
                 outputSpeed = distToFinish / (thirdOfDistToTravel); // Scales from 1->0 during the final third of distance travel.
             }
 
@@ -71,15 +70,15 @@ public class Drivetrain extends Subsystem {
 
         }
     }
-    
     private int direction;
     private double speed;
     public RobotDrive drive;
     public Solenoid gearShift;
+    Solenoid gearShiftLow;
+    Solenoid gearShiftHigh; 
     AnalogChannel sonar;
     public Encoder encoderLeft;
     public Encoder encoderRight;
-
     Gyro gyro;
     SendablePIDController controller;
     final int WHEEL_RADIUS = 3;
@@ -89,7 +88,6 @@ public class Drivetrain extends Subsystem {
     double Kp = 0.035;
     double Ki = 0.0005;
     double Kd = 1.0;
-
     private double previousReading = -1.0;
 
     // Put methods for controlling this subsystem
@@ -100,7 +98,7 @@ public class Drivetrain extends Subsystem {
         drive.setSafetyEnabled(false);
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-        
+
         encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
         encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
 
@@ -120,22 +118,23 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-          drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( 105.25 - getAvgDistance(), 105.25, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo(105.25 - getAvgDistance(), 105.25, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
-        gearShift = new Solenoid(RobotMap.GEAR_SHIFT);
-        sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
+       gearShiftLow = new Solenoid(RobotMap.GEAR_SHIFT_LOW);
+       gearShiftHigh = new Solenoid(RobotMap.GEAR_SHIFT_LOW);
+       sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
     }
-    
+
     /**
      * Gets the analog voltage of the MaxBotics ultrasonic sensor, and debounces the input
      * @return Analog voltage reading from 0 to 5
      */
-    public double getSonarVoltage () {
-        double newReading = sonar.getVoltage ();
+    public double getSonarVoltage() {
+        double newReading = sonar.getVoltage();
         double goodReading = previousReading;
-        if (previousReading - (-1) < .001 || (newReading - previousReading) < .5){
+        if (previousReading - (-1) < .001 || (newReading - previousReading) < .5) {
             goodReading = newReading;
             previousReading = newReading;
         } else {
@@ -143,7 +142,7 @@ public class Drivetrain extends Subsystem {
         }
         return goodReading;
     }
-    
+
     /**
      * Scales sonar voltage reading to centimeters
      * @return distance from alliance wall in centimeters, as measured by sonar sensor
@@ -153,14 +152,14 @@ public class Drivetrain extends Subsystem {
         double cm = getSonarVoltage() * 1024 / Vcc; // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
         return cm / 2.54; // 1 cm is 1/2.54 inch
     }
-            
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
         setDefaultCommand(new DriveManualJoystickControl());
     }
 
-    public Command getDefaultCommand(){
+    public Command getDefaultCommand() {
         return super.getDefaultCommand();
     }
 
@@ -170,18 +169,19 @@ public class Drivetrain extends Subsystem {
     }
 
     public void setGear(boolean high) {
-        gearShift.set(high);
+        gearShiftHigh.set(high);
+        gearShiftLow.set(!high);
     }
-    
+
     public boolean getGear() {
         return gearShift.get();
     }
-    
+
     public void initController() {
         controller.setSetpoint(0);
         controller.enable();
     }
-    
+
     public void endController() {
         controller.disable();
     }
@@ -199,7 +199,7 @@ public class Drivetrain extends Subsystem {
         return (encoderLeft.getDistance() + encoderRight.getDistance()) / 2.0;
 
     }
-    
+
     /**
      * Reset both encoders's tick, distance, etc. count to zero
      */
@@ -208,14 +208,13 @@ public class Drivetrain extends Subsystem {
         encoderRight.reset();
     }
 
-    
     /* Defines direction for autonomus as forwards */
-    public final void setForward(){
+    public final void setForward() {
         direction = -1;
     }
 
     /* Defines direction for autonomus as backwards */
-    public final void setBackwards(){
+    public final void setBackwards() {
         direction = 1;
     }
 
@@ -223,27 +222,24 @@ public class Drivetrain extends Subsystem {
     public double profileSpeed(double sonarDistance) {
         double oldSpeed = speed;
         // If direction is forward, it is negative.
-        if(direction < 0){
+        if (direction < 0) {
             // Distance at which ramping down occurs.
-            if(sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
+            if (sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE) {
                 speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
-            }
-            else if(oldSpeed < 1){
+            } else if (oldSpeed < 1) {
                 speed = oldSpeed + 0.1;
             }
-            if(speed < 0.1){
+            if (speed < 0.1) {
                 speed = 0.1;
             }
-        }
-        // If direction is backward, it is positive.
-        else if(direction > 0){
-            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.RAMPING_DISTANCE){
+        } // If direction is backward, it is positive.
+        else if (direction > 0) {
+            if (Autonomous.INCHES_TO_BRIDGE - sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.RAMPING_DISTANCE) {
                 speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
-            }
-            else if(oldSpeed < 1){
+            } else if (oldSpeed < 1) {
                 speed = oldSpeed + 0.1;
             }
-            if(speed < 0.1){
+            if (speed < 0.1) {
                 speed = 0.1;
             }
         }
