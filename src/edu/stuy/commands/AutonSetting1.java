@@ -16,9 +16,9 @@ public class AutonSetting1 extends CommandGroup {
     public AutonSetting1() {
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_FENDER));
 
-        // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
         double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-        addSequential(new ShooterShoot(2.0, distanceInches));
+        addSequential(new ShooterMoveFlyWheel(distanceInches));
+        addSequential(new ConveyAutomatic(4)); //4 sec is a raw value. Change.
 
         // TODO: Get tusks running concurrently with backing up, have them retract after backuptobridge is done
         addParallel(new TusksExtend());
