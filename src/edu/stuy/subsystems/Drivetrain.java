@@ -19,6 +19,59 @@ import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
+    public static class SpeedRamp {
+        /**
+         * Profiles based on generic distance measurement to wall and the distance to travel.
+         * Speed/Distance follows the following profile:
+         * |
+         * |
+         * |     _________
+         * |    /         \ 
+         * |   /           \
+         * |__/             \__
+         * |               
+         * ------------------------------
+         * 
+         * NOTE: Possible issues include negative differences in case a sensor measures a greater
+         *       distance than actually exists.
+         * 
+         * TODO: Make this work in the backwards direction, i.e. towards the bridge.
+         * 
+         * @param distToFinish Distance from the robot to the Fender
+         * @param totalDistToTravel Total distance for the robot to travel
+         * @param direction -1 for forward, 1 for backward
+         * @return The speed at which to drive the motors, from -1.0 to 1.0
+         */
+        public static double profileSpeed_Bravo(double distToFinish, double totalDistToTravel, int direction) {
+            double outputSpeed = 0;
+            double thirdOfDistToTravel = totalDistToTravel / 3.0;
+            double difference = totalDistToTravel - distToFinish;
+            double stage = difference / totalDistToTravel;
+
+            // If we are in the first third of travel, ramp up speed proportionally to distance from first third
+            if (stage < 1.0/3.0) {
+                outputSpeed = difference / (thirdOfDistToTravel); // Scales from 0->1, approaching 1 as the distance traveled 
+                                                                          //approaches the first third
+            }
+            else if (stage < 2.0/3.0) {
+                outputSpeed = 1.0;
+            }
+            else {
+                outputSpeed = distToFinish / (thirdOfDistToTravel); // Scales from 1->0 during the final third of distance travel.
+            }
+
+
+            if (outputSpeed < 0.3) {  // Ensure the output is at minimum 0.3
+                outputSpeed = 0.3;
+            }
+
+            //TODO: Make this work in the backwards direction
+
+            return outputSpeed * direction;
+
+        }
+    }
+    
     private int direction;
     private double speed;
     public RobotDrive drive;
@@ -54,6 +107,12 @@ public class Drivetrain extends Subsystem {
         encoderLeft.start();
         encoderRight.start();
 
+        encoderLeft.getDistance();
+        encoderLeft.getDirection();
+
+
+
+
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
 
@@ -64,7 +123,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(profileSpeed(getSonarDistance_in()), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+          drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( 105.25 - getAvgDistance(), 105.25, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
@@ -192,56 +251,5 @@ public class Drivetrain extends Subsystem {
             }
         }
         return speed * direction;
-    }
-    
-    
-    /**
-     * Profiles based on generic distance measurement to wall and the distance to travel.
-     * Speed/Distance follows the following profile:
-     * |
-     * |
-     * |     _________
-     * |    /         \ 
-     * |   /           \
-     * |__/             \__
-     * |               
-     * ------------------------------
-     * 
-     * NOTE: Possible issues include negative differences in case a sensor measures a greater
-     *       distance than actually exists.
-     * 
-     * TODO: Make this work in the backwards direction, i.e. towards the bridge.
-     * 
-     * @param distToWall Distance from the robot to the Alliance wall
-     * @param totalDistToTravel Total distance for the robot to travel
-     * @return The speed at which to drive the motors, from -1.0 to 1.0
-     */
-    public double profileSpeed_Bravo(double distToWall, double totalDistToTravel) {
-        double outputSpeed = 0;
-        double thirdOfDistToTravel = totalDistToTravel / 3;
-        double difference = totalDistToTravel - distToWall;
-        double stage = difference / totalDistToTravel;
-        
-        // If we are in the first third of travel, ramp up speed proportionally to distance from first third
-        if (stage < 1/3) {
-            outputSpeed = difference / (thirdOfDistToTravel); // Scales from 0->1, approaching 1 as the distance traveled 
-                                                                      //approaches the first third
-        }
-        else if (stage < 2/3) {
-            outputSpeed = 1.0;
-        }
-        else {
-            outputSpeed = distToWall / (thirdOfDistToTravel); // Scales from 1->0 during the final third of distance travel.
-        }
-        
-        
-        if (outputSpeed < 0.3) {  // Ensure the output is at minimum 0.3
-            outputSpeed = 0.3;
-        }
-        
-        //TODO: Make this work in the backwards direction
-        
-        return outputSpeed * direction;
-        
     }
 }
