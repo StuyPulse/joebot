@@ -107,9 +107,6 @@ public class Drivetrain extends Subsystem {
         encoderLeft.start();
         encoderRight.start();
 
-        encoderLeft.getDistance();
-        encoderLeft.getDirection();
-
 
 
 
