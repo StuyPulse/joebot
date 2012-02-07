@@ -111,7 +111,6 @@ public class ConveyAutomaticTest {
     public void makeSpeedBad() {
         double distanceInches = Shooter.distances[Shooter.KEY_INDEX]+50;
         ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
-        cmd.initialize();
         cmd.execute();
     }
 
