@@ -12,8 +12,6 @@ import edu.stuy.subsystems.Shooter;
  */
 public class ShooterMoveFlyWheel extends CommandBase {
 
-    boolean hasTimeout = false;
-    double timeout;
     double distanceInches;
     
     public ShooterMoveFlyWheel(double distanceInches) {
@@ -21,26 +19,14 @@ public class ShooterMoveFlyWheel extends CommandBase {
         setDistanceInches(distanceInches);
     }
     
-    public ShooterMoveFlyWheel(double timeout, double distanceInches) {
-        this(distanceInches);
-        hasTimeout = true;
-        this.timeout = timeout;
-    }
-
-    
-
     public void setDistanceInches(double distanceInches) {
         this.distanceInches = distanceInches;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        if (hasTimeout) {
-            setTimeout(timeout);
-        }
-    }
 
-    
+    }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
@@ -50,9 +36,6 @@ public class ShooterMoveFlyWheel extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (hasTimeout) {
-            return isTimedOut();
-        }
         return false;
     }
 

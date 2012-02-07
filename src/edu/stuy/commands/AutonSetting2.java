@@ -26,7 +26,7 @@ public class AutonSetting2 extends CommandGroup {
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
 
         double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-        addSequential(new ShooterMoveFlyWheel(2.0, distanceInches));
+        addSequential(new ShooterMoveFlyWheel(distanceInches));
         addSequential(new ConveyAutomatic(4));//4 second coded in raw. Needs to be changed.
     }
 }
