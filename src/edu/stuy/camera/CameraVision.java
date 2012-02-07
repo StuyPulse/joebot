@@ -38,6 +38,7 @@ public class CameraVision {
 
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
+    private double targetCenter;
 
     public CameraVision() {
         camera = AxisCamera.getInstance();  // get an instance ofthe camera
@@ -65,10 +66,9 @@ public class CameraVision {
             BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
 
             ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
-            for (int i = 0; i < reports.length; i++) {                                // print results
-                ParticleAnalysisReport r = reports[i];
-                System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
-            }
+            ParticleAnalysisReport r = reports[0];
+            System.out.println("Center of mass x: " + r.center_mass_x);
+            targetCenter = r.center_mass_x;
             System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
 
             /**
@@ -88,4 +88,13 @@ public class CameraVision {
             ex.printStackTrace();
         }
     }
+
+    /**
+     * Displays the center of the largest, rectangular target detected
+     * @return targetCenter
+     */
+    public double getTargetCenter() {
+        return targetCenter;
+    }
+
 }
