@@ -49,11 +49,10 @@ public class SpeedProfileTest {
         // start at key, move closer to wall in 1/4-inch steps
         
         double distToTravel = 144 - 38.75;
-        double distToWall = 144;
         int forward = 1;
         for (double distanceFromStart = 0; distanceFromStart <= 144; distanceFromStart += 0.25) {
-            double sonarDistance = distToWall - distanceFromStart;
-            double speed = SpeedRamp.profileSpeed_Bravo(sonarDistance - 38.75, distToTravel, forward);
+            double distanceRemaining = distToTravel - distanceFromStart;
+            double speed = SpeedRamp.profileSpeed_Bravo(distanceRemaining, distToTravel, forward);
             System.out.println(distanceFromStart + ", " + speed);
         }
     }
