@@ -102,11 +102,11 @@ public class Drivetrain extends Subsystem {
         encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
         encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
 
-        encoderLeft.start();
-        encoderRight.start();
-
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
+
+        encoderLeft.start();
+        encoderRight.start();
 
 
         gyro = new Gyro(RobotMap.GYRO_CHANNEL);
