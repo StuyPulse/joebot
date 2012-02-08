@@ -164,7 +164,6 @@ public class Drivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
-        System.out.println(getSonarVoltage());
     }
 
     public void setGear(boolean high) {
