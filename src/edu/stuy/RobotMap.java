@@ -57,6 +57,8 @@ public class RobotMap {
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
     public static final int SPEED_BAD_LIGHT = 2;
+    public static final int TARGET_LIGHT = 3;
+     
 
     /* SOLENOID */
     public static final int GEAR_SHIFT = 1;
