@@ -172,6 +172,7 @@ public class Drivetrain extends Subsystem {
     }
     
     public void initController() {
+        resetEncoders();
         controller.setSetpoint(0);
         controller.enable();
     }
