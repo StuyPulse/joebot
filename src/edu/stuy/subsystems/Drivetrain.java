@@ -70,8 +70,6 @@ public class Drivetrain extends Subsystem {
         }
     }
     
-    private int direction;
-    private double speed;
     public RobotDrive drive;
     public Solenoid gearShift;
     AnalogChannel sonar;
@@ -93,7 +91,6 @@ public class Drivetrain extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Drivetrain() {
-        setForward();
         drive = new VictorRobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
@@ -216,16 +213,5 @@ public class Drivetrain extends Subsystem {
     public void resetEncoders() {
         encoderLeft.reset();
         encoderRight.reset();
-    }
-
-    
-    /* Defines direction for autonomus as forwards */
-    public final void setForward(){
-        direction = -1;
-    }
-
-    /* Defines direction for autonomus as backwards */
-    public final void setBackwards(){
-        direction = 1;
     }
 }
