@@ -39,7 +39,7 @@ public class Drivetrain extends Subsystem {
          * 
          * @param distToFinish Distance from the robot to the Fender
          * @param totalDistToTravel Total distance for the robot to travel
-         * @param direction -1 for forward, 1 for backward
+         * @param direction 1 for forward, -1 for backward
          * @return The speed at which to drive the motors, from -1.0 to 1.0
          */
         public static double profileSpeed_Bravo(double distToFinish, double totalDistToTravel, int direction) {
@@ -50,7 +50,7 @@ public class Drivetrain extends Subsystem {
 
             // If we are in the first third of travel, ramp up speed proportionally to distance from first third
             if (stage < 1.0/3.0) {
-                outputSpeed = 0.5 + (1-0.5)/(1.0/3.0) * stage; // Scales from 0->1, approaching 1 as the distance traveled
+                outputSpeed = 0.5 + (1-0.5)/(1.0/3.0) * stage; // Scales from 0.5->1, approaching 1 as the distance traveled
                                                                           //approaches the first third
             }
             else if (stage < 2.0/3.0) {
