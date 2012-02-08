@@ -228,35 +228,4 @@ public class Drivetrain extends Subsystem {
     public final void setBackwards(){
         direction = 1;
     }
-
-    // Updates speed relative to distance, the distance from the fender.
-    public double profileSpeed(double sonarDistance) {
-        double oldSpeed = speed;
-        // If direction is forward, it is negative.
-        if(direction < 0){
-            // Distance at which ramping down occurs.
-            if(sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
-                speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
-            }
-            else if(oldSpeed < 1){
-                speed = oldSpeed + 0.1;
-            }
-            if(speed < 0.1){
-                speed = 0.1;
-            }
-        }
-        // If direction is backward, it is positive.
-        else if(direction > 0){
-            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.RAMPING_DISTANCE){
-                speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
-            }
-            else if(oldSpeed < 1){
-                speed = oldSpeed + 0.1;
-            }
-            if(speed < 0.1){
-                speed = 0.1;
-            }
-        }
-        return speed * direction;
-    }
 }
