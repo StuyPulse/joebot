@@ -16,6 +16,5 @@ public class AutonBackUpToBridge extends AutonDrive {
     // Called just before this Command runs the first time
     protected void initialize() {
         super.initialize(); // Enables "drive straight" controller
-        drivetrain.setBackwards();
     }
 }
