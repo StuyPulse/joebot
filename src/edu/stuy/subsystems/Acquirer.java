@@ -19,7 +19,7 @@ public class Acquirer extends Subsystem {
     // here. Call these from Commands.
     
     public Acquirer() {
-        roller = new Victor(RobotMap.ACQUIRER_UPPER_ROLLER);
+        roller = new Victor(RobotMap.ACQUIRER_ROLLER);
     }
 
     public void initDefaultCommand() {
@@ -29,5 +29,17 @@ public class Acquirer extends Subsystem {
     
     public void roll(double speed) {
         roller.set(speed);
+    }
+
+    public void stop() {
+        roll(0);
+    }
+
+    public void acquire() {
+        roll(1);
+    }
+
+    public void acquireReverse() {
+        roll(-1);
     }
 }
