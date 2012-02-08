@@ -22,7 +22,7 @@ public class AcquirerStop extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        acquirer.roll(0, 0);
+        acquirer.roll(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
