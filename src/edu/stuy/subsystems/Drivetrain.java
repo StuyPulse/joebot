@@ -105,9 +105,6 @@ public class Drivetrain extends Subsystem {
         encoderLeft.start();
         encoderRight.start();
 
-
-
-
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
 
@@ -118,7 +115,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-          drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( 105.25 - getAvgDistance(), 105.25, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( 105.25 - getAvgDistance(), 105.25, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
@@ -130,8 +127,8 @@ public class Drivetrain extends Subsystem {
      * Gets the analog voltage of the MaxBotics ultrasonic sensor, and debounces the input
      * @return Analog voltage reading from 0 to 5
      */
-    public double getSonarVoltage () {
-        double newReading = sonar.getVoltage ();
+    public double getSonarVoltage() {
+        double newReading = sonar.getVoltage();
         double goodReading = previousReading;
         if (previousReading - (-1) < .001 || (newReading - previousReading) < .5){
             goodReading = newReading;
@@ -182,6 +179,19 @@ public class Drivetrain extends Subsystem {
     public void endController() {
         controller.disable();
     }
+    
+    /**
+     * Sets the ramping distance by constructing a new PID controller.
+     * @param distance inches to travel
+     */
+    public void setDriveStraightDistance(final double distance) {
+        controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
+
+            public void pidWrite(double output) {
+                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( distance - getAvgDistance(), distance, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+            }
+        }, 0.005);
+    }
 
     public void driveStraight() {
         controller.setSetpoint(0);  // Go straight
@@ -192,9 +202,7 @@ public class Drivetrain extends Subsystem {
      * @return Average of the distances (inches) read by each encoder since they were last reset.
      */
     public double getAvgDistance() {
-
         return (encoderLeft.getDistance() + encoderRight.getDistance()) / 2.0;
-
     }
     
     /**
