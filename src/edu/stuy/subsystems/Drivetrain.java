@@ -112,7 +112,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( 105.25 - getAvgDistance(), 105.25, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo(Autonomous.INCHES_TO_FENDER - getAvgDistance(), Autonomous.INCHES_TO_FENDER, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
@@ -190,7 +190,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( distance - getAvgDistance(), distance, direction), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo(distance - getAvgDistance(), distance, direction), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
     }
