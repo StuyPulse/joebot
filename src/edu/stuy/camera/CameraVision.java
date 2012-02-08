@@ -1,5 +1,7 @@
 package edu.stuy.camera;
 
+import edu.stuy.RobotMap;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
@@ -36,11 +38,17 @@ import edu.wpi.first.wpilibj.image.RGBImage;
  */
 public class CameraVision {
 
+    //TODO get number from Peter
+    public static final int TARGET_POSITION = 7;
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
+    private Relay targetLight;
     private double targetCenter;
 
     public CameraVision() {
+    targetLight = new Relay(RobotMap.TARGET_LIGHT);
+    targetLight.setDirection(Relay.Direction.kForward);
+
         camera = AxisCamera.getInstance();  // get an instance ofthe camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 400, false);
@@ -87,6 +95,12 @@ public class CameraVision {
         } catch (NIVisionException ex) {
             ex.printStackTrace();
         }
+        if(isFacingTarget()){
+            targetLight.set(Relay.Value.kOn);
+        }else{
+            targetLight.set(Relay.Value.kOff);
+        
+        }
     }
 
     /**
@@ -96,5 +110,12 @@ public class CameraVision {
     public double getTargetCenter() {
         return targetCenter;
     }
+
+    public boolean isFacingTarget() {
+        double absValue = Math.abs(TARGET_POSITION - targetCenter);
+        return absValue < 50;
+
+    }
+
 
 }
