@@ -24,17 +24,20 @@ public class ShooterManualSpeed extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         setManualSpeed();
+
     }
 
     public void setManualSpeed() {
-        double rpm = 0;
+        double rpmTop = 0;
+        double rpmBottom = 0;
         try {
-            rpm = SmartDashboard.getDouble("setRPM");
+            rpmTop = SmartDashboard.getDouble("setRPMtop");
+            rpmBottom = SmartDashboard.getDouble("setRPMbottom");
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        shooter.setFlywheelSpeeds(rpm, rpm);
+        shooter.setFlywheelSpeeds(rpmTop, rpmBottom);
     }
 
     // Make this return true when this Command no longer needs to run execute()
