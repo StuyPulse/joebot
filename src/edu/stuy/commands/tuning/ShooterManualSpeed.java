@@ -19,12 +19,13 @@ public class ShooterManualSpeed extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("rpmTop, rpmBottom"); // column headers for CSV
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         setManualSpeed();
-
+        showSpeed();
     }
 
     public void setManualSpeed() {
@@ -38,6 +39,19 @@ public class ShooterManualSpeed extends CommandBase {
             e.printStackTrace();
         }
         shooter.setFlywheelSpeeds(rpmTop, rpmBottom);
+    }
+
+    public void showSpeed() {
+        double rpmTop = shooter.upperRoller.getRPM();
+        double rpmBottom = shooter.lowerRoller.getRPM();
+        try {
+            SmartDashboard.putDouble("getRPMtop", rpmTop);
+            SmartDashboard.putDouble("getRPMbottom", rpmBottom);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(rpmTop + ", " + rpmBottom);
     }
 
     // Make this return true when this Command no longer needs to run execute()
