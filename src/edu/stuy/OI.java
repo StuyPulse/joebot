@@ -13,7 +13,38 @@ public class OI {
     private Joystick rightStick;
     private Joystick shooterStick;
     private Joystick debugBox;
-
+    
+    // Copied from last year's DesDroid code. 
+    
+//    public double getRawAnalogVoltage() {
+//        try {
+//            return enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
+//        }
+//        catch (EnhancedIOException e) {
+//            FileIO.reportError("OI", e, "Failed to read height button input");
+//            setStuffsBrokenLED(true);
+//            return 0;
+//        }
+//    }
+//    
+//    public double getMaxVoltage() {
+//        try {
+//            return enhancedIO.getAnalogIn(OI_MAX_VOLTAGE_INPUT);
+//        }
+//        catch (EnhancedIOException e) {
+//            FileIO.reportError("OI", e, "Failed to get max voltage");
+//            setStuffsBrokenLED(true);
+//            return 2.2;
+//        }
+//    }
+//    
+//    
+//    public int getHeightButton() {
+//        return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 6)) + .5);
+//    }
+    
+    // Copied from last year's DesDroid code. 
+    
     public static final int DISTANCE_BUTTON_AUTO = 0;
     public static final int DISTANCE_BUTTON_FAR = 1;
     public static final int DISTANCE_BUTTON_FENDER_WIDE = 2;
@@ -25,15 +56,17 @@ public class OI {
     private DriverStationEnhancedIO enhancedIO;
     
     // EnhancedIO digital input
-    private static final int BIT_1_CHANNEL = 1;
-    private static final int BIT_2_CHANNEL = 2;
-    private static final int BIT_3_CHANNEL = 3;
-    private static final int ACQUIRER_IN_SWITCH_CHANNEL = 4;
-    private static final int ACQUIRER_OUT_SWITCH_CHANNEL = 5;
-    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 6;
-    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 7;
-    private static final int SHOOT_BUTTON_CHANNEL = 8;
-    private static final int OVERRIDE_BUTTON_CHANNEL = 9;
+    
+    private static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
+    private static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
+    private static final int FLYWHEEL_OFF_BUTTON_CHANNEL = 3;
+    private static final int BIT_1_CHANNEL = 4;
+    private static final int BIT_2_CHANNEL = 5;
+    private static final int BIT_3_CHANNEL = 6;
+    private static final int SHOOT_BUTTON_CHANNEL = 7;
+    private static final int OVERRIDE_BUTTON_CHANNEL = 8;
+    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 9;
+    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 10;
     
     public double distanceInches;
     
