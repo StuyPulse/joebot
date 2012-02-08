@@ -11,16 +11,18 @@ package edu.stuy.commands;
  */
 public abstract class AutonDrive extends CommandBase {
     private double inches_to_travel;
+    private int direction;
     
-    public AutonDrive(double inches) {
+    public AutonDrive(double inches, int direction) {
         // Use requires() here to declare subsystem dependencies
         requires(drivetrain);
         inches_to_travel = inches;
+        this.direction = direction;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        drivetrain.setDriveStraightDistance(inches_to_travel);
+        drivetrain.setDriveStraightDistanceAndDirection(inches_to_travel, direction);
         drivetrain.initController(); // Enables "drive straight" controller
     }
 

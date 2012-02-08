@@ -182,14 +182,18 @@ public class Drivetrain extends Subsystem {
     }
     
     /**
-     * Sets the ramping distance by constructing a new PID controller.
+     * Sets the ramping distance and direction by constructing a new PID controller.
      * @param distance inches to travel
      */
-    public void setDriveStraightDistance(final double distance) {
+    public void setDriveStraightDistanceAndDirection(final double distance, final int direction) {
+        if (controller != null) {
+            controller.disable();
+            controller.free();
+        }
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( distance - getAvgDistance(), distance, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( distance - getAvgDistance(), distance, direction), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
     }
