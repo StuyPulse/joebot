@@ -82,11 +82,11 @@ public class OI {
         }
 
         // Defaults shooter speed to fender
-        double distanceInches = Shooter.distances[Shooter.fenderIndex];
+        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
 
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot(distanceInches));
+            new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches));
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             
