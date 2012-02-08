@@ -16,32 +16,28 @@ public class OI {
     
     // Copied from last year's DesDroid code. 
     
-//    public double getRawAnalogVoltage() {
-//        try {
-//            return enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
-//        }
-//        catch (EnhancedIOException e) {
-//            FileIO.reportError("OI", e, "Failed to read height button input");
-//            setStuffsBrokenLED(true);
-//            return 0;
-//        }
-//    }
-//    
-//    public double getMaxVoltage() {
-//        try {
-//            return enhancedIO.getAnalogIn(OI_MAX_VOLTAGE_INPUT);
-//        }
-//        catch (EnhancedIOException e) {
-//            FileIO.reportError("OI", e, "Failed to get max voltage");
-//            setStuffsBrokenLED(true);
-//            return 2.2;
-//        }
-//    }
-//    
-//    
-//    public int getHeightButton() {
-//        return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 6)) + .5);
-//    }
+    public double getRawAnalogVoltage() {
+        try {
+            return enhancedIO.getAnalogIn(MAX_ANALOG_CHANNEL);
+        }
+        catch (EnhancedIOException e) {
+            return 0;
+        }
+    }
+    
+    public double getMaxVoltage() {
+        try {
+            return enhancedIO.getAnalogIn(MAX_ANALOG_CHANNEL);
+        }
+        catch (EnhancedIOException e) {
+            return 2.2;
+        }
+    }
+    
+    
+    public int getHeightButton() {
+        return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 6)) + .5);
+    }
     
     // Copied from last year's DesDroid code. 
     
@@ -83,6 +79,7 @@ public class OI {
     private static final int DISTANCE_BUTTONS_CHANNEL = 1;
     private static final int SPEED_TRIM_POT_CHANNEL = 2;
     private static final int SPIN_TRIM_POT_CHANNEL = 3;
+    private static final int MAX_ANALOG_CHANNEL = 4;
     
     public OI() {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
