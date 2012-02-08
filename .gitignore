@@ -2,6 +2,6 @@
 j2meclasses/
 build/
 suite/
-nbproject/private/
+nbproject/private/private.xml
 joebot.test/nbproject/private/
 VIRSYSJ
