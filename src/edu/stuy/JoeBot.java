@@ -35,7 +35,6 @@ public class JoeBot extends IterativeRobot {
         // autonomousCommand = new ExampleCommand();
 
         if (!Devmode.DEV_MODE) {
-            autonomousCommand = new Autonomous();
             Compressor compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
             compressor.start();
         }
@@ -46,6 +45,7 @@ public class JoeBot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        autonomousCommand = new Autonomous();
         autonomousCommand.start();
     }
 
