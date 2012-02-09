@@ -174,6 +174,32 @@ public class OI {
             return -1; // Do nothing in case of failure
         }
     }
+    
+    public int getDebugBoxBinaryAutonSetting() {
+        int switchNum = 0;
+        int[] binaryValue = new int[4];
+
+        boolean[] dIO = {debugBox.getRawButton(1), debugBox.getRawButton(2), debugBox.getRawButton(3), debugBox.getRawButton(4)};
+
+        for (int i = 0; i < 4; i++) {
+            if (dIO[i]) {
+                binaryValue[i] = 1;
+            }
+            else {
+                binaryValue[i] = 0;
+            }
+        }
+
+        binaryValue[0] *= 8; // convert all binaryValues to decimal values
+        binaryValue[1] *= 4;
+        binaryValue[2] *= 2;
+
+        for (int i = 0; i < 4; i++) { // finish binary -> decimal conversion
+            switchNum += binaryValue[i];
+        }
+
+        return switchNum;
+    }
 
     public double getSpeedPot() {
         try {
