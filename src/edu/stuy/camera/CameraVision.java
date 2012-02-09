@@ -112,7 +112,7 @@ public class CameraVision {
     }
 
     public boolean isFacingTarget() {
-        double absValue = Math.abs(TARGET_POSITION - targetCenter);
+        double absValue = Math.abs(CAMERA_CENTER - targetCenter);
         return absValue < 50;
 
     }
