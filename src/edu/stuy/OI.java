@@ -2,6 +2,7 @@ package edu.stuy;
 
 import edu.stuy.commands.*;
 import edu.stuy.subsystems.Shooter;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 import edu.wpi.first.wpilibj.Joystick;
@@ -50,6 +51,7 @@ public class OI {
     public static final int DISTANCE_BUTTON_STOP = 6;
     
     private DriverStationEnhancedIO enhancedIO;
+    private DriverStation ds;
     
     // EnhancedIO digital input
     
@@ -82,6 +84,8 @@ public class OI {
     private static final int MAX_ANALOG_CHANNEL = 4;
     
     public OI() {
+        ds = DriverStation.getInstance();
+        enhancedIO = ds.getEnhancedIO();
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
         shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
