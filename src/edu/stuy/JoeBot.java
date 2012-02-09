@@ -61,7 +61,9 @@ public class JoeBot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to 
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		autonomousCommand.cancel();
+        if (autonomousCommand != null) {
+            autonomousCommand.cancel();
+        }
 
                 // Note that OI starts a bunch of other commands
                 // by attaching them to joystick buttons.  Check OI.java
