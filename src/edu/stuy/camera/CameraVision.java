@@ -39,7 +39,7 @@ import edu.wpi.first.wpilibj.image.RGBImage;
 public class CameraVision {
 
     //TODO get number from Peter
-    public static final int TARGET_POSITION = 7;
+    public static final int CAMERA_CENTER = 320;
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
     private Relay targetLight;
