@@ -5,6 +5,7 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
+import edu.stuy.commands.AcquirerStop;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -24,7 +25,7 @@ public class Acquirer extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new AcquirerStop());
     }
     
     public void roll(double speed) {
