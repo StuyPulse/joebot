@@ -59,8 +59,8 @@ public class Drivetrain extends Subsystem {
             else if (stage < 1) {
                 outputSpeed = distToFinish / (thirdOfDistToTravel); // Scales from 1->0 during the final third of distance travel.
             }
-            if (outputSpeed < 0.5) {
-                outputSpeed = 0.5;
+            if (outputSpeed < 0.3) {
+                outputSpeed = 0.3;
             }
 
             //TODO: Make this work in the backwards direction
