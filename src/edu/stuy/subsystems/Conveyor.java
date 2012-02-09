@@ -15,8 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Danny
  */
 public class Conveyor extends Subsystem {
-    public Victor upperRoller;
-    public Victor lowerRoller;
+    public Victor roller;
     public DigitalInput upperSensor;
     public DigitalInput lowerSensor;
 
@@ -29,27 +28,25 @@ public class Conveyor extends Subsystem {
     }
     
     public Conveyor() {
-        upperRoller = new Victor(RobotMap.CONVEYOR_UPPER_ROLLER);
-        lowerRoller = new Victor(RobotMap.CONVEYOR_LOWER_ROLLER);
+        roller = new Victor(RobotMap.CONVEYOR_UPPER_ROLLER);
         upperSensor = new DigitalInput(RobotMap.UPPER_CONVEYOR_SENSOR);
         lowerSensor = new DigitalInput(RobotMap.LOWER_CONVEYOR_SENSOR);
     }
     
-    public void roll(double upperSpeed, double lowerSpeed) {
-        upperRoller.set(upperSpeed);
-        lowerRoller.set(lowerSpeed);
+    public void roll(double speed) {
+        roller.set(speed);
     }
 
     public void convey() {
-        roll(1, 1);
+        roll(1);
     }
 
     public void conveyReverse() {
-        roll(-1, -1);
+        roll(-1);
     }
 
     public void stop() {
-        roll(0, 0);
+        roll(0);
     }
 
     public boolean ballAtTop() {
@@ -60,11 +57,7 @@ public class Conveyor extends Subsystem {
         return lowerSensor.get();
     }
 
-    public double getUpperRoller() {
-        return upperRoller.get();
-    }
-
-    public double getLowerRoller() {
-        return lowerRoller.get();
+    public double getRoller() {
+        return roller.get();
     }
 }

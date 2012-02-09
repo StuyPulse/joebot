@@ -35,8 +35,6 @@ public class Drivetrain extends Subsystem {
          * NOTE: Possible issues include negative differences in case a sensor measures a greater
          *       distance than actually exists.
          * 
-         * TODO: Make this work in the backwards direction, i.e. towards the bridge.
-         * 
          * @param distToFinish Distance from the robot to the Fender
          * @param totalDistToTravel Total distance for the robot to travel
          * @param direction 1 for forward, -1 for backward
@@ -62,8 +60,6 @@ public class Drivetrain extends Subsystem {
             if (outputSpeed < 0.3) {
                 outputSpeed = 0.3;
             }
-
-            //TODO: Make this work in the backwards direction
 
             return outputSpeed * direction;
 
@@ -112,7 +108,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo(Autonomous.INCHES_TO_FENDER - getAvgDistance(), Autonomous.INCHES_TO_FENDER, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo(Autonomous.INCHES_TO_FENDER - getAvgDistance(), Autonomous.INCHES_TO_FENDER, 1), -output);
             }
         }, 0.005);
 
@@ -190,7 +186,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo(distance - getAvgDistance(), distance, direction), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+                drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo(distance - getAvgDistance(), distance, direction), -output);
             }
         }, 0.005);
     }
