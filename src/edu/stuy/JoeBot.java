@@ -12,6 +12,7 @@ import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
@@ -23,7 +24,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class JoeBot extends IterativeRobot {
 
-    Autonomous autonomousCommand;
+    Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -45,7 +46,6 @@ public class JoeBot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand.setSetting(CommandBase.oi.getAutonSetting());
         autonomousCommand.start();
     }
 

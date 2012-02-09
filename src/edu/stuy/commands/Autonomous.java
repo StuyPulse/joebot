@@ -12,7 +12,6 @@ import edu.stuy.commands.CommandBase;
  * @author Kevin Wang
  */
 public class Autonomous extends CommandGroup {
-    private int setting = 0;
 
     /* For inches to fender */
     private static final int DIST_FENDER_TO_KEY = 110;
@@ -33,14 +32,7 @@ public class Autonomous extends CommandGroup {
 
     public Autonomous() {
         addSequential(new DrivetrainSetGear(true));
-    }
-    
-    public void setSetting(int setting) {
-        this.setting = setting;
-    }
-    
-    public void start() {
-        switch(setting){
+        switch(CommandBase.oi.getAutonSetting()){
             case 0:
                 addSequential(new AutonSetting1());
                 break;
@@ -60,6 +52,5 @@ public class Autonomous extends CommandGroup {
                 addSequential(new AutonSetting6());
                 break;
         }
-        super.start();
     }
 }
