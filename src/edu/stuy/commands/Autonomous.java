@@ -4,13 +4,14 @@
  */
 package edu.stuy.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.stuy.commands.CommandBase;
 
 /**
  *
  * @author Kevin Wang
  */
-public class Autonomous extends CommandBase {
+public class Autonomous extends CommandGroup {
 
     /* For inches to fender */
     private static final int DIST_FENDER_TO_KEY = 110;
@@ -28,54 +29,28 @@ public class Autonomous extends CommandBase {
     
     public static final double RAMPING_DISTANCE = 5;
     public static final double RAMPING_CONSTANT = 10/9;
-    
-    public Autonomous() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-        new DrivetrainSetGear(true).start();
-        Command autonCommand;
+    public Autonomous() {
+        addSequential(new DrivetrainSetGear(true));
         switch(CommandBase.oi.getAutonSetting()){
             case 0:
-                autonCommand = new AutonSetting1();
+                addSequential(new AutonSetting1());
                 break;
             case 1:
-                autonCommand = new AutonSetting2();
+                addSequential(new AutonSetting2());
                 break;
             case 2:
-                autonCommand = new AutonSetting3();
+                addSequential(new AutonSetting3());
                 break;
             case 3:
-                autonCommand = new AutonSetting4();
+                addSequential(new AutonSetting4());
                 break;
             case 4:
-                autonCommand = new AutonSetting5();
+                addSequential(new AutonSetting5());
                 break;
             default:
-                autonCommand = new AutonSetting6();
+                addSequential(new AutonSetting6());
                 break;
         }
-        autonCommand.start();
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
     }
 }
