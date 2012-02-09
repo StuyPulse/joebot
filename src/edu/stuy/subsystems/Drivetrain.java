@@ -46,7 +46,7 @@ public class Drivetrain extends Subsystem {
             double outputSpeed = 0;
             double thirdOfDistToTravel = totalDistToTravel / 3.0;
             double difference = totalDistToTravel - distToFinish;
-            double stage = difference / totalDistToTravel;
+            double stage = Math.abs(difference / totalDistToTravel);
 
             // If we are in the first third of travel, ramp up speed proportionally to distance from first third
             if (stage < 1.0/3.0) {
@@ -59,8 +59,8 @@ public class Drivetrain extends Subsystem {
             else if (stage < 1) {
                 outputSpeed = distToFinish / (thirdOfDistToTravel); // Scales from 1->0 during the final third of distance travel.
             }
-            else {
-                outputSpeed = 0;
+            if (outputSpeed < 0.5) {
+                outputSpeed = 0.5;
             }
 
             //TODO: Make this work in the backwards direction

@@ -22,6 +22,7 @@ public abstract class AutonDrive extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        drivetrain.resetEncoders();
         drivetrain.setDriveStraightDistanceAndDirection(inches_to_travel, direction);
         drivetrain.initController(); // Enables "drive straight" controller
     }
