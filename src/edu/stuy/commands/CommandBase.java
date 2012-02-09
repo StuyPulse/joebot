@@ -59,4 +59,9 @@ public abstract class CommandBase extends Command {
     public CommandBase() {
         super();
     }
+
+    public void cancel() {
+        end();
+        super.cancel();
+    }
 }
