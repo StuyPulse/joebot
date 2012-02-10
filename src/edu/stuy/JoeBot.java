@@ -66,7 +66,6 @@ public class JoeBot extends IterativeRobot {
 
                 // Note that OI starts a bunch of other commands
                 // by attaching them to joystick buttons.  Check OI.java
-                (new ConveyorPushDown()).start();
     }
 
     /**
