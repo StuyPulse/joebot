@@ -1,5 +1,7 @@
 package edu.wpi.first.wpilibj.templates;
 
+import java.lang.Math;
+
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
@@ -36,6 +38,8 @@ import edu.wpi.first.wpilibj.image.RGBImage;
  */
 public class CameraTest extends SimpleRobot {
 
+    static final int HALF_FOV = 24;          // half of field of view for AXIS 206 Camera in degrees
+    static final int TARGET_WIDTH = 2;       // width of rects in feet
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
 
@@ -58,17 +62,26 @@ public class CameraTest extends SimpleRobot {
                  *
                  */
                 ColorImage image = camera.getImage();
-                BinaryImage rectImage = image.thresholdHSL(136, 182, 45, 255, 116, 255);
-                rectImage.write("myimage.jpg");
+                BinaryImage rectImage = image.thresholdHSL(136,182,0,255,116,255);
+                rectImage.write("red.png"); 
+
                 //BinaryImage thresholdImage = rectImage.thresholdRGB(25, 255, 0, 45, 0, 47);   // keep only red objects
                 BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
                 BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
+                convexHullImage.write("box.png");
                 BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
 
                 ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
                 for (int i = 0; i < reports.length; i++) {                                // print results
                     ParticleAnalysisReport r = reports[i];
+                    // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
+                    // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
+                    int fovFeet = (360 * 2) / r.boundingRectWidth;
+                    System.out.println("Our field of view in feet is: " + fovFeet);
                     System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
+                    // Calculate distance using tan(theta) = [half-width of target]/[distance to target]
+                    // [distance to target] = [half-width of target]/tan(theta)
+                    System.out.println("Distance to target: " + ((fovFeet / 2) / 2.1348966977217008));
                 }
                 System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
 
@@ -78,13 +91,15 @@ public class CameraTest extends SimpleRobot {
                  * free() will cause the memory to accumulate over each pass of
                  * this loop.
                  */
-                filteredImage.free();
-                convexHullImage.free();
-                bigObjectsImage.free();
-                rectImage.free();
-                image.free();
-
-            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
+                 filteredImage.free();
+                 convexHullImage.free();
+                 bigObjectsImage.free();
+                 rectImage.free();
+                 image.free();
+                 
+//            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
+//                ex.printStackTrace();
+            } catch (AxisCameraException ex) {
                 ex.printStackTrace();
             } catch (NIVisionException ex) {
                 ex.printStackTrace();
