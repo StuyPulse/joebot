@@ -27,7 +27,7 @@ public class TusksRetract extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return tusks.getTuskState() < 0;
+        return !tusks.isExtended();
     }
 
     // Called once after isFinished returns true
