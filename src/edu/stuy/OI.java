@@ -15,33 +15,6 @@ public class OI {
     private Joystick shooterStick;
     private Joystick debugBox;
     
-    // Copied from last year's DesDroid code. 
-    
-    public double getRawAnalogVoltage() {
-        try {
-            return enhancedIO.getAnalogIn(MAX_ANALOG_CHANNEL);
-        }
-        catch (EnhancedIOException e) {
-            return 0;
-        }
-    }
-    
-    public double getMaxVoltage() {
-        try {
-            return enhancedIO.getAnalogIn(MAX_ANALOG_CHANNEL);
-        }
-        catch (EnhancedIOException e) {
-            return 2.2;
-        }
-    }
-    
-    
-    public int getHeightButton() {
-        return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 6)) + .5);
-    }
-    
-    // Copied from last year's DesDroid code. 
-    
     public static final int DISTANCE_BUTTON_AUTO = 0;
     public static final int DISTANCE_BUTTON_FAR = 1;
     public static final int DISTANCE_BUTTON_FENDER_WIDE = 2;
@@ -57,14 +30,13 @@ public class OI {
     
     private static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
     private static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
-    private static final int FLYWHEEL_OFF_BUTTON_CHANNEL = 3;
-    private static final int BIT_1_CHANNEL = 4;
-    private static final int BIT_2_CHANNEL = 5;
-    private static final int BIT_3_CHANNEL = 6;
-    private static final int SHOOT_BUTTON_CHANNEL = 7;
-    private static final int OVERRIDE_BUTTON_CHANNEL = 8;
-    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 9;
-    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 10;
+    private static final int BIT_1_CHANNEL = 3;
+    private static final int BIT_2_CHANNEL = 4;
+    private static final int BIT_3_CHANNEL = 5;
+    private static final int SHOOT_BUTTON_CHANNEL = 6;
+    private static final int OVERRIDE_BUTTON_CHANNEL = 7;
+    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
+    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
     
     public double distanceInches;
     
@@ -138,6 +110,76 @@ public class OI {
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
         }
     }
+    
+    // Copied from last year's DesDroid code. 
+    
+    public double getRawAnalogVoltage() {
+        try {
+            return enhancedIO.getAnalogIn(MAX_ANALOG_CHANNEL);
+        }
+        catch (EnhancedIOException e) {
+            return 0;
+        }
+    }
+    
+    public double getMaxVoltage() {
+        try {
+            return enhancedIO.getAnalogIn(MAX_ANALOG_CHANNEL);
+        }
+        catch (EnhancedIOException e) {
+            return 2.2;
+        }
+    }
+    
+    /**
+     * Determines which height button is pressed. All (7 logically because
+     * side buttons are wired together) buttons are wired by means of
+     * resistors to one analog input. Depending on the button that is pressed, a
+     * different voltage is read by the analog input. Each resistor reduces the
+     * voltage by about 1/7 the maximum voltage.
+     *
+     * @return An integer value representing the height button that was pressed.
+     */
+    public int getHeightButton() {
+        return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
+    }
+    
+    public double getDistanceFromHeightButton(){
+        double distance = 0;
+        switch(getHeightButton()){
+            // Automatic
+            case 1:
+                distance = CommandBase.drivetrain.getSonarDistance_in();
+                break;
+            // Full Throttle
+            case 2:
+                distance = 725; // TODO: Max distance to max speed?
+                break;
+            // Fender + Long
+            case 3:
+                distance = Shooter.distances[Shooter.FENDER_LONG_INDEX];
+                break;
+            // Fender + Wide
+            case 4:
+                distance = Shooter.distances[Shooter.FENDER_WIDE_INDEX];
+                break;
+            // Fender
+            case 5:
+                distance = Shooter.distances[Shooter.FENDER_INDEX];
+                break;
+            // Side Fender
+            case 6:
+                distance = Shooter.distances[Shooter.FENDER_SIDE_INDEX];
+                break;
+            // Stop Flywheels
+            default:
+                distance = 0;
+                break;
+        }
+        return distance;
+    }
+    
+    // Copied from last year's DesDroid code. 
     
     public Joystick getLeftStick() {
         return leftStick;
