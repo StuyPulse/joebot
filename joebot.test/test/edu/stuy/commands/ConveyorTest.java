@@ -45,8 +45,8 @@ public class ConveyorTest {
     // public void hello() {}
     @Test
     public void conveyorExists() {
-        System.out.println(CommandBase.conveyor);
-        assertTrue(CommandBase.conveyor != null);
+        //System.out.println(CommandBase.conveyor);
+        assertNotNull(CommandBase.conveyor);
     }
     
     @Test

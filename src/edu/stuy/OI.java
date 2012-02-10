@@ -88,35 +88,39 @@ public class OI {
         enhancedIO = ds.getEnhancedIO();
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
+
         shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
         debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
         
         try {
-            enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(ACQUIRER_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(ACQUIRER_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(CONVEYOR_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(CONVEYOR_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(SHOOT_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(OVERRIDE_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            
-            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            if (!Devmode.DEV_MODE) {
+                enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(ACQUIRER_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(ACQUIRER_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(CONVEYOR_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(CONVEYOR_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(SHOOT_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(OVERRIDE_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            }
         } catch (EnhancedIOException e) {
         }
 
         // Defaults shooter speed to fender
-        distanceInches = Shooter.distances[Shooter.fenderIndex];
+        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
+
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot(distanceInches));
+            new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches));
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             
@@ -141,6 +145,10 @@ public class OI {
     
     public Joystick getRightStick() {
         return rightStick;
+    }
+    
+    public Joystick getDebugBox() {
+        return debugBox;
     }
 
     public boolean getShootOverrideButton() {
@@ -199,6 +207,32 @@ public class OI {
         catch (EnhancedIOException e) {
             return -1; // Do nothing in case of failure
         }
+    }
+    
+    public int getDebugBoxBinaryAutonSetting() {
+        int switchNum = 0;
+        int[] binaryValue = new int[4];
+
+        boolean[] dIO = {debugBox.getRawButton(1), debugBox.getRawButton(2), debugBox.getRawButton(3), debugBox.getRawButton(4)};
+
+        for (int i = 0; i < 4; i++) {
+            if (dIO[i]) {
+                binaryValue[i] = 1;
+            }
+            else {
+                binaryValue[i] = 0;
+            }
+        }
+
+        binaryValue[0] *= 8; // convert all binaryValues to decimal values
+        binaryValue[1] *= 4;
+        binaryValue[2] *= 2;
+
+        for (int i = 0; i < 4; i++) { // finish binary -> decimal conversion
+            switchNum += binaryValue[i];
+        }
+
+        return switchNum;
     }
 
     public double getSpeedPot() {

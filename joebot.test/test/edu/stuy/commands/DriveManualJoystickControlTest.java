@@ -67,10 +67,9 @@ public class DriveManualJoystickControlTest {
         }
         cmd.end();
 
-        // TODO: get encoder readings from drivetrain object
         double leftDist = CommandBase.drivetrain.encoderLeft.getDistance();
         double rightDist = CommandBase.drivetrain.encoderRight.getDistance();
-        System.out.println(leftDist + " " + rightDist);
+        System.out.println(leftDist + ", " + rightDist);
         assertTrue(leftDist > 0);
         assertTrue(rightDist > 0);
         assertEquals(leftDist, rightDist, 2.0);

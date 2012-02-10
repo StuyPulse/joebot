@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.stuy.commands;
 
 import edu.stuy.subsystems.Shooter;
@@ -21,12 +20,13 @@ public class AutonSetting2 extends CommandGroup {
 
         addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
 
+        addSequential(new TusksRetract());
+
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_BRIDGE));
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
-        double distanceInches = Shooter.distances[Shooter.fenderIndex];
-        addSequential(new ShooterShoot(2.0, distanceInches));
 
-        addSequential(new TusksRetract());
+        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
+        addSequential(new ShooterMoveFlyWheel(distanceInches));
+        addSequential(new ConveyAutomatic(4));//4 second coded in raw. Needs to be changed.
     }
 }
-

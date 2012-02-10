@@ -102,12 +102,16 @@ public class ConveyAutomaticTest {
     }
 
     public void makeSpeedGood() {
-        double rpm = Shooter.speeds[Shooter.keyIndex];
-        CommandBase.shooter.setFlywheelSpeeds(rpm, rpm);
+        double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
+        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
+        cmd.initialize();
+        cmd.execute();
     }
 
     public void makeSpeedBad() {
-        CommandBase.shooter.upperRoller.jaguar.value = Shooter.speeds[Shooter.keyIndex] + 50;
+        double distanceInches = Shooter.distances[Shooter.KEY_INDEX]+50;
+        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
+        cmd.execute();
     }
 
     public void makeBallAtTop() {
