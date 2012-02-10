@@ -87,8 +87,10 @@ public class OI {
 
         if (!Devmode.DEV_MODE) {
             new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches));
-            new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
+            new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
+            new JoystickButton(leftStick, 1). whenPressed(new TusksExtend());
+            new JoystickButton(leftStick, 2). whenPressed(new TusksRetrct());
             
             // OI box switches
             new DigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
