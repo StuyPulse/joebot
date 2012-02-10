@@ -22,7 +22,6 @@ public class AutonSetting1 extends CommandGroup {
 
         // TODO: Get tusks running concurrently with backing up, have them retract after backuptobridge is done
         addParallel(new TusksExtend());
-
         addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE));
         addSequential(new TusksRetract());
 
