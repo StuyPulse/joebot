@@ -44,7 +44,10 @@ public class CameraVision {
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
     private Relay targetLight;
     private double targetCenter;
-
+    double distance;
+    int numRectangles;
+    double[] massCenter;
+    
     public CameraVision() {
     targetLight = new Relay(RobotMap.TARGET_LIGHT);
     targetLight.setDirection(Relay.Direction.kForward);
@@ -57,51 +60,64 @@ public class CameraVision {
 
     public void doCamera() {
         try {
-            /**
-             * Do the image capture with the camera and apply the algorithm
-             * described above. This sample will either get images from the
-             * camera or from an image file stored in the top level directory in
-             * the flash memory on the cRIO. The file name in this case is
-             * "10ft2.jpg"
-             *
-             */
-            ColorImage image = camera.getImage();
-            BinaryImage rectImage = image.thresholdHSL(136, 182, 45, 255, 116, 255);
-            rectImage.write("myimage.jpg");
-            //BinaryImage thresholdImage = rectImage.thresholdRGB(25, 255, 0, 45, 0, 47);   // keep only red objects
-            BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
-            BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
-            BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
+                /**
+                 * Do the image capture with the camera and apply the algorithm
+                 * described above. This sample will either get images from the
+                 * camera or from an image file stored in the top level
+                 * directory in the flash memory on the cRIO. The file name in
+                 * this case is "10ft2.jpg"
+                 *
+                 */
+                ColorImage image = camera.getImage();
+                BinaryImage rectImage = image.thresholdHSL(136,182,0,255,116,255);
+                //rectImage.write("red.png"); 
 
-            ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
-            ParticleAnalysisReport r = reports[0];
-            System.out.println("Center of mass x: " + r.center_mass_x);
-            targetCenter = r.center_mass_x;
-            System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
+                
+                BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
+                BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
+                //convexHullImage.write("box.png");
+                BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
 
-            /**
-             * all images in Java must be freed after they are used since they
-             * are allocated out of C data structures. Not calling free() will
-             * cause the memory to accumulate over each pass of this loop.
-             */
-            filteredImage.free();
-            convexHullImage.free();
-            bigObjectsImage.free();
-            rectImage.free();
-            image.free();
+                ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
+                for (int i = 0; i < reports.length; i++) {                                // print results
+                   
+                    ParticleAnalysisReport r = reports[i];
+                    // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
+                    // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
+                    int fovFeet = (360 * 2) / r.boundingRectWidth;
+                    distance = ((fovFeet / 2) / 2.1348966977217008);
+                    massCenter = new double[3];
+                    massCenter[i] = r.center_mass_x;
+                    //System.out.println("Our field of view in feet is: " + fovFeet);
+                    //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
+                    // Calculate distance using tan(theta) = [half-width of target]/[distance to target]
+                    // [distance to target] = [half-width of target]/tan(theta)
+   
+                    //System.out.println("Distance to target: " + ((fovFeet / 2) / 2.1348966977217008));
+                }
+                System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
 
-            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
+                /**
+                 * all images in Java must be freed after they are used since
+                 * they are allocated out of C data structures. Not calling
+                 * free() will cause the memory to accumulate over each pass of
+                 * this loop.
+                 */
+                 filteredImage.free();
+                 convexHullImage.free();
+                 bigObjectsImage.free();
+                 rectImage.free();
+                 image.free();
+                 
+//            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
+//                ex.printStackTrace();
+            } catch (AxisCameraException ex) {
                 ex.printStackTrace();
-        } catch (NIVisionException ex) {
-            ex.printStackTrace();
+            } catch (NIVisionException ex) {
+                ex.printStackTrace();
+            }
         }
-        if(isFacingTarget()){
-            targetLight.set(Relay.Value.kOn);
-        }else{
-            targetLight.set(Relay.Value.kOff);
-        
-        }
-    }
+    
 
     /**
      * Displays the center of the largest, rectangular target detected
@@ -110,7 +126,18 @@ public class CameraVision {
     public double getTargetCenter() {
         return targetCenter;
     }
+    
+    public double getDistance() {
+        return distance;
+}
 
+    public double getCenterMass(int rectid){
+        if((rectid < 4) && (rectid >= 0))
+            return massCenter[rectid];
+        else
+            return 0;
+            }
+    
     public boolean isFacingTarget() {
         double absValue = Math.abs(CAMERA_CENTER - targetCenter);
         return absValue < 50;
