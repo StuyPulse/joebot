@@ -19,53 +19,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
-    public static class SpeedRamp {
-        /**
-         * Profiles based on generic distance measurement to wall and the distance to travel.
-         * Speed/Distance follows the following profile:
-         * |
-         * |
-         * |     _________
-         * |    /         \ 
-         * |   /           \
-         * |__/             \__
-         * |               
-         * ------------------------------
-         * 
-         * NOTE: Possible issues include negative differences in case a sensor measures a greater
-         *       distance than actually exists.
-         * 
-         * @param distToFinish Distance from the robot to the Fender
-         * @param totalDistToTravel Total distance for the robot to travel
-         * @param direction 1 for forward, -1 for backward
-         * @return The speed at which to drive the motors, from -1.0 to 1.0
-         */
-        public static double profileSpeed_Bravo(double distToFinish, double totalDistToTravel, int direction) {
-            double outputSpeed = 0;
-            double thirdOfDistToTravel = totalDistToTravel / 3.0;
-            double difference = totalDistToTravel - distToFinish;
-            double stage = Math.abs(difference / totalDistToTravel);
-
-            // If we are in the first third of travel, ramp up speed proportionally to distance from first third
-            if (stage < 1.0/3.0) {
-                outputSpeed = 0.5 + (1-0.5)/(1.0/3.0) * stage; // Scales from 0.5->1, approaching 1 as the distance traveled
-                                                                          //approaches the first third
-            }
-            else if (stage < 2.0/3.0) {
-                outputSpeed = 1.0;
-            }
-            else if (stage < 1) {
-                outputSpeed = distToFinish / (thirdOfDistToTravel); // Scales from 1->0 during the final third of distance travel.
-            }
-            if (outputSpeed < 0.3) {
-                outputSpeed = 0.3;
-            }
-
-            return outputSpeed * direction;
-
-        }
-    }
-    
     public RobotDrive drive;
     public Solenoid gearShift;
     AnalogChannel sonar;
@@ -209,5 +162,51 @@ public class Drivetrain extends Subsystem {
     public void resetEncoders() {
         encoderLeft.reset();
         encoderRight.reset();
+    }
+
+    public static class SpeedRamp {
+        /**
+         * Profiles based on generic distance measurement to wall and the distance to travel.
+         * Speed/Distance follows the following profile:
+         * |
+         * |
+         * |     _________
+         * |    /         \ 
+         * |   /           \
+         * |__/             \__
+         * |               
+         * ------------------------------
+         * 
+         * NOTE: Possible issues include negative differences in case a sensor measures a greater
+         *       distance than actually exists.
+         * 
+         * @param distToFinish Distance from the robot to the Fender
+         * @param totalDistToTravel Total distance for the robot to travel
+         * @param direction 1 for forward, -1 for backward
+         * @return The speed at which to drive the motors, from -1.0 to 1.0
+         */
+        public static double profileSpeed_Bravo(double distToFinish, double totalDistToTravel, int direction) {
+            double outputSpeed = 0;
+            double thirdOfDistToTravel = totalDistToTravel / 3.0;
+            double difference = totalDistToTravel - distToFinish;
+            double stage = Math.abs(difference / totalDistToTravel);
+
+            // If we are in the first third of travel, ramp up speed proportionally to distance from first third
+            if (stage < 1.0/3.0) {
+                outputSpeed = 0.5 + (1-0.5)/(1.0/3.0) * stage; // Scales from 0.5->1, approaching 1 as the distance traveled
+                                                                          //approaches the first third
+            }
+            else if (stage < 2.0/3.0) {
+                outputSpeed = 1.0;
+            }
+            else if (stage < 1) {
+                outputSpeed = distToFinish / (thirdOfDistToTravel); // Scales from 1->0 during the final third of distance travel.
+            }
+            if (outputSpeed < 0.3) {
+                outputSpeed = 0.3;
+            }
+
+            return outputSpeed * direction;
+        }
     }
 }
