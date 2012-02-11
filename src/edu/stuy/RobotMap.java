@@ -1,11 +1,11 @@
 package edu.stuy;
 
 /**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
+* The RobotMap is a mapping from the ports sensors and actuators are wired into
+* to a variable name. This provides flexibility changing wiring, makes checking
+* the wiring easier and significantly reduces the number of magic numbers
+* floating around.
+*/
 public class RobotMap {
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.
@@ -24,16 +24,17 @@ public class RobotMap {
     public static final int DEBUG_BOX_PORT = 4;
 
     /* PWM OUTPUTS */
-    public static final int FRONT_LEFT_MOTOR = 1;
-    public static final int REAR_LEFT_MOTOR = 2;
-    public static final int FRONT_RIGHT_MOTOR = 3;
-    public static final int REAR_RIGHT_MOTOR = 4;
+
+    public static final int CONVEYOR_ROLLER = 1;
+    public static final int FRONT_RIGHT_MOTOR = 2;
+    public static final int REAR_RIGHT_MOTOR = 3;
+    // NO 4
+    public static final int ACQUIRER_ROLLER = 5;
+    public static final int FRONT_LEFT_MOTOR = 6;
+    public static final int REAR_LEFT_MOTOR = 7;
+
     public static final int SHOOTER_UPPER_ROLLER = 5;
     public static final int SHOOTER_LOWER_ROLLER = 6;
-    public static final int ACQUIRER_UPPER_ROLLER = 7;
-    public static final int ACQUIRER_LOWER_ROLLER = 8;
-    public static final int CONVEYOR_UPPER_ROLLER = 9;
-    public static final int CONVEYOR_LOWER_ROLLER = 10;
 
     /* DIGITAL INPUTS */
     public static final int SHOOTER_UPPER_ROLLER_ENCODER_A = 1;
@@ -44,15 +45,15 @@ public class RobotMap {
     public static final int LEFT_ENCODER_CHANNEL_A = 5;
     public static final int LEFT_ENCODER_CHANNEL_B = 6;
     public static final int RIGHT_ENCODER_CHANNEL_A = 7;
-    public static final int RIGHT_ENCODER_CHANNEL_B = 8;
+    public static final int RIGHT_ENCODER_CHANNEL_B = 11;
 
-    public static final int PRESSURE_SWITCH_CHANNEL = 9; // Switches when pneumatics pressure exceeds limit
+    public static final int PRESSURE_SWITCH_CHANNEL = 10; // Switches when pneumatics pressure exceeds limit
 
-    public static final int UPPER_CONVEYOR_SENSOR = 10;
-    public static final int LOWER_CONVEYOR_SENSOR = 11;
+    public static final int UPPER_CONVEYOR_SENSOR = 8;
+    public static final int LOWER_CONVEYOR_SENSOR = 9;
 
-    public static final int TUSKS_EXTENDED_SWITCH = 12;
-    public static final int TUSKS_RETRACTED_SWITCH = 13;
+    public static final int TUSKS_EXTENDED_SWITCH = 13;
+    public static final int TUSKS_RETRACTED_SWITCH = 14;
 
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
@@ -79,7 +80,7 @@ public class RobotMap {
         VIRSYS_OUTPUT_MAP[REAR_LEFT_MOTOR] = 0;
         VIRSYS_OUTPUT_MAP[FRONT_RIGHT_MOTOR] = 1;
         VIRSYS_OUTPUT_MAP[REAR_RIGHT_MOTOR] = 1;
-        
+
         for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
             VIRSYS_INPUT_MAP[i] = 0;
         }
