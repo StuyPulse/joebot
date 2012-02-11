@@ -19,6 +19,9 @@ public class Conveyor extends Subsystem {
     public DigitalInput upperSensor;
     public DigitalInput lowerSensor;
 
+    public static final double FORWARD = 1;
+    public static final double BACKWARD = -1;
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -38,11 +41,11 @@ public class Conveyor extends Subsystem {
     }
 
     public void convey() {
-        roll(1);
+        roll(FORWARD);
     }
 
     public void conveyReverse() {
-        roll(-1);
+        roll(BACKWARD);
     }
 
     public void stop() {

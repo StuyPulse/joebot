@@ -7,7 +7,7 @@ package edu.stuy.assertions;
 
 import static org.junit.Assert.*;
 import edu.stuy.commands.CommandBase;
-
+import edu.stuy.subsystems.Conveyor;
 
 /**
  *
@@ -15,7 +15,7 @@ import edu.stuy.commands.CommandBase;
  */
 public class ConveyorAssertions {
     public static void assertConveyorIsRunning() {
-        assertEquals(1, CommandBase.conveyor.getRoller(), 0.01);
+        assertEquals(Conveyor.FORWARD , CommandBase.conveyor.getRoller(), 0.01);
     }
 
     public static void assertConveyorIsNotRunning() {
@@ -23,7 +23,7 @@ public class ConveyorAssertions {
     }
 
     public static void assertConveyorIsRunningBackwards(){
-        assertEquals(-1, CommandBase.conveyor.getRoller(), 0.01);
+        assertEquals(Conveyor.BACKWARD, CommandBase.conveyor.getRoller(), 0.01);
     }
 
 }
