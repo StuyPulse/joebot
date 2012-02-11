@@ -88,6 +88,6 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Distance 1", CameraVision.getInstance().getDistance(1));
         SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
         SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
-        SmartDashboard.putBoolean("Is Aligned", CameraVision.getInstance().isFacingTarget());
+        SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
     }
 }
