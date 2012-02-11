@@ -37,11 +37,6 @@ public class RobotMap {
     public static final int SHOOTER_LOWER_ROLLER = 6;
 
     /* DIGITAL INPUTS */
-    public static final int SHOOTER_UPPER_ROLLER_ENCODER_A = 1;
-    public static final int SHOOTER_UPPER_ROLLER_ENCODER_B = 2;
-    public static final int SHOOTER_LOWER_ROLLER_ENCODER_A = 3;
-    public static final int SHOOTER_LOWER_ROLLER_ENCODER_B = 4;
-
     public static final int LEFT_ENCODER_CHANNEL_A = 5;
     public static final int LEFT_ENCODER_CHANNEL_B = 6;
     public static final int RIGHT_ENCODER_CHANNEL_A = 7;
@@ -64,8 +59,8 @@ public class RobotMap {
     public static final int TUSKS_SOLENOID = 2;
 
     /* VIRSYSJ */
-    public static int[] VIRSYS_OUTPUT_MAP = new int[11];
-    public static int[] VIRSYS_INPUT_MAP = new int[10];
+    public static int[] VIRSYS_OUTPUT_MAP = new int[15];
+    public static int[] VIRSYS_INPUT_MAP = new int[15];
 
 
     /* ANALOG INPUTS */
