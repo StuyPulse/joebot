@@ -24,7 +24,6 @@ public class OI {
     public static final int DISTANCE_BUTTON_STOP = 6;
     
     private DriverStationEnhancedIO enhancedIO;
-    private DriverStation ds;
     
     // EnhancedIO digital input
     
@@ -56,8 +55,7 @@ public class OI {
     private static final int MAX_ANALOG_CHANNEL = 4;
     
     public OI() {
-        ds = DriverStation.getInstance();
-        enhancedIO = ds.getEnhancedIO();
+        enhancedIO = DriverStation.getInstance().getEnhancedIO();
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
 
@@ -117,7 +115,7 @@ public class OI {
     
     public double getRawAnalogVoltage() {
         try {
-            return enhancedIO.getAnalogIn(MAX_ANALOG_CHANNEL);
+            return enhancedIO.getAnalogIn(DISTANCE_BUTTONS_CHANNEL);
         }
         catch (EnhancedIOException e) {
             return 0;
@@ -142,13 +140,13 @@ public class OI {
      *
      * @return An integer value representing the height button that was pressed.
      */
-    public int getHeightButton() {
+    public int getDistanceButton() {
         return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
     }
     
     public double getDistanceFromHeightButton(){
         double distance = 0;
-        switch(getHeightButton()){
+        switch(getDistanceButton()){
             // Automatic
             case 1:
                 distance = CommandBase.drivetrain.getSonarDistance_in();
