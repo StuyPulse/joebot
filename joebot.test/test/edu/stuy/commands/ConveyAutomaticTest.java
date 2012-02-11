@@ -92,13 +92,11 @@ public class ConveyAutomaticTest {
     }
 
     public void assertConveyorIsRunning() {
-        assertEquals(1, CommandBase.conveyor.getUpperRoller(), 0.01);
-        assertEquals(1, CommandBase.conveyor.getLowerRoller(), 0.01);
+        assertEquals(1, CommandBase.conveyor.getRoller(), 0.01);
     }
 
     public void assertConveyorIsNotRunning() {
-        assertEquals(0, CommandBase.conveyor.getUpperRoller(), 0.01);
-        assertEquals(0, CommandBase.conveyor.getLowerRoller(), 0.01);
+        assertEquals(0, CommandBase.conveyor.getRoller(), 0.01);
     }
 
     public void makeSpeedGood() {
