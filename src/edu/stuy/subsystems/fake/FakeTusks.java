@@ -4,10 +4,6 @@
  */
 package edu.stuy.subsystems.fake;
 
-import edu.stuy.subsystems.*;
-import edu.stuy.RobotMap;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -16,10 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class FakeTusks extends Subsystem {
 
-    Solenoid solenoid;
-    DigitalInput extendedSwitch;
-    DigitalInput retractedSwitch;
-
+  
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public FakeTusks() {
@@ -29,6 +22,7 @@ public class FakeTusks extends Subsystem {
     }
 
     public void extend() {
+        System.out.println("tuskExtend");
     }
 
     public void retract() {
