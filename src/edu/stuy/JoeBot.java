@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,6 +44,10 @@ public class JoeBot extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
     }
+    
+    public void disabledPeriodic() {
+        updateSmartDashboard();
+    }
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
@@ -55,6 +60,7 @@ public class JoeBot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        updateSmartDashboard();
     }
 
     public void teleopInit() {
@@ -78,5 +84,21 @@ public class JoeBot extends IterativeRobot {
         Scheduler.getInstance().run();
         
         // Debug box actions
+        updateSmartDashboard();
+    }
+    
+    private void updateSmartDashboard() {
+        SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+        
+        SmartDashboard.putDouble("Left encoder distance", CommandBase.drivetrain.getLeftEncoderDistance());
+        SmartDashboard.putDouble("Right encoder distance", CommandBase.drivetrain.getRightEncoderDistance());
+        SmartDashboard.putDouble("Encoder average distance", CommandBase.drivetrain.getAvgDistance());
+        
+        SmartDashboard.putDouble("Gyro angle", CommandBase.drivetrain.getGyroAngle());
+        
+        SmartDashboard.putBoolean("Upper conveyor sensor", CommandBase.conveyor.ballAtTop());
+        SmartDashboard.putBoolean("Lower conveyor sensor", CommandBase.conveyor.ballAtBottom());
+        
+        // TODO: Camera target info
     }
 }
