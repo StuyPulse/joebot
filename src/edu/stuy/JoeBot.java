@@ -8,6 +8,7 @@
 package edu.stuy;
 
 
+import edu.stuy.camera.CameraVision;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.wpi.first.wpilibj.Compressor;
@@ -41,6 +42,8 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
+        
+        CameraVision.getInstance();
     }
 
     public void autonomousInit() {

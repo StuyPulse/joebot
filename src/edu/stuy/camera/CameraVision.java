@@ -2,17 +2,11 @@ package edu.stuy.camera;
 
 import edu.stuy.RobotMap;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
-import edu.wpi.first.wpilibj.image.BinaryImage;
-import edu.wpi.first.wpilibj.image.ColorImage;
-import edu.wpi.first.wpilibj.image.CriteriaCollection;
 import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
-import edu.wpi.first.wpilibj.image.NIVisionException;
-import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
-import edu.wpi.first.wpilibj.image.RGBImage;
+import edu.wpi.first.wpilibj.image.*;
 
 /**
  * Sample program to use NIVision to find rectangles in the scene that are
@@ -37,6 +31,7 @@ import edu.wpi.first.wpilibj.image.RGBImage;
  * vision command chain (open it with the Vision Assistant)
  */
 public class CameraVision {
+    private static CameraVision instance;
 
     //TODO get number from Peter
     public static final int CAMERA_CENTER = 320;
@@ -48,7 +43,14 @@ public class CameraVision {
     int numRectangles;
     double[] massCenter;
     
-    public CameraVision() {
+    public static CameraVision getInstance() {
+        if (instance == null) {
+            instance = new CameraVision();
+        }
+        return instance;
+    }
+    
+    private CameraVision() {
     targetLight = new Relay(RobotMap.TARGET_LIGHT);
     targetLight.setDirection(Relay.Direction.kForward);
 
