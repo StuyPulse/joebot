@@ -28,7 +28,7 @@ public class Conveyor extends Subsystem {
     }
     
     public Conveyor() {
-        roller = new Victor(RobotMap.CONVEYOR_UPPER_ROLLER);
+        roller = new Victor(RobotMap.CONVEYOR_ROLLER);
         upperSensor = new DigitalInput(RobotMap.UPPER_CONVEYOR_SENSOR);
         lowerSensor = new DigitalInput(RobotMap.LOWER_CONVEYOR_SENSOR);
     }

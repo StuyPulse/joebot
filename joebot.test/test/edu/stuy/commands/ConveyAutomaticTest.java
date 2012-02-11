@@ -1,9 +1,10 @@
 package edu.stuy.commands;
 
+import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.*;
 import edu.stuy.subsystems.Shooter;
 import org.junit.*;
-import static org.junit.Assert.*;
+import static edu.stuy.assertions.ConveyorAssertions.*;
 
 public class ConveyAutomaticTest {
 
@@ -91,16 +92,7 @@ public class ConveyAutomaticTest {
         assertConveyorIsNotRunning();
     }
 
-    public void assertConveyorIsRunning() {
-        assertEquals(1, CommandBase.conveyor.getUpperRoller(), 0.01);
-        assertEquals(1, CommandBase.conveyor.getLowerRoller(), 0.01);
-    }
-
-    public void assertConveyorIsNotRunning() {
-        assertEquals(0, CommandBase.conveyor.getUpperRoller(), 0.01);
-        assertEquals(0, CommandBase.conveyor.getLowerRoller(), 0.01);
-    }
-
+    
     public void makeSpeedGood() {
         double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
         ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
@@ -109,9 +101,8 @@ public class ConveyAutomaticTest {
     }
 
     public void makeSpeedBad() {
-        double distanceInches = Shooter.distances[Shooter.KEY_INDEX]+50;
-        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
-        cmd.execute();
+        JaguarSpeed j = Shooter.lowerRoller;
+        j.jaguar.value = -100;
     }
 
     public void makeBallAtTop() {
