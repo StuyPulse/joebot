@@ -15,13 +15,13 @@ public class OI {
     private Joystick shooterStick;
     private Joystick debugBox;
     
-    public static final int DISTANCE_BUTTON_AUTO = 0;
-    public static final int DISTANCE_BUTTON_FAR = 1;
-    public static final int DISTANCE_BUTTON_FENDER_WIDE = 2;
-    public static final int DISTANCE_BUTTON_FENDER_NARROW = 3;
-    public static final int DISTANCE_BUTTON_FENDER_SIDE = 4;
-    public static final int DISTANCE_BUTTON_FENDER = 5;
-    public static final int DISTANCE_BUTTON_STOP = 6;
+    public static final int DISTANCE_BUTTON_AUTO = 1;
+    public static final int DISTANCE_BUTTON_FAR = 2;
+    public static final int DISTANCE_BUTTON_FENDER_WIDE = 3;
+    public static final int DISTANCE_BUTTON_FENDER_NARROW = 4;
+    public static final int DISTANCE_BUTTON_FENDER_SIDE = 5;
+    public static final int DISTANCE_BUTTON_FENDER = 6;
+    public static final int DISTANCE_BUTTON_STOP = 7;
     
     private DriverStationEnhancedIO enhancedIO;
     
@@ -141,37 +141,45 @@ public class OI {
      * @return An integer value representing the height button that was pressed.
      */
     public int getDistanceButton() {
-        return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
+       if (shooterStick.getRawButton(DISTANCE_BUTTON_STOP)) {
+           return DISTANCE_BUTTON_STOP;
+       }
+       if (shooterStick.getRawButton(DISTANCE_BUTTON_AUTO)) {
+           return DISTANCE_BUTTON_AUTO;
+       }
+       if (shooterStick.getRawButton(DISTANCE_BUTTON_FENDER)) {
+           return DISTANCE_BUTTON_FENDER;
+       }
+       if (shooterStick.getRawButton(DISTANCE_BUTTON_FAR)) {
+           return DISTANCE_BUTTON_FAR;
+       }
+       return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
     }
     
     public double getDistanceFromHeightButton(){
         double distance = 0;
         switch(getDistanceButton()){
-            // Automatic
-            case 1:
+            case DISTANCE_BUTTON_AUTO:
                 distance = CommandBase.drivetrain.getSonarDistance_in();
                 break;
-            // Full Throttle
-            case 2:
+            case DISTANCE_BUTTON_FAR:
                 distance = 725; // TODO: Max distance to max speed?
                 break;
-            // Fender + Long
-            case 3:
+            case DISTANCE_BUTTON_FENDER_WIDE:
                 distance = Shooter.distances[Shooter.FENDER_LONG_INDEX];
                 break;
-            // Fender + Wide
-            case 4:
+            case DISTANCE_BUTTON_FENDER_NARROW:
                 distance = Shooter.distances[Shooter.FENDER_WIDE_INDEX];
                 break;
-            // Fender
-            case 5:
-                distance = Shooter.distances[Shooter.FENDER_INDEX];
-                break;
-            // Side Fender
-            case 6:
+            case DISTANCE_BUTTON_FENDER_SIDE:
                 distance = Shooter.distances[Shooter.FENDER_SIDE_INDEX];
                 break;
-            // Stop Flywheels
+            case DISTANCE_BUTTON_FENDER:
+                distance = Shooter.distances[Shooter.FENDER_INDEX];
+                break;
+            case DISTANCE_BUTTON_STOP:
+                distance = 0;
+                break;
             default:
                 distance = 0;
                 break;
@@ -199,22 +207,6 @@ public class OI {
         } catch (EnhancedIOException ex) {
             return shooterStick.getRawButton(8);
         }
-    }
-
-    public int getPressedDistanceButton() {
-       if (shooterStick.getRawButton(6)) {
-           return DISTANCE_BUTTON_STOP;
-       }
-       if (shooterStick.getRawButton(7)) {
-           return DISTANCE_BUTTON_AUTO;
-       }
-       if (shooterStick.getRawButton(10)) {
-           return DISTANCE_BUTTON_FENDER;
-       }
-       if (shooterStick.getRawButton(11)) {
-           return DISTANCE_BUTTON_FAR;
-       }
-       return 0;
     }
 
     /**
