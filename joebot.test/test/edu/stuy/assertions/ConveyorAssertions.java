@@ -22,4 +22,8 @@ public class ConveyorAssertions {
         assertEquals(0, CommandBase.conveyor.getRoller(), 0.01);
     }
 
+    public static void assertConveyorIsRunningBackwards(){
+        assertEquals(-1, CommandBase.conveyor.getRoller(), 0.01);
+    }
+
 }

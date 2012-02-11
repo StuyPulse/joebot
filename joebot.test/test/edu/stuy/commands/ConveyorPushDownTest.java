@@ -5,25 +5,24 @@
 
 package edu.stuy.commands;
 
-import edu.stuy.JoeBot;
-import edu.stuy.InitTests;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import edu.stuy.*;
+import edu.stuy.commands.*;
 import static edu.stuy.assertions.ConveyorAssertions.*;
-import static edu.stuy.assertions.AcquirerAssertions.*;
 import static edu.stuy.commands.util.ConveyorTools.*;
 
 /**
  *
- * @author 694
+ * @author Q
  */
-public class AcquirerAcquireTest {
+public class ConveyorPushDownTest {
 
-    public AcquirerAcquireTest() {
+    public ConveyorPushDownTest() {
     }
 
     @BeforeClass
@@ -46,31 +45,31 @@ public class AcquirerAcquireTest {
     public void tearDown() {
     }
 
-    /**
-     * Should not run the conveyor
-     * -Bottom Sensor does not sense a ball
-     * Result: don't run conveyor
-     */
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
+
     @Test
-    public void testRunNoBallNoConvey() {
-        lowerSensorDoesNotSense();
-        AcquirerAcquire cmd = new AcquirerAcquire();
-        cmd.execute();
-        assertConveyorIsNotRunning();
-        assertAcquirerIsRunning();
+    public void testSubsystemsExist(){
+        assertNotNull(CommandBase.acquirer);
+        assertNotNull(CommandBase.conveyor);
     }
 
-    /**
-     * Should run the conveyor
-     * -Bottom Sensor senses a ball
-     * Result: run conveyor
-     */
     @Test
-    public void testRunYesBallConvey() {
-        lowerSensorDoesSense();
-        AcquirerAcquire cmd = new AcquirerAcquire();
+    public void testBallNotAtBottom(){
+        lowerSensorDoesNotSense();
+        ConveyorPushDown cmd = new ConveyorPushDown();
         cmd.execute();
-        assertConveyorIsRunning();
-        assertAcquirerIsNotRunning();
+        assertConveyorIsRunningBackwards();
+    }
+
+    @Test
+    public void testBallAtBottom(){
+        lowerSensorDoesSense();
+        ConveyorPushDown cmd = new ConveyorPushDown();
+        cmd.execute();
+        assertConveyorIsRunningBackwards();
     }
 }
