@@ -4,7 +4,7 @@ import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.*;
 import edu.stuy.subsystems.Shooter;
 import org.junit.*;
-import static org.junit.Assert.*;
+import static edu.stuy.assertions.ConveyorAssertions.*;
 
 public class ConveyAutomaticTest {
 
@@ -92,14 +92,7 @@ public class ConveyAutomaticTest {
         assertConveyorIsNotRunning();
     }
 
-    public void assertConveyorIsRunning() {
-        assertEquals(1, CommandBase.conveyor.getRoller(), 0.01);
-    }
-
-    public void assertConveyorIsNotRunning() {
-        assertEquals(0, CommandBase.conveyor.getRoller(), 0.01);
-    }
-
+    
     public void makeSpeedGood() {
         double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
         ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);

@@ -9,6 +9,7 @@ import edu.stuy.*;
 import edu.wpi.first.wpilibj.Timer;
 import org.junit.*;
 import static org.junit.Assert.*;
+import static edu.stuy.assertions.ConveyorAssertions.*;
 
 /**
  *

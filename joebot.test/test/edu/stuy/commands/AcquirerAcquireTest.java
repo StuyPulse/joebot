@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static edu.stuy.assertions.ConveyorAssertions.*;
+import static edu.stuy.assertions.AcquirerAssertions.*;
 
 /**
  *
@@ -77,21 +79,5 @@ public class AcquirerAcquireTest {
 
     public void sensorDoesSense() {
         CommandBase.conveyor.lowerSensor.value = true;
-    }
-
-    public void assertConveyorIsNotRunning() {
-        assertEquals(0, CommandBase.conveyor.getRoller(), 0.01);
-    }
-
-    public void assertConveyorIsRunning() {
-        assertEquals(1, CommandBase.conveyor.getRoller(), 0.01);
-    }
-
-    public void assertAcquirerIsRunning() {
-        assertEquals(1, CommandBase.acquirer.getRoller(), 0.01);
-    }
-
-    public void assertAcquirerIsNotRunning() {
-        assertEquals(0, CommandBase.acquirer.getRoller(), 0.01);
     }
 }
