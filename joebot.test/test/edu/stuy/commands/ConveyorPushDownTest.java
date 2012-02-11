@@ -70,6 +70,6 @@ public class ConveyorPushDownTest {
         lowerSensorDoesSense();
         ConveyorPushDown cmd = new ConveyorPushDown();
         cmd.execute();
-        assertConveyorIsRunningBackwards();
+        assertConveyorIsNotRunning();
     }
 }
