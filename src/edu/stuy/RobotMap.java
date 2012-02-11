@@ -48,10 +48,9 @@ public class RobotMap {
 
     public static final int UPPER_CONVEYOR_SENSOR = 10;
     public static final int LOWER_CONVEYOR_SENSOR = 11;
-    public static final int MIDDLE_CONVEYOR_SENSOR = 12;
 
-    public static final int TUSKS_EXTENDED_SWITCH = 13;
-    public static final int TUSKS_RETRACTED_SWITCH = 14;
+    public static final int TUSKS_EXTENDED_SWITCH = 12;
+    public static final int TUSKS_RETRACTED_SWITCH = 13;
 
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;

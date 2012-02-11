@@ -4,8 +4,6 @@
  */
 package edu.stuy.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 /**
  *
  * @author Kevin Wang

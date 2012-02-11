@@ -46,7 +46,7 @@ public class ConveyorPushDown extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return ((hasTimeout && isTimedOut()) ||   // timed out
-                conveyor.ballAtMiddle());         // or ball is pushed down
+                conveyor.ballAtBottom());         // or ball is pushed down
     }
 
     // Called once after isFinished returns true

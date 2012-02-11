@@ -18,7 +18,6 @@ public class Conveyor extends Subsystem {
     public Victor roller;
     public DigitalInput upperSensor;
     public DigitalInput lowerSensor;
-    public DigitalInput middleSensor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -32,7 +31,6 @@ public class Conveyor extends Subsystem {
         roller = new Victor(RobotMap.CONVEYOR_ROLLER);
         upperSensor = new DigitalInput(RobotMap.UPPER_CONVEYOR_SENSOR);
         lowerSensor = new DigitalInput(RobotMap.LOWER_CONVEYOR_SENSOR);
-        middleSensor = new DigitalInput(RobotMap.MIDDLE_CONVEYOR_SENSOR);
     }
     
     public void roll(double speed) {
@@ -57,10 +55,6 @@ public class Conveyor extends Subsystem {
 
     public boolean ballAtBottom() {
         return lowerSensor.get();
-    }
-
-    public boolean ballAtMiddle(){
-        return middleSensor.get();
     }
 
     public double getRoller() {
