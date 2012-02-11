@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -80,6 +81,17 @@ public class JoeBot extends IterativeRobot {
         //
         Scheduler.getInstance().run();
         
+        CameraVision.getInstance().doCamera();
+        
         // Debug box actions
+        SmartDashboard.putDouble("Distance 0", CameraVision.getInstance().getDistance(0));
+        SmartDashboard.putDouble("Distance 1", CameraVision.getInstance().getDistance(1));
+        SmartDashboard.putDouble("Distance 2", CameraVision.getInstance().getDistance(2));
+        SmartDashboard.putDouble("Distance 3", CameraVision.getInstance().getDistance(3));
+        SmartDashboard.putDouble("Target center", CameraVision.getInstance().getTargetCenter());
+        SmartDashboard.putDouble("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
+        SmartDashboard.putDouble("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
+        SmartDashboard.putDouble("Center of mass 2", CameraVision.getInstance().getCenterMass(2));
+        SmartDashboard.putDouble("Center of mass 3", CameraVision.getInstance().getCenterMass(3));
     }
 }

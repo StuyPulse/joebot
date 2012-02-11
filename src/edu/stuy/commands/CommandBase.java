@@ -3,6 +3,7 @@ package edu.stuy.commands;
 import edu.stuy.Devmode;
 import edu.stuy.OI;
 import edu.stuy.subsystems.*;
+import edu.stuy.subsystems.fake.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,19 +17,19 @@ public abstract class CommandBase extends Command {
     public static OI oi;
     
     // Create a single static instance of all of your subsystems
-    public static Drivetrain drivetrain;
-    public static Shooter shooter;
-    public static Tusks tusks;
-    public static Acquirer acquirer;
-    public static Conveyor conveyor;
+    public static FakeDrivetrain drivetrain;
+    public static FakeShooter shooter;
+    public static FakeTusks tusks;
+    public static FakeAcquirer acquirer;
+    public static FakeConveyor conveyor;
 
     static {
-        drivetrain = new Drivetrain();
-        conveyor = new Conveyor();
-        shooter = new Shooter();
-        acquirer = new Acquirer();
+        drivetrain = new FakeDrivetrain();
+        conveyor = new FakeConveyor();
+        shooter = new FakeShooter();
+        acquirer = new FakeAcquirer();
         if (!Devmode.DEV_MODE) {
-            tusks = new Tusks();
+            tusks = new FakeTusks();
         }
     }
 
