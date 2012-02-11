@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
 import edu.wpi.first.wpilibj.image.*;
+import java.util.Vector;
 
 /**
  * Sample program to use NIVision to find rectangles in the scene that are
@@ -39,9 +40,9 @@ public class CameraVision {
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
     private Relay targetLight;
     private double targetCenter;
-    double distance;
+    Vector distances = new Vector();
     int numRectangles;
-    double[] massCenter;
+    Vector massCenter = new Vector();
     
     public static CameraVision getInstance() {
         if (instance == null) {
@@ -81,15 +82,15 @@ public class CameraVision {
                 BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
 
                 ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
+                massCenter.removeAllElements();
+                distances.removeAllElements();
                 for (int i = 0; i < reports.length; i++) {                                // print results
-                   
                     ParticleAnalysisReport r = reports[i];
                     // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
                     // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
                     int fovFeet = (360 * 2) / r.boundingRectWidth;
-                    distance = ((fovFeet / 2) / 2.1348966977217008);
-                    massCenter = new double[3];
-                    massCenter[i] = r.center_mass_x;
+                    distances.addElement(new Double((fovFeet / 2) / 2.1348966977217008));
+                    massCenter.addElement(new Integer(r.center_mass_x));
                     //System.out.println("Our field of view in feet is: " + fovFeet);
                     //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
                     // Calculate distance using tan(theta) = [half-width of target]/[distance to target]
@@ -129,16 +130,19 @@ public class CameraVision {
         return targetCenter;
     }
     
-    public double getDistance() {
-        return distance;
+    public double getDistance(int rectid) {
+        if (rectid < distances.size()) {
+            return ((Double)distances.elementAt(rectid)).doubleValue();
+        }
+        return 0.0;
 }
 
-    public double getCenterMass(int rectid){
-        if((rectid < 4) && (rectid >= 0))
-            return massCenter[rectid];
-        else
-            return 0;
-            }
+    public int getCenterMass(int rectid) {
+        if (rectid < massCenter.size()) {
+            return ((Integer)massCenter.elementAt(rectid)).intValue();
+        }
+        return 0;
+    }
     
     public boolean isFacingTarget() {
         double absValue = Math.abs(CAMERA_CENTER - targetCenter);
