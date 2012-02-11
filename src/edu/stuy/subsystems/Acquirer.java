@@ -42,4 +42,8 @@ public class Acquirer extends Subsystem {
     public void acquireReverse() {
         roll(-1);
     }
+
+    public double getRoller() {
+        return roller.get();
+    }
 }

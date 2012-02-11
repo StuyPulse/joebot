@@ -54,6 +54,7 @@ public class AcquirerAcquireTest {
         AcquirerAcquire cmd = new AcquirerAcquire();
         cmd.execute();
         assertConveyorIsNotRunning();
+        assertAcquirerIsRunning();
     }
 
     /**
@@ -67,6 +68,7 @@ public class AcquirerAcquireTest {
         AcquirerAcquire cmd = new AcquirerAcquire();
         cmd.execute();
         assertConveyorIsRunning();
+        assertAcquirerIsNotRunning();
     }
 
     public void sensorDoesNotSense() {
@@ -83,5 +85,13 @@ public class AcquirerAcquireTest {
 
     public void assertConveyorIsRunning() {
         assertEquals(1, CommandBase.conveyor.getRoller(), 0.01);
+    }
+
+    public void assertAcquirerIsRunning() {
+        assertEquals(1, CommandBase.acquirer.getRoller(), 0.01);
+    }
+
+    public void assertAcquirerIsNotRunning() {
+        assertEquals(0, CommandBase.acquirer.getRoller(), 0.01);
     }
 }

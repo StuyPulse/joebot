@@ -33,12 +33,13 @@ public class AcquirerAcquire extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        acquirer.acquire();
         if (conveyor.ballAtBottom() && !conveyor.ballAtTop()) {
             conveyor.convey();
+            acquirer.stop();
         }
         else {
             conveyor.stop();
+            acquirer.acquire();
         }
     }
 
