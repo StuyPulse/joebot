@@ -26,25 +26,19 @@ public class SystemsCheck extends CommandGroup {
     }
 
     private void checkAcquirer(){
-        addSequential(new AcquirerAcquire());
-        addSequential(new WaitCommand(1));
-        addSequential(new AcquirerReverse());
-        addSequential(new WaitCommand(1));
+        addSequential(new AcquirerAcquire(1));
+        addSequential(new AcquirerReverse(1));
         addSequential(new AcquirerStop());
     }
 
     private void checkConveyor() {
-        addSequential(new ConveyAutomatic());
-        addSequential(new WaitCommand(1));
-        addSequential(new ConveyReverseManual());
-        addSequential(new WaitCommand(1));
+        addSequential(new ConveyAutomatic(1));
+        addSequential(new ConveyReverseManual(1));
         addSequential(new ConveyStop());
     }
 
     private void checkShooter() {
-        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-        addSequential(new ShooterMoveFlyWheel(distanceInches));
-        addSequential(new WaitCommand(1));
+        addSequential(new CheckFlywheelSpeedControl());
         addSequential(new ShooterStop());
     }
 

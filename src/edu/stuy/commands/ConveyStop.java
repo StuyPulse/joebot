@@ -9,6 +9,7 @@ package edu.stuy.commands;
  * @author Danny
  */
 public class ConveyStop extends CommandBase {
+    private boolean done = false;
     
     public ConveyStop() {
         // Use requires() here to declare subsystem dependencies
@@ -22,11 +23,12 @@ public class ConveyStop extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         conveyor.stop();
+        done = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return done;
     }
 
     // Called once after isFinished returns true
