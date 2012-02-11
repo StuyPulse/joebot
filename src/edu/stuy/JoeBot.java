@@ -88,10 +88,9 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Distance 1", CameraVision.getInstance().getDistance(1));
         SmartDashboard.putDouble("Distance 2", CameraVision.getInstance().getDistance(2));
         SmartDashboard.putDouble("Distance 3", CameraVision.getInstance().getDistance(3));
-        SmartDashboard.putDouble("Target center", CameraVision.getInstance().getTargetCenter());
-        SmartDashboard.putDouble("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
-        SmartDashboard.putDouble("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
-        SmartDashboard.putDouble("Center of mass 2", CameraVision.getInstance().getCenterMass(2));
-        SmartDashboard.putDouble("Center of mass 3", CameraVision.getInstance().getCenterMass(3));
+        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
+        SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
+        SmartDashboard.putInt("Center of mass 2", CameraVision.getInstance().getCenterMass(2));
+        SmartDashboard.putInt("Center of mass 3", CameraVision.getInstance().getCenterMass(3));
     }
 }
