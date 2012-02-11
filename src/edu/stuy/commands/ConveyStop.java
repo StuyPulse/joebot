@@ -8,9 +8,9 @@ package edu.stuy.commands;
  *
  * @author Danny
  */
-public class ConveyorStop extends CommandBase {
+public class ConveyStop extends CommandBase {
     
-    public ConveyorStop() {
+    public ConveyStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
