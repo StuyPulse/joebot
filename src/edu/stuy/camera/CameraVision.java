@@ -39,7 +39,7 @@ public class CameraVision {
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
     private Relay targetLight;
-    private double targetCenter;
+    private int targetCenter;
     Vector distances = new Vector();
     int numRectangles;
     Vector massCenter = new Vector();
@@ -99,6 +99,9 @@ public class CameraVision {
                     //System.out.println("Distance to target: " + ((fovFeet / 2) / 2.1348966977217008));
                 }
                 System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
+                if (massCenter.size() > 0) {
+                    targetCenter = getCenterMass(0);
+                }
 
                 /**
                  * all images in Java must be freed after they are used since
