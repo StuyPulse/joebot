@@ -98,7 +98,7 @@ public class CameraVision {
    
                     //System.out.println("Distance to target: " + ((fovFeet / 2) / 2.1348966977217008));
                 }
-                System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
+//                System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
                 if (massCenter.size() > 0) {
                     targetCenter = getCenterMass(0);
                 }
