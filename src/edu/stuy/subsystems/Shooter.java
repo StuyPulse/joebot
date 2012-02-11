@@ -6,10 +6,10 @@ package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
 import edu.stuy.speed.JaguarSpeed;
-import edu.stuy.speed.JoeSpeed;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.stuy.RobotMap;
+import edu.stuy.commands.CommandBase;
+import edu.stuy.commands.ShooterMoveFlyWheel;
 
 /**
  *
@@ -114,7 +114,7 @@ public class Shooter extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ShooterMoveFlyWheel(CommandBase.oi.getDistanceFromHeightButton()));
     }
 
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {

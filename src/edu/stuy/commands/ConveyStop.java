@@ -2,14 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+package edu.stuy.commands;
 
 /**
  *
- * @author admin
+ * @author Danny
  */
-public class FlywheelLight extends CommandBase {
+public class ConveyStop extends CommandBase {
+    private boolean done = false;
     
-    public FlywheelLight() {
+    public ConveyStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -20,11 +22,13 @@ public class FlywheelLight extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        conveyor.stop();
+        done = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return done;
     }
 
     // Called once after isFinished returns true

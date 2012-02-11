@@ -71,7 +71,7 @@ public class ConveyorTest {
     public void testConveyorStop() {
         ConveyManual convey = new ConveyManual();
         convey.initialize();
-        ConveyorStop stop = new ConveyorStop();
+        ConveyStop stop = new ConveyStop();
         stop.initialize();
         convey.execute();
         stop.execute();
