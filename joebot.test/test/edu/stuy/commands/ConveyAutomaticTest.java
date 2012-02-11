@@ -1,5 +1,6 @@
 package edu.stuy.commands;
 
+import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.*;
 import edu.stuy.subsystems.Shooter;
 import org.junit.*;
@@ -107,9 +108,8 @@ public class ConveyAutomaticTest {
     }
 
     public void makeSpeedBad() {
-        double distanceInches = Shooter.distances[Shooter.KEY_INDEX]+50;
-        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
-        cmd.execute();
+        JaguarSpeed j = Shooter.lowerRoller;
+        j.jaguar.value = -100;
     }
 
     public void makeBallAtTop() {
