@@ -56,7 +56,9 @@ public class OI {
     private static final int MAX_ANALOG_CHANNEL = 4;
     
     public OI() {
-        enhancedIO = DriverStation.getInstance().getEnhancedIO();
+        if (!Devmode.DEV_MODE) {
+            enhancedIO = DriverStation.getInstance().getEnhancedIO();
+        }
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
 
