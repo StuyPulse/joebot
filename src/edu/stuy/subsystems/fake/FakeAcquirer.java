@@ -25,7 +25,23 @@ public class FakeAcquirer extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void roll(double upperSpeed, double lowerSpeed) {
+    public void roll(double upperSpeed) {
         System.out.println("Acquirer roll");
+    }
+
+    public void stop() {
+        roll(0);
+    }
+
+    public void acquire() {
+        roll(1);
+    }
+
+    public void acquireReverse() {
+        roll(-1);
+    }
+
+    public double getRoller() {
+        return 0.0;
     }
 }

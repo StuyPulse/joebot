@@ -31,4 +31,20 @@ public class Acquirer extends Subsystem {
     public void roll(double speed) {
         roller.set(speed);
     }
+
+    public void stop() {
+        roll(0);
+    }
+
+    public void acquire() {
+        roll(1);
+    }
+
+    public void acquireReverse() {
+        roll(-1);
+    }
+
+    public double getRoller() {
+        return roller.get();
+    }
 }

@@ -6,21 +6,23 @@ package edu.stuy.commands;
 
 /**
  *
- * @author Kevin Wang
+ * @author belias
  */
-public class ConveyAutomatic extends CommandBase {
+public class ConveyorPushDown extends CommandBase {
     
     double timeout;
     boolean hasTimeout = false;
 
-    public ConveyAutomatic() {
+    public ConveyorPushDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        
+        setInterruptible(false);
         requires(conveyor);
-        requires(shooter);
+        requires(acquirer);
     }
 
-    public ConveyAutomatic(double timeout) {
+    public ConveyorPushDown(double timeout) {
         this();
         hasTimeout = true;
         this.timeout = timeout;
@@ -28,31 +30,27 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        acquirer.stop();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        System.out.println("shooter is at speed? " + shooter.isSpeedGood());
-        System.out.println("ball at top? " + conveyor.ballAtTop());
-        if (shooter.isSpeedGood() || !conveyor.ballAtTop()) {
-            conveyor.convey();
+        if (conveyor.ballAtBottom()) {
+            conveyor.stop();
         }
         else {
-            conveyor.stop();
+            conveyor.conveyReverse();
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (hasTimeout) {
-            return isTimedOut();
-        }
-        return false;
+        return ((hasTimeout && isTimedOut()) ||   // timed out
+                conveyor.ballAtBottom());         // or ball is pushed down
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        (new ConveyorPushDown(5)).start();
     }
 
     // Called when another command which requires one or more of the same
