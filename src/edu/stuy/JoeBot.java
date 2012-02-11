@@ -10,6 +10,7 @@ package edu.stuy;
 
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
+import edu.stuy.commands.ConveyorPushDown;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
