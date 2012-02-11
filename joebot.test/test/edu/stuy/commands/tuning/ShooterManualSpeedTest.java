@@ -56,4 +56,14 @@ public class ShooterManualSpeedTest {
         assertEquals(1200, CommandBase.shooter.lowerRoller.getRPM(), 0.01);
     }
 
+    @Test
+    public void testShowSpeed() throws NetworkTableKeyNotDefined {
+        SmartDashboard.putDouble("setRPMtop", 1000);
+        SmartDashboard.putDouble("setRPMbottom", 1200);
+        ShooterManualSpeed cmd = new ShooterManualSpeed();
+        cmd.init();
+        cmd.execute();
+        assertEquals(1000, SmartDashboard.getDouble("getRPMtop"), 0.01);
+        assertEquals(1200, SmartDashboard.getDouble("getRPMbottom"), 0.01);
+    }
 }
