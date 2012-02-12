@@ -29,8 +29,6 @@ public class FakeDrivetrain extends Subsystem {
          * NOTE: Possible issues include negative differences in case a sensor measures a greater
          *       distance than actually exists.
          * 
-         * TODO: Make this work in the backwards direction, i.e. towards the bridge.
-         * 
          * @param distToFinish Distance from the robot to the Fender
          * @param totalDistToTravel Total distance for the robot to travel
          * @param direction 1 for forward, -1 for backward
