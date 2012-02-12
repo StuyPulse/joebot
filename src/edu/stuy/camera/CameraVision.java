@@ -168,7 +168,8 @@ public class CameraVision {
         boolean withinRange = CommandBase.drivetrain.getSonarVoltage() < 144;
         reflectiveLight.set(withinRange ? Relay.Value.kOn : Relay.Value.kOff);
 
-        return withinRange;
+        //return withinRange;
+        return true;
     }
 
     /**
