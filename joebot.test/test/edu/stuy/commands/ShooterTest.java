@@ -54,8 +54,8 @@ public class ShooterTest {
         }
 
         System.out.println("Interpolated points\ndistance, speed");
-        for (double distanceInches = Shooter.distances[Shooter.fenderIndex];
-             distanceInches <= Shooter.distances[Shooter.keyIndex];
+        for (double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
+             distanceInches <= Shooter.distances[Shooter.KEY_INDEX];
              distanceInches += 1) {
             System.out.println(distanceInches + ", " + CommandBase.shooter.lookupRPM(distanceInches)[0]);
         }

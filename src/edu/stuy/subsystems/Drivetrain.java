@@ -19,6 +19,57 @@ import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
  * @author Kevin Wang
  */
 public class Drivetrain extends Subsystem {
+    public static class SpeedRamp {
+        /**
+         * Profiles based on generic distance measurement to wall and the distance to travel.
+         * Speed/Distance follows the following profile:
+         * |
+         * |
+         * |     _________
+         * |    /         \ 
+         * |   /           \
+         * |__/             \__
+         * |               
+         * ------------------------------
+         * 
+         * NOTE: Possible issues include negative differences in case a sensor measures a greater
+         *       distance than actually exists.
+         * 
+         * TODO: Make this work in the backwards direction, i.e. towards the bridge.
+         * 
+         * @param distToFinish Distance from the robot to the Fender
+         * @param totalDistToTravel Total distance for the robot to travel
+         * @param direction -1 for forward, 1 for backward
+         * @return The speed at which to drive the motors, from -1.0 to 1.0
+         */
+        public static double profileSpeed_Bravo(double distToFinish, double totalDistToTravel, int direction) {
+            double outputSpeed = 0;
+            double thirdOfDistToTravel = totalDistToTravel / 3.0;
+            double difference = totalDistToTravel - distToFinish;
+            double stage = difference / totalDistToTravel;
+
+            // If we are in the first third of travel, ramp up speed proportionally to distance from first third
+            if (stage < 1.0/3.0) {
+                outputSpeed = 0.5 + (1-0.5)/(1.0/3.0) * stage; // Scales from 0->1, approaching 1 as the distance traveled
+                                                                          //approaches the first third
+            }
+            else if (stage < 2.0/3.0) {
+                outputSpeed = 1.0;
+            }
+            else if (stage < 1) {
+                outputSpeed = distToFinish / (thirdOfDistToTravel); // Scales from 1->0 during the final third of distance travel.
+            }
+            else {
+                outputSpeed = 0;
+            }
+
+            //TODO: Make this work in the backwards direction
+
+            return outputSpeed * direction;
+
+        }
+    }
+    
     private int direction;
     private double speed;
     public RobotDrive drive;
@@ -54,6 +105,9 @@ public class Drivetrain extends Subsystem {
         encoderLeft.start();
         encoderRight.start();
 
+
+
+
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
 
@@ -64,7 +118,7 @@ public class Drivetrain extends Subsystem {
         controller = new SendablePIDController(Kp, Ki, Kd, gyro, new PIDOutput() {
 
             public void pidWrite(double output) {
-                drive.arcadeDrive(profileSpeed(getSonarDistance_in()), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
+          drive.arcadeDrive(SpeedRamp.profileSpeed_Bravo( 105.25 - getAvgDistance(), 105.25, 1), -output); //TODO: Replace "1" with output from sonar sensor, in inches.
             }
         }, 0.005);
 
@@ -89,11 +143,13 @@ public class Drivetrain extends Subsystem {
     }
     
     /**
-     * Scales sonar voltage reading to inches
-     * @return distance from alliance wall in in, as measured by sonar sensor
+     * Scales sonar voltage reading to centimeters
+     * @return distance from alliance wall in centimeters, as measured by sonar sensor
      */
     public double getSonarDistance_in() {
-        return getSonarVoltage() * 512 / 5;
+        final int Vcc = 5; // 5 volts
+        double cm = getSonarVoltage() * 1024 / Vcc; // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
+        return cm / 2.54; // 1 cm is 1/2.54 inch
     }
             
     public void initDefaultCommand() {
@@ -108,7 +164,6 @@ public class Drivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
-        System.out.println(getSonarVoltage());
     }
 
     public void setGear(boolean high) {
@@ -167,7 +222,7 @@ public class Drivetrain extends Subsystem {
         // If direction is forward, it is negative.
         if(direction < 0){
             // Distance at which ramping down occurs.
-            if(sonarDistance < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
+            if(sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.FENDER_DEPTH + Autonomous.RAMPING_DISTANCE){
                 speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
             }
             else if(oldSpeed < 1){
@@ -179,7 +234,7 @@ public class Drivetrain extends Subsystem {
         }
         // If direction is backward, it is positive.
         else if(direction > 0){
-            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance < Autonomous.RAMPING_DISTANCE){
+            if(Autonomous.INCHES_TO_BRIDGE - sonarDistance - Autonomous.INCHES_FROM_EDGE_TO_SONAR < Autonomous.RAMPING_DISTANCE){
                 speed = oldSpeed / Autonomous.RAMPING_CONSTANT;
             }
             else if(oldSpeed < 1){

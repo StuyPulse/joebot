@@ -24,7 +24,9 @@ public class Autonomous extends CommandGroup {
 
     /* For inches to bridge from fender */
     public static final double INCHES_TO_BRIDGE = DIST_ALLIANCESTATION_TO_BRIDGE - FENDER_DEPTH - BOT_LENGTH_WITH_BUMPERS -TOLERANCE;
-
+    
+    public static final double INCHES_FROM_EDGE_TO_SONAR = 13;
+    
     public static final double RAMPING_DISTANCE = 5;
     public static final double RAMPING_CONSTANT = 10/9;
 

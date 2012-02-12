@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.stuy.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -18,7 +17,9 @@ public class AutonSetting5 extends CommandGroup {
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_FENDER));
 
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
-        double distanceInches = Shooter.distances[Shooter.fenderIndex];
-        addSequential(new ShooterShoot(2.0, distanceInches));
+
+        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
+        addSequential(new ShooterMoveFlyWheel(distanceInches));
+        addSequential(new ConveyAutomatic(4)); //value of 4 is hardcoded. Please change.
     }
 }

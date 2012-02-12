@@ -18,15 +18,16 @@ public class JaguarSpeed implements JoeSpeed {
     public static final double KD = 0.0;
     public CANJaguar jaguar;
     private double speedSetpoint;
-    //This is wrong. Need to run calculations for the real one.
-    private static final double TOLERANCE_RPM = 4;
-
+    public double toleranceRPM;
     /**
      * Constructs a new CANJaguar using speed control.
+     *
      * @param id CAN ID of the Jaguar
+     * @param toleranceRPM the value of toleranceRPM
      */
-    public JaguarSpeed(int id) {
+    public JaguarSpeed(int id, double toleranceRPM) {
         speedSetpoint = 0;
+        this.toleranceRPM = toleranceRPM;
         try {
             jaguar = new CANJaguar(id, CANJaguar.ControlMode.kSpeed);
             jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
@@ -61,7 +62,7 @@ public class JaguarSpeed implements JoeSpeed {
      */
     public boolean isAtSetPoint() {
         boolean atSetPoint = false;
-        if (Math.abs(getRPM() - speedSetpoint) < TOLERANCE_RPM) {
+        if (Math.abs(getRPM() - speedSetpoint) < toleranceRPM) {
             atSetPoint = true;
         }
         return atSetPoint;

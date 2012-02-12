@@ -1,6 +1,7 @@
 package edu.stuy;
 
 import edu.stuy.commands.*;
+import edu.stuy.commands.tuning.ShooterManualSpeed;
 import edu.stuy.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
@@ -82,11 +83,11 @@ public class OI {
         }
 
         // Defaults shooter speed to fender
-        double distanceInches = Shooter.distances[Shooter.fenderIndex];
+        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
 
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new ShooterShoot(distanceInches));
+            new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches));
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             
@@ -102,6 +103,7 @@ public class OI {
             new JoystickButton(shooterStick, 3).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
+            new JoystickButton(shooterStick, 6).whenPressed(new ShooterManualSpeed());
         }
     }
     
