@@ -6,6 +6,7 @@ package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
 import edu.stuy.speed.VictorSpeed;
+import edu.stuy.commands.ConveyorAssistAcquire;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -28,6 +29,7 @@ public class Conveyor extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ConveyorAssistAcquire());
     }
     
     public Conveyor() {
