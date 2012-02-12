@@ -82,6 +82,7 @@ public class JoeBot extends IterativeRobot {
         Scheduler.getInstance().run();
         
         CameraVision.getInstance().doCamera();
+        CameraVision.getInstance().toggleTargetLightIfAligned();
         
         // Debug box actions
         SmartDashboard.putDouble("Distance 0", CameraVision.getInstance().getDistance(0));
