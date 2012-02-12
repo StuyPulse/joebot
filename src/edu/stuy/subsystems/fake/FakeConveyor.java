@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.stuy.subsystems;
+package edu.stuy.subsystems.fake;
 
+import edu.stuy.subsystems.*;
 import edu.stuy.RobotMap;
 import edu.stuy.speed.VictorSpeed;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -14,10 +15,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  * @author Danny
  */
-public class Conveyor extends Subsystem {
-    public Victor roller;
-    public DigitalInput upperSensor;
-    public DigitalInput lowerSensor;
+public class FakeConveyor extends Subsystem {
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -27,37 +26,40 @@ public class Conveyor extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public Conveyor() {
-        roller = new Victor(RobotMap.CONVEYOR_UPPER_ROLLER);
-        upperSensor = new DigitalInput(RobotMap.UPPER_CONVEYOR_SENSOR);
-        lowerSensor = new DigitalInput(RobotMap.LOWER_CONVEYOR_SENSOR);
+    public FakeConveyor() {
+ 
     }
     
-    public void roll(double speed) {
-        roller.set(speed);
+    public void roll(double upperSpeed, double lowerSpeed) {
+   
     }
 
     public void convey() {
-        roll(1);
+     
     }
 
     public void conveyReverse() {
-        roll(-1);
+   
     }
 
     public void stop() {
-        roll(0);
+        System.out.println("Conveyor stop");
+      
     }
 
     public boolean ballAtTop() {
-        return upperSensor.get();
+        return false;
     }
 
     public boolean ballAtBottom() {
-        return lowerSensor.get();
+        return false;
     }
 
-    public double getRoller() {
-        return roller.get();
+    public double getUpperRoller() {
+        return 0;
+    }
+
+    public double getLowerRoller() {
+        return 0;
     }
 }

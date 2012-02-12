@@ -102,26 +102,15 @@ public class ConveyAutomaticTest {
     }
 
     public void makeSpeedGood() {
-<<<<<<< HEAD
-        double distanceInches = Shooter.distances[Shooter.keyIndex];
-        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
-=======
         double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
-        ShooterShoot cmd = new ShooterShoot(distanceInches);
->>>>>>> 216b74319c30aa359d9f440e6b5e7f93dd384731
+        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
         cmd.initialize();
         cmd.execute();
     }
 
     public void makeSpeedBad() {
-<<<<<<< HEAD
-        double distanceInches = Shooter.distances[Shooter.keyIndex]+50;
-        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
-=======
         double distanceInches = Shooter.distances[Shooter.KEY_INDEX]+50;
-        ShooterShoot cmd = new ShooterShoot(distanceInches);
->>>>>>> 216b74319c30aa359d9f440e6b5e7f93dd384731
-        cmd.initialize();
+        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
         cmd.execute();
     }
 
