@@ -45,6 +45,8 @@ public class JoeBot extends IterativeRobot {
         CommandBase.init();
         
         CameraVision.getInstance();
+        CameraVision.getInstance().doCamera();
+        CameraVision.getInstance().toggleTargetLightIfAligned();
     }
 
     public void autonomousInit() {

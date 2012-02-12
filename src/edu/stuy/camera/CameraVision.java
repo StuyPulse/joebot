@@ -1,8 +1,8 @@
 package edu.stuy.camera;
 
 import edu.stuy.RobotMap;
+import edu.stuy.commands.CommandBase;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
@@ -66,65 +66,67 @@ public class CameraVision {
     }
 
     public void doCamera() {
-        try {
-            /**
-             * Do the image capture with the camera and apply the algorithm
-             * described above. This sample will either get images from the
-             * camera or from an image file stored in the top level
-             * directory in the flash memory on the cRIO. The file name in
-             * this case is "10ft2.jpg"
-             *
-             */
-            ColorImage image = camera.getImage();
-            BinaryImage rectImage = image.thresholdHSL(136, 182, 0, 255, 116, 255);
-            //rectImage.write("red.png");
+        if (toggleReflectLightIfInRange()) {
+            try {
+                /**
+                 * Do the image capture with the camera and apply the algorithm
+                 * described above. This sample will either get images from the
+                 * camera or from an image file stored in the top level
+                 * directory in the flash memory on the cRIO. The file name in
+                 * this case is "10ft2.jpg"
+                 *
+                 */
+                ColorImage image = camera.getImage();
+                BinaryImage rectImage = image.thresholdHSL(136, 182, 0, 255, 116, 255);
+                //rectImage.write("red.png");
 
 
-            BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
-            BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
-            //convexHullImage.write("box.png");
-            BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
+                BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
+                BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
+                //convexHullImage.write("box.png");
+                BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
 
-            ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
-            massCenter.removeAllElements();
-            distances.removeAllElements();
-            for (int i = 0; i < reports.length; i++) {                                // print results
-                ParticleAnalysisReport r = reports[i];
-                // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
-                // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
-                int fovFeet = (360 * 2) / r.boundingRectWidth;
-                distances.addElement(new Double((fovFeet / 2) / 2.1348966977217008));
-                massCenter.addElement(new Integer(r.center_mass_x));
-                //System.out.println("Our field of view in feet is: " + fovFeet);
-                //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
-                // Calculate distance using tan(theta) = [half-width of target]/[distance to target]
-                // [distance to target] = [half-width of target]/tan(theta)
+                ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
+                massCenter.removeAllElements();
+                distances.removeAllElements();
+                for (int i = 0; i < reports.length; i++) {                                // print results
+                    ParticleAnalysisReport r = reports[i];
+                    // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
+                    // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
+                    int fovFeet = (360 * 2) / r.boundingRectWidth;
+                    distances.addElement(new Double((fovFeet / 2) / 2.1348966977217008));
+                    massCenter.addElement(new Integer(r.center_mass_x));
+                    //System.out.println("Our field of view in feet is: " + fovFeet);
+                    //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
+                    // Calculate distance using tan(theta) = [half-width of target]/[distance to target]
+                    // [distance to target] = [half-width of target]/tan(theta)
 
-                //System.out.println("Distance to target: " + ((fovFeet / 2) / 2.1348966977217008));
-            }
+                    //System.out.println("Distance to target: " + ((fovFeet / 2) / 2.1348966977217008));
+                }
 //                System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
-            if (massCenter.size() > 0) {
-                targetCenter = getCenterMass(0);
-            }
+                if (massCenter.size() > 0) {
+                    targetCenter = getCenterMass(0);
+                }
 
-            /**
-             * all images in Java must be freed after they are used since
-             * they are allocated out of C data structures. Not calling
-             * free() will cause the memory to accumulate over each pass of
-             * this loop.
-             */
-            filteredImage.free();
-            convexHullImage.free();
-            bigObjectsImage.free();
-            rectImage.free();
-            image.free();
+                /**
+                 * all images in Java must be freed after they are used since
+                 * they are allocated out of C data structures. Not calling
+                 * free() will cause the memory to accumulate over each pass of
+                 * this loop.
+                 */
+                filteredImage.free();
+                convexHullImage.free();
+                bigObjectsImage.free();
+                rectImage.free();
+                image.free();
 
 //            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
 //                ex.printStackTrace();
-        } catch (AxisCameraException ex) {
-            ex.printStackTrace();
-        } catch (NIVisionException ex) {
-            ex.printStackTrace();
+            } catch (AxisCameraException ex) {
+                ex.printStackTrace();
+            } catch (NIVisionException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -154,5 +156,24 @@ public class CameraVision {
         double absValue = Math.abs(CAMERA_CENTER - targetCenter);
         return absValue < 50;
 
+    }
+
+    /**
+     * Uses the sonar to determine whether to turn on camera light.
+     *
+     * If Alliance Wall is within 144 inches, then turn on light.  Else, turn off.
+     */
+    public boolean toggleReflectLightIfInRange() {
+        boolean withinRange = CommandBase.drivetrain.getSonarVoltage() < 144;
+        reflectiveLight.set(withinRange ? Relay.Value.kOn : Relay.Value.kOff);
+
+        return withinRange;
+    }
+
+    /**
+     * If aligned to target, turn on target light.  Else, off.
+     */
+    public void toggleTargetLightIfAligned() {
+        targetLight.set(isAligned() ? Relay.Value.kOn : Relay.Value.kOff);
     }
 }
