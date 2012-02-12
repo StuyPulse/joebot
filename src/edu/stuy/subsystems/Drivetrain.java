@@ -215,7 +215,15 @@ public class Drivetrain extends Subsystem {
      * @return Average of the distances (inches) read by each encoder since they were last reset.
      */
     public double getAvgDistance() {
-        return (encoderLeft.getDistance() + encoderRight.getDistance()) / 2.0;
+        return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2.0;
+    }
+    
+    public double getLeftEncoderDistance() {
+        return encoderLeft.getDistance();
+    }
+    
+    public double getRightEncoderDistance() {
+        return encoderRight.getDistance();
     }
 
     /**
@@ -224,6 +232,10 @@ public class Drivetrain extends Subsystem {
     public void resetEncoders() {
         encoderLeft.reset();
         encoderRight.reset();
+    }
+    
+    public double getGyroAngle() {
+        return gyro.getAngle();
     }
 
 <<<<<<< HEAD

@@ -6,27 +6,47 @@ package edu.stuy.commands;
 
 /**
  *
- * @author Danny
+ * @author belias
  */
-public class ConveyorStop extends CommandBase {
+public class ConveyorPushDown extends CommandBase {
     
-    public ConveyorStop() {
+    double timeout;
+    boolean hasTimeout = false;
+
+    public ConveyorPushDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        
+        setInterruptible(false);
+        requires(conveyor);
+        requires(acquirer);
+    }
+
+    public ConveyorPushDown(double timeout) {
+        this();
+        hasTimeout = true;
+        this.timeout = timeout;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        acquirer.stop();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        conveyor.stop();
+        if (conveyor.ballAtBottom()) {
+            conveyor.stop();
+        }
+        else {
+            conveyor.conveyReverse();
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return ((hasTimeout && isTimedOut()) ||   // timed out
+                conveyor.ballAtBottom());         // or ball is pushed down
     }
 
     // Called once after isFinished returns true

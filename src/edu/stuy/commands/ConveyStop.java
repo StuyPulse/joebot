@@ -6,15 +6,14 @@ package edu.stuy.commands;
 
 /**
  *
- * @author Kevin Wang
+ * @author Danny
  */
-public class ConveySemiAutomatic extends CommandBase {
+public class ConveyStop extends CommandBase {
+    private boolean done = false;
     
-    public ConveySemiAutomatic() {
+    public ConveyStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(conveyor);
-        requires(shooter);
     }
 
     // Called just before this Command runs the first time
@@ -23,17 +22,17 @@ public class ConveySemiAutomatic extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        conveyor.convey();
+        conveyor.stop();
+        done = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !shooter.isSpeedGood();
+        return done;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        conveyor.stop();
     }
 
     // Called when another command which requires one or more of the same

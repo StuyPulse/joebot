@@ -2,6 +2,7 @@ package edu.stuy;
 
 import edu.stuy.commands.*;
 import edu.stuy.subsystems.Shooter;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 import edu.wpi.first.wpilibj.Joystick;
@@ -13,27 +14,28 @@ public class OI {
     private Joystick rightStick;
     private Joystick shooterStick;
     private Joystick debugBox;
-
-    public static final int DISTANCE_BUTTON_AUTO = 0;
-    public static final int DISTANCE_BUTTON_FAR = 1;
-    public static final int DISTANCE_BUTTON_FENDER_WIDE = 2;
-    public static final int DISTANCE_BUTTON_FENDER_NARROW = 3;
-    public static final int DISTANCE_BUTTON_FENDER_SIDE = 4;
-    public static final int DISTANCE_BUTTON_FENDER = 5;
-    public static final int DISTANCE_BUTTON_STOP = 6;
+    
+    public static final int DISTANCE_BUTTON_AUTO = 1;
+    public static final int DISTANCE_BUTTON_FAR = 2;
+    public static final int DISTANCE_BUTTON_FENDER_WIDE = 3;
+    public static final int DISTANCE_BUTTON_FENDER_NARROW = 4;
+    public static final int DISTANCE_BUTTON_FENDER_SIDE = 5;
+    public static final int DISTANCE_BUTTON_FENDER = 6;
+    public static final int DISTANCE_BUTTON_STOP = 7;
     
     private DriverStationEnhancedIO enhancedIO;
     
     // EnhancedIO digital input
-    private static final int BIT_1_CHANNEL = 1;
-    private static final int BIT_2_CHANNEL = 2;
-    private static final int BIT_3_CHANNEL = 3;
-    private static final int ACQUIRER_IN_SWITCH_CHANNEL = 4;
-    private static final int ACQUIRER_OUT_SWITCH_CHANNEL = 5;
-    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 6;
-    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 7;
-    private static final int SHOOT_BUTTON_CHANNEL = 8;
-    private static final int OVERRIDE_BUTTON_CHANNEL = 9;
+    
+    private static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
+    private static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
+    private static final int BIT_1_CHANNEL = 3;
+    private static final int BIT_2_CHANNEL = 4;
+    private static final int BIT_3_CHANNEL = 5;
+    private static final int SHOOT_BUTTON_CHANNEL = 6;
+    private static final int OVERRIDE_BUTTON_CHANNEL = 7;
+    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
+    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
     
     public double distanceInches;
     
@@ -50,8 +52,12 @@ public class OI {
     private static final int DISTANCE_BUTTONS_CHANNEL = 1;
     private static final int SPEED_TRIM_POT_CHANNEL = 2;
     private static final int SPIN_TRIM_POT_CHANNEL = 3;
+    private static final int MAX_ANALOG_CHANNEL = 4;
     
     public OI() {
+        if (!Devmode.DEV_MODE) {
+            enhancedIO = DriverStation.getInstance().getEnhancedIO();
+        }
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
 
@@ -87,8 +93,10 @@ public class OI {
 
         if (!Devmode.DEV_MODE) {
             new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches));
-            new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(false));
+            new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
+            new JoystickButton(leftStick, 1).whenPressed(new TusksExtend());
+            new JoystickButton(leftStick, 2).whenPressed(new TusksRetract());
             
             // OI box switches
             new DigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
@@ -104,6 +112,84 @@ public class OI {
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
         }
     }
+    
+    // Copied from last year's DesDroid code. 
+    
+    public double getRawAnalogVoltage() {
+        try {
+            return enhancedIO.getAnalogIn(DISTANCE_BUTTONS_CHANNEL);
+        }
+        catch (EnhancedIOException e) {
+            return 0;
+        }
+    }
+    
+    public double getMaxVoltage() {
+        try {
+            return enhancedIO.getAnalogIn(MAX_ANALOG_CHANNEL);
+        }
+        catch (EnhancedIOException e) {
+            return 2.2;
+        }
+    }
+    
+    /**
+     * Determines which height button is pressed. All (7 logically because
+     * side buttons are wired together) buttons are wired by means of
+     * resistors to one analog input. Depending on the button that is pressed, a
+     * different voltage is read by the analog input. Each resistor reduces the
+     * voltage by about 1/7 the maximum voltage.
+     *
+     * @return An integer value representing the height button that was pressed.
+     */
+    public int getDistanceButton() {
+       if (shooterStick.getRawButton(DISTANCE_BUTTON_STOP)) {
+           return DISTANCE_BUTTON_STOP;
+       }
+       if (shooterStick.getRawButton(DISTANCE_BUTTON_AUTO)) {
+           return DISTANCE_BUTTON_AUTO;
+       }
+       if (shooterStick.getRawButton(DISTANCE_BUTTON_FENDER)) {
+           return DISTANCE_BUTTON_FENDER;
+       }
+       if (shooterStick.getRawButton(DISTANCE_BUTTON_FAR)) {
+           return DISTANCE_BUTTON_FAR;
+       }
+       return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
+    }
+    
+    public double getDistanceFromHeightButton(){
+        double distance = 0;
+        switch(getDistanceButton()){
+            case DISTANCE_BUTTON_AUTO:
+                distance = CommandBase.drivetrain.getSonarDistance_in();
+                break;
+            case DISTANCE_BUTTON_FAR:
+                distance = 725; // TODO: Max distance to max speed?
+                break;
+            case DISTANCE_BUTTON_FENDER_WIDE:
+                distance = Shooter.distances[Shooter.FENDER_LONG_INDEX];
+                break;
+            case DISTANCE_BUTTON_FENDER_NARROW:
+                distance = Shooter.distances[Shooter.FENDER_WIDE_INDEX];
+                break;
+            case DISTANCE_BUTTON_FENDER_SIDE:
+                distance = Shooter.distances[Shooter.FENDER_SIDE_INDEX];
+                break;
+            case DISTANCE_BUTTON_FENDER:
+                distance = Shooter.distances[Shooter.FENDER_INDEX];
+                break;
+            case DISTANCE_BUTTON_STOP:
+                distance = 0;
+                break;
+            default:
+                distance = 0;
+                break;
+        }
+        return distance;
+    }
+    
+    // Copied from last year's DesDroid code. 
     
     public Joystick getLeftStick() {
         return leftStick;
@@ -123,22 +209,6 @@ public class OI {
         } catch (EnhancedIOException ex) {
             return shooterStick.getRawButton(8);
         }
-    }
-
-    public int getPressedDistanceButton() {
-       if (shooterStick.getRawButton(6)) {
-           return DISTANCE_BUTTON_STOP;
-       }
-       if (shooterStick.getRawButton(7)) {
-           return DISTANCE_BUTTON_AUTO;
-       }
-       if (shooterStick.getRawButton(10)) {
-           return DISTANCE_BUTTON_FENDER;
-       }
-       if (shooterStick.getRawButton(11)) {
-           return DISTANCE_BUTTON_FAR;
-       }
-       return 0;
     }
 
     /**
