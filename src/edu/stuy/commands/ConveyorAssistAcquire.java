@@ -4,17 +4,17 @@
  */
 package edu.stuy.commands;
 
+
 /**
  *
- * @author Kevin Wang
+ * @author English
  */
-public class ConveySemiAutomatic extends CommandBase {
-    
-    public ConveySemiAutomatic() {
+public class ConveyorAssistAcquire extends CommandBase {
+
+    public ConveyorAssistAcquire() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(conveyor);
-        requires(shooter);
     }
 
     // Called just before this Command runs the first time
@@ -23,12 +23,17 @@ public class ConveySemiAutomatic extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        conveyor.convey();
+        if (conveyor.ballAtBottom() && !conveyor.ballAtTop()) {
+            conveyor.convey();
+        }
+        else {
+            conveyor.stop();
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !shooter.isSpeedGood();
+        return false;
     }
 
     // Called once after isFinished returns true
