@@ -5,6 +5,8 @@
 
 package edu.stuy.commands;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,8 +15,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import edu.stuy.*;
 import edu.stuy.commands.*;
+import static edu.stuy.assertions.AcquirerAssertions.*;
 import static edu.stuy.assertions.ConveyorAssertions.*;
 import static edu.stuy.commands.util.ConveyorTools.*;
+import static edu.stuy.commands.util.AcquirerTools.*;
 
 /**
  *
@@ -71,5 +75,24 @@ public class ConveyorPushDownTest {
         ConveyorPushDown cmd = new ConveyorPushDown();
         cmd.execute();
         assertConveyorIsNotRunning();
+    }
+
+    @Test
+    public void testInit(){
+        ConveyorPushDown cmd = new ConveyorPushDown();
+        runCommandOnce(cmd);
+        runCommandOnce(cmd);
+    }
+
+    private void runCommandOnce(ConveyorPushDown cmd){
+        startAcquirerForward();
+        cmd.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ConveyorPushDownTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cmd.end();
+        assertAcquirerIsNotRunning();
     }
 }
