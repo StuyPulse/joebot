@@ -60,8 +60,10 @@ public class RobotMap {
      
 
     /* SOLENOID */
-    public static final int GEAR_SHIFT = 1;
-    public static final int TUSKS_SOLENOID = 2;
+    public static final int GEAR_SHIFT_LOW = 1;
+    public static final int GEAR_SHIFT_HIGH = 2;
+    public static final int TUSKS_SOLENOID_RETRACT = 3;
+    public static final int TUSKS_SOLENOID_EXTEND = 4;
 
     /* VIRSYSJ */
     public static int[] VIRSYS_OUTPUT_MAP = new int[11];
