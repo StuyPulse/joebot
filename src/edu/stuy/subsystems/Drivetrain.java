@@ -86,21 +86,13 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-     * Scales sonar voltage reading to inches
-     * @return distance from alliance wall in inches, as measured by sonar sensor
+     * Scales sonar voltage reading to centimeters
+     * @return distance from alliance wall in centimeters, as measured by sonar sensor
      */
     public double getSonarDistance_in() {
         final int Vcc = 5; // 5 volts
         double cm = getSonarVoltage() * 1024 / Vcc; // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
         return cm / 2.54; // 1 cm is 1/2.54 inch
-    }
-
-    /**
-     * Dan's formula for converting sonar voltage into inches.
-     * @return distance from alliance wall in inches, as measured by sonar sensor
-     */
-    public double getSonarDistanceDan() {
-        return sonar.getValue() / 8;
     }
 
     public void initDefaultCommand() {
