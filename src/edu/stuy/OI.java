@@ -87,10 +87,6 @@ public class OI {
         } catch (EnhancedIOException e) {
         }
 
-        // Defaults shooter speed to fender
-        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-
-
         if (!Devmode.DEV_MODE) {
             new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches));
             new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
@@ -159,34 +155,32 @@ public class OI {
     }
     
     public double getDistanceFromHeightButton(){
-        double distance = 0;
         switch(getDistanceButton()){
             case DISTANCE_BUTTON_AUTO:
-                distance = CommandBase.drivetrain.getSonarDistance_in();
+                distanceInches = CommandBase.drivetrain.getSonarDistance_in();
                 break;
             case DISTANCE_BUTTON_FAR:
-                distance = 725; // TODO: Max distance to max speed?
+                distanceInches = 725; // TODO: Max distance to max speed?
                 break;
             case DISTANCE_BUTTON_FENDER_WIDE:
-                distance = Shooter.distances[Shooter.FENDER_LONG_INDEX];
+                distanceInches = Shooter.distances[Shooter.FENDER_LONG_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER_NARROW:
-                distance = Shooter.distances[Shooter.FENDER_WIDE_INDEX];
+                distanceInches = Shooter.distances[Shooter.FENDER_WIDE_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER_SIDE:
-                distance = Shooter.distances[Shooter.FENDER_SIDE_INDEX];
+                distanceInches = Shooter.distances[Shooter.FENDER_SIDE_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER:
-                distance = Shooter.distances[Shooter.FENDER_INDEX];
+                distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
                 break;
             case DISTANCE_BUTTON_STOP:
-                distance = 0;
+                distanceInches = 0;
                 break;
             default:
-                distance = 0;
                 break;
         }
-        return distance;
+        return distanceInches;
     }
     
     // Copied from last year's DesDroid code. 
