@@ -37,6 +37,7 @@ public class OI {
     private static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
     private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
     
+    public int distanceButton;
     public double distanceInches;
     
     // EnhancedIO digital output
@@ -63,6 +64,9 @@ public class OI {
 
         shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
         debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
+        
+        distanceButton = DISTANCE_BUTTON_STOP;
+        distanceInches = 0;
         
         try {
             if (!Devmode.DEV_MODE) {
@@ -106,6 +110,8 @@ public class OI {
             new JoystickButton(shooterStick, 3).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
+            
+            updateLights();
         }
     }
     
@@ -140,22 +146,23 @@ public class OI {
      */
     public int getDistanceButton() {
        if (shooterStick.getRawButton(DISTANCE_BUTTON_STOP)) {
-           return DISTANCE_BUTTON_STOP;
+           distanceButton = DISTANCE_BUTTON_STOP;
        }
        if (shooterStick.getRawButton(DISTANCE_BUTTON_AUTO)) {
-           return DISTANCE_BUTTON_AUTO;
+           distanceButton = DISTANCE_BUTTON_AUTO;
        }
        if (shooterStick.getRawButton(DISTANCE_BUTTON_FENDER)) {
-           return DISTANCE_BUTTON_FENDER;
+           distanceButton = DISTANCE_BUTTON_FENDER;
        }
        if (shooterStick.getRawButton(DISTANCE_BUTTON_FAR)) {
-           return DISTANCE_BUTTON_FAR;
+           distanceButton = DISTANCE_BUTTON_FAR;
        }
-       return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
+       distanceButton = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
+       return distanceButton;
     }
     
     public double getDistanceFromHeightButton(){
-        switch(getDistanceButton()){
+        switch(distanceButton){
             case DISTANCE_BUTTON_AUTO:
                 distanceInches = CommandBase.drivetrain.getSonarDistance_in();
                 break;
@@ -278,6 +285,58 @@ public class OI {
             return enhancedIO.getAnalogIn(SPIN_TRIM_POT_CHANNEL);
         } catch (EnhancedIOException ex) {
             return 0.0;
+        }
+    }
+    
+    public void setLight(int lightNum) {
+        turnOffLights();
+        try {
+            enhancedIO.setDigitalOutput(lightNum, true);
+        }
+        catch (EnhancedIOException e) {
+        }
+    }
+    
+    public void turnOffLights(){
+        try {
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, false);
+        }
+        catch (EnhancedIOException e) {
+        }
+    }
+    
+    public void updateLights(){
+        switch(distanceButton){
+            case DISTANCE_BUTTON_AUTO:
+                setLight(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL);
+                break;
+            case DISTANCE_BUTTON_FAR:
+                setLight(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL);
+                break;
+            case DISTANCE_BUTTON_FENDER_WIDE:
+                setLight(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL);
+                break;
+            case DISTANCE_BUTTON_FENDER_NARROW:
+                setLight(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL);
+                break;
+            case DISTANCE_BUTTON_FENDER_SIDE:
+                setLight(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL);
+                break;
+            case DISTANCE_BUTTON_FENDER:
+                setLight(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL);
+                break;
+            case DISTANCE_BUTTON_STOP:
+                setLight(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL);
+                break;
+            default:
+                turnOffLights();
+                break;
         }
     }
 }
