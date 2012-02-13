@@ -92,6 +92,7 @@ public class JoeBot extends IterativeRobot {
         CameraVision.getInstance().toggleTargetLightIfAligned();
         
         // Debug box actions
+        CommandBase.oi.updateLights();
         updateSmartDashboard();
     }
     
