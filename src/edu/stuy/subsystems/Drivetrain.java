@@ -86,8 +86,8 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-     * Scales sonar voltage reading to centimeters
-     * @return distance from alliance wall in centimeters, as measured by sonar sensor
+     * Scales sonar voltage reading to inches
+     * @return distance from alliance wall in inches, as measured by sonar sensor
      */
     public double getSonarDistance_in() {
         final int Vcc = 5; // 5 volts

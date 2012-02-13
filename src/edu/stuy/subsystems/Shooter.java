@@ -32,7 +32,6 @@ public class Shooter extends Subsystem {
 
     public static JaguarSpeed upperRoller;
     public static JaguarSpeed lowerRoller;
-    private Relay speedLight;
 
     public static final double THETA_DEGREES = 72;
     public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
@@ -105,8 +104,6 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Shooter() {
-        speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
-        speedLight.setDirection(Relay.Direction.kForward);
 
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
         lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
@@ -120,18 +117,6 @@ public class Shooter extends Subsystem {
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {
         upperRoller.setRPM(upperRPM);
         lowerRoller.setRPM(lowerRPM);
-    }
-
-    /**
-     * Given a desired flywheel RPM, checks if the current RPM is
-     * within an acceptable range of the desired RPM, and turns
-     * on or off the speed light accordingly.
-     */
-    public boolean isSpeedGood() {
-        boolean speedGood = upperRoller.isAtSetPoint() &&
-                            lowerRoller.isAtSetPoint();
-        speedLight.set(speedGood ? Relay.Value.kOff : Relay.Value.kOn);
-        return speedGood;
     }
 
     /**
