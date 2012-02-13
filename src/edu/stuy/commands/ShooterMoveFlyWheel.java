@@ -13,10 +13,12 @@ import edu.stuy.subsystems.Shooter;
 public class ShooterMoveFlyWheel extends CommandBase {
 
     double distanceInches;
+    double[] speeds;
     
-    public ShooterMoveFlyWheel(double distanceInches) {
+    public ShooterMoveFlyWheel(double distanceInches, double[] speeds) {
         requires(shooter);
         setDistanceInches(distanceInches);
+        this.speeds = speeds;
     }
     
     public void setDistanceInches(double distanceInches) {
@@ -30,7 +32,7 @@ public class ShooterMoveFlyWheel extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double[] rpm = shooter.lookupRPM(distanceInches);
+        double[] rpm = shooter.lookupRPM(distanceInches, speeds);
         shooter.setFlywheelSpeeds(rpm[0], rpm[1]);
     }
 
