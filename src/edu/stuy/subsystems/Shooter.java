@@ -105,7 +105,7 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Shooter() {
-        speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
+       // speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
         speedLight.setDirection(Relay.Direction.kForward);
 
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);

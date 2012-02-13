@@ -38,8 +38,8 @@ public class JoeBot extends IterativeRobot {
         // autonomousCommand = new ExampleCommand();
 
         if (!Devmode.DEV_MODE) {
-            Compressor compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
-            compressor.start();
+            /*Compressor compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
+            compressor.start(); */
         }
 
         // Initialize all subsystems
@@ -88,6 +88,9 @@ public class JoeBot extends IterativeRobot {
         //
         Scheduler.getInstance().run();
         
+        CameraVision.getInstance().doCamera();
+        CameraVision.getInstance().toggleTargetLightIfAligned();
+        
         // Debug box actions
         updateSmartDashboard();
     }
@@ -104,6 +107,12 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putBoolean("Upper conveyor sensor", CommandBase.conveyor.ballAtTop());
         SmartDashboard.putBoolean("Lower conveyor sensor", CommandBase.conveyor.ballAtBottom());
         
-        // TODO: Camera target info
+        // Camera target info
+        SmartDashboard.putDouble("Distance 0", CameraVision.getInstance().getDistance(0));
+        SmartDashboard.putDouble("Distance 1", CameraVision.getInstance().getDistance(1));
+        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
+        SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
+        SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
+
     }
 }
