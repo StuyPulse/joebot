@@ -68,14 +68,7 @@ public class CameraVision {
     public void doCamera() {
         if (toggleReflectLightIfInRange()) {
             try {
-                /**
-                 * Do the image capture with the camera and apply the algorithm
-                 * described above. This sample will either get images from the
-                 * camera or from an image file stored in the top level
-                 * directory in the flash memory on the cRIO. The file name in
-                 * this case is "10ft2.jpg"
-                 *
-                 */
+                 // Do the image capture with the camera and apply the algorithm described above.
                 ColorImage image = camera.getImage();
                 BinaryImage rectImage = image.thresholdHSL(136, 182, 0, 255, 116, 255);
                 //rectImage.write("red.png");
