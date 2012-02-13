@@ -120,9 +120,7 @@ public class CameraVision {
                 rectImage.free();
                 image.free();
 
-//            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
-//                ex.printStackTrace();
-            } catch (AxisCameraException ex) {
+            } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
                 ex.printStackTrace();
             } catch (NIVisionException ex) {
                 ex.printStackTrace();
