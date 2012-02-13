@@ -110,8 +110,6 @@ public class OI {
             new JoystickButton(shooterStick, 3).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
-            
-            updateLights();
         }
     }
     
@@ -142,7 +140,9 @@ public class OI {
      * different voltage is read by the analog input. Each resistor reduces the
      * voltage by about 1/7 the maximum voltage.
      *
-     * @return An integer value representing the height button that was pressed.
+     * @return An integer value representing the distance button that was pressed.
+     * If a Joystick button is being used, that will returned. Otherwise, the
+     * button will be returned from the voltage (if it returns 0, no button is pressed).
      */
     public int getDistanceButton() {
        if (shooterStick.getRawButton(DISTANCE_BUTTON_STOP)) {
@@ -161,6 +161,11 @@ public class OI {
        return distanceButton;
     }
     
+    /**
+     * Takes the distance button that has been pressed, and finds the distance for
+     * the shooter to use.
+     * @return distance for the shooter.
+     */
     public double getDistanceFromHeightButton(){
         switch(distanceButton){
             case DISTANCE_BUTTON_AUTO:
@@ -288,6 +293,10 @@ public class OI {
         }
     }
     
+    /**
+     * Turns on specified light on OI.
+     * @param lightNum 
+     */
     public void setLight(int lightNum) {
         turnOffLights();
         try {
@@ -297,6 +306,9 @@ public class OI {
         }
     }
     
+    /**
+     * Turns all lights off.
+     */
     public void turnOffLights(){
         try {
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, false);
@@ -311,6 +323,11 @@ public class OI {
         }
     }
     
+    /**
+     * Meant to be called continuously to update the lights on the OI board.
+     * Depending on which button has been pressed last (which distance is
+     * currently set), that button will be lit.
+     */
     public void updateLights(){
         switch(distanceButton){
             case DISTANCE_BUTTON_AUTO:
