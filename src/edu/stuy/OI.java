@@ -189,6 +189,10 @@ public class OI {
         }
         return distanceInches;
     }
+
+    public double[] getHeightFromButton() {
+        return shooterStick.getRawButton(7) ? Shooter.speedsMiddleHoop : Shooter.speedsTopHoop;
+    }
     
     // Copied from last year's DesDroid code. 
     
