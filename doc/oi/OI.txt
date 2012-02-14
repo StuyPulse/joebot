@@ -1,3 +1,48 @@
+LEFT STICK
+  (USB port #1)
+
+  Axes:
+              X:
+              Y:
+              Z:
+
+  Buttons:
+    (trigger) 1:  (HOLD) Run flywheel for last set distance, top hoop
+               CONFLICT: extend tusks
+              2:  retract tusks
+              3:
+              4:
+              5:
+              6:
+              7:
+              8:
+              9:
+             10:
+             11:
+
+RIGHT STICK
+  (USB port #2)
+
+  Axes:
+              X:
+              Y:
+              Z:
+
+  Buttons:
+    (trigger) 1:  Low gear
+              2:  High gear
+              3:
+              4:
+              5:
+              6:
+              7:
+              8:
+              9:
+             10:
+             11:
+
+
+
 SHOOTER STICK
   (USB port #3)
 
@@ -8,13 +53,21 @@ SHOOTER STICK
 
   Buttons:
     (trigger) 1:  Convey Automatic
+        CONFLICT: auto-distance
               2:  Acquire
+        CONFLICT: max speed
               3:  Convey Manual
+        CONFLICT: fender + wide bot
               4:  Convey Reverse Manual
+        CONFLICT: fender + narrow bot
               5:  Acquire Reverse
+        CONFLICT: fender side
               6:  top hoop
+        CONFLICT: shooter manual speed (SmartDashboard)
+        CONFLICT: fender
               7:  middle hoop
-              8:
+        CONFLICT: stop flywheel
+              8:  shoot override
               9:
              10:
              11:
