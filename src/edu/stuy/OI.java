@@ -159,7 +159,7 @@ public class OI {
        if (shooterStick.getRawButton(DISTANCE_BUTTON_FAR)) {
            distanceButton = DISTANCE_BUTTON_FAR;
        }
-       distanceButton = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
+       distanceButton = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 8)) + 0.5);
        return distanceButton;
     }
     
