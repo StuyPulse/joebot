@@ -4,6 +4,7 @@
  */
 package edu.stuy.subsystems.fake;
 
+import edu.stuy.speed.JoeSpeed;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
