@@ -43,6 +43,7 @@ public class CameraVision {
     private int targetCenter;
     int numRectangles;
     Vector massCenter = new Vector();
+    int lumLow = 116;
 
     public static CameraVision getInstance() {
         if (instance == null) {
@@ -71,7 +72,7 @@ public class CameraVision {
             try {
                  // Do the image capture with the camera and apply the algorithm described above.
                 ColorImage image = camera.getImage();
-                BinaryImage rectImage = image.thresholdHSL(136, 182, 0, 255, 116, 255);
+                BinaryImage rectImage = image.thresholdHSL(136, 182, 0, 255, lumLow, 255);
                 //rectImage.write("red.png");
 
 
@@ -90,6 +91,9 @@ public class CameraVision {
                     massCenter.addElement(new Integer(r.center_mass_x));
                     //System.out.println("Our field of view in feet is: " + fovFeet);
                     //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
+                }
+                if (reports.length > 4) {
+                    
                 }
 //                System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
                 if (massCenter.size() > 0) {
