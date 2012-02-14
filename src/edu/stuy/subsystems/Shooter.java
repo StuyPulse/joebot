@@ -27,8 +27,6 @@ public class Shooter extends Subsystem {
 
     public static final double thetaDegrees = 72;
     public static final double thetaRadians = Math.toRadians(thetaDegrees);
-
-    private Relay speedLight;
     
     public double lowerSetpoint;
     public double upperSetpoint;
@@ -131,7 +129,6 @@ public class Shooter extends Subsystem {
     public boolean isSpeedGood() {
         boolean speedGood = (Math.abs(upperSetpoint - upperRoller.getRPM()) < rpmTolerance) &&
                             (Math.abs(lowerSetpoint - lowerRoller.getRPM()) < rpmTolerance);
-        speedLight.set(speedGood ? Relay.Value.kOff : Relay.Value.kOn);
         return speedGood;
     }
 

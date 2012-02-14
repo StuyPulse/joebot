@@ -13,17 +13,10 @@ public class ConveyorPushDown extends CommandBase {
     boolean hasTimeout = false;
     double timeout;
 
-    public ConveyorPushDown() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        
+    public ConveyorPushDown(double timeout) {
         setInterruptible(false);
         requires(conveyor);
         requires(acquirer);
-    }
-
-    public ConveyorPushDown(double timeout) {
-        this();
         hasTimeout = true;
         this.timeout = timeout;
     }
