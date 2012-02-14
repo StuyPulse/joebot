@@ -1,7 +1,6 @@
 package edu.stuy;
 
 import edu.stuy.commands.*;
-import edu.stuy.commands.tuning.ShooterManualSpeed;
 import edu.stuy.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
@@ -111,7 +110,6 @@ public class OI {
             new JoystickButton(shooterStick, 3).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
-            new JoystickButton(shooterStick, 6).whenPressed(new ShooterManualSpeed());
         }
     }
     

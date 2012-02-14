@@ -10,12 +10,12 @@ package edu.stuy;
 
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.ConveyorPushDown;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.stuy.commands.tuning.ShooterManualSpeed;
+import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -66,9 +66,7 @@ public class JoeBot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        ShooterManualSpeed cmd = new ShooterManualSpeed();
-        cmd.start();
-
+        
                 // Note that OI starts a bunch of other commands
                 // by attaching them to joystick buttons.  Check OI.java
     }
@@ -79,7 +77,30 @@ public class JoeBot extends IterativeRobot {
     public void teleopPeriodic() {
         //
         Scheduler.getInstance().run();
-        
+
+        double setRpmTop = 0;
+        double setRpmBottom = 0;
+        try {
+            setRpmTop = SmartDashboard.getDouble("setRPMtop");
+            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
+        }
+        catch (NetworkTableKeyNotDefined e) {
+            SmartDashboard.putDouble("setRPMtop", 0);
+            SmartDashboard.putDouble("setRPMbottom", 0);
+        }
+        CommandBase.shooter.setFlywheelSpeeds(setRpmTop, setRpmBottom);
+
+
+        double rpmTop = CommandBase.shooter.upperRoller.getRPM();
+        double rpmBottom = CommandBase.shooter.lowerRoller.getRPM();
+        try {
+            SmartDashboard.putDouble("getRPMtop", rpmTop);
+            SmartDashboard.putDouble("getRPMbottom", rpmBottom);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Debug box actions
     }
 }
