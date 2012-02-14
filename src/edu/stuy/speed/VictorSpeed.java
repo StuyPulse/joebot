@@ -6,6 +6,9 @@ package edu.stuy.speed;
 
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -91,5 +94,16 @@ public class VictorSpeed implements JoeSpeed {
             atSetPoint = true;
         }
         return atSetPoint;
+    }
+
+    public void setPID(String prefix) {
+        try {
+            controller.setPID(SmartDashboard.getDouble(prefix+"P"), SmartDashboard.getDouble(prefix+"I"), SmartDashboard.getDouble(prefix+"D"));
+        }
+        catch (NetworkTableKeyNotDefined e) {
+            SmartDashboard.putDouble(prefix+"P", 0);
+            SmartDashboard.putDouble(prefix+"I", 0);
+            SmartDashboard.putDouble(prefix+"D", 0);
+        }
     }
 }
