@@ -90,10 +90,6 @@ public class CameraVision {
                     massCenter.addElement(new Integer(r.center_mass_x));
                     //System.out.println("Our field of view in feet is: " + fovFeet);
                     //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
-                    // Calculate distance using tan(theta) = [half-width of target]/[distance to target]
-                    // [distance to target] = [half-width of target]/tan(theta)
-
-                    //System.out.println("Distance to target: " + ((fovFeet / 2) / 2.1348966977217008));
                 }
 //                System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
                 if (massCenter.size() > 0) {

@@ -109,8 +109,6 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putBoolean("Lower conveyor sensor", CommandBase.conveyor.ballAtBottom());
         
         // Camera target info
-        SmartDashboard.putDouble("Distance 0", CameraVision.getInstance().getDistance(0));
-        SmartDashboard.putDouble("Distance 1", CameraVision.getInstance().getDistance(1));
         SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
         SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
         SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
