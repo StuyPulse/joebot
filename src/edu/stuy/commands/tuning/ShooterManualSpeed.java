@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterManualSpeed extends CommandBase {
 
     public ShooterManualSpeed() {
-        requires(shooter);
+        requires(flywheel);
     }
 
     // Called just before this Command runs the first time
@@ -38,12 +38,12 @@ public class ShooterManualSpeed extends CommandBase {
         catch (Exception e) {
             e.printStackTrace();
         }
-        shooter.setFlywheelSpeeds(rpmTop, rpmBottom);
+        flywheel.setFlywheelSpeeds(rpmTop, rpmBottom);
     }
 
     public void showSpeed() {
-        double rpmTop = shooter.upperRoller.getRPM();
-        double rpmBottom = shooter.lowerRoller.getRPM();
+        double rpmTop = flywheel.upperRoller.getRPM();
+        double rpmBottom = flywheel.lowerRoller.getRPM();
         try {
             SmartDashboard.putDouble("getRPMtop", rpmTop);
             SmartDashboard.putDouble("getRPMbottom", rpmBottom);

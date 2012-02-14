@@ -2,7 +2,7 @@ package edu.stuy;
 
 import edu.stuy.commands.*;
 import edu.stuy.commands.tuning.ShooterManualSpeed;
-import edu.stuy.subsystems.Shooter;
+import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
@@ -94,7 +94,7 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches, Shooter.speedsTopHoop));
+            new JoystickButton(leftStick, 1).whileHeld(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
             new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             new JoystickButton(leftStick, 1).whenPressed(new TusksExtend());
@@ -113,7 +113,7 @@ public class OI {
             new JoystickButton(shooterStick, 4).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
             // 6 and 7 are used for top and mid hoop respectively (see getHeightFromButton())
-            new JoystickButton(shooterStick, 8).whenPressed(new ShooterStop());
+            new JoystickButton(shooterStick, 8).whenPressed(new FlywheelStop());
             // 9-11 are used for fender, fender side, and max speed, in that order
             // see getDistanceButton()
         }
@@ -181,16 +181,16 @@ public class OI {
                 distanceInches = 725; // TODO: Max distance to max speed?
                 break;
             case DISTANCE_BUTTON_FENDER_WIDE:
-                distanceInches = Shooter.distances[Shooter.FENDER_LONG_INDEX];
+                distanceInches = Flywheel.distances[Flywheel.FENDER_LONG_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER_NARROW:
-                distanceInches = Shooter.distances[Shooter.FENDER_WIDE_INDEX];
+                distanceInches = Flywheel.distances[Flywheel.FENDER_WIDE_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER_SIDE:
-                distanceInches = Shooter.distances[Shooter.FENDER_SIDE_INDEX];
+                distanceInches = Flywheel.distances[Flywheel.FENDER_SIDE_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER:
-                distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
+                distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
                 break;
             case DISTANCE_BUTTON_STOP:
                 distanceInches = 0;
@@ -208,7 +208,7 @@ public class OI {
         if (shooterStick.getRawButton(6)) {
             topHoop = true;
         }
-        return  topHoop ? Shooter.speedsMiddleHoop : Shooter.speedsTopHoop;
+        return  topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop;
     }
     
     // Copied from last year's DesDroid code. 

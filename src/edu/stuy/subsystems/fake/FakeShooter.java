@@ -9,7 +9,7 @@ import edu.stuy.speed.JaguarSpeed;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.ShooterMoveFlyWheel;
+import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JoeSpeed;
 
 /**
