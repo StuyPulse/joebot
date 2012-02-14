@@ -93,7 +93,7 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches));
+            new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches, Shooter.speedsTopHoop));
             new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             new JoystickButton(leftStick, 1).whenPressed(new TusksExtend());
@@ -188,6 +188,10 @@ public class OI {
                 break;
         }
         return distanceInches;
+    }
+
+    public double[] getHeightFromButton() {
+        return shooterStick.getRawButton(7) ? Shooter.speedsMiddleHoop : Shooter.speedsTopHoop;
     }
     
     // Copied from last year's DesDroid code. 
