@@ -14,13 +14,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Tusks extends Subsystem {
-    Solenoid solenoid;
+    Solenoid solenoidExtend;
+    Solenoid solenoidRetract;
+    DigitalInput extendedSwitch;
+    DigitalInput retractedSwitch;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
     public Tusks() {
-        solenoid = new Solenoid(RobotMap.TUSKS_SOLENOID);
+        solenoidExtend = new Solenoid(RobotMap.TUSKS_SOLENOID_EXTEND);
+        solenoidRetract = new Solenoid(RobotMap.TUSKS_SOLENOID_RETRACT);
+        extendedSwitch = new DigitalInput(2, RobotMap.TUSKS_EXTENDED_SWITCH);
+        retractedSwitch = new DigitalInput(2, RobotMap.TUSKS_RETRACTED_SWITCH);
     }
 
     public void initDefaultCommand() {
@@ -29,14 +35,15 @@ public class Tusks extends Subsystem {
     }
     
     public void extend() {
-        solenoid.set(true);
+        solenoidExtend.set(true);
+        solenoidRetract.set(false);
     }
     
     public void retract() {
-        solenoid.set(false);
+        solenoidRetract.set(true); 
+        solenoidExtend.set(false);
     }
-
     public boolean isExtended() {
-        return solenoid.get();
+        return solenoidExtend.get();
     }
 }

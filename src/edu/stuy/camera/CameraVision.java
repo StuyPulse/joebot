@@ -67,17 +67,9 @@ public class CameraVision {
     }
 
     public void doCamera() {
-
         if (toggleReflectLightIfInRange()) {
             try {
-                /**
-                 * Do the image capture with the camera and apply the algorithm
-                 * described above. This sample will either get images from the
-                 * camera or from an image file stored in the top level
-                 * directory in the flash memory on the cRIO. The file name in
-                 * this case is "10ft2.jpg"
-                 *
-                 */
+                 // Do the image capture with the camera and apply the algorithm described above.
                 ColorImage image = camera.getImage();
                 BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 140, 255);
                 //rectImage.write("red.png");
@@ -129,9 +121,7 @@ public class CameraVision {
                 rectImage.free();
                 image.free();
 
-//            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
-//                ex.printStackTrace();
-            } catch (AxisCameraException ex) {
+            } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
                 ex.printStackTrace();
             } catch (NIVisionException ex) {
                 ex.printStackTrace();
@@ -173,12 +163,10 @@ public class CameraVision {
      * If Alliance Wall is within 144 inches, then turn on light.  Else, turn off.
      */
     public boolean toggleReflectLightIfInRange() {
-        boolean withinRange = CommandBase.drivetrain.getSonarVoltage() < 144;
+        boolean withinRange = CommandBase.drivetrain.getSonarVoltage() < 144; // TODO: Find actual effective limit for range of LEDs
         reflectiveLight.set(withinRange ? Relay.Value.kOn : Relay.Value.kOff);
 
-
-        //return withinRange;
-        return true;
+        return withinRange;
     }
 
     /**

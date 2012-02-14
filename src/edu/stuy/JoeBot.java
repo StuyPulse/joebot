@@ -46,6 +46,12 @@ public class JoeBot extends IterativeRobot {
         CommandBase.init();
         
         CameraVision.getInstance();
+        CameraVision.getInstance().doCamera();
+        CameraVision.getInstance().toggleTargetLightIfAligned();
+    }
+    
+    public void disabledPeriodic() {
+        updateSmartDashboard();
     }
 
     public void autonomousInit() {
@@ -59,6 +65,7 @@ public class JoeBot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        updateSmartDashboard();
     }
 
     public void teleopInit() {
@@ -85,10 +92,27 @@ public class JoeBot extends IterativeRobot {
         CameraVision.getInstance().toggleTargetLightIfAligned();
         
         // Debug box actions
+        updateSmartDashboard();
+    }
+    
+    private void updateSmartDashboard() {
+        SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+        
+        SmartDashboard.putDouble("Left encoder distance", CommandBase.drivetrain.getLeftEncoderDistance());
+        SmartDashboard.putDouble("Right encoder distance", CommandBase.drivetrain.getRightEncoderDistance());
+        SmartDashboard.putDouble("Encoder average distance", CommandBase.drivetrain.getAvgDistance());
+        
+        SmartDashboard.putDouble("Gyro angle", CommandBase.drivetrain.getGyroAngle());
+        
+        SmartDashboard.putBoolean("Upper conveyor sensor", CommandBase.conveyor.ballAtTop());
+        SmartDashboard.putBoolean("Lower conveyor sensor", CommandBase.conveyor.ballAtBottom());
+        
+        // Camera target info
         SmartDashboard.putDouble("Distance 0", CameraVision.getInstance().getDistance(0));
         SmartDashboard.putDouble("Distance 1", CameraVision.getInstance().getDistance(1));
         SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
         SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
         SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
+
     }
 }
