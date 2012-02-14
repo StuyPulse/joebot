@@ -34,13 +34,12 @@ import java.util.Vector;
 public class CameraVision {
 
     private static CameraVision instance;
-    //TODO get number from Peter
-    public static final int CAMERA_CENTER = 320;
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
     private Relay targetLight;
     private Relay reflectiveLight;
     private int targetCenter;
+    int CAMERA_CENTER;
     int numRectangles;
     Vector massCenter = new Vector();
     int lumLow = 116; // used for adaptive threshold, changing this according to particles found
@@ -60,6 +59,7 @@ public class CameraVision {
         reflectiveLight.setDirection(Relay.Direction.kForward);
 
         camera = AxisCamera.getInstance();  // get an instance ofthe camera
+        CAMERA_CENTER = camera.getResolution().width / 2;
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 400, false);
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 400, false);
@@ -98,7 +98,7 @@ public class CameraVision {
                     lumLow = lumLow + (reports.length - 4); // increase threshold by number of extra objects
                                                             // TODO: figure out some more reasonable algorithm
                 }
-//                System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
+                
                 if (massCenter.size() > 0) {
                     targetCenter = getCenterMass(0);
                 }
