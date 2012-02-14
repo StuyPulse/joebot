@@ -42,7 +42,10 @@ public class CameraVision {
     int CAMERA_CENTER;
     int numRectangles;
     Vector massCenter = new Vector();
-    int lumLow = 116; // used for adaptive threshold, changing this according to particles found
+    
+    // adaptive threshold things
+    int lumLow = 116; // increased according to number of particles found
+    int count = 0; // count for decreasing lumLow as corrective maintenance
 
     public static CameraVision getInstance() {
         if (instance == null) {
@@ -97,6 +100,12 @@ public class CameraVision {
                 if (reports.length > 4) { // adaptive threshold
                     lumLow = lumLow + (reports.length - 4); // increase threshold by number of extra objects
                                                             // TODO: figure out some more reasonable algorithm
+                     if (count == 20) {
+                         lumLow--;
+                         count = 0;
+                     } else {
+                         count++;
+                     }
                 }
                 
                 if (massCenter.size() > 0) {
