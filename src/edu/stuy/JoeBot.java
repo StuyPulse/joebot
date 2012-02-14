@@ -98,11 +98,11 @@ public class JoeBot extends IterativeRobot {
             SmartDashboard.putDouble("setRPMtop", 0);
             SmartDashboard.putDouble("setRPMbottom", 0);
         }
-        CommandBase.shooter.setFlywheelSpeeds(setRpmTop, setRpmBottom);
+        CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
 
 
-        double rpmTop = CommandBase.shooter.upperRoller.getRPM();
-        double rpmBottom = CommandBase.shooter.lowerRoller.getRPM();
+        double rpmTop = CommandBase.flywheel.upperRoller.getRPM();
+        double rpmBottom = CommandBase.flywheel.lowerRoller.getRPM();
         try {
             SmartDashboard.putDouble("getRPMtop", rpmTop);
             SmartDashboard.putDouble("getRPMbottom", rpmBottom);
@@ -114,8 +114,8 @@ public class JoeBot extends IterativeRobot {
         // Debug box actions
         CommandBase.oi.updateLights();
         updateSmartDashboard();
-        CommandBase.shooter.upperRoller.setPID("upper");
-        CommandBase.shooter.lowerRoller.setPID("lower");
+        CommandBase.flywheel.upperRoller.setPID("upper");
+        CommandBase.flywheel.lowerRoller.setPID("lower");
     }
     
     private void updateSmartDashboard() {
