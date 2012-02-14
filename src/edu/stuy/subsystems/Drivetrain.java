@@ -23,6 +23,7 @@ public class Drivetrain extends Subsystem {
     Solenoid gearShiftLow;
     Solenoid gearShiftHigh; 
     AnalogChannel sonar;
+    AnalogChannel vcc;
     public Encoder encoderLeft;
     public Encoder encoderRight;
     Gyro gyro;
@@ -67,6 +68,7 @@ public class Drivetrain extends Subsystem {
        gearShiftLow = new Solenoid(RobotMap.GEAR_SHIFT_LOW);
        gearShiftHigh = new Solenoid(RobotMap.GEAR_SHIFT_LOW);
        sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
+       vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
     }
 
     /**
@@ -86,12 +88,19 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
+     * Get value of maximum analog input in volts.
+     * @return value of maximum analog input in volts.
+     */
+    public double getVcc() {
+        return vcc.getVoltage();
+    }
+
+    /**
      * Scales sonar voltage reading to inches
      * @return distance from alliance wall in inches, as measured by sonar sensor
      */
     public double getSonarDistance_in() {
-        final int Vcc = 5; // 5 volts
-        double cm = getSonarVoltage() * 1024 / Vcc; // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
+        double cm = getSonarVoltage() * 1024 / getVcc(); // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
         return cm / 2.54; // 1 cm is 1/2.54 inch
     }
 

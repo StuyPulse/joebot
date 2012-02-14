@@ -10,8 +10,8 @@ package edu.stuy.commands;
  */
 public class ConveyAutomatic extends CommandBase {
     
-    double timeout;
     boolean hasTimeout = false;
+    double timeout;
 
     public ConveyAutomatic() {
         // Use requires() here to declare subsystem dependencies
@@ -28,6 +28,7 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        setTimeout(timeout);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -52,7 +53,7 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        (new ConveyorPushDown(5)).start();
+        (new ConveyorPushDown(1)).start();
     }
 
     // Called when another command which requires one or more of the same

@@ -70,6 +70,7 @@ public class RobotMap {
     /* ANALOG INPUTS */
     public static final int GYRO_CHANNEL = 1;
     public static final int SONAR_CHANNEL = 2;
+    public static final int VCC_CHANNEL = 4;
 
     static {
         for (int i = 0; i < VIRSYS_OUTPUT_MAP.length; i++) {
