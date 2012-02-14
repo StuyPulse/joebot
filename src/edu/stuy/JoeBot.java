@@ -89,6 +89,7 @@ public class JoeBot extends IterativeRobot {
         Scheduler.getInstance().run();
         
         // Debug box actions
+        CommandBase.oi.updateLights();
         updateSmartDashboard();
     }
     

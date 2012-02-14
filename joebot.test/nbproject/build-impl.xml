@@ -175,9 +175,20 @@ is divided into following sections:
         </condition>
         <property name="javac.fork" value="false"/>
         <property name="jar.index" value="false"/>
+<<<<<<< HEAD
 
         <property name="jar.index.metainf" value="${jar.index}"/>
 
+=======
+<!--<<<<<< HEAD
+        <property name="jar.index.metainf" value="${jar.index}"/>
+=======
+<<<<<<< HEAD
+=======
+        <property name="jar.index.metainf" value="${jar.index}"/>
+>>>>>>> 2fa595de436ec5f9327b07606a472c6b2cdc05c7
+>>>>>>> feature-autonomous -->
+>>>>>>> 2584c84ca7485312df0ac5c22e2330a51b5d9883
         <available file="${meta.inf.dir}/persistence.xml" property="has.persistence.xml"/>
     </target>
     <target name="-post-init">
@@ -489,7 +500,19 @@ is divided into following sections:
                     </chainedmapper>
                 </pathconvert>
                 <taskdef classname="org.netbeans.modules.java.j2seproject.copylibstask.CopyLibs" classpath="${libs.CopyLibs.classpath}" name="copylibs"/>
+<<<<<<< HEAD
 
+=======
+                <!--copylibs compress="${jar.compress}" index="${jar.index}" indexMetaInf="${jar.index.metainf}" jarfile="${dist.jar}" manifest="@{manifest}" runtimeclasspath="${run.classpath.without.build.classes.dir}">
+
+                <copylibs compress="${jar.compress}" index="${jar.index}" indexMetaInf="${jar.index.metainf}" jarfile="${dist.jar}" manifest="@{manifest}" runtimeclasspath="${run.classpath.without.build.classes.dir}">
+                    <fileset dir="${build.classes.dir}"/>
+                    <manifest>
+                        <attribute name="Class-Path" value="${jar.classpath}"/>
+                        
+                    </manifest>
+                </copylibs-->
+>>>>>>> 2584c84ca7485312df0ac5c22e2330a51b5d9883
             </sequential>
         </macrodef>
     </target>
