@@ -96,13 +96,19 @@ public class JoeBot extends IterativeRobot {
     private void updateSmartDashboard() {
         SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
-        SmartDashboard.putBoolean("Auto: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_AUTO));
-        SmartDashboard.putBoolean("Far: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FAR));
-        SmartDashboard.putBoolean("Length: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FENDER_WIDE));
-        SmartDashboard.putBoolean("Width: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FENDER_NARROW));
-        SmartDashboard.putBoolean("Fender Side: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FENDER_SIDE));
-        SmartDashboard.putBoolean("Fender: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FENDER));
-        SmartDashboard.putBoolean("Stop: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_STOP));
+        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromHeightButton());
+        
+        SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getValue(OI.SHOOT_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Override Button: ", CommandBase.oi.getValue(OI.OVERRIDE_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getValue(OI.CONVEYOR_IN_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getValue(OI.CONVEYOR_OUT_SWITCH_CHANNEL));
+        
+        SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
+        SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
+        SmartDashboard.putDouble("Spin Trim: ", CommandBase.oi.getSpinPot());
+        SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
         
         
         // TODO: Camera target info
