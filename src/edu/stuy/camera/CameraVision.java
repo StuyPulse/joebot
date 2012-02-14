@@ -44,7 +44,6 @@ public class CameraVision {
     Vector massCenter = new Vector();
     
     // adaptive threshold things
-    int lumLow = 116; // increased according to number of particles found
     int count = 0; // count for decreasing lumLow as corrective maintenance
 
     public static CameraVision getInstance() {
@@ -75,7 +74,7 @@ public class CameraVision {
             try {
                  // Do the image capture with the camera and apply the algorithm described above.
                 ColorImage image = camera.getImage();
-                BinaryImage rectImage = image.thresholdHSL(136, 182, 0, 255, lumLow, 255);
+                BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255);
                 //rectImage.write("red.png");
 
 
@@ -94,19 +93,11 @@ public class CameraVision {
                     massCenter.addElement(new Integer(r.center_mass_x));
                     //System.out.println("Our field of view in feet is: " + fovFeet);
                     //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
+
                 }
                 
                 // 
-                if (reports.length > 4) { // adaptive threshold
-                    lumLow = lumLow + (reports.length - 4); // increase threshold by number of extra objects
-                                                            // TODO: figure out some more reasonable algorithm
-                     if (count == 20) {
-                         lumLow--;
-                         count = 0;
-                     } else {
-                         count++;
-                     }
-                }
+               
                 
                 if (massCenter.size() > 0) {
                     targetCenter = getCenterMass(0);
@@ -149,7 +140,7 @@ public class CameraVision {
 
     public boolean isAligned() {
         double absValue = Math.abs(CAMERA_CENTER - targetCenter);
-        return absValue < 50;
+        return absValue < 20;
 
     }
 
