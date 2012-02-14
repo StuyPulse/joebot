@@ -9,9 +9,9 @@ package edu.stuy.commands;
  * @author belias
  */
 public class ConveyorPushDown extends CommandBase {
-    
-    double timeout;
+
     boolean hasTimeout = false;
+    double timeout;
 
     public ConveyorPushDown() {
         // Use requires() here to declare subsystem dependencies
@@ -31,6 +31,7 @@ public class ConveyorPushDown extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
         acquirer.stop();
+        setTimeout(timeout);
     }
 
     // Called repeatedly when this Command is scheduled to run
