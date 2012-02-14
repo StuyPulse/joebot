@@ -23,37 +23,17 @@ public class Shooter extends Subsystem {
     static final double fenderDepth = 38.75;
     static final double backboardToHoopCenter = 6 + 9;
     static final double halfFenderWidth = 50.5;
-<<<<<<< HEAD
-=======
 
     public static final double thetaDegrees = 72;
     public static final double thetaRadians = Math.toRadians(thetaDegrees);
 
+    private Relay speedLight;
+    
     public double lowerSetpoint;
     public double upperSetpoint;
 
     public static JoeSpeed upperRoller;
     public static JoeSpeed lowerRoller;
->>>>>>> 2584c84ca7485312df0ac5c22e2330a51b5d9883
-
-    /**
-     * The two points that we're in between for shooting.
-     * Set to the same value if you're at an exact point, like fenderIndex
-     */
-    public int indexSetPointLower;
-    public int indexSetPointHigher;
-    public double ratioBetweenDistances; // 0-1 position of distance setpoint between two closest points.
-
-<<<<<<< HEAD
-    public double lowerSetpoint;
-    public double upperSetpoint;
-
-    public static JaguarSpeed upperRoller;
-    public static JaguarSpeed lowerRoller;
-    private Relay speedLight;
-
-    public static final double THETA_DEGREES = 72;
-    public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
 
     /**
      * The two points that we're in between for shooting.
@@ -77,14 +57,6 @@ public class Shooter extends Subsystem {
 
     /** Positions **/
     public static int numDistances = 9;
-
-=======
-    public static double rpmTolerance = 16;
-
-    /** Positions **/
-    public static int numDistances = 9;
-
->>>>>>> 2584c84ca7485312df0ac5c22e2330a51b5d9883
     public static double[] distances = new double[numDistances]; // all inches
     public static double[] speeds = new double[numDistances];
     /**
@@ -119,15 +91,7 @@ public class Shooter extends Subsystem {
         for (int i = 0; i < distances.length; i++) {
             System.out.println(distances[i]);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 2584c84ca7485312df0ac5c22e2330a51b5d9883
-        for (int i = 0; i <= highestBackboardIndex; i++) {
-=======
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
->>>>>>> c30c142ae0c54fdb753c72eac7ecde4e64ac2094
             speeds[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter);
         }
         for (int i = LOWEST_SWISH_INDEX; i < numDistances; i++) {
@@ -161,20 +125,10 @@ public class Shooter extends Subsystem {
      * on or off the speed light accordingly.
      */
     public boolean isSpeedGood() {
-<<<<<<< HEAD
-<<<<<<< HEAD
         boolean speedGood = (Math.abs(upperSetpoint - upperRoller.getRPM()) < rpmTolerance) &&
                             (Math.abs(lowerSetpoint - lowerRoller.getRPM()) < rpmTolerance);
-=======
-        boolean speedGood = upperRoller.isAtSetPoint() &&
-                            lowerRoller.isAtSetPoint();
->>>>>>> c30c142ae0c54fdb753c72eac7ecde4e64ac2094
         speedLight.set(speedGood ? Relay.Value.kOff : Relay.Value.kOn);
         return speedGood;
-=======
-        return (Math.abs(upperSetpoint - upperRoller.getRPM()) < rpmTolerance) &&
-                (Math.abs(lowerSetpoint - lowerRoller.getRPM()) < rpmTolerance);
->>>>>>> 2584c84ca7485312df0ac5c22e2330a51b5d9883
     }
 
     /**
