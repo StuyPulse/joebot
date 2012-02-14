@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.ShooterMoveFlyWheel;
+import edu.stuy.speed.JoeSpeed;
 
 /**
  *
@@ -27,15 +28,16 @@ public class Shooter extends Subsystem {
     public static final double thetaDegrees = 72;
     public static final double thetaRadians = Math.toRadians(thetaDegrees);
 
+    private Relay speedLight;
+    
     public double lowerSetpoint;
     public double upperSetpoint;
 
-    public static JaguarSpeed upperRoller;
-    public static JaguarSpeed lowerRoller;
-    private Relay speedLight;
-
     public static final double THETA_DEGREES = 72;
     public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
+    
+    public static JoeSpeed upperRoller;
+    public static JoeSpeed lowerRoller;
 
     /**
      * The two points that we're in between for shooting.
@@ -59,7 +61,6 @@ public class Shooter extends Subsystem {
 
     /** Positions **/
     public static int numDistances = 9;
-
     public static double[] distances = new double[numDistances]; // all inches
     public static double[] speeds = new double[numDistances];
     /**
@@ -105,8 +106,6 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Shooter() {
-        speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
-        speedLight.setDirection(Relay.Direction.kForward);
 
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
         lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
@@ -123,18 +122,21 @@ public class Shooter extends Subsystem {
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Given a desired flywheel RPM, checks if the current RPM is
      * within an acceptable range of the desired RPM, and turns
      * on or off the speed light accordingly.
      */
     public boolean isSpeedGood() {
-        boolean speedGood = upperRoller.isAtSetPoint() &&
-                            lowerRoller.isAtSetPoint();
+        boolean speedGood = (Math.abs(upperSetpoint - upperRoller.getRPM()) < rpmTolerance) &&
+                            (Math.abs(lowerSetpoint - lowerRoller.getRPM()) < rpmTolerance);
         speedLight.set(speedGood ? Relay.Value.kOff : Relay.Value.kOn);
         return speedGood;
     }
 
     /**
+>>>>>>> feature-shooter-test
      * Given a distance that we want to shoot the ball, calculate
      * the flywheel RPM necessary to shoot the ball that distance
      */

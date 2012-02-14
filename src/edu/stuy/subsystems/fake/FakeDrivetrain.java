@@ -29,8 +29,6 @@ public class FakeDrivetrain extends Subsystem {
          * NOTE: Possible issues include negative differences in case a sensor measures a greater
          *       distance than actually exists.
          * 
-         * TODO: Make this work in the backwards direction, i.e. towards the bridge.
-         * 
          * @param distToFinish Distance from the robot to the Fender
          * @param totalDistToTravel Total distance for the robot to travel
          * @param direction 1 for forward, -1 for backward
@@ -115,10 +113,22 @@ public class FakeDrivetrain extends Subsystem {
         return 0;
     }
     
+    public double getLeftEncoderDistance() {
+        return 0;
+    }
+    
+    public double getRightEncoderDistance() {
+        return 0;
+    }
+    
     /**
      * Reset both encoders's tick, distance, etc. count to zero
      */
     public void resetEncoders() {
-   System.out.println("Drivetrain resetEncoder");
+        System.out.println("Drivetrain resetEncoder");
+    }
+    
+    public double getGyroAngle() {
+        return 0;
     }
 }

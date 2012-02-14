@@ -24,17 +24,14 @@ public class RobotMap {
     public static final int DEBUG_BOX_PORT = 4;
 
     /* PWM OUTPUTS */
-
-    public static final int CONVEYOR_ROLLER = 1;
-    public static final int FRONT_RIGHT_MOTOR = 2;
-    public static final int REAR_RIGHT_MOTOR = 3;
-    // NO 4
-    public static final int ACQUIRER_ROLLER = 5;
     public static final int FRONT_LEFT_MOTOR = 6;
     public static final int REAR_LEFT_MOTOR = 7;
-
-    public static final int SHOOTER_UPPER_ROLLER = 5;
-    public static final int SHOOTER_LOWER_ROLLER = 6;
+    public static final int FRONT_RIGHT_MOTOR = 2;
+    public static final int REAR_RIGHT_MOTOR = 3;
+    public static final int SHOOTER_UPPER_ROLLER = 4;
+    public static final int SHOOTER_LOWER_ROLLER = 8;
+    public static final int ACQUIRER_ROLLER = 5;
+    public static final int CONVEYOR_ROLLER = 1;
 
     /* DIGITAL INPUTS */
     public static final int LEFT_ENCODER_CHANNEL_A = 5;
@@ -47,16 +44,18 @@ public class RobotMap {
     public static final int UPPER_CONVEYOR_SENSOR = 8;
     public static final int LOWER_CONVEYOR_SENSOR = 9;
 
-    public static final int TUSKS_EXTENDED_SWITCH = 13;
-    public static final int TUSKS_RETRACTED_SWITCH = 14;
-
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
     public static final int SPEED_BAD_LIGHT = 2;
+    public static final int TARGET_LIGHT = 3;
+    public static final int REFLECTIVE_LIGHT = 4;
+     
 
     /* SOLENOID */
-    public static final int GEAR_SHIFT = 1;
-    public static final int TUSKS_SOLENOID = 2;
+    public static final int GEAR_SHIFT_LOW = 1;
+    public static final int GEAR_SHIFT_HIGH = 2;
+    public static final int TUSKS_SOLENOID_RETRACT = 3;
+    public static final int TUSKS_SOLENOID_EXTEND = 4;
 
     /* VIRSYSJ */
     public static int[] VIRSYS_OUTPUT_MAP = new int[15];
@@ -66,6 +65,7 @@ public class RobotMap {
     /* ANALOG INPUTS */
     public static final int GYRO_CHANNEL = 1;
     public static final int SONAR_CHANNEL = 2;
+    public static final int VCC_CHANNEL = 4;
 
     static {
         for (int i = 0; i < VIRSYS_OUTPUT_MAP.length; i++) {

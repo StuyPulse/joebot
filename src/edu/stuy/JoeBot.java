@@ -8,6 +8,7 @@
 package edu.stuy;
 
 
+import edu.stuy.camera.CameraVision;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.wpi.first.wpilibj.Compressor;
@@ -43,6 +44,14 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
+        
+        CameraVision.getInstance();
+        CameraVision.getInstance().doCamera();
+        CameraVision.getInstance().toggleTargetLightIfAligned();
+    }
+    
+    public void disabledPeriodic() {
+        updateSmartDashboard();
     }
 
     public void autonomousInit() {
@@ -56,6 +65,7 @@ public class JoeBot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        updateSmartDashboard();
     }
 
     public void teleopInit() {
@@ -102,5 +112,22 @@ public class JoeBot extends IterativeRobot {
         }
 
         // Debug box actions
+        CommandBase.oi.updateLights();
+        updateSmartDashboard();
+    }
+    
+    private void updateSmartDashboard() {
+        SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+        
+        SmartDashboard.putDouble("Left encoder distance", CommandBase.drivetrain.getLeftEncoderDistance());
+        SmartDashboard.putDouble("Right encoder distance", CommandBase.drivetrain.getRightEncoderDistance());
+        SmartDashboard.putDouble("Encoder average distance", CommandBase.drivetrain.getAvgDistance());
+        
+        SmartDashboard.putDouble("Gyro angle", CommandBase.drivetrain.getGyroAngle());
+        
+        SmartDashboard.putBoolean("Upper conveyor sensor", CommandBase.conveyor.ballAtTop());
+        SmartDashboard.putBoolean("Lower conveyor sensor", CommandBase.conveyor.ballAtBottom());
+        
+        // TODO: Camera target info
     }
 }

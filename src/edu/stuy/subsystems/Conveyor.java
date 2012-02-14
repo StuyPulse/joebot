@@ -6,6 +6,7 @@ package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
 import edu.stuy.speed.VictorSpeed;
+import edu.stuy.commands.ConveyorAssistAcquire;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,12 +20,16 @@ public class Conveyor extends Subsystem {
     public DigitalInput upperSensor;
     public DigitalInput lowerSensor;
 
+    public static final double FORWARD = 1;
+    public static final double BACKWARD = -1;
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ConveyorAssistAcquire());
     }
     
     public Conveyor() {
@@ -38,11 +43,11 @@ public class Conveyor extends Subsystem {
     }
 
     public void convey() {
-        roll(1);
+        roll(FORWARD);
     }
 
     public void conveyReverse() {
-        roll(-1);
+        roll(BACKWARD);
     }
 
     public void stop() {

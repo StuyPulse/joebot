@@ -15,6 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static edu.stuy.assertions.ConveyorAssertions.*;
 import static edu.stuy.assertions.AcquirerAssertions.*;
+import static edu.stuy.commands.util.ConveyorTools.*;
 
 /**
  *
@@ -52,7 +53,7 @@ public class AcquirerAcquireTest {
      */
     @Test
     public void testRunNoBallNoConvey() {
-        sensorDoesNotSense();
+        lowerSensorDoesNotSense();
         AcquirerAcquire cmd = new AcquirerAcquire();
         cmd.execute();
         assertConveyorIsNotRunning();
@@ -66,18 +67,10 @@ public class AcquirerAcquireTest {
      */
     @Test
     public void testRunYesBallConvey() {
-        sensorDoesSense();
+        lowerSensorDoesSense();
         AcquirerAcquire cmd = new AcquirerAcquire();
         cmd.execute();
         assertConveyorIsRunning();
         assertAcquirerIsNotRunning();
-    }
-
-    public void sensorDoesNotSense() {
-        CommandBase.conveyor.lowerSensor.value = false;
-    }
-
-    public void sensorDoesSense() {
-        CommandBase.conveyor.lowerSensor.value = true;
     }
 }
