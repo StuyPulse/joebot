@@ -95,15 +95,9 @@ public class JoeBot extends IterativeRobot {
     
     private void updateSmartDashboard() {
         SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+        SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
+        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromHeightButton());
         
-        SmartDashboard.putDouble("Left encoder distance", CommandBase.drivetrain.getLeftEncoderDistance());
-        SmartDashboard.putDouble("Right encoder distance", CommandBase.drivetrain.getRightEncoderDistance());
-        SmartDashboard.putDouble("Encoder average distance", CommandBase.drivetrain.getAvgDistance());
-        
-        SmartDashboard.putDouble("Gyro angle", CommandBase.drivetrain.getGyroAngle());
-        
-        SmartDashboard.putBoolean("Upper conveyor sensor", CommandBase.conveyor.ballAtTop());
-        SmartDashboard.putBoolean("Lower conveyor sensor", CommandBase.conveyor.ballAtBottom());
         
         // TODO: Camera target info
     }
