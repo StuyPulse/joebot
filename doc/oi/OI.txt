@@ -52,22 +52,15 @@ SHOOTER STICK
               Z:
 
   Buttons:
+
     (trigger) 1:  Convey Automatic
-        CONFLICT: auto-distance
               2:  Acquire
-        CONFLICT: max speed
               3:  Convey Manual
-        CONFLICT: fender + wide bot
               4:  Convey Reverse Manual
-        CONFLICT: fender + narrow bot
               5:  Acquire Reverse
-        CONFLICT: fender side
               6:  top hoop
-        CONFLICT: shooter manual speed (SmartDashboard)
-        CONFLICT: fender
               7:  middle hoop
-        CONFLICT: stop flywheel
-              8:  shoot override
-              9:
-             10:
-             11:
+              8:  stop flywheel
+              9:  fender
+             10:  fender side
+             11:  max speed

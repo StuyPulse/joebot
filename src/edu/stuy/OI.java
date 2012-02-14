@@ -40,6 +40,7 @@ public class OI {
     
     public int distanceButton;
     public double distanceInches;
+    public boolean topHoop;
     
     // EnhancedIO digital output
     private static final int DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL = 10;
@@ -111,7 +112,10 @@ public class OI {
             new JoystickButton(shooterStick, 3).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
-            new JoystickButton(shooterStick, 6).whenPressed(new ShooterManualSpeed());
+            // 6 and 7 are used for top and mid hoop respectively (see getHeightFromButton())
+            new JoystickButton(shooterStick, 8).whenPressed(new ShooterStop());
+            // 9-11 are used for fender, fender side, and max speed, in that order
+            // see getDistanceButton()
         }
     }
     
@@ -147,16 +151,16 @@ public class OI {
      * button will be returned from the voltage (if it returns 0, no button is pressed).
      */
     public int getDistanceButton() {
-       if (shooterStick.getRawButton(DISTANCE_BUTTON_STOP)) {
+       if (shooterStick.getRawButton(8)) {
            distanceButton = DISTANCE_BUTTON_STOP;
        }
-       if (shooterStick.getRawButton(DISTANCE_BUTTON_AUTO)) {
-           distanceButton = DISTANCE_BUTTON_AUTO;
-       }
-       if (shooterStick.getRawButton(DISTANCE_BUTTON_FENDER)) {
+       if (shooterStick.getRawButton(9)) {
            distanceButton = DISTANCE_BUTTON_FENDER;
        }
-       if (shooterStick.getRawButton(DISTANCE_BUTTON_FAR)) {
+       if (shooterStick.getRawButton(10)) {
+           distanceButton = DISTANCE_BUTTON_FENDER_SIDE;
+       }
+       if (shooterStick.getRawButton(11)) {
            distanceButton = DISTANCE_BUTTON_FAR;
        }
        distanceButton = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
@@ -198,7 +202,13 @@ public class OI {
     }
 
     public double[] getHeightFromButton() {
-        return shooterStick.getRawButton(7) ? Shooter.speedsMiddleHoop : Shooter.speedsTopHoop;
+        if (shooterStick.getRawButton(7)) {
+            topHoop = false;
+        }
+        if (shooterStick.getRawButton(6)) {
+            topHoop = true;
+        }
+        return  topHoop ? Shooter.speedsMiddleHoop : Shooter.speedsTopHoop;
     }
     
     // Copied from last year's DesDroid code. 
