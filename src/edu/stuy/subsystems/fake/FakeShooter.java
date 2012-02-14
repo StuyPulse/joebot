@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class FakeShooter extends Subsystem {
     /** Distances **/
- 
+    
+    public static JoeSpeed upperRoller;
+    public static JoeSpeed lowerRoller;
 
 
 
