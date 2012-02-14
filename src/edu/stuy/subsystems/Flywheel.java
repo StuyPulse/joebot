@@ -9,14 +9,14 @@ import edu.stuy.speed.JaguarSpeed;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.ShooterMoveFlyWheel;
+import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JoeSpeed;
 
 /**
  *
  * @author Kevin Wang
  */
-public class Shooter extends Subsystem {
+public class Flywheel extends Subsystem {
     /** Distances **/
     static final double wideBot = 28.0;
     static final double longBot = 38.0;
@@ -27,8 +27,6 @@ public class Shooter extends Subsystem {
 
     public static final double thetaDegrees = 72;
     public static final double thetaRadians = Math.toRadians(thetaDegrees);
-
-    private Relay speedLight;
     
     public double lowerSetpoint;
     public double upperSetpoint;
@@ -38,6 +36,9 @@ public class Shooter extends Subsystem {
     
     public static JoeSpeed upperRoller;
     public static JoeSpeed lowerRoller;
+
+    public static final double TOP_HOOP_HEIGHT = 98.0;
+    public static final double MIDDLE_HOOP_HEIGHT = 61.0;
 
     /**
      * The two points that we're in between for shooting.
@@ -62,7 +63,8 @@ public class Shooter extends Subsystem {
     /** Positions **/
     public static int numDistances = 9;
     public static double[] distances = new double[numDistances]; // all inches
-    public static double[] speeds = new double[numDistances];
+    public static double[] speedsTopHoop = new double[numDistances];
+    public static double[] speedsMiddleHoop = new double[numDistances];
     /**
      * How much faster should the lower flywheel run, to:
      *  A)  Produce spin
@@ -96,16 +98,22 @@ public class Shooter extends Subsystem {
             System.out.println(distances[i]);
         }
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
-            speeds[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter);
+            speedsTopHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, TOP_HOOP_HEIGHT);
         }
         for (int i = LOWEST_SWISH_INDEX; i < numDistances; i++) {
-            speeds[i] = theoreticalDesiredExitRPM(distances[i]);
+            speedsTopHoop[i] = theoreticalDesiredExitRPM(distances[i], TOP_HOOP_HEIGHT);
+        }
+        for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
+            speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
+        }
+        for (int i = LOWEST_SWISH_INDEX; i < numDistances; i++) {
+            speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i], MIDDLE_HOOP_HEIGHT);
         }
     }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    public Shooter() {
+    public Flywheel() {
 
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
         lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
@@ -113,7 +121,8 @@ public class Shooter extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new ShooterMoveFlyWheel(CommandBase.oi.getDistanceFromHeightButton()));
+        setDefaultCommand(new FlywheelRun(CommandBase.oi.getDistanceFromHeightButton(),
+                                                  CommandBase.oi.getHeightFromButton()));
     }
 
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {
@@ -131,7 +140,6 @@ public class Shooter extends Subsystem {
     public boolean isSpeedGood() {
         boolean speedGood = (Math.abs(upperSetpoint - upperRoller.getRPM()) < rpmTolerance) &&
                             (Math.abs(lowerSetpoint - lowerRoller.getRPM()) < rpmTolerance);
-        speedLight.set(speedGood ? Relay.Value.kOff : Relay.Value.kOn);
         return speedGood;
     }
 
@@ -140,11 +148,10 @@ public class Shooter extends Subsystem {
      * Given a distance that we want to shoot the ball, calculate
      * the flywheel RPM necessary to shoot the ball that distance
      */
-    public static double theoreticalDesiredExitRPM(double distanceInches) {
+    public static double theoreticalDesiredExitRPM(double distanceInches, double hoopHeightInches) {
         double g = 387; // gravity: inches per second squared
         double shooterHeightInches = 36.0;
-        double topHoopHeightInches = 98.0;
-        double h = topHoopHeightInches - shooterHeightInches; // height of hoop above the shooter: inches
+        double h = hoopHeightInches - shooterHeightInches; // height of hoop above the shooter: inches
         double thetaRadians = Math.toRadians(72.0);
         double linearSpeedInchesPerSecond = (distanceInches * Math.sqrt(g))
                 / (Math.sqrt(2) * Math.cos(thetaRadians) * Math.sqrt(distanceInches * Math.tan(thetaRadians) - h));
@@ -166,7 +173,7 @@ public class Shooter extends Subsystem {
      * bottom and top rollers should run, respectively.
      * 
      */
-    public double[] lookupRPM(double distanceInches) {
+    public double[] lookupRPM(double distanceInches, double[] speeds) {
         double[] returnVal = new double[2];
         
         // Linear search for given distance in distances array.
