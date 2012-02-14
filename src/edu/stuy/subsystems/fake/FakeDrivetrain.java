@@ -113,10 +113,22 @@ public class FakeDrivetrain extends Subsystem {
         return 0;
     }
     
+    public double getLeftEncoderDistance() {
+        return 0;
+    }
+    
+    public double getRightEncoderDistance() {
+        return 0;
+    }
+    
     /**
      * Reset both encoders's tick, distance, etc. count to zero
      */
     public void resetEncoders() {
-   System.out.println("Drivetrain resetEncoder");
+        System.out.println("Drivetrain resetEncoder");
+    }
+    
+    public double getGyroAngle() {
+        return 0;
     }
 }
