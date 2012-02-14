@@ -114,6 +114,8 @@ public class JoeBot extends IterativeRobot {
         // Debug box actions
         CommandBase.oi.updateLights();
         updateSmartDashboard();
+        CommandBase.shooter.upperRoller.setPID("upper");
+        CommandBase.shooter.lowerRoller.setPID("lower");
     }
     
     private void updateSmartDashboard() {
