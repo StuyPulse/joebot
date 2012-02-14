@@ -18,8 +18,8 @@ public class OI {
     
     public static final int DISTANCE_BUTTON_AUTO = 1;
     public static final int DISTANCE_BUTTON_FAR = 2;
-    public static final int DISTANCE_BUTTON_FENDER_WIDE = 3;
-    public static final int DISTANCE_BUTTON_FENDER_NARROW = 4;
+    public static final int DISTANCE_BUTTON_FENDER_LENGTH = 3;
+    public static final int DISTANCE_BUTTON_FENDER_WIDTH = 4;
     public static final int DISTANCE_BUTTON_FENDER_SIDE = 5;
     public static final int DISTANCE_BUTTON_FENDER = 6;
     public static final int DISTANCE_BUTTON_STOP = 7;
@@ -176,10 +176,10 @@ public class OI {
             case DISTANCE_BUTTON_FAR:
                 distanceInches = 725; // TODO: Max distance to max speed?
                 break;
-            case DISTANCE_BUTTON_FENDER_WIDE:
+            case DISTANCE_BUTTON_FENDER_LENGTH:
                 distanceInches = Shooter.distances[Shooter.FENDER_LONG_INDEX];
                 break;
-            case DISTANCE_BUTTON_FENDER_NARROW:
+            case DISTANCE_BUTTON_FENDER_WIDTH:
                 distanceInches = Shooter.distances[Shooter.FENDER_WIDE_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER_SIDE:
@@ -338,10 +338,10 @@ public class OI {
             case DISTANCE_BUTTON_FAR:
                 setLight(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL);
                 break;
-            case DISTANCE_BUTTON_FENDER_WIDE:
+            case DISTANCE_BUTTON_FENDER_LENGTH:
                 setLight(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL);
                 break;
-            case DISTANCE_BUTTON_FENDER_NARROW:
+            case DISTANCE_BUTTON_FENDER_WIDTH:
                 setLight(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL);
                 break;
             case DISTANCE_BUTTON_FENDER_SIDE:
