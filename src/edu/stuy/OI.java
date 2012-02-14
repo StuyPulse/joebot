@@ -358,5 +358,15 @@ public class OI {
                 break;
         }
     }
+    
+    public boolean getValue(int channel) {
+        boolean b = false;
+        try{
+            b = enhancedIO.getDigital(channel);
+        }
+        catch (EnhancedIOException e) {
+        }
+        return b;
+    }
 }
 

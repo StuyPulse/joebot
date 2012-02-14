@@ -96,7 +96,13 @@ public class JoeBot extends IterativeRobot {
     private void updateSmartDashboard() {
         SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
-        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromHeightButton());
+        SmartDashboard.putBoolean("Auto: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_AUTO));
+        SmartDashboard.putBoolean("Far: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FAR));
+        SmartDashboard.putBoolean("Length: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FENDER_WIDE));
+        SmartDashboard.putBoolean("Width: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FENDER_NARROW));
+        SmartDashboard.putBoolean("Fender Side: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FENDER_SIDE));
+        SmartDashboard.putBoolean("Fender: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_FENDER));
+        SmartDashboard.putBoolean("Stop: ", CommandBase.oi.getValue(OI.DISTANCE_BUTTON_STOP));
         
         
         // TODO: Camera target info
