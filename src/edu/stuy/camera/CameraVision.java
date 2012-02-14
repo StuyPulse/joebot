@@ -43,7 +43,7 @@ public class CameraVision {
     private int targetCenter;
     int numRectangles;
     Vector massCenter = new Vector();
-    int lumLow = 116;
+    int lumLow = 116; // used for adaptive threshold, changing this according to particles found
 
     public static CameraVision getInstance() {
         if (instance == null) {
@@ -92,8 +92,11 @@ public class CameraVision {
                     //System.out.println("Our field of view in feet is: " + fovFeet);
                     //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
                 }
-                if (reports.length > 4) {
-                    
+                
+                // 
+                if (reports.length > 4) { // adaptive threshold
+                    lumLow = lumLow + (reports.length - 4); // increase threshold by number of extra objects
+                                                            // TODO: figure out some more reasonable algorithm
                 }
 //                System.out.println(filteredImage.getNumberParticles() + "  " + Timer.getFPGATimestamp());
                 if (massCenter.size() > 0) {
