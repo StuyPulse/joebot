@@ -63,6 +63,7 @@ public class CameraVision {
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 400, false);
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 400, false);
+        
     }
 
     public void doCamera() {
@@ -78,15 +79,22 @@ public class CameraVision {
                  *
                  */
                 ColorImage image = camera.getImage();
-                BinaryImage rectImage = image.thresholdHSL(136, 182, 0, 255, 116, 255);
+                BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 140, 255);
                 //rectImage.write("red.png");
 
 
-                BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
+                BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false,2);  // remove small artifacts
+                for(int x = 0; x<5;x++){
+                BinaryImage bigObjectsImage2 = bigObjectsImage.removeSmallObjects(false,2);
+                bigObjectsImage.free();
+                bigObjectsImage = bigObjectsImage2.removeSmallObjects(false,2);
+                bigObjectsImage2.free();
+                }
+
                 BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
                 //convexHullImage.write("box.png");
                 BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
-
+                filteredImage.write("rawr.png");
                 ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
                 massCenter.removeAllElements();
                 distances.removeAllElements();
@@ -168,6 +176,7 @@ public class CameraVision {
         boolean withinRange = CommandBase.drivetrain.getSonarVoltage() < 144;
         reflectiveLight.set(withinRange ? Relay.Value.kOn : Relay.Value.kOff);
 
+
         //return withinRange;
         return true;
     }
@@ -177,5 +186,7 @@ public class CameraVision {
      */
     public void toggleTargetLightIfAligned() {
         targetLight.set(isAligned() ? Relay.Value.kOn : Relay.Value.kOff);
+
+
     }
 }
