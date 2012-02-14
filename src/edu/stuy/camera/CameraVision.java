@@ -128,13 +128,6 @@ public class CameraVision {
         return targetCenter;
     }
 
-    public double getDistance(int rectid) {
-        if (rectid < distances.size()) {
-            return ((Double) distances.elementAt(rectid)).doubleValue();
-        }
-        return 0.0;
-    }
-
     public int getCenterMass(int rectid) {
         if (rectid < massCenter.size()) {
             return ((Integer) massCenter.elementAt(rectid)).intValue();
