@@ -40,7 +40,7 @@ public class OI {
     
     public int distanceButton;
     public double distanceInches;
-    public boolean topHoop;
+    public boolean topHoop = true;
     
     // EnhancedIO digital output
     private static final int DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL = 10;
