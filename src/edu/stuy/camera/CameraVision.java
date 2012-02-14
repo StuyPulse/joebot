@@ -41,7 +41,6 @@ public class CameraVision {
     private Relay targetLight;
     private Relay reflectiveLight;
     private int targetCenter;
-    Vector distances = new Vector();
     int numRectangles;
     Vector massCenter = new Vector();
 
@@ -83,13 +82,11 @@ public class CameraVision {
 
                 ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
                 massCenter.removeAllElements();
-                distances.removeAllElements();
                 for (int i = 0; i < reports.length; i++) {                                // print results
                     ParticleAnalysisReport r = reports[i];
                     // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
                     // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
                     int fovFeet = (360 * 2) / r.boundingRectWidth;
-                    distances.addElement(new Double((fovFeet / 2) / 2.1348966977217008));
                     massCenter.addElement(new Integer(r.center_mass_x));
                     //System.out.println("Our field of view in feet is: " + fovFeet);
                     //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
