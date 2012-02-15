@@ -3,6 +3,7 @@ package edu.stuy;
 import edu.stuy.commands.*;
 import edu.stuy.commands.tuning.ShooterManualSpeed;
 import edu.stuy.subsystems.Shooter;
+import edu.stuy.util.InverseDigitalIOButton;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
@@ -100,11 +101,11 @@ public class OI {
             new JoystickButton(leftStick, 2).whenPressed(new TusksRetract());
             
             // OI box switches
-            new DigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
-            new DigitalIOButton(ACQUIRER_OUT_SWITCH_CHANNEL).whileHeld(new AcquirerReverse());
-            new DigitalIOButton(CONVEYOR_IN_SWITCH_CHANNEL).whileHeld(new ConveyManual());
-            new DigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
-            new DigitalIOButton(SHOOT_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
+            new InverseDigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
+            new InverseDigitalIOButton(ACQUIRER_OUT_SWITCH_CHANNEL).whileHeld(new AcquirerReverse());
+            new InverseDigitalIOButton(CONVEYOR_IN_SWITCH_CHANNEL).whileHeld(new ConveyManual());
+            new InverseDigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
+            new InverseDigitalIOButton(SHOOT_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
             
             new JoystickButton(shooterStick, 1).whileHeld(new ConveyAutomatic());
             new JoystickButton(shooterStick, 2).whileHeld(new AcquirerAcquire());
