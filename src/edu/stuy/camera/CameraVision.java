@@ -38,13 +38,9 @@ public class CameraVision {
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
     private Relay targetLight;              // Are-we-aligned? indicator
     private Relay reflectiveLight;          // To make the targets luminous
-    private int targetCenter;               // 
-    int CAMERA_CENTER;
-    int numRectangles;
-    Vector massCenter = new Vector();
-    
-    // adaptive threshold things
-    int count = 0; // count for decreasing lumLow as corrective maintenance
+    private int targetCenter;               // x-coord os the particle center-of-mass
+    int CAMERA_CENTER;                      // center of camera width
+    Vector massCenter = new Vector();       // list of center-of-mass-es
 
     public static CameraVision getInstance() {
         if (instance == null) {
@@ -133,7 +129,7 @@ public class CameraVision {
         if (rectid < massCenter.size()) {
             return ((Integer) massCenter.elementAt(rectid)).intValue();
         }
-        return 0;
+        return -1;
     }
 
     public boolean isAligned() {
