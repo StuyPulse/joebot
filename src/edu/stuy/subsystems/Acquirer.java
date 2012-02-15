@@ -15,6 +15,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Acquirer extends Subsystem {
     private Victor roller;
+
+    // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
+    public static final int FWD = 1;
+    public static final int OFF = 0;
+    public static final int REV = -1;
+
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -28,20 +34,28 @@ public class Acquirer extends Subsystem {
         setDefaultCommand(new AcquirerStop());
     }
     
+    /**
+     * Rolls the acquirer forwards, backwards, or stops.
+     * 
+     * WARNING: The acquirer runs on a FisherPrice motor, meaning you 
+     * CANNOT use a floating point value between 0 and 1!
+     * 
+     * @param speed Either 1, 0, or -1.
+     */
     public void roll(double speed) {
         roller.set(speed);
     }
 
     public void stop() {
-        roll(0);
+        roll(OFF);// WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
     }
 
     public void acquire() {
-        roll(1);
+        roll(FWD); // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
     }
 
     public void acquireReverse() {
-        roll(-1);
+        roll(REV);// WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
     }
 
     public double getRoller() {
