@@ -66,7 +66,7 @@ public class Drivetrain extends Subsystem {
         }, 0.005);
 
        gearShiftLow = new Solenoid(RobotMap.GEAR_SHIFT_LOW);
-       gearShiftHigh = new Solenoid(RobotMap.GEAR_SHIFT_LOW);
+       gearShiftHigh = new Solenoid(RobotMap.GEAR_SHIFT_HIGH);
        sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
        vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
     }
