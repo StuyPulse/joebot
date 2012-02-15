@@ -131,8 +131,6 @@ public class Flywheel extends Subsystem {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Given a desired flywheel RPM, checks if the current RPM is
      * within an acceptable range of the desired RPM, and turns
      * on or off the speed light accordingly.
@@ -144,7 +142,6 @@ public class Flywheel extends Subsystem {
     }
 
     /**
->>>>>>> feature-shooter-test
      * Given a distance that we want to shoot the ball, calculate
      * the flywheel RPM necessary to shoot the ball that distance
      */
