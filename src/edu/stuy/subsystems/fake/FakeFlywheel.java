@@ -4,19 +4,13 @@
  */
 package edu.stuy.subsystems.fake;
 
-import edu.stuy.RobotMap;
-import edu.stuy.speed.JaguarSpeed;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.FlywheelRun;
-import edu.stuy.speed.JoeSpeed;
 
 /**
  *
  * @author Kevin Wang
  */
-public class FakeShooter extends Subsystem {
+public class FakeFlywheel extends Subsystem {
     /** Distances **/
     static final double wideBot = 28.0;
     static final double longBot = 38.0;
@@ -106,7 +100,7 @@ public class FakeShooter extends Subsystem {
     
      // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    public FakeShooter() {
+    public FakeFlywheel() {
 
         
     }

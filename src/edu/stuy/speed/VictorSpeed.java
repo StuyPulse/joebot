@@ -4,7 +4,6 @@
  */
 package edu.stuy.speed;
 
-import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.*;
 
 /**

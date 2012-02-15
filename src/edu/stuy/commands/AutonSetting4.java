@@ -8,8 +8,8 @@ package edu.stuy.commands;
  *
  * @author 694
  */
+import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.stuy.subsystems.*;
 
 public class AutonSetting4 extends CommandGroup {
 

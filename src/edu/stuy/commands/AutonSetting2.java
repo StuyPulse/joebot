@@ -5,11 +5,6 @@
 package edu.stuy.commands;
 
 import edu.stuy.subsystems.Flywheel;
-
-/**
- *
- * @author 694
- */
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutonSetting2 extends CommandGroup {

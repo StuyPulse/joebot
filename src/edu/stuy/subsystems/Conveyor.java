@@ -5,7 +5,6 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.stuy.speed.VictorSpeed;
 import edu.stuy.commands.ConveyorAssistAcquire;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
