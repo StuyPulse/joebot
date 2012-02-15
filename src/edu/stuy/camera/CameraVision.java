@@ -129,14 +129,15 @@ public class CameraVision {
 
     public int getCenterMass(int rectid) {
         if (rectid < massCenter.size()) {
-            return ((Integer) massCenter.elementAt(rectid)).intValue();
+            return ((Integer) massCenter.elementAt(rectid)).intValue(); // return the center-of-mass for the specified rectangle
         }
-        return -1;
+        return -1; // but if trying to find a non-existent rectangle, return nonsense
     }
 
     public boolean isAligned() {
         double absValue = Math.abs(CAMERA_CENTER - targetCenter);
-        return absValue < 20;
+        return absValue < 20; // if the pixel difference between the center-of-mass
+                              // and the center-of-camera, return True
 
     }
 
