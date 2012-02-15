@@ -1,14 +1,12 @@
 package edu.stuy;
 
 import edu.stuy.commands.*;
-import edu.stuy.commands.tuning.ShooterManualSpeed;
 import edu.stuy.subsystems.Flywheel;
 import edu.stuy.util.InverseDigitalIOButton;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
@@ -177,7 +175,7 @@ public class OI {
      * the shooter to use.
      * @return distance for the shooter.
      */
-    public double getDistanceFromHeightButton(){
+    public double getDistanceFromHeightButton(){ // TODO: Rename method
         switch(distanceButton){
             case DISTANCE_BUTTON_AUTO:
                 distanceInches = CommandBase.drivetrain.getSonarDistance_in();
@@ -207,13 +205,11 @@ public class OI {
     }
 
     public double[] getHeightFromButton() {
-        if (shooterStick.getRawButton(7)) {
-            topHoop = false;
+        try {
+            topHoop = !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
+        } catch (EnhancedIOException ex) {
         }
-        if (shooterStick.getRawButton(6)) {
-            topHoop = true;
-        }
-        return  topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop;
+        return (topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop);
     }
     
     // Copied from last year's DesDroid code. 
@@ -228,18 +224,6 @@ public class OI {
     
     public Joystick getDebugBox() {
         return debugBox;
-    }
-    
-    /**
-     * Gets value of hoop height toggle switch.
-     * @return true if high setting, false if middle
-     */
-    public boolean getHoopHeightButton() {
-        try {
-            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL) || shooterStick.getRawButton(8);
-        } catch (EnhancedIOException ex) {
-            return shooterStick.getRawButton(8);
-        }
     }
 
     /**
