@@ -35,7 +35,7 @@ public class OI {
     public static final int BIT_2_CHANNEL = 4;
     public static final int BIT_3_CHANNEL = 3;
     public static final int SHOOT_BUTTON_CHANNEL = 6;
-    public static final int OVERRIDE_BUTTON_CHANNEL = 7;
+    public static final int HOOP_HEIGHT_SWITCH_CHANNEL = 7;
     public static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
     public static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
     
@@ -80,7 +80,7 @@ public class OI {
                 enhancedIO.setDigitalConfig(CONVEYOR_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(CONVEYOR_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(SHOOT_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-                enhancedIO.setDigitalConfig(OVERRIDE_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(HOOP_HEIGHT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
 
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
@@ -215,10 +215,14 @@ public class OI {
     public Joystick getDebugBox() {
         return debugBox;
     }
-
-    public boolean getShootOverrideButton() {
+    
+    /**
+     * Gets value of hoop height toggle switch.
+     * @return true if high setting, false if middle
+     */
+    public boolean getHoopHeightButton() {
         try {
-            return !enhancedIO.getDigital(OVERRIDE_BUTTON_CHANNEL) || shooterStick.getRawButton(8);
+            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL) || shooterStick.getRawButton(8);
         } catch (EnhancedIOException ex) {
             return shooterStick.getRawButton(8);
         }
