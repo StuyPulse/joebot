@@ -59,12 +59,12 @@ public class CameraVision {
         camera = AxisCamera.getInstance();  // get an instance of the camera
         CAMERA_CENTER = camera.getResolution().width / 2;
         cc = new CriteriaCollection();      // create the criteria for the particle filter
-        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 400, false);
-        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 400, false);
+        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 240, false); // any particles at least
+        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 320, false);
     }
 
     public void doCamera() {
-        if (toggleReflectLightIfInRange()) {
+        if (toggleReflectLightIfInRange()) { // if we're within image-accurate distance
             try {
                  // Do the image capture with the camera and apply the algorithm described above.
                 ColorImage image = camera.getImage();
