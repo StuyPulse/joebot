@@ -30,9 +30,9 @@ public class OI {
     
     public static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
     public static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
-    public static final int BIT_1_CHANNEL = 3;
+    public static final int BIT_1_CHANNEL = 5;
     public static final int BIT_2_CHANNEL = 4;
-    public static final int BIT_3_CHANNEL = 5;
+    public static final int BIT_3_CHANNEL = 3;
     public static final int SHOOT_BUTTON_CHANNEL = 6;
     public static final int OVERRIDE_BUTTON_CHANNEL = 7;
     public static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
