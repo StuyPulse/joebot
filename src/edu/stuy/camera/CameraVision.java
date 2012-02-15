@@ -65,8 +65,6 @@ public class CameraVision {
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 400, false);
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 400, false);
-        //cc.addCriteria(MeasurementType.IMAQ_MT_ORIENTATION, 0, 180, false);
-        // TODO: look into IMAQ_MT_ORIENTATION and IMAQ_MT_MOMENT_OF_INERTIA_XX
     }
 
     public void doCamera() {
