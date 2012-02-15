@@ -98,12 +98,12 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
         SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromHeightButton());
         
-        SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
-        SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
-        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getValue(OI.SHOOT_BUTTON_CHANNEL));
-        SmartDashboard.putBoolean("Override Button: ", CommandBase.oi.getValue(OI.OVERRIDE_BUTTON_CHANNEL));
-        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getValue(OI.CONVEYOR_IN_SWITCH_CHANNEL));
-        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getValue(OI.CONVEYOR_OUT_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getDigitalValue(OI.SHOOT_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Override Button: ", CommandBase.oi.getDigitalValue(OI.OVERRIDE_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_IN_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_OUT_SWITCH_CHANNEL));
         
         SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
         SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());

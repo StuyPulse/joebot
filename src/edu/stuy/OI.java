@@ -364,10 +364,10 @@ public class OI {
     }
     
     // For debugging purposes.
-    public boolean getValue(int channel) {
+    public boolean getDigitalValue(int channel) {
         boolean b = false;
         try{
-            b = enhancedIO.getDigital(channel);
+            b = !enhancedIO.getDigital(channel);
         }
         catch (EnhancedIOException e) {
         }
