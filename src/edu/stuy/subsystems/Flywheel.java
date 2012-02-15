@@ -16,7 +16,7 @@ import edu.stuy.speed.JoeSpeed;
  *
  * @author Kevin Wang
  */
-public class Shooter extends Subsystem {
+public class Flywheel extends Subsystem {
     /** Distances **/
     static final double wideBot = 28.0;
     static final double longBot = 38.0;
@@ -113,7 +113,7 @@ public class Shooter extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    public Shooter() {
+    public Flywheel() {
        // speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
         lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);

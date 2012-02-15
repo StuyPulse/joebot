@@ -18,7 +18,7 @@ public abstract class CommandBase extends Command {
     
     // Create a single static instance of all of your subsystems
     public static Drivetrain drivetrain;
-    public static Shooter flywheel;
+    public static Flywheel flywheel;
     public static Tusks tusks;
     public static Acquirer acquirer;
     public static Conveyor conveyor;
@@ -26,7 +26,7 @@ public abstract class CommandBase extends Command {
     static {
         drivetrain = new Drivetrain();
         conveyor = new Conveyor();
-        flywheel = new Shooter();
+        flywheel = new Flywheel();
         acquirer = new Acquirer();
 
         if (!Devmode.DEV_MODE) {

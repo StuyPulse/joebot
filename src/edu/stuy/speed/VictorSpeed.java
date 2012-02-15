@@ -4,7 +4,7 @@
  */
 package edu.stuy.speed;
 
-import edu.stuy.subsystems.Shooter;
+import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.*;
 
 /**
