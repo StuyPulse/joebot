@@ -45,9 +45,9 @@ public class JoeBot extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         
-        CameraVision.getInstance();
-        CameraVision.getInstance().doCamera();
-        CameraVision.getInstance().toggleTargetLightIfAligned();
+        //CameraVision.getInstance();
+        //CameraVision.getInstance().doCamera();
+        //CameraVision.getInstance().toggleTargetLightIfAligned();
     }
     
     public void disabledPeriodic() {
@@ -95,15 +95,21 @@ public class JoeBot extends IterativeRobot {
     
     private void updateSmartDashboard() {
         SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+        SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
+        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromHeightButton());
         
-        SmartDashboard.putDouble("Left encoder distance", CommandBase.drivetrain.getLeftEncoderDistance());
-        SmartDashboard.putDouble("Right encoder distance", CommandBase.drivetrain.getRightEncoderDistance());
-        SmartDashboard.putDouble("Encoder average distance", CommandBase.drivetrain.getAvgDistance());
+        SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getDigitalValue(OI.SHOOT_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Override Button: ", CommandBase.oi.getDigitalValue(OI.OVERRIDE_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_IN_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_OUT_SWITCH_CHANNEL));
         
-        SmartDashboard.putDouble("Gyro angle", CommandBase.drivetrain.getGyroAngle());
+        SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
+        SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
+        SmartDashboard.putDouble("Spin Trim: ", CommandBase.oi.getSpinPot());
+        SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
         
-        SmartDashboard.putBoolean("Upper conveyor sensor", CommandBase.conveyor.ballAtTop());
-        SmartDashboard.putBoolean("Lower conveyor sensor", CommandBase.conveyor.ballAtBottom());
         
         // TODO: Camera target info
     }

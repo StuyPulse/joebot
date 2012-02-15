@@ -28,15 +28,15 @@ public class OI {
     
     // EnhancedIO digital input
     
-    private static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
-    private static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
-    private static final int BIT_1_CHANNEL = 3;
-    private static final int BIT_2_CHANNEL = 4;
-    private static final int BIT_3_CHANNEL = 5;
-    private static final int SHOOT_BUTTON_CHANNEL = 6;
-    private static final int OVERRIDE_BUTTON_CHANNEL = 7;
-    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
-    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
+    public static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
+    public static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
+    public static final int BIT_1_CHANNEL = 5;
+    public static final int BIT_2_CHANNEL = 4;
+    public static final int BIT_3_CHANNEL = 3;
+    public static final int SHOOT_BUTTON_CHANNEL = 6;
+    public static final int OVERRIDE_BUTTON_CHANNEL = 7;
+    public static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
+    public static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
     
     public int distanceButton;
     public double distanceInches;
@@ -159,7 +159,11 @@ public class OI {
        if (shooterStick.getRawButton(DISTANCE_BUTTON_FAR)) {
            distanceButton = DISTANCE_BUTTON_FAR;
        }
-       distanceButton = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
+       int preValue = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 8)) + 0.5);
+       // If no buttons are pressed, it does not update the distance.
+       if(preValue != 0){
+           distanceButton = preValue;
+       }
        return distanceButton;
     }
     
@@ -357,6 +361,28 @@ public class OI {
                 turnOffLights();
                 break;
         }
+    }
+    
+    // For debugging purposes.
+    public boolean getDigitalValue(int channel) {
+        boolean b = false;
+        try{
+            b = !enhancedIO.getDigital(channel);
+        }
+        catch (EnhancedIOException e) {
+        }
+        return b;
+    }
+    
+    // For debugging purposes.
+    public double getAnalogValue(int channel) {
+        double b = 0;
+        try{
+            b = enhancedIO.getAnalogOut(channel);
+        }
+        catch (EnhancedIOException e) {
+        }
+        return b;
     }
 }
 
