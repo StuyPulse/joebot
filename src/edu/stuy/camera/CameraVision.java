@@ -42,7 +42,7 @@ public class CameraVision {
     int CAMERA_CENTER;                      // center of camera width
     Vector massCenter = new Vector();       // list of center-of-mass-es
 
-    public static CameraVision getInstance() {
+    public static CameraVision getInstance() {  // CameraVision is a singleton
         if (instance == null) {
             instance = new CameraVision();
         }
@@ -56,7 +56,7 @@ public class CameraVision {
         reflectiveLight = new Relay(RobotMap.REFLECTIVE_LIGHT);
         reflectiveLight.setDirection(Relay.Direction.kForward);
 
-        camera = AxisCamera.getInstance();  // get an instance ofthe camera
+        camera = AxisCamera.getInstance();  // get an instance of the camera
         CAMERA_CENTER = camera.getResolution().width / 2;
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 400, false);
