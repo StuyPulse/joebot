@@ -33,12 +33,12 @@ import java.util.Vector;
  */
 public class CameraVision {
 
-    private static CameraVision instance;
+    private static CameraVision instance;   // CameraVision is a singleton
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
-    private Relay targetLight;
-    private Relay reflectiveLight;
-    private int targetCenter;
+    private Relay targetLight;              // Are-we-aligned? indicator
+    private Relay reflectiveLight;          // To make the targets luminous
+    private int targetCenter;               // 
     int CAMERA_CENTER;
     int numRectangles;
     Vector massCenter = new Vector();
