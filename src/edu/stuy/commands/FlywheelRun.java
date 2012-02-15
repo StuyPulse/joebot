@@ -4,7 +4,7 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.subsystems.Shooter;
+import edu.stuy.subsystems.Flywheel;
 
 /**
  *

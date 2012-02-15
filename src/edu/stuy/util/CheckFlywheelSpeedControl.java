@@ -5,7 +5,7 @@
 package edu.stuy.util;
 
 import edu.stuy.commands.CommandBase;
-import edu.stuy.subsystems.Shooter;
+import edu.stuy.subsystems.Flywheel;
 
 
 /**
@@ -19,7 +19,7 @@ public class CheckFlywheelSpeedControl extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(flywheel);
-        distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
+        distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
     }
 
     // Called just before this Command runs the first time
@@ -29,7 +29,7 @@ public class CheckFlywheelSpeedControl extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double[] rpm = flywheel.lookupRPM(distanceInches, Shooter.speedsTopHoop);
+        double[] rpm = flywheel.lookupRPM(distanceInches, Flywheel.speedsTopHoop);
         flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
     }
 

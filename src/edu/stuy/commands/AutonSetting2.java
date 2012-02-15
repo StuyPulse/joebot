@@ -4,7 +4,7 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.subsystems.Shooter;
+import edu.stuy.subsystems.Flywheel;
 
 /**
  *
@@ -25,8 +25,8 @@ public class AutonSetting2 extends CommandGroup {
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_BRIDGE));
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
 
-        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-        addSequential(new FlywheelRun(distanceInches, Shooter.speedsTopHoop));
+        double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
+        addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(4));//4 second coded in raw. Needs to be changed.
     }
 }
