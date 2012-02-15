@@ -4,8 +4,6 @@
  */
 package edu.stuy.subsystems.fake;
 
-import edu.stuy.subsystems.*;
-import edu.stuy.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
