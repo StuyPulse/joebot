@@ -33,20 +33,16 @@ import java.util.Vector;
  */
 public class CameraVision {
 
-    private static CameraVision instance;
+    private static CameraVision instance;   // CameraVision is a singleton
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
-    private Relay targetLight;
-    private Relay reflectiveLight;
-    private int targetCenter;
-    int CAMERA_CENTER;
-    int numRectangles;
-    Vector massCenter = new Vector();
-    
-    // adaptive threshold things
-    int count = 0; // count for decreasing lumLow as corrective maintenance
+    private Relay targetLight;              // Are-we-aligned? indicator
+    private Relay reflectiveLight;          // To make the targets luminous
+    private int targetCenter;               // x-coord os the particle center-of-mass
+    int CAMERA_CENTER;                      // center of camera width
+    Vector massCenter = new Vector();       // list of center-of-mass-es
 
-    public static CameraVision getInstance() {
+    public static CameraVision getInstance() {  // CameraVision is a singleton
         if (instance == null) {
             instance = new CameraVision();
         }
@@ -60,35 +56,37 @@ public class CameraVision {
         reflectiveLight = new Relay(RobotMap.REFLECTIVE_LIGHT);
         reflectiveLight.setDirection(Relay.Direction.kForward);
 
-        camera = AxisCamera.getInstance();  // get an instance ofthe camera
+        camera = AxisCamera.getInstance();  // get an instance of the camera
         CAMERA_CENTER = camera.getResolution().width / 2;
         cc = new CriteriaCollection();      // create the criteria for the particle filter
-        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 400, false);
-        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 400, false);
+        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 240, false);  // any particles at least 30 pixels wide
+        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 320, false); // any particles at least 40 pixels high
     }
 
     public void doCamera() {
-        if (toggleReflectLightIfInRange()) {
+        if (toggleReflectLightIfInRange()) { // if we're within image-accurate distance
             try {
                  // Do the image capture with the camera and apply the algorithm described above.
-                ColorImage image = camera.getImage();
-                BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255);
-                //rectImage.write("red.png");
+                ColorImage image = camera.getImage(); // get the image from the camera
+                BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255); // mark only areas that have high
+                                                                                        // luminance (the last two numbers
+                                                                                        // are low-high limits
+                //rectImage.write("red.png");     // test: mask image
 
 
                 BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
                 BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
-                //convexHullImage.write("box.png");
-                BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // find filled in rectangles
+                //convexHullImage.write("box.png");                                       // test: rect image
+                BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // filter particles using our criteria
 
                 ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
-                massCenter.removeAllElements();
-                for (int i = 0; i < reports.length; i++) {                                // print results
+                massCenter.removeAllElements();                                         // remove previous center-of-mass-es
+                for (int i = 0; i < reports.length; i++) {                                // for each detected particle
                     ParticleAnalysisReport r = reports[i];
                     // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
                     // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
-                    int fovFeet = (360 * 2) / r.boundingRectWidth;
-                    massCenter.addElement(new Integer(r.center_mass_x));
+                    int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
+                    massCenter.addElement(new Integer(r.center_mass_x));                    // add each center-of-mass to our list
                     //System.out.println("Our field of view in feet is: " + fovFeet);
                     //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
 
@@ -97,8 +95,8 @@ public class CameraVision {
                 // 
                
                 
-                if (massCenter.size() > 0) {
-                    targetCenter = getCenterMass(0);
+                if (massCenter.size() > 0) {            // if there are center-of-mass-es in the list
+                    targetCenter = getCenterMass(0);    // set targetCenter to the largest one (the first one)
                 }
 
                 /**
@@ -126,14 +124,14 @@ public class CameraVision {
      * @return targetCenter
      */
     public double getTargetCenter() {
-        return targetCenter;
+        return targetCenter;    // returns the largest center-of-mass
     }
 
     public int getCenterMass(int rectid) {
         if (rectid < massCenter.size()) {
             return ((Integer) massCenter.elementAt(rectid)).intValue();
         }
-        return 0;
+        return -1;
     }
 
     public boolean isAligned() {

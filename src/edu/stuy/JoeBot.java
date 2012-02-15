@@ -95,6 +95,8 @@ public class JoeBot extends IterativeRobot {
         updateSmartDashboard();
     }
     
+    // We use SmartDashboard to monitor bot information.
+    // Here, we put things to the SmartDashboard
     private void updateSmartDashboard() {
         SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
