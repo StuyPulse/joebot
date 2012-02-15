@@ -3,6 +3,7 @@ package edu.stuy;
 import edu.stuy.commands.*;
 import edu.stuy.commands.tuning.ShooterManualSpeed;
 import edu.stuy.subsystems.Flywheel;
+import edu.stuy.util.InverseDigitalIOButton;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
@@ -18,8 +19,8 @@ public class OI {
     
     public static final int DISTANCE_BUTTON_AUTO = 1;
     public static final int DISTANCE_BUTTON_FAR = 2;
-    public static final int DISTANCE_BUTTON_FENDER_WIDE = 3;
-    public static final int DISTANCE_BUTTON_FENDER_NARROW = 4;
+    public static final int DISTANCE_BUTTON_FENDER_LENGTH = 3;
+    public static final int DISTANCE_BUTTON_FENDER_WIDTH = 4;
     public static final int DISTANCE_BUTTON_FENDER_SIDE = 5;
     public static final int DISTANCE_BUTTON_FENDER = 6;
     public static final int DISTANCE_BUTTON_STOP = 7;
@@ -28,15 +29,15 @@ public class OI {
     
     // EnhancedIO digital input
     
-    private static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
-    private static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
-    private static final int BIT_1_CHANNEL = 3;
-    private static final int BIT_2_CHANNEL = 4;
-    private static final int BIT_3_CHANNEL = 5;
-    private static final int SHOOT_BUTTON_CHANNEL = 6;
-    private static final int OVERRIDE_BUTTON_CHANNEL = 7;
-    private static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
-    private static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
+    public static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
+    public static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
+    public static final int BIT_1_CHANNEL = 5;
+    public static final int BIT_2_CHANNEL = 4;
+    public static final int BIT_3_CHANNEL = 3;
+    public static final int SHOOT_BUTTON_CHANNEL = 6;
+    public static final int HOOP_HEIGHT_SWITCH_CHANNEL = 7;
+    public static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
+    public static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
     
     public int distanceButton;
     public double distanceInches;
@@ -80,7 +81,7 @@ public class OI {
                 enhancedIO.setDigitalConfig(CONVEYOR_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(CONVEYOR_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(SHOOT_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-                enhancedIO.setDigitalConfig(OVERRIDE_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(HOOP_HEIGHT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
 
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
@@ -101,11 +102,11 @@ public class OI {
             new JoystickButton(leftStick, 2).whenPressed(new TusksRetract());
             
             // OI box switches
-            new DigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
-            new DigitalIOButton(ACQUIRER_OUT_SWITCH_CHANNEL).whileHeld(new AcquirerReverse());
-            new DigitalIOButton(CONVEYOR_IN_SWITCH_CHANNEL).whileHeld(new ConveyManual());
-            new DigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
-            new DigitalIOButton(SHOOT_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
+            new InverseDigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
+            new InverseDigitalIOButton(ACQUIRER_OUT_SWITCH_CHANNEL).whileHeld(new AcquirerReverse());
+            new InverseDigitalIOButton(CONVEYOR_IN_SWITCH_CHANNEL).whileHeld(new ConveyManual());
+            new InverseDigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
+            new InverseDigitalIOButton(SHOOT_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
             
             new JoystickButton(shooterStick, 1).whileHeld(new ConveyAutomatic());
             new JoystickButton(shooterStick, 2).whileHeld(new AcquirerAcquire());
@@ -163,7 +164,11 @@ public class OI {
        if (shooterStick.getRawButton(11)) {
            distanceButton = DISTANCE_BUTTON_FAR;
        }
-       distanceButton = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
+       int preValue = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 8)) + 0.5);
+       // If no buttons are pressed, it does not update the distance.
+       if(preValue != 0){
+           distanceButton = preValue;
+       }
        return distanceButton;
     }
     
@@ -180,10 +185,10 @@ public class OI {
             case DISTANCE_BUTTON_FAR:
                 distanceInches = 725; // TODO: Max distance to max speed?
                 break;
-            case DISTANCE_BUTTON_FENDER_WIDE:
+            case DISTANCE_BUTTON_FENDER_LENGTH:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_LONG_INDEX];
                 break;
-            case DISTANCE_BUTTON_FENDER_NARROW:
+            case DISTANCE_BUTTON_FENDER_WIDTH:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_WIDE_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER_SIDE:
@@ -224,10 +229,14 @@ public class OI {
     public Joystick getDebugBox() {
         return debugBox;
     }
-
-    public boolean getShootOverrideButton() {
+    
+    /**
+     * Gets value of hoop height toggle switch.
+     * @return true if high setting, false if middle
+     */
+    public boolean getHoopHeightButton() {
         try {
-            return !enhancedIO.getDigital(OVERRIDE_BUTTON_CHANNEL) || shooterStick.getRawButton(8);
+            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL) || shooterStick.getRawButton(8);
         } catch (EnhancedIOException ex) {
             return shooterStick.getRawButton(8);
         }
@@ -352,10 +361,10 @@ public class OI {
             case DISTANCE_BUTTON_FAR:
                 setLight(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL);
                 break;
-            case DISTANCE_BUTTON_FENDER_WIDE:
+            case DISTANCE_BUTTON_FENDER_LENGTH:
                 setLight(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL);
                 break;
-            case DISTANCE_BUTTON_FENDER_NARROW:
+            case DISTANCE_BUTTON_FENDER_WIDTH:
                 setLight(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL);
                 break;
             case DISTANCE_BUTTON_FENDER_SIDE:
@@ -371,6 +380,28 @@ public class OI {
                 turnOffLights();
                 break;
         }
+    }
+    
+    // For debugging purposes.
+    public boolean getDigitalValue(int channel) {
+        boolean b = false;
+        try{
+            b = !enhancedIO.getDigital(channel);
+        }
+        catch (EnhancedIOException e) {
+        }
+        return b;
+    }
+    
+    // For debugging purposes.
+    public double getAnalogValue(int channel) {
+        double b = 0;
+        try{
+            b = enhancedIO.getAnalogOut(channel);
+        }
+        catch (EnhancedIOException e) {
+        }
+        return b;
     }
 }
 

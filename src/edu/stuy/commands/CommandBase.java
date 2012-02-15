@@ -3,7 +3,6 @@ package edu.stuy.commands;
 import edu.stuy.Devmode;
 import edu.stuy.OI;
 import edu.stuy.subsystems.*;
-import edu.stuy.subsystems.fake.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,7 +27,6 @@ public abstract class CommandBase extends Command {
         conveyor = new Conveyor();
         flywheel = new Flywheel();
         acquirer = new Acquirer();
-
         if (!Devmode.DEV_MODE) {
             tusks = new Tusks();
         }
