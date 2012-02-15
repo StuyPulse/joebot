@@ -17,7 +17,7 @@ public class AutonSetting1 extends CommandGroup {
         addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_FENDER));
 
         double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-        addSequential(new ShooterMoveFlyWheel(distanceInches));
+        addSequential(new FlywheelRun(distanceInches, Shooter.speedsTopHoop));
         addSequential(new ConveyAutomatic(4)); //4 sec is a raw value. Change.
 
         // TODO: Get tusks running concurrently with backing up, have them retract after backuptobridge is done

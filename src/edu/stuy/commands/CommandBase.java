@@ -17,19 +17,20 @@ public abstract class CommandBase extends Command {
     public static OI oi;
     
     // Create a single static instance of all of your subsystems
-    public static FakeDrivetrain drivetrain;
-    public static FakeShooter shooter;
-    public static FakeTusks tusks;
-    public static FakeAcquirer acquirer;
-    public static FakeConveyor conveyor;
+    public static Drivetrain drivetrain;
+    public static Shooter flywheel;
+    public static Tusks tusks;
+    public static Acquirer acquirer;
+    public static Conveyor conveyor;
 
     static {
-        drivetrain = new FakeDrivetrain();
-        conveyor = new FakeConveyor();
-        shooter = new FakeShooter();
-        acquirer = new FakeAcquirer();
+        drivetrain = new Drivetrain();
+        conveyor = new Conveyor();
+        flywheel = new Shooter();
+        acquirer = new Acquirer();
+
         if (!Devmode.DEV_MODE) {
-            tusks = new FakeTusks();
+            tusks = new Tusks();
         }
     }
 
@@ -44,7 +45,7 @@ public abstract class CommandBase extends Command {
         if (!Devmode.DEV_MODE) {
             // Show what command your subsystem is running on the SmartDashboard
             SmartDashboard.putData(drivetrain);
-            SmartDashboard.putData(shooter);
+            SmartDashboard.putData(flywheel);
             SmartDashboard.putData(tusks);
             SmartDashboard.putData(acquirer);
             SmartDashboard.putData(conveyor);

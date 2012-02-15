@@ -40,6 +40,7 @@ public class OI {
     
     public int distanceButton;
     public double distanceInches;
+    public boolean topHoop = true;
     
     // EnhancedIO digital output
     private static final int DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL = 10;
@@ -93,7 +94,7 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new ShooterMoveFlyWheel(distanceInches));
+            new JoystickButton(leftStick, 1).whileHeld(new FlywheelRun(distanceInches, Shooter.speedsTopHoop));
             new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             new JoystickButton(leftStick, 1).whenPressed(new TusksExtend());
@@ -111,7 +112,10 @@ public class OI {
             new JoystickButton(shooterStick, 3).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
-            new JoystickButton(shooterStick, 6).whenPressed(new ShooterManualSpeed());
+            // 6 and 7 are used for top and mid hoop respectively (see getHeightFromButton())
+            new JoystickButton(shooterStick, 8).whenPressed(new FlywheelStop());
+            // 9-11 are used for fender, fender side, and max speed, in that order
+            // see getDistanceButton()
         }
     }
     
@@ -142,25 +146,32 @@ public class OI {
      * different voltage is read by the analog input. Each resistor reduces the
      * voltage by about 1/7 the maximum voltage.
      *
-     * @return An integer value representing the height button that was pressed.
+     * @return An integer value representing the distance button that was pressed.
+     * If a Joystick button is being used, that will returned. Otherwise, the
+     * button will be returned from the voltage (if it returns 0, no button is pressed).
      */
     public int getDistanceButton() {
-       if (shooterStick.getRawButton(DISTANCE_BUTTON_STOP)) {
+       if (shooterStick.getRawButton(8)) {
            distanceButton = DISTANCE_BUTTON_STOP;
        }
-       if (shooterStick.getRawButton(DISTANCE_BUTTON_AUTO)) {
-           distanceButton = DISTANCE_BUTTON_AUTO;
-       }
-       if (shooterStick.getRawButton(DISTANCE_BUTTON_FENDER)) {
+       if (shooterStick.getRawButton(9)) {
            distanceButton = DISTANCE_BUTTON_FENDER;
        }
-       if (shooterStick.getRawButton(DISTANCE_BUTTON_FAR)) {
+       if (shooterStick.getRawButton(10)) {
+           distanceButton = DISTANCE_BUTTON_FENDER_SIDE;
+       }
+       if (shooterStick.getRawButton(11)) {
            distanceButton = DISTANCE_BUTTON_FAR;
        }
        distanceButton = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 7)) + 0.5);
        return distanceButton;
     }
     
+    /**
+     * Takes the distance button that has been pressed, and finds the distance for
+     * the shooter to use.
+     * @return distance for the shooter.
+     */
     public double getDistanceFromHeightButton(){
         switch(distanceButton){
             case DISTANCE_BUTTON_AUTO:
@@ -188,6 +199,16 @@ public class OI {
                 break;
         }
         return distanceInches;
+    }
+
+    public double[] getHeightFromButton() {
+        if (shooterStick.getRawButton(7)) {
+            topHoop = false;
+        }
+        if (shooterStick.getRawButton(6)) {
+            topHoop = true;
+        }
+        return  topHoop ? Shooter.speedsMiddleHoop : Shooter.speedsTopHoop;
     }
     
     // Copied from last year's DesDroid code. 
@@ -288,6 +309,10 @@ public class OI {
         }
     }
     
+    /**
+     * Turns on specified light on OI.
+     * @param lightNum 
+     */
     public void setLight(int lightNum) {
         turnOffLights();
         try {
@@ -297,6 +322,9 @@ public class OI {
         }
     }
     
+    /**
+     * Turns all lights off.
+     */
     public void turnOffLights(){
         try {
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, false);
@@ -311,6 +339,11 @@ public class OI {
         }
     }
     
+    /**
+     * Meant to be called continuously to update the lights on the OI board.
+     * Depending on which button has been pressed last (which distance is
+     * currently set), that button will be lit.
+     */
     public void updateLights(){
         switch(distanceButton){
             case DISTANCE_BUTTON_AUTO:

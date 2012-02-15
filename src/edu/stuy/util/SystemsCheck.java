@@ -39,7 +39,7 @@ public class SystemsCheck extends CommandGroup {
 
     private void checkShooter() {
         addSequential(new CheckFlywheelSpeedControl());
-        addSequential(new ShooterStop());
+        addSequential(new FlywheelStop());
     }
 
     private void checkTusks() {

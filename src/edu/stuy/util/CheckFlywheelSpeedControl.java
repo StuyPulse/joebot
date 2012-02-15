@@ -18,7 +18,7 @@ public class CheckFlywheelSpeedControl extends CommandBase {
     public CheckFlywheelSpeedControl() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(shooter);
+        requires(flywheel);
         distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
     }
 
@@ -29,8 +29,8 @@ public class CheckFlywheelSpeedControl extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double[] rpm = shooter.lookupRPM(distanceInches);
-        shooter.setFlywheelSpeeds(rpm[0], rpm[1]);
+        double[] rpm = flywheel.lookupRPM(distanceInches, Shooter.speedsTopHoop);
+        flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,7 +39,7 @@ public class CheckFlywheelSpeedControl extends CommandBase {
             System.out.println("Flywheel speed control FAIL! Timed out!");
             return true;
         }
-        if (shooter.isSpeedGood()) {
+        if (flywheel.isSpeedGood()) {
             System.out.println("Flywheel speed control PASS!");
             return true;
         }
@@ -48,7 +48,7 @@ public class CheckFlywheelSpeedControl extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        shooter.setFlywheelSpeeds(0, 0);
+        flywheel.setFlywheelSpeeds(0, 0);
     }
 
     // Called when another command which requires one or more of the same
