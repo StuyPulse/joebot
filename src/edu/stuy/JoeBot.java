@@ -11,6 +11,7 @@ package edu.stuy;
 import edu.stuy.camera.CameraVision;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
+import edu.stuy.commands.TusksRetract;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -44,9 +45,6 @@ public class JoeBot extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         
-        //CameraVision.getInstance();
-        //CameraVision.getInstance().doCamera();
-        //CameraVision.getInstance().toggleTargetLightIfAligned();
     }
     
     public void disabledPeriodic() {
@@ -55,6 +53,7 @@ public class JoeBot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        new TusksRetract().start();
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
     }
@@ -75,6 +74,7 @@ public class JoeBot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
+        new TusksRetract().start();
 
                 // Note that OI starts a bunch of other commands
                 // by attaching them to joystick buttons.  Check OI.java
