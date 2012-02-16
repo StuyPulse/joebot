@@ -42,8 +42,6 @@ public class Drivetrain extends Subsystem {
     public Drivetrain() {
         drive = new VictorRobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
         encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
         encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
