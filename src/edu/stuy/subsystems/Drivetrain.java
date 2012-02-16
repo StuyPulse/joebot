@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
  */
 public class Drivetrain extends Subsystem {
     public RobotDrive drive;
-    public Solenoid gearShift;
+    
     Solenoid gearShiftLow;
     Solenoid gearShiftHigh; 
     AnalogChannel sonar;
@@ -122,7 +122,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public boolean getGear() {
-        return gearShift.get();
+        return gearShiftHigh.get();
     }
 
     public void initController() {
