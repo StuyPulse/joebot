@@ -18,6 +18,7 @@ public class AcquirerReverse extends CommandBase {
         requires(acquirer);
     }
 
+    // Reverses acquirer for timeout seconds
     public AcquirerReverse(double timeout) {
         this();
         hasTimeout = true;
