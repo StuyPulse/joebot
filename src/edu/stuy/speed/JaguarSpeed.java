@@ -37,6 +37,7 @@ public class JaguarSpeed implements JoeSpeed {
             jaguar.setPID(KP, KI, KD);
             jaguar.enableControl();
         } catch (CANTimeoutException e) {
+            e.printStackTrace();
         }
 
     }

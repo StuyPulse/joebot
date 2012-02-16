@@ -44,10 +44,10 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
-        
+       /*
         CameraVision.getInstance();
         CameraVision.getInstance().doCamera();
-        CameraVision.getInstance().toggleTargetLightIfAligned();
+        CameraVision.getInstance().toggleTargetLightIfAligned();*/
     }
     
     public void disabledPeriodic() {
