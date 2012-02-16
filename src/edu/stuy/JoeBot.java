@@ -91,6 +91,13 @@ public class JoeBot extends IterativeRobot {
         // Debug box actions
         CommandBase.oi.updateLights();
         updateSmartDashboard();
+        
+        while(CommandBase.oi.getLeftStick().getRawButton(10)){
+            CommandBase.oi.turnOnLights();
+        }
+        if(CommandBase.oi.getLeftStick().getRawButton(11)){
+            CommandBase.oi.turnOffLights();
+        }
     }
     
     private void updateSmartDashboard() {

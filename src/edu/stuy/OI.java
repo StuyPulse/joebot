@@ -331,6 +331,23 @@ public class OI {
     }
     
     /**
+     * Turns all lights on.
+     */
+    public void turnOnLights(){
+        try {
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, true);
+        }
+        catch (EnhancedIOException e) {
+        }
+    }
+    
+    /**
      * Meant to be called continuously to update the lights on the OI board.
      * Depending on which button has been pressed last (which distance is
      * currently set), that button will be lit.
