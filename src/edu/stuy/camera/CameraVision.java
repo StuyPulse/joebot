@@ -69,28 +69,22 @@ public class CameraVision {
                  // Do the image capture with the camera and apply the algorithm described above.
                 ColorImage image = camera.getImage(); // get the image from the camera
                 BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255); // mark only areas that have high
-                                                                                        // luminance (the last two numbers
+                image.free();                                                                        // luminance (the last two numbers
                                                                                         // are low-high limits
-                //rectImage.write("red.png");     // test: mask image
-
-
                 BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
+                rectImage.free();
                 BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
-                //convexHullImage.write("box.png");                                       // test: rect image
+                bigObjectsImage.free();
                 BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // filter particles using our criteria
-
+                convexHullImage.free();
                 ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
                 massCenter.removeAllElements();                                         // remove previous center-of-mass-es
-                for (int i = 0; i < reports.length; i++) {                                // for each detected particle
-                    ParticleAnalysisReport r = reports[i];
-                    // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
-                    // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
+                                                                                        // for each detected particle
+                    ParticleAnalysisReport r = reports[0];
                     int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
                     massCenter.addElement(new Integer(r.center_mass_x));                    // add each center-of-mass to our list
-                    //System.out.println("Our field of view in feet is: " + fovFeet);
-                    //System.out.println("Particle: " + i + ":  Center of mass x: " + r.center_mass_x);
-
-                }
+                  
+                
                 
                 // 
                
@@ -99,19 +93,9 @@ public class CameraVision {
                     targetCenter = getCenterMass(0);    // set targetCenter to the largest one (the first one)
                 }
 
-                /**
-                 * all images in Java must be freed after they are used since
-                 * they are allocated out of C data structures. Not calling
-                 * free() will cause the memory to accumulate over each pass of
-                 * this loop.
-                 */
                 filteredImage.free();
-                convexHullImage.free();
-                bigObjectsImage.free();
-                rectImage.free();
-                image.free();
-
-            } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
+               
+             } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
                 ex.printStackTrace();
             } catch (NIVisionException ex) {
                 ex.printStackTrace();
