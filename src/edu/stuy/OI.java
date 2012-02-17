@@ -106,13 +106,14 @@ public class OI {
             new InverseDigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
             new InverseDigitalIOButton(SHOOT_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
             
-            new JoystickButton(shooterStick, 1).whileHeld(new ConveyAutomatic());
-            new JoystickButton(shooterStick, 2).whileHeld(new AcquirerAcquire());
-            new JoystickButton(shooterStick, 3).whileHeld(new ConveyManual());
-            new JoystickButton(shooterStick, 4).whileHeld(new ConveyReverseManual());
+            new JoystickButton(shooterStick, 1).whileHeld(new ConveyManual());
+            new JoystickButton(shooterStick, 4).whenPressed(new FlywheelStop());
             new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
+            new JoystickButton(shooterStick, 6).whileHeld(new ConveyReverseManual());
+            new JoystickButton(shooterStick, 7).whileHeld(new AcquirerAcquire());
+            new JoystickButton(shooterStick, 8).whileHeld(new ConveyAutomatic());
             // 6 and 7 are used for top and mid hoop respectively (see getHeightFromButton())
-            new JoystickButton(shooterStick, 8).whenPressed(new FlywheelStop());
+            
             // 9-11 are used for fender, fender side, and max speed, in that order
             // see getDistanceButton()
         }
