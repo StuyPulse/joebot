@@ -79,16 +79,16 @@ public class CameraVision {
                 convexHullImage.free();
                 ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
                 massCenter.removeAllElements();                                         // remove previous center-of-mass-es
-                                                                                        // for each detected particle
-                    ParticleAnalysisReport r = reports[0];
-                    int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
-                    massCenter.addElement(new Integer(r.center_mass_x));                    // add each center-of-mass to our list
-                  
                 
                 
-                // 
-               
+                ParticleAnalysisReport r = reports[0]; // Gets largest detected target
                 
+                // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
+                // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
+                int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
+                massCenter.addElement(new Integer(r.center_mass_x));                    // add each center-of-mass to our list
+
+
                 if (massCenter.size() > 0) {            // if there are center-of-mass-es in the list
                     targetCenter = getCenterMass(0);    // set targetCenter to the largest one (the first one)
                 }
