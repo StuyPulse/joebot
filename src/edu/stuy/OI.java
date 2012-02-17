@@ -17,27 +17,27 @@ public class OI {
     private Joystick shooterStick;
     private Joystick debugBox;
     
-    public static final int DISTANCE_BUTTON_AUTO = 1;
-    public static final int DISTANCE_BUTTON_FAR = 2;
-    public static final int DISTANCE_BUTTON_FENDER_LENGTH = 3;
+    public static final int DISTANCE_BUTTON_AUTO = 7;
+    public static final int DISTANCE_BUTTON_FAR = 6;
+    public static final int DISTANCE_BUTTON_FENDER_LENGTH = 5;
     public static final int DISTANCE_BUTTON_FENDER_WIDTH = 4;
-    public static final int DISTANCE_BUTTON_FENDER_SIDE = 5;
-    public static final int DISTANCE_BUTTON_FENDER = 6;
-    public static final int DISTANCE_BUTTON_STOP = 7;
+    public static final int DISTANCE_BUTTON_FENDER_SIDE = 2;
+    public static final int DISTANCE_BUTTON_FENDER = 3;
+    public static final int DISTANCE_BUTTON_STOP = 1;
     
     private DriverStationEnhancedIO enhancedIO;
     
     // EnhancedIO digital input
     
-    public static final int ACQUIRER_IN_SWITCH_CHANNEL = 1;
-    public static final int ACQUIRER_OUT_SWITCH_CHANNEL = 2;
+    public static final int CONVEYOR_IN_SWITCH_CHANNEL = 1;
+    public static final int CONVEYOR_OUT_SWITCH_CHANNEL = 2;
     public static final int BIT_1_CHANNEL = 5;
     public static final int BIT_2_CHANNEL = 4;
     public static final int BIT_3_CHANNEL = 3;
-    public static final int SHOOT_BUTTON_CHANNEL = 6;
-    public static final int HOOP_HEIGHT_SWITCH_CHANNEL = 7;
-    public static final int CONVEYOR_IN_SWITCH_CHANNEL = 8;
-    public static final int CONVEYOR_OUT_SWITCH_CHANNEL = 9;
+    public static final int SHOOTER_BUTTON_CHANNEL = 7;
+    public static final int HOOP_HEIGHT_BUTTON_CHANNEL = 6;
+    public static final int ACQUIRER_IN_SWITCH_CHANNEL = 9;
+    public static final int ACQUIRER_OUT_SWITCH_CHANNEL = 8;
     
     public int distanceButton;
     public double distanceInches;
@@ -79,8 +79,8 @@ public class OI {
                 enhancedIO.setDigitalConfig(ACQUIRER_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(CONVEYOR_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(CONVEYOR_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-                enhancedIO.setDigitalConfig(SHOOT_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-                enhancedIO.setDigitalConfig(HOOP_HEIGHT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(SHOOTER_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(HOOP_HEIGHT_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
 
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_AUTO_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
@@ -105,7 +105,7 @@ public class OI {
             new InverseDigitalIOButton(ACQUIRER_OUT_SWITCH_CHANNEL).whileHeld(new AcquirerReverse());
             new InverseDigitalIOButton(CONVEYOR_IN_SWITCH_CHANNEL).whileHeld(new ConveyManual());
             new InverseDigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
-            new InverseDigitalIOButton(SHOOT_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
+            new InverseDigitalIOButton(SHOOTER_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
             
             new JoystickButton(shooterStick, 1).whileHeld(new ConveyAutomatic());
             new JoystickButton(shooterStick, 2).whileHeld(new AcquirerAcquire());
@@ -222,7 +222,7 @@ public class OI {
      */
     public boolean getHoopHeightButton() {
         try {
-            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL) || shooterStick.getRawButton(8);
+            return !enhancedIO.getDigital(HOOP_HEIGHT_BUTTON_CHANNEL) || shooterStick.getRawButton(8);
         } catch (EnhancedIOException ex) {
             return shooterStick.getRawButton(8);
         }
@@ -290,7 +290,7 @@ public class OI {
 
     public double getSpeedPot() {
         try {
-            return enhancedIO.getAnalogIn(SPEED_TRIM_POT_CHANNEL);
+            return getMaxVoltage() - enhancedIO.getAnalogIn(SPEED_TRIM_POT_CHANNEL);
         } catch (EnhancedIOException ex) {
             return 0.0;
         }
@@ -298,7 +298,7 @@ public class OI {
 
     public double getSpinPot() {
         try {
-            return enhancedIO.getAnalogIn(SPIN_TRIM_POT_CHANNEL);
+            return getMaxVoltage() - enhancedIO.getAnalogIn(SPIN_TRIM_POT_CHANNEL);
         } catch (EnhancedIOException ex) {
             return 0.0;
         }
