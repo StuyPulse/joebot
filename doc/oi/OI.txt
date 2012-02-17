@@ -6,6 +6,13 @@ LEFT STICK
               Y:
               Z:
 
+            1: ConveyManual
+            4: FlywheelStop
+            5: AcquirerReverse
+            6: ConveyReverseManual
+            7: AcquirerAcquire
+            8: ConveyAutomatic
+
   Buttons:
     (trigger) 1:  (HOLD) Run flywheel for last set distance, top hoop
                CONFLICT: extend tusks
@@ -53,14 +60,14 @@ SHOOTER STICK
 
   Buttons:
 
-    (trigger) 1:  Convey Automatic
-              2:  Acquire
-              3:  Convey Manual
-              4:  Convey Reverse Manual
+    (trigger) 1:  Convey Manual
+              2:  
+              3:  
+              4:  Flywheel Stop
               5:  Acquire Reverse
-              6:  top hoop
-              7:  middle hoop
-              8:  stop flywheel
-              9:  fender
-             10:  fender side
-             11:  max speed
+              6:  Convey Reverse Manual
+              7:  Acquirer Acquire
+              8:  Convey Automatic
+              9:  
+             10:  
+             11:  
