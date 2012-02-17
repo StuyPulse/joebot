@@ -49,6 +49,7 @@ public class JoeBot extends IterativeRobot {
     
     public void disabledPeriodic() {
         updateSmartDashboard();
+        CommandBase.oi.turnOffLights();
     }
 
     public void autonomousInit() {
@@ -93,6 +94,13 @@ public class JoeBot extends IterativeRobot {
         // Debug box actions
         CommandBase.oi.updateLights();
         updateSmartDashboard();
+        
+        while(CommandBase.oi.getLeftStick().getRawButton(10)){
+            CommandBase.oi.turnOnLights();
+        }
+        if(CommandBase.oi.getLeftStick().getRawButton(11)){
+            CommandBase.oi.turnOffLights();
+        }
     }
     
     // We use SmartDashboard to monitor bot information.
@@ -104,15 +112,15 @@ public class JoeBot extends IterativeRobot {
         
         SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
         SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
-        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getDigitalValue(OI.SHOOT_BUTTON_CHANNEL));
-        SmartDashboard.putBoolean("Override Button: ", CommandBase.oi.getDigitalValue(OI.HOOP_HEIGHT_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getDigitalValue(OI.SHOOTER_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Hoop Height Button: ", CommandBase.oi.getDigitalValue(OI.HOOP_HEIGHT_SWITCH_CHANNEL));
         SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_IN_SWITCH_CHANNEL));
         SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_OUT_SWITCH_CHANNEL));
         
         SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
-        SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
-        SmartDashboard.putDouble("Spin Trim: ", CommandBase.oi.getSpinPot());
-        SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
+        SmartDashboard.putDouble("Speed Trim: ", (double) ((int) (CommandBase.oi.getSpeedPot() * 100)) / 100 );
+        SmartDashboard.putDouble("Spin Trim: ", (double) ((int) (CommandBase.oi.getSpinPot() * 100)) / 100 );
+        SmartDashboard.putDouble("Max Voltage: ", (double) ((int) (CommandBase.oi.getMaxVoltage() * 100)) / 100 );
         
         
         // Camera target info
