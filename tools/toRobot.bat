@@ -1,14 +1,18 @@
-ECHO This fanciness is brought to you by Folders!
-ECHO You may have to change the text in "Wireless Network Connection"
+@ECHO THIS NEEDS TO BE TUNED FOR EACH COMPUTER. THE NAME OF THIS COMPUTER IS ... NEEDS TO BE MODIFIED
+@ECHO This fanciness is brought to you by Folders!
+@ECHO You may have to change the text in "Wireless Network Connection"
 
-set varip=10.6.94.30
-set varsm=255.0.0.0
+@REM set /P lastnumberofip=ENTER_LAST_DIGIT_OF_IP_YOU_WANT_TO_USE:
 
-REM For the most up-to-date-info, visit http://samanathon.com/set-your-ip-address-via-batch-file/
+@set varip=10.6.94.%lastnumberofip%
+@ECHO ip address %varip%
+@set varsm=255.0.0.0
 
-ECHO Setting IP Address and Subnet Mask
-netsh int ip set address name = "Wireless Network Connection 4" source = static addr = %varip% mask = %varsm%
+@REM For the most up-to-date-info, visit http://samanathon.com/set-your-ip-address-via-batch-file/
 
-netsh int ip show config
+@ECHO Setting IP Address and Subnet Mask
+@netsh int ip set address name = "Wireless Network Connection 4" source = static addr = %varip% mask = %varsm%
 
-pause
+@netsh int ip show config
+
+@pause
