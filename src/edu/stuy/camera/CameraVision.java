@@ -41,7 +41,7 @@ public class CameraVision extends Thread {
     private int targetCenter;               // x-coord os the particle center-of-mass
     int CAMERA_CENTER;                      // center of camera width
     Vector massCenter = new Vector();       // list of center-of-mass-es
-    Thread ariel;
+
     public static CameraVision getInstance() {  // CameraVision is a singleton
         if (instance == null) {
             instance = new CameraVision();
@@ -61,16 +61,12 @@ public class CameraVision extends Thread {
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 240, false);  // any particles at least 30 pixels wide
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 320, false); // any particles at least 40 pixels high
-    
-        ariel = new Thread(this);
     }
 
-
-    public void run()  {
+    public void doCamera() {
         if (toggleReflectLightIfInRange()) { // if we're within image-accurate distance
             try {
                  // Do the image capture with the camera and apply the algorithm described above.
-
                 ColorImage image = camera.getImage(); // get the image from the camera
                 BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255); // mark only areas that have high
                 image.free();                                                                        // luminance (the last two numbers
@@ -83,10 +79,10 @@ public class CameraVision extends Thread {
                 convexHullImage.free();
                 ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
                 massCenter.removeAllElements();                                         // remove previous center-of-mass-es
-
-
+                
+                
                 ParticleAnalysisReport r = reports[0]; // Gets largest detected target
-
+                
                 // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
                 // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
                 int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
@@ -98,16 +94,13 @@ public class CameraVision extends Thread {
                 }
 
                 filteredImage.free();
-
+               
              } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
                 ex.printStackTrace();
             } catch (NIVisionException ex) {
                 ex.printStackTrace();
             }
         }
-    }
-    public void doCamera(){
-        ariel.start();
     }
 
     /**
@@ -149,5 +142,10 @@ public class CameraVision extends Thread {
      */
     public void toggleTargetLightIfAligned() {
         targetLight.set(isAligned() ? Relay.Value.kOn : Relay.Value.kOff);
+    }
+
+    public void run(){
+        doCamera();
+        toggleTargetLightIfAligned();
     }
 }
