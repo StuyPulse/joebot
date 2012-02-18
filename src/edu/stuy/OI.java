@@ -176,8 +176,7 @@ public class OI {
                 distanceInches = CommandBase.drivetrain.getSonarDistance_in();
                 break;
             case DISTANCE_BUTTON_FAR:
-                distanceInches = 725; // TODO: Max distance to max speed?
-                break;
+                distanceInches = 725; 
             case DISTANCE_BUTTON_FENDER_LENGTH:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_LONG_INDEX];
                 break;
