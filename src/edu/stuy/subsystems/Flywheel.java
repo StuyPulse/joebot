@@ -97,9 +97,9 @@ public class Flywheel extends Subsystem {
         distances[FENDER_SIDE_LONG_INDEX] = distances[FENDER_SIDE_INDEX] + longBot;
         distances[KEY_INDEX] = 144.0 + shooterToBumper;
         
-        for (int i = 0; i < distances.length; i++) {
-            System.out.println(distances[i]);
-        }
+//        for (int i = 0; i < distances.length; i++) {
+//            System.out.println(distances[i]);
+//        }
         speedsTopHoop[STOP_INDEX] = 0;
         speedsTopHoop[FENDER_INDEX] = 300; // lower for shooting in hallway; was 1000 in real life
         speedsTopHoop[FENDER_SIDE_INDEX] = 1000;
