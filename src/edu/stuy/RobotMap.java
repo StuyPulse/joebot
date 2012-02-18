@@ -60,8 +60,8 @@ public class RobotMap {
     public static final int TUSKS_SOLENOID_EXTEND = 4;
 
     /* VIRSYSJ */
-    public static int[] VIRSYS_OUTPUT_MAP = new int[15];
-    public static int[] VIRSYS_INPUT_MAP = new int[15];
+    public static final int[] VIRSYS_OUTPUT_MAP = new int[15];
+    public static final int[] VIRSYS_INPUT_MAP = new int[15];
 
 
     /* ANALOG INPUTS */

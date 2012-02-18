@@ -21,7 +21,7 @@ public class FlywheelRun extends CommandBase {
         //System.out.println("distance inches: " + distanceInches);
     }
     
-    public void setDistanceInches(double distanceInches) {
+    private void setDistanceInches(double distanceInches) {
         this.distanceInches = distanceInches;
     }
 

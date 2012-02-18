@@ -5,8 +5,6 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.speed.JoeSpeed;
 import edu.wpi.first.wpilibj.command.Subsystem;

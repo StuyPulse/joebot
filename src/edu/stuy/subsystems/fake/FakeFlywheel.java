@@ -51,9 +51,9 @@ public class FakeFlywheel extends Subsystem {
      */
        public static double rpmTolerance = 16;
 //Positions
-    public static int numDistances = 9;
-    public static double[] distances = new double[numDistances]; // all inches
-    public static double[] speeds = new double[numDistances];
+    public static final int numDistances = 9;
+    public static final double[] distances = new double[numDistances]; // all inches
+    public static final double[] speeds = new double[numDistances];
     // * How much faster should the lower flywheel run, to:
      //*  A)  Produce spin
      //*  B)  Account for lower wheel losing energy by being in contact with ball longer
@@ -138,7 +138,6 @@ public class FakeFlywheel extends Subsystem {
         double shooterHeightInches = 36.0;
         double topHoopHeightInches = 98.0;
         double h = topHoopHeightInches - shooterHeightInches; // height of hoop above the shooter: inches
-        double thetaRadians = Math.toRadians(72.0);
         double linearSpeedInchesPerSecond = (distanceInches * Math.sqrt(g))
                 / (Math.sqrt(2) * Math.cos(thetaRadians) * Math.sqrt(distanceInches * Math.tan(thetaRadians) - h));
         double wheelRadiusInches = 3.0;

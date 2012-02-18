@@ -12,6 +12,7 @@ import edu.stuy.camera.CameraVision;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.TusksRetract;
+import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -106,17 +107,16 @@ public class JoeBot extends IterativeRobot {
             CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
 
 
-            double rpmTop = CommandBase.flywheel.upperRoller.getRPM();
-            double rpmBottom = CommandBase.flywheel.lowerRoller.getRPM();
+            double rpmTop = Flywheel.upperRoller.getRPM();
+            double rpmBottom = Flywheel.lowerRoller.getRPM();
             try {
                 SmartDashboard.putDouble("getRPMtop", rpmTop);
                 SmartDashboard.putDouble("getRPMbottom", rpmBottom);
             }
             catch (Exception e) {
-                e.printStackTrace();
             }
-            CommandBase.flywheel.upperRoller.setPID("upper");
-            CommandBase.flywheel.lowerRoller.setPID("lower");
+            Flywheel.upperRoller.setPID("upper");
+            Flywheel.lowerRoller.setPID("lower");
         }
 
         // Debug box actions
