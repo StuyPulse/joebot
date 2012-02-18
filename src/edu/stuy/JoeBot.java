@@ -113,6 +113,7 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
         SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
         SmartDashboard.putDouble("Delay Pot: ", CommandBase.oi.getDelayPot());
+        SmartDashboard.putDouble("Delay Time: ", CommandBase.oi.getDelayTime());
         SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
 
         SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
