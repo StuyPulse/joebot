@@ -25,14 +25,11 @@ public class Flywheel extends Subsystem {
     static final double backboardToHoopCenter = 6 + 9;
     static final double halfFenderWidth = 50.5;
 
-    public static final double thetaDegrees = 72;
-    public static final double thetaRadians = Math.toRadians(thetaDegrees);
+    public static final double THETA_DEGREES = 72;
+    public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
     
     public double lowerSetpoint;
     public double upperSetpoint;
-
-    public static final double THETA_DEGREES = 72;
-    public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
     
     public static JoeSpeed upperRoller;
     public static JoeSpeed lowerRoller;
@@ -158,7 +155,7 @@ public class Flywheel extends Subsystem {
         double shooterHeightInches = 36.0;
         double h = hoopHeightInches - shooterHeightInches; // height of hoop above the shooter: inches
         double linearSpeedInchesPerSecond = (distanceInches * Math.sqrt(g))
-                / (Math.sqrt(2) * Math.cos(thetaRadians) * Math.sqrt(distanceInches * Math.tan(thetaRadians) - h));
+                / (Math.sqrt(2) * Math.cos(THETA_RADIANS) * Math.sqrt(distanceInches * Math.tan(THETA_RADIANS) - h));
         double wheelRadiusInches = 3.0;
         double wheelCircumferenceInches = 2 * Math.PI * wheelRadiusInches;
         double RPM = 60 * linearSpeedInchesPerSecond / wheelCircumferenceInches;
