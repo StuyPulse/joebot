@@ -54,6 +54,7 @@ SHOOTER STICK
   (USB port #3)
 
   Axes:
+
               X:
               Y:
               Z:

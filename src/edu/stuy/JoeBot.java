@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
+    Thread ariel;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -44,12 +45,14 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
+        ariel = CameraVision.getInstance();
         
     }
     
     public void disabledPeriodic() {
         updateSmartDashboard();
         CommandBase.oi.turnOffLights();
+        CameraVision.getInstance().setCamera(false);
     }
 
     public void autonomousInit() {
@@ -76,6 +79,8 @@ public class JoeBot extends IterativeRobot {
             autonomousCommand.cancel();
         }
         new TusksRetract().start();
+        CameraVision.getInstance().setCamera(true);
+        ariel.start();
 
                 // Note that OI starts a bunch of other commands
                 // by attaching them to joystick buttons.  Check OI.java
@@ -85,11 +90,10 @@ public class JoeBot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        //
+
         Scheduler.getInstance().run();
-        
-        CameraVision.getInstance().doCamera();
-        CameraVision.getInstance().toggleTargetLightIfAligned();
+//        CameraVision.getInstance().doCamera();
+//        CameraVision.getInstance().toggleTargetLightIfAligned();
         
         // Debug box actions
         CommandBase.oi.updateLights();
@@ -121,7 +125,9 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Speed Trim: ", (double) ((int) (CommandBase.oi.getSpeedPot() * 100)) / 100 );
         SmartDashboard.putDouble("Spin Trim: ", (double) ((int) (CommandBase.oi.getSpinPot() * 100)) / 100 );
         SmartDashboard.putDouble("Max Voltage: ", (double) ((int) (CommandBase.oi.getMaxVoltage() * 100)) / 100 );
-        
+
+        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
+        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
         
         // Camera target info
         SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));

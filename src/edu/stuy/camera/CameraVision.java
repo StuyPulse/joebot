@@ -31,7 +31,7 @@ import java.util.Vector;
  * sample images as well as the NI Vision Assistant file that contains the
  * vision command chain (open it with the Vision Assistant)
  */
-public class CameraVision {
+public class CameraVision extends Thread {
 
     private static CameraVision instance;   // CameraVision is a singleton
     AxisCamera camera;          // the axis camera object (connected to the switch)
@@ -142,5 +142,10 @@ public class CameraVision {
      */
     public void toggleTargetLightIfAligned() {
         targetLight.set(isAligned() ? Relay.Value.kOn : Relay.Value.kOff);
+    }
+
+    public void run(){
+        doCamera();
+        toggleTargetLightIfAligned();
     }
 }

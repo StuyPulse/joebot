@@ -23,7 +23,7 @@ public class ConveyorAssistAcquire extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (conveyor.ballAtBottom() && !conveyor.ballAtTop()) {
+        if (conveyor.ballAtBottom() && !conveyor.ballAtTop() && acquirer.isAcquiring()) {
             conveyor.convey();
         }
         else {
