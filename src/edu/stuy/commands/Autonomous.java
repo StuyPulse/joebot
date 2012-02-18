@@ -47,6 +47,9 @@ public class Autonomous extends CommandGroup {
             case 4:
                 addSequential(new AutonSetting5());
                 break;
+            case 5:
+                addSequential(new AutonSetting6());
+                break;
             default:
                 break;
         }
