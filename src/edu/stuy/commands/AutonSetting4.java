@@ -19,7 +19,7 @@ public class AutonSetting4 extends CommandGroup {
         // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
 
         double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
-        addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
+        addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME)); //value of 4 is hardcoded. Please change.
     }
 }
