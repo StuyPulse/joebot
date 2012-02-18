@@ -31,7 +31,7 @@ import java.util.Vector;
  * sample images as well as the NI Vision Assistant file that contains the
  * vision command chain (open it with the Vision Assistant)
  */
-public class CameraVision {
+public class CameraVision extends Thread {
 
     private static CameraVision instance;   // CameraVision is a singleton
     AxisCamera camera;          // the axis camera object (connected to the switch)
@@ -41,6 +41,7 @@ public class CameraVision {
     private int targetCenter;               // x-coord os the particle center-of-mass
     int CAMERA_CENTER;                      // center of camera width
     Vector massCenter = new Vector();       // list of center-of-mass-es
+    boolean cameraOn;
 
     public static CameraVision getInstance() {  // CameraVision is a singleton
         if (instance == null) {
@@ -61,9 +62,11 @@ public class CameraVision {
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 240, false);  // any particles at least 30 pixels wide
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 320, false); // any particles at least 40 pixels high
+
     }
 
     public void doCamera() {
+        while(cameraOn){
         if (toggleReflectLightIfInRange()) { // if we're within image-accurate distance
             try {
                  // Do the image capture with the camera and apply the algorithm described above.
@@ -95,14 +98,12 @@ public class CameraVision {
 
                 filteredImage.free();
                
-             } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
-                ex.printStackTrace();
+            } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
             } catch (NIVisionException ex) {
-                ex.printStackTrace();
             }
         }
     }
-
+    }
     /**
      * Displays the center of the largest, rectangular target detected
      * @return targetCenter
@@ -142,5 +143,15 @@ public class CameraVision {
      */
     public void toggleTargetLightIfAligned() {
         targetLight.set(isAligned() ? Relay.Value.kOn : Relay.Value.kOff);
+    }
+
+    public void run(){
+        doCamera();
+        toggleTargetLightIfAligned();
+        toggleReflectLightIfInRange();
+    }
+
+    public void setCamera(boolean  isRunning){
+        cameraOn = isRunning;
     }
 }

@@ -5,6 +5,7 @@
 package edu.stuy.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -28,27 +29,33 @@ public class Autonomous extends CommandGroup {
     
     public static final double RAMPING_DISTANCE = 5;
     public static final double RAMPING_CONSTANT = 10/9;
+    
+    public static final double CONVEY_AUTO_TIME = 4;
+
 
     public Autonomous() {
         addSequential(new DrivetrainSetGear(true));
+        addSequential(new WaitCommand(CommandBase.oi.getDelayTime())) ;
         switch(CommandBase.oi.getAutonSetting()){
             case 0:
-                addSequential(new AutonSetting1());
+                addSequential(new AutonSetting0());
                 break;
             case 1:
-                addSequential(new AutonSetting2());
+                addSequential(new AutonSetting1());
                 break;
             case 2:
-                addSequential(new AutonSetting3());
+                addSequential(new AutonSetting2());
                 break;
             case 3:
-                addSequential(new AutonSetting4());
+                addSequential(new AutonSetting3());
                 break;
             case 4:
-                addSequential(new AutonSetting5());
+                addSequential(new AutonSetting4());
                 break;
             default:
                 break;
         }
     }
+
+
 }

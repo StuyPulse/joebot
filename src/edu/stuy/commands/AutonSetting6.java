@@ -5,16 +5,15 @@
 package edu.stuy.commands;
 
 /**
- * Shoot from key at slanted position at top hoop.
+ * Shoots from key at 2 point hoop
  * @author admin
  */
-
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutonSetting5 extends CommandGroup {
-   public AutonSetting5() {
-        double distanceInches = Flywheel.distances[Flywheel.KEY_SLANT_INDEX];
+public class AutonSetting6 extends CommandGroup {
+    public AutonSetting6 () {
+        double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
     }

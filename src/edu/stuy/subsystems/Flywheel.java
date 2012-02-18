@@ -5,7 +5,6 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.speed.JoeSpeed;
@@ -17,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Flywheel extends Subsystem {
     /** Distances **/
+    static final double stop = 0;
     static final double wideBot = 28.0;
     static final double longBot = 38.0;
     static final double shooterToBumper = 23.5;
@@ -24,14 +24,11 @@ public class Flywheel extends Subsystem {
     static final double backboardToHoopCenter = 6 + 9;
     static final double halfFenderWidth = 50.5;
 
-    public static final double thetaDegrees = 72;
-    public static final double thetaRadians = Math.toRadians(thetaDegrees);
+    public static final double THETA_DEGREES = 72;
+    public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
     
     public double lowerSetpoint;
     public double upperSetpoint;
-
-    public static final double THETA_DEGREES = 72;
-    public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
     
     public static JoeSpeed upperRoller;
     public static JoeSpeed lowerRoller;
@@ -60,7 +57,7 @@ public class Flywheel extends Subsystem {
     public static double rpmTolerance = 16;
 
     /** Positions **/
-    public static final int numDistances = 9;
+    public static final int numDistances = 10;
     public static final double[] distances = new double[numDistances]; // all inches
     public static final double[] speedsTopHoop = new double[numDistances];
     public static final double[] speedsMiddleHoop = new double[numDistances];
@@ -72,17 +69,21 @@ public class Flywheel extends Subsystem {
      */
     public static double[] spinBottomMinusTopRPM = new double[numDistances];
 
-    public static final int FENDER_INDEX = 0;
-    public static final int FENDER_SIDE_INDEX = 1;
-    public static final int FENDER_WIDE_INDEX = 2;
-    public static final int HIGHEST_BACKBOARD_INDEX = 3;
-    public static final int LOWEST_SWISH_INDEX = 4;
-    public static final int FENDER_LONG_INDEX = 5;
-    public static final int FENDER_SIDE_WIDE_INDEX = 6;
-    public static final int FENDER_SIDE_LONG_INDEX = 7;
-    public static final int KEY_INDEX = 8;
 
+    public static final int STOP_INDEX = 0;
+    public static final int FENDER_INDEX = 1;
+    public static final int FENDER_SIDE_INDEX = 2;
+    public static final int FENDER_WIDE_INDEX = 3;
+    public static final int HIGHEST_BACKBOARD_INDEX = 4;
+    public static final int LOWEST_SWISH_INDEX = 5;
+    public static final int FENDER_LONG_INDEX = 6;
+    public static final int FENDER_SIDE_WIDE_INDEX = 7;
+    public static final int FENDER_SIDE_LONG_INDEX = 8;
+    public static final int KEY_INDEX = 9;
+    public static final int KEY_SLANT_INDEX = 10;
+    
     static {
+        distances[STOP_INDEX] = 0;
         distances[FENDER_INDEX] = fenderDepth + shooterToBumper;
         distances[FENDER_SIDE_INDEX] = halfFenderWidth + shooterToBumper;
         distances[FENDER_WIDE_INDEX] = distances[FENDER_INDEX] + wideBot;
@@ -92,16 +93,21 @@ public class Flywheel extends Subsystem {
         distances[FENDER_LONG_INDEX] = distances[FENDER_INDEX] + longBot;
         distances[FENDER_SIDE_LONG_INDEX] = distances[FENDER_SIDE_INDEX] + longBot;
         distances[KEY_INDEX] = 144.0 + shooterToBumper;
-        
-        for (int i = 0; i < distances.length; i++) {
-            System.out.println(distances[i]);
-        }
-        for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
-            speedsTopHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, TOP_HOOP_HEIGHT);
-        }
-        for (int i = LOWEST_SWISH_INDEX; i < numDistances; i++) {
-            speedsTopHoop[i] = theoreticalDesiredExitRPM(distances[i], TOP_HOOP_HEIGHT);
-        }
+        distances[KEY_SLANT_INDEX] = 215; //Fix this value through testing
+//        for (int i = 0; i < distances.length; i++) {
+//            System.out.println(distances[i]);
+//        }
+        speedsTopHoop[STOP_INDEX] = 0;
+        speedsTopHoop[FENDER_INDEX] = 1000;
+        speedsTopHoop[FENDER_SIDE_INDEX] = 1000;
+        speedsTopHoop[FENDER_WIDE_INDEX] = 1010;
+        speedsTopHoop[HIGHEST_BACKBOARD_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
+        speedsTopHoop[LOWEST_SWISH_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
+        speedsTopHoop[FENDER_SIDE_WIDE_INDEX] = 1000; //NOT TESTED
+        speedsTopHoop[FENDER_LONG_INDEX] = 1075;
+        speedsTopHoop[FENDER_SIDE_LONG_INDEX] = 1000; //NOT TESTED
+        speedsTopHoop[KEY_INDEX] = 1300;
+        speedsTopHoop[KEY_SLANT_INDEX] = 1500; //Fix this value through testing
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
         }
@@ -120,8 +126,7 @@ public class Flywheel extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new FlywheelRun(CommandBase.oi.getDistanceFromHeightButton(),
-                                                  CommandBase.oi.getHeightFromButton()));
+        setDefaultCommand(new FlywheelRun());
     }
 
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {
@@ -149,7 +154,7 @@ public class Flywheel extends Subsystem {
         double shooterHeightInches = 36.0;
         double h = hoopHeightInches - shooterHeightInches; // height of hoop above the shooter: inches
         double linearSpeedInchesPerSecond = (distanceInches * Math.sqrt(g))
-                / (Math.sqrt(2) * Math.cos(thetaRadians) * Math.sqrt(distanceInches * Math.tan(thetaRadians) - h));
+                / (Math.sqrt(2) * Math.cos(THETA_RADIANS) * Math.sqrt(distanceInches * Math.tan(THETA_RADIANS) - h));
         double wheelRadiusInches = 3.0;
         double wheelCircumferenceInches = 2 * Math.PI * wheelRadiusInches;
         double RPM = 60 * linearSpeedInchesPerSecond / wheelCircumferenceInches;

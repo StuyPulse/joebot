@@ -7,8 +7,7 @@ LEFT STICK
               Z:
 
   Buttons:
-    (trigger) 1:  (HOLD) Run flywheel for last set distance, top hoop
-               CONFLICT: extend tusks
+    (trigger) 1:  extend tusks
               2:  retract tusks
               3:
               4:
@@ -47,20 +46,21 @@ SHOOTER STICK
   (USB port #3)
 
   Axes:
+
               X:
               Y:
               Z:
 
   Buttons:
 
-    (trigger) 1:  Convey Automatic
-              2:  Acquire
-              3:  Convey Manual
-              4:  Convey Reverse Manual
+    (trigger) 1:  Convey Manual
+              2:  
+              3:  
+              4:  Flywheel Stop
               5:  Acquire Reverse
-              6:  top hoop
-              7:  middle hoop
-              8:  stop flywheel
-              9:  fender
-             10:  fender side
-             11:  max speed
+              6:  Convey Reverse Manual
+              7:  Acquirer Acquire
+              8:  Convey Automatic
+              9:  Stop Flywheel
+             10:  Flywheel fender speed
+             11:  Flywheel max speed
