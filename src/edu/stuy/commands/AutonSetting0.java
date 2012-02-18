@@ -20,8 +20,7 @@ public class AutonSetting0 extends CommandGroup {
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
 
-        // TODO: Get tusks running concurrently with backing up, have them retract after backuptobridge is done
-        addParallel(new TusksExtend());
+        addSequential(new TusksExtend());
         addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE));
         addSequential(new TusksRetract());
     }
