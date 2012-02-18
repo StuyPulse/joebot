@@ -6,6 +6,8 @@ package edu.stuy.speed;
 
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Jaguar motor controller with speed methods
@@ -52,6 +54,19 @@ public class JaguarSpeed implements JoeSpeed {
         try {
             jaguar.setX(-rpm);
         } catch (CANTimeoutException e) {
+        }
+    }
+
+    public void setPID(String prefix) {
+        try {
+            jaguar.setPID(SmartDashboard.getDouble(prefix+"P"), SmartDashboard.getDouble(prefix+"I"), SmartDashboard.getDouble(prefix+"D"));
+        }
+        catch (NetworkTableKeyNotDefined e) {
+            SmartDashboard.putDouble(prefix+"P", 0);
+            SmartDashboard.putDouble(prefix+"I", 0);
+            SmartDashboard.putDouble(prefix+"D", 0);
+        }
+        catch (CANTimeoutException e) {
         }
     }
 

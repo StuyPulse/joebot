@@ -32,9 +32,9 @@ public class FileIO {
         try {
             FileConnection c = (FileConnection) Connector.open(url);
             BufferedReader buf = new BufferedReader(new InputStreamReader(c.openInputStream()));
-            String line = "";
+            String line;
 
-            boolean lineRead = false;
+            boolean lineRead;
             while ((line = buf.readLine()) != null) {
                 lineRead = false;
                 if (line.charAt(0) != '#') {

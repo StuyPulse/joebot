@@ -31,7 +31,7 @@ public class FlywheelRun extends CommandBase {
         automatic = true;
     }
     
-    public void setDistanceInches(double distanceInches) {
+    private void setDistanceInches(double distanceInches) {
         this.distanceInches = distanceInches;
     }
 
