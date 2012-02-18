@@ -50,7 +50,7 @@ public class JaguarSpeed implements JoeSpeed {
     public void setRPM(double rpm) {
         speedSetpoint = rpm;
         try {
-            jaguar.setX(rpm);
+            jaguar.setX(-rpm);
         } catch (CANTimeoutException e) {
         }
     }
