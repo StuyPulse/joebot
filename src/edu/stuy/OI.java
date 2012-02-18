@@ -113,9 +113,7 @@ public class OI {
             new JoystickButton(shooterStick, 7).whileHeld(new AcquirerAcquire());
             new JoystickButton(shooterStick, 8).whileHeld(new ConveyAutomatic());
             new JoystickButton(shooterStick, 9).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
-            // 6 and 7 are used for top and mid hoop respectively (see getHeightFromButton())
-            
-            // 9-11 are used for fender, fender side, and max speed, in that order
+
             // see getDistanceButton()
         }
     }
@@ -210,6 +208,7 @@ public class OI {
         try {
             topHoop = !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
         } catch (EnhancedIOException ex) {
+            topHoop = false;
         }
         return (topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop);
     }
@@ -234,9 +233,9 @@ public class OI {
      */
     public boolean getHoopHeightButton() {
         try {
-            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL) || shooterStick.getRawButton(8);
+            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
         } catch (EnhancedIOException ex) {
-            return shooterStick.getRawButton(8);
+            return false;
         }
     }
     
