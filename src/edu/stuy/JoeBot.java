@@ -92,36 +92,36 @@ public class JoeBot extends IterativeRobot {
 
         Scheduler.getInstance().run();
 
-        double setRpmTop = 0;
-        double setRpmBottom = 0;
-        try {
-            setRpmTop = SmartDashboard.getDouble("setRPMtop");
-            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
-        }
-        catch (NetworkTableKeyNotDefined e) {
-            SmartDashboard.putDouble("setRPMtop", 0);
-            SmartDashboard.putDouble("setRPMbottom", 0);
-        }
-        CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
+        if (!DriverStation.getInstance().isFMSAttached()) {
+            double setRpmTop = 0;
+            double setRpmBottom = 0;
+            try {
+                setRpmTop = SmartDashboard.getDouble("setRPMtop");
+                setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
+            }
+            catch (NetworkTableKeyNotDefined e) {
+                SmartDashboard.putDouble("setRPMtop", 0);
+                SmartDashboard.putDouble("setRPMbottom", 0);
+            }
+            CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
 
 
-        double rpmTop = CommandBase.flywheel.upperRoller.getRPM();
-        double rpmBottom = CommandBase.flywheel.lowerRoller.getRPM();
-        try {
-            SmartDashboard.putDouble("getRPMtop", rpmTop);
-            SmartDashboard.putDouble("getRPMbottom", rpmBottom);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+            double rpmTop = CommandBase.flywheel.upperRoller.getRPM();
+            double rpmBottom = CommandBase.flywheel.lowerRoller.getRPM();
+            try {
+                SmartDashboard.putDouble("getRPMtop", rpmTop);
+                SmartDashboard.putDouble("getRPMbottom", rpmBottom);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            CommandBase.flywheel.upperRoller.setPID("upper");
+            CommandBase.flywheel.lowerRoller.setPID("lower");
         }
 
         // Debug box actions
         CommandBase.oi.updateLights();
         updateSmartDashboard();
-        if (!DriverStation.getInstance().isFMSAttached()) {
-            CommandBase.flywheel.upperRoller.setPID("upper");
-            CommandBase.flywheel.lowerRoller.setPID("lower");
-        }
     }
     
     // We use SmartDashboard to monitor bot information.
