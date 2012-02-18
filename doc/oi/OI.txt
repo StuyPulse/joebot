@@ -6,16 +6,8 @@ LEFT STICK
               Y:
               Z:
 
-            1: ConveyManual
-            4: FlywheelStop
-            5: AcquirerReverse
-            6: ConveyReverseManual
-            7: AcquirerAcquire
-            8: ConveyAutomatic
-
   Buttons:
-    (trigger) 1:  (HOLD) Run flywheel for last set distance, top hoop
-               CONFLICT: extend tusks
+    (trigger) 1:  extend tusks
               2:  retract tusks
               3:
               4:

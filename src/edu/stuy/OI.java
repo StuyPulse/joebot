@@ -93,7 +93,6 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
             new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             new JoystickButton(leftStick, 1).whenPressed(new TusksExtend());
