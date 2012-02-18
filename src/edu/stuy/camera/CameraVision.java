@@ -150,6 +150,7 @@ public class CameraVision extends Thread {
     public void run(){
         doCamera();
         toggleTargetLightIfAligned();
+        toggleReflectLightIfInRange();
     }
 
     public void setCamera(boolean  isRunning){
