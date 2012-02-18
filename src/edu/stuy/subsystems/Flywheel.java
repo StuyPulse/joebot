@@ -100,7 +100,7 @@ public class Flywheel extends Subsystem {
 //            System.out.println(distances[i]);
 //        }
         speedsTopHoop[STOP_INDEX] = 0;
-        speedsTopHoop[FENDER_INDEX] = 300; // lower for shooting in hallway; was 1000 in real life
+        speedsTopHoop[FENDER_INDEX] = 1000;
         speedsTopHoop[FENDER_SIDE_INDEX] = 1000;
         speedsTopHoop[FENDER_WIDE_INDEX] = 1010;
         speedsTopHoop[HIGHEST_BACKBOARD_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
@@ -129,7 +129,7 @@ public class Flywheel extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new FlywheelRun(Flywheel.speedsTopHoop));
+        setDefaultCommand(new FlywheelRun());
     }
 
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {
