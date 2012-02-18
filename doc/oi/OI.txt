@@ -61,6 +61,6 @@ SHOOTER STICK
               6:  Convey Reverse Manual
               7:  Acquirer Acquire
               8:  Convey Automatic
-              9:  
-             10:  
-             11:  
+              9:  Stop Flywheel
+             10:  Flywheel fender speed
+             11:  Flywheel max speed
