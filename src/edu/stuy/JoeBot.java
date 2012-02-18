@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
+    Thread ariel;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -44,12 +45,14 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
+        ariel = CameraVision.getInstance();
         
     }
     
     public void disabledPeriodic() {
         updateSmartDashboard();
         CommandBase.oi.turnOffLights();
+        CameraVision.getInstance().setCamera(false);
     }
 
     public void autonomousInit() {
@@ -76,6 +79,8 @@ public class JoeBot extends IterativeRobot {
             autonomousCommand.cancel();
         }
         new TusksRetract().start();
+        CameraVision.getInstance().setCamera(true);
+        ariel.start();
 
                 // Note that OI starts a bunch of other commands
                 // by attaching them to joystick buttons.  Check OI.java
