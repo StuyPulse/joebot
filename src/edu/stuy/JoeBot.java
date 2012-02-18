@@ -85,11 +85,10 @@ public class JoeBot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        //
+
         Scheduler.getInstance().run();
-        
-        CameraVision.getInstance().doCamera();
-        CameraVision.getInstance().toggleTargetLightIfAligned();
+//        CameraVision.getInstance().doCamera();
+//        CameraVision.getInstance().toggleTargetLightIfAligned();
         
         // Debug box actions
         CommandBase.oi.updateLights();
