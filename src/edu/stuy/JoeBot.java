@@ -139,9 +139,9 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_OUT_SWITCH_CHANNEL));
         
         SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
-        SmartDashboard.putDouble("Speed Trim: ", (double) ((int) (CommandBase.oi.getSpeedPot() * 100)) / 100 );
-        SmartDashboard.putDouble("Spin Trim: ", (double) ((int) (CommandBase.oi.getSpinPot() * 100)) / 100 );
-        SmartDashboard.putDouble("Max Voltage: ", (double) ((int) (CommandBase.oi.getMaxVoltage() * 100)) / 100 );
+        SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
+        SmartDashboard.putDouble("Spin Trim: ", CommandBase.oi.getDelayPot());
+        SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
 
         SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
         SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
