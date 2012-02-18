@@ -53,4 +53,9 @@ public class AcquirerAcquire extends CommandBase {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+
+    public void cancel() {
+        super.cancel();
+        this.end();
+    }
 }
