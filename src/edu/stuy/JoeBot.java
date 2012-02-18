@@ -101,7 +101,7 @@ public class JoeBot extends IterativeRobot {
     private void updateSmartDashboard() {
         SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
-        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromHeightButton());
+        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromDistanceButton());
 
         SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
         SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));

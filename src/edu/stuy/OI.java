@@ -170,7 +170,7 @@ public class OI {
      * the shooter to use.
      * @return distance for the shooter.
      */
-    public double getDistanceFromHeightButton(){ // TODO: Rename method
+    public double getDistanceFromDistanceButton(){
         switch(distanceButton){
             case DISTANCE_BUTTON_AUTO:
                 distanceInches = CommandBase.drivetrain.getSonarDistance_in();
