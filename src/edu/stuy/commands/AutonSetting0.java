@@ -24,6 +24,5 @@ public class AutonSetting0 extends CommandGroup {
         addParallel(new TusksExtend());
         addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE));
         addSequential(new TusksRetract());
-
     }
 }
