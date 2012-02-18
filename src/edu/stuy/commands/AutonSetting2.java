@@ -6,7 +6,7 @@
 package edu.stuy.commands;
 
 /**
- *
+ * Knocks down bridge.
  * @author 694
  */
 import edu.wpi.first.wpilibj.command.CommandGroup;

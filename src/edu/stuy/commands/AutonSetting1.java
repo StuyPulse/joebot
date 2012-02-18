@@ -7,6 +7,9 @@ package edu.stuy.commands;
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+/**
+ * Backs up to and knocks down bridge, and then drives to fender and shoots.
+ */
 public class AutonSetting1 extends CommandGroup {
 
     public AutonSetting1() {
@@ -22,6 +25,6 @@ public class AutonSetting1 extends CommandGroup {
 
         double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
         addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
-        addSequential(new ConveyAutomatic(4));//4 second coded in raw. Needs to be changed.
+        addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
     }
 }

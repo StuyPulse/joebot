@@ -28,6 +28,8 @@ public class Autonomous extends CommandGroup {
     
     public static final double RAMPING_DISTANCE = 5;
     public static final double RAMPING_CONSTANT = 10/9;
+    
+    public static final double CONVEY_AUTO_TIME = 4;
 
     public Autonomous() {
         addSequential(new DrivetrainSetGear(true));

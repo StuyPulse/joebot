@@ -8,7 +8,7 @@ import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * Drives to fender and shoots balls.
  * @author 694
  */
 public class AutonSetting4 extends CommandGroup {
@@ -20,6 +20,6 @@ public class AutonSetting4 extends CommandGroup {
 
         double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
         addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
-        addSequential(new ConveyAutomatic(4)); //value of 4 is hardcoded. Please change.
+        addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME)); //value of 4 is hardcoded. Please change.
     }
 }
