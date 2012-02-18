@@ -5,7 +5,6 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.stuy.commands.TusksRetract;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 

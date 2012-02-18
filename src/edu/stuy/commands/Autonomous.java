@@ -5,6 +5,7 @@
 package edu.stuy.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -31,8 +32,10 @@ public class Autonomous extends CommandGroup {
     
     public static final double CONVEY_AUTO_TIME = 4;
 
+
     public Autonomous() {
         addSequential(new DrivetrainSetGear(true));
+        addSequential(new WaitCommand( 1000 * (CommandBase.oi.getSpeedPot()))) ;
         switch(CommandBase.oi.getAutonSetting()){
             case 0:
                 addSequential(new AutonSetting0());
@@ -56,4 +59,6 @@ public class Autonomous extends CommandGroup {
                 break;
         }
     }
+
+
 }

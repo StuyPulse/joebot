@@ -19,8 +19,8 @@ public class OI {
     public static final int DISTANCE_BUTTON_FAR = 6;
     public static final int DISTANCE_BUTTON_FENDER_LENGTH = 5;
     public static final int DISTANCE_BUTTON_FENDER_WIDTH = 4;
-    public static final int DISTANCE_BUTTON_FENDER_SIDE = 2;
-    public static final int DISTANCE_BUTTON_FENDER = 3;
+    public static final int DISTANCE_BUTTON_FENDER_SIDE = 3;
+    public static final int DISTANCE_BUTTON_FENDER = 2;
     public static final int DISTANCE_BUTTON_STOP = 1;
     
     private DriverStationEnhancedIO enhancedIO;
@@ -46,8 +46,8 @@ public class OI {
     private static final int DISTANCE_BUTTON_FAR_LIGHT_CHANNEL = 11;
     private static final int DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL = 12;
     private static final int DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL = 13;
-    private static final int DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL = 14;
-    private static final int DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL = 15;
+    private static final int DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL = 15;
+    private static final int DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL = 14;
     private static final int DISTANCE_BUTTON_STOP_LIGHT_CHANNEL = 16;
     
     // EnhancedIO analog input
@@ -93,7 +93,6 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whileHeld(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
             new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             new JoystickButton(leftStick, 1).whenPressed(new TusksExtend());
@@ -112,10 +111,7 @@ public class OI {
             new JoystickButton(shooterStick, 6).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 7).whileHeld(new AcquirerAcquire());
             new JoystickButton(shooterStick, 8).whileHeld(new ConveyAutomatic());
-            new JoystickButton(shooterStick, 9).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
-            // 6 and 7 are used for top and mid hoop respectively (see getHeightFromButton())
-            
-            // 9-11 are used for fender, fender side, and max speed, in that order
+
             // see getDistanceButton()
         }
     }
@@ -152,16 +148,13 @@ public class OI {
      * button will be returned from the voltage (if it returns 0, no button is pressed).
      */
     public int getDistanceButton() {
-       if (shooterStick.getRawButton(8)) {
+       if (shooterStick.getRawButton(9)) {
            distanceButton = DISTANCE_BUTTON_STOP;
        }
-       if (shooterStick.getRawButton(9)) {
+       else if(shooterStick.getRawButton(10)) {
            distanceButton = DISTANCE_BUTTON_FENDER;
        }
-       if (shooterStick.getRawButton(10)) {
-           distanceButton = DISTANCE_BUTTON_FENDER_SIDE;
-       }
-       if (shooterStick.getRawButton(11)) {
+       else if(shooterStick.getRawButton(11)) {
            distanceButton = DISTANCE_BUTTON_FAR;
        }
        int preValue = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 8)) + 0.5);
@@ -210,6 +203,7 @@ public class OI {
         try {
             topHoop = !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
         } catch (EnhancedIOException ex) {
+            topHoop = true;
         }
         return (topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop);
     }
@@ -234,9 +228,9 @@ public class OI {
      */
     public boolean getHoopHeightButton() {
         try {
-            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL) || shooterStick.getRawButton(8);
+            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
         } catch (EnhancedIOException ex) {
-            return shooterStick.getRawButton(8);
+            return true;
         }
     }
     
@@ -417,6 +411,11 @@ public class OI {
         catch (EnhancedIOException e) {
         }
         return b;
+    }
+
+    public void resetBox(){
+        turnOffLights();
+        distanceButton = DISTANCE_BUTTON_STOP;
     }
 }
 
