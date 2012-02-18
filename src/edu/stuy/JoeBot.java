@@ -13,6 +13,7 @@ import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.TusksRetract;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -117,8 +118,10 @@ public class JoeBot extends IterativeRobot {
         // Debug box actions
         CommandBase.oi.updateLights();
         updateSmartDashboard();
-        CommandBase.flywheel.upperRoller.setPID("upper");
-        CommandBase.flywheel.lowerRoller.setPID("lower");
+        if (!DriverStation.getInstance().isFMSAttached()) {
+            CommandBase.flywheel.upperRoller.setPID("upper");
+            CommandBase.flywheel.lowerRoller.setPID("lower");
+        }
     }
     
     // We use SmartDashboard to monitor bot information.
