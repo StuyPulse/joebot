@@ -11,9 +11,10 @@ package edu.stuy.commands;
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutonSetting5 {
+public class AutonSetting5 extends CommandGroup {
    public AutonSetting5() {
         double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
+    }
 }
