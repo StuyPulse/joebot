@@ -19,8 +19,8 @@ public class OI {
     public static final int DISTANCE_BUTTON_FAR = 6;
     public static final int DISTANCE_BUTTON_FENDER_LENGTH = 5;
     public static final int DISTANCE_BUTTON_FENDER_WIDTH = 4;
-    public static final int DISTANCE_BUTTON_FENDER_SIDE = 2;
-    public static final int DISTANCE_BUTTON_FENDER = 3;
+    public static final int DISTANCE_BUTTON_FENDER_SIDE = 3;
+    public static final int DISTANCE_BUTTON_FENDER = 2;
     public static final int DISTANCE_BUTTON_STOP = 1;
     
     private DriverStationEnhancedIO enhancedIO;
@@ -46,8 +46,8 @@ public class OI {
     private static final int DISTANCE_BUTTON_FAR_LIGHT_CHANNEL = 11;
     private static final int DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL = 12;
     private static final int DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL = 13;
-    private static final int DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL = 14;
-    private static final int DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL = 15;
+    private static final int DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL = 15;
+    private static final int DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL = 14;
     private static final int DISTANCE_BUTTON_STOP_LIGHT_CHANNEL = 16;
     
     // EnhancedIO analog input
@@ -411,6 +411,11 @@ public class OI {
         catch (EnhancedIOException e) {
         }
         return b;
+    }
+
+    public void resetBox(){
+        turnOffLights();
+        distanceButton = DISTANCE_BUTTON_STOP;
     }
 }
 
