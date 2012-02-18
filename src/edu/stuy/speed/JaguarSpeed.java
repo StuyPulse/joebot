@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
  */
 public class JaguarSpeed implements JoeSpeed {
 
-    public static final double KP = 0.0;
-    public static final double KI = 0.0;
+    public static final double KP = 0.3;
+    public static final double KI = 0.01;
     public static final double KD = 0.0;
     public CANJaguar jaguar;
     private double speedSetpoint;

@@ -96,12 +96,16 @@ public class Flywheel extends Subsystem {
         for (int i = 0; i < distances.length; i++) {
             System.out.println(distances[i]);
         }
-        for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
-            speedsTopHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, TOP_HOOP_HEIGHT);
-        }
-        for (int i = LOWEST_SWISH_INDEX; i < numDistances; i++) {
-            speedsTopHoop[i] = theoreticalDesiredExitRPM(distances[i], TOP_HOOP_HEIGHT);
-        }
+        speedsTopHoop[FENDER_INDEX] = 1000;
+        speedsTopHoop[FENDER_SIDE_INDEX] = 1000;
+        speedsTopHoop[FENDER_WIDE_INDEX] = 1010;
+        speedsTopHoop[HIGHEST_BACKBOARD_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
+        speedsTopHoop[LOWEST_SWISH_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
+        speedsTopHoop[FENDER_SIDE_WIDE_INDEX] = 1000; //NOT TESTED
+        speedsTopHoop[FENDER_LONG_INDEX] = 1075;
+        speedsTopHoop[FENDER_SIDE_LONG_INDEX] = 1000; //NOT TESTED
+        speedsTopHoop[KEY_INDEX] = 1300;
+
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
         }
