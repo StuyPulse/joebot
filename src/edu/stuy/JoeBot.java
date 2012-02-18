@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -47,7 +48,6 @@ public class JoeBot extends IterativeRobot {
         CommandBase.init();
         CameraVision.getInstance().setCamera(true);
         ariel = CameraVision.getInstance();
-        
     }
     
     public void disabledPeriodic() {
@@ -82,9 +82,6 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
         CameraVision.getInstance().setCamera(true);
         ariel.start();
-
-                // Note that OI starts a bunch of other commands
-                // by attaching them to joystick buttons.  Check OI.java
     }
 
     /**
@@ -93,12 +90,35 @@ public class JoeBot extends IterativeRobot {
     public void teleopPeriodic() {
 
         Scheduler.getInstance().run();
-//        CameraVision.getInstance().doCamera();
-//        CameraVision.getInstance().toggleTargetLightIfAligned();
-        
+
+        double setRpmTop = 0;
+        double setRpmBottom = 0;
+        try {
+            setRpmTop = SmartDashboard.getDouble("setRPMtop");
+            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
+        }
+        catch (NetworkTableKeyNotDefined e) {
+            SmartDashboard.putDouble("setRPMtop", 0);
+            SmartDashboard.putDouble("setRPMbottom", 0);
+        }
+        CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
+
+
+        double rpmTop = CommandBase.flywheel.upperRoller.getRPM();
+        double rpmBottom = CommandBase.flywheel.lowerRoller.getRPM();
+        try {
+            SmartDashboard.putDouble("getRPMtop", rpmTop);
+            SmartDashboard.putDouble("getRPMbottom", rpmBottom);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Debug box actions
         CommandBase.oi.updateLights();
         updateSmartDashboard();
+        CommandBase.flywheel.upperRoller.setPID("upper");
+        CommandBase.flywheel.lowerRoller.setPID("lower");
     }
     
     // We use SmartDashboard to monitor bot information.
