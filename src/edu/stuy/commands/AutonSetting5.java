@@ -4,22 +4,26 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.subsystems.Flywheel;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
 /**
  *
  * @author 694
  */
+import edu.stuy.subsystems.Flywheel;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
 public class AutonSetting5 extends CommandGroup {
 
+    /**
+     * Shoots at key.
+     */
     public AutonSetting5() {
-        addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_FENDER));
-
-        // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
-
-        double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
+        double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
         addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
-        addSequential(new ConveyAutomatic(4)); //value of 4 is hardcoded. Please change.
+        
+        addSequential(new TusksExtend());
+        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
+        addSequential(new TusksRetract());
+        
+        addSequential(new ConveyAutomatic(4)); //what is this (from AutonSetting4)
     }
 }

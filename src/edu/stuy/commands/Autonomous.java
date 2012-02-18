@@ -33,22 +33,22 @@ public class Autonomous extends CommandGroup {
         addSequential(new DrivetrainSetGear(true));
         switch(CommandBase.oi.getAutonSetting()){
             case 0:
-                addSequential(new AutonSetting1());
+                addSequential(new AutonSetting0());
                 break;
             case 1:
-                addSequential(new AutonSetting2());
+                addSequential(new AutonSetting1());
                 break;
             case 2:
-                addSequential(new AutonSetting3());
+                addSequential(new AutonSetting2());
                 break;
             case 3:
-                addSequential(new AutonSetting4());
+                addSequential(new AutonSetting3());
                 break;
             case 4:
-                addSequential(new AutonSetting5());
+                addSequential(new AutonSetting4());
                 break;
             case 5:
-                addSequential(new AutonSetting6());
+                addSequential(new AutonSetting5());
                 break;
             default:
                 break;
