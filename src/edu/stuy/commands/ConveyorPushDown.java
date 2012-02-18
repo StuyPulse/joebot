@@ -14,16 +14,13 @@ public class ConveyorPushDown extends CommandBase {
     double timeout;
 
     public ConveyorPushDown(double timeout) {
-        setInterruptible(false);
         requires(conveyor);
-        requires(acquirer);
         hasTimeout = true;
         this.timeout = timeout;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        acquirer.stop();
         setTimeout(timeout);
     }
 

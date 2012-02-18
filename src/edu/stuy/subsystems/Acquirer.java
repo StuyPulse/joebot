@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Acquirer extends Subsystem {
     private Victor roller;
+    private boolean isAcquiring;
 
     // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
     public static final int FWD = 1;
@@ -28,6 +29,7 @@ public class Acquirer extends Subsystem {
     
     public Acquirer() {
         roller = new Victor(RobotMap.ACQUIRER_ROLLER);
+        isAcquiring = false;
     }
 
     public void initDefaultCommand() {
@@ -49,10 +51,12 @@ public class Acquirer extends Subsystem {
 
     public void stop() {
         roll(OFF);// WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
+        isAcquiring = false;
     }
 
     public void acquire() {
         if (!CommandBase.conveyor.ballAtTop()) {
+            isAcquiring = true;
             roll(FWD); // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
         } else {
             stop();
@@ -65,5 +69,9 @@ public class Acquirer extends Subsystem {
 
     public double getRoller() {
         return roller.get();
+    }
+
+    public boolean isAcquiring() {
+        return isAcquiring;
     }
 }
