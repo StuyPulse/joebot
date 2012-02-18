@@ -120,7 +120,9 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Speed Trim: ", (double) ((int) (CommandBase.oi.getSpeedPot() * 100)) / 100 );
         SmartDashboard.putDouble("Spin Trim: ", (double) ((int) (CommandBase.oi.getSpinPot() * 100)) / 100 );
         SmartDashboard.putDouble("Max Voltage: ", (double) ((int) (CommandBase.oi.getMaxVoltage() * 100)) / 100 );
-        
+
+        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
+        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
         
         // Camera target info
         SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
