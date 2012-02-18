@@ -230,7 +230,7 @@ public class OI {
         try {
             return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
         } catch (EnhancedIOException ex) {
-            return false;
+            return true;
         }
     }
     
