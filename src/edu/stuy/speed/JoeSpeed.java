@@ -31,4 +31,6 @@ public interface JoeSpeed {
      * @return atSetPoint
      */
     boolean isAtSetPoint();
+
+    public void setPID(String prefix);
 }
