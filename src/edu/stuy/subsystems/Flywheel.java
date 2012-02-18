@@ -81,7 +81,8 @@ public class Flywheel extends Subsystem {
     public static final int FENDER_SIDE_WIDE_INDEX = 7;
     public static final int FENDER_SIDE_LONG_INDEX = 8;
     public static final int KEY_INDEX = 9;
-
+    public static final int KEY_SLANT_INDEX = 10;
+    
     static {
         distances[STOP_INDEX] = 0;
         distances[FENDER_INDEX] = fenderDepth + shooterToBumper;
@@ -93,7 +94,7 @@ public class Flywheel extends Subsystem {
         distances[FENDER_LONG_INDEX] = distances[FENDER_INDEX] + longBot;
         distances[FENDER_SIDE_LONG_INDEX] = distances[FENDER_SIDE_INDEX] + longBot;
         distances[KEY_INDEX] = 144.0 + shooterToBumper;
-        
+        distances[KEY_SLANT_INDEX] = 215; //Fix this value through testing
 //        for (int i = 0; i < distances.length; i++) {
 //            System.out.println(distances[i]);
 //        }
@@ -107,7 +108,7 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[FENDER_LONG_INDEX] = 1075;
         speedsTopHoop[FENDER_SIDE_LONG_INDEX] = 1000; //NOT TESTED
         speedsTopHoop[KEY_INDEX] = 1300;
-
+        speedsTopHoop[KEY_SLANT_INDEX] = 1500; //Fix this value through testing
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
         }
