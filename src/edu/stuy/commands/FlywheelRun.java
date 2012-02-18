@@ -25,9 +25,9 @@ public class FlywheelRun extends CommandBase {
         //System.out.println("distance inches: " + distanceInches);
     }
 
-    public FlywheelRun(double[] speeds) {
+    public FlywheelRun() {
         requires(flywheel);
-        this.speeds = speeds;
+        this.speeds = Flywheel.speedsTopHoop;
         automatic = true;
     }
     

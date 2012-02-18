@@ -9,6 +9,7 @@ package edu.stuy;
 import edu.stuy.camera.CameraVision;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
+import edu.stuy.commands.FlywheelRun;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.Compressor;
@@ -82,6 +83,7 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
         CameraVision.getInstance().setCamera(true);
         ariel.start();
+        new FlywheelRun().start();
     }
 
     /**
