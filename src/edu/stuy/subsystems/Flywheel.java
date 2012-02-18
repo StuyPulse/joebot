@@ -126,7 +126,7 @@ public class Flywheel extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new FlywheelRun(Flywheel.speedsTopHoop));
+        setDefaultCommand(new FlywheelRun());
     }
 
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {
