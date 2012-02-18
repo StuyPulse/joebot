@@ -203,7 +203,7 @@ public class OI {
         try {
             topHoop = !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
         } catch (EnhancedIOException ex) {
-            topHoop = false;
+            topHoop = true;
         }
         return (topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop);
     }
