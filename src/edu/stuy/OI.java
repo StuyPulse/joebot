@@ -67,7 +67,7 @@ public class OI {
         debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
         
         distanceButton = DISTANCE_BUTTON_STOP;
-        distanceInches = 0;
+        distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
         
         try {
             if (!Devmode.DEV_MODE) {
@@ -112,6 +112,7 @@ public class OI {
             new JoystickButton(shooterStick, 6).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 7).whileHeld(new AcquirerAcquire());
             new JoystickButton(shooterStick, 8).whileHeld(new ConveyAutomatic());
+            new JoystickButton(shooterStick, 9).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
             // 6 and 7 are used for top and mid hoop respectively (see getHeightFromButton())
             
             // 9-11 are used for fender, fender side, and max speed, in that order

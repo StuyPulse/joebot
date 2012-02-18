@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Flywheel extends Subsystem {
     /** Distances **/
+    static final double stop = 0;
     static final double wideBot = 28.0;
     static final double longBot = 38.0;
     static final double shooterToBumper = 23.5;
@@ -60,7 +61,7 @@ public class Flywheel extends Subsystem {
     public static double rpmTolerance = 16;
 
     /** Positions **/
-    public static final int numDistances = 9;
+    public static final int numDistances = 10;
     public static final double[] distances = new double[numDistances]; // all inches
     public static final double[] speedsTopHoop = new double[numDistances];
     public static final double[] speedsMiddleHoop = new double[numDistances];
@@ -72,17 +73,20 @@ public class Flywheel extends Subsystem {
      */
     public static double[] spinBottomMinusTopRPM = new double[numDistances];
 
-    public static final int FENDER_INDEX = 0;
-    public static final int FENDER_SIDE_INDEX = 1;
-    public static final int FENDER_WIDE_INDEX = 2;
-    public static final int HIGHEST_BACKBOARD_INDEX = 3;
-    public static final int LOWEST_SWISH_INDEX = 4;
-    public static final int FENDER_LONG_INDEX = 5;
-    public static final int FENDER_SIDE_WIDE_INDEX = 6;
-    public static final int FENDER_SIDE_LONG_INDEX = 7;
-    public static final int KEY_INDEX = 8;
+
+    public static final int STOP_INDEX = 0;
+    public static final int FENDER_INDEX = 1;
+    public static final int FENDER_SIDE_INDEX = 2;
+    public static final int FENDER_WIDE_INDEX = 3;
+    public static final int HIGHEST_BACKBOARD_INDEX = 4;
+    public static final int LOWEST_SWISH_INDEX = 5;
+    public static final int FENDER_LONG_INDEX = 6;
+    public static final int FENDER_SIDE_WIDE_INDEX = 7;
+    public static final int FENDER_SIDE_LONG_INDEX = 8;
+    public static final int KEY_INDEX = 9;
 
     static {
+        distances[STOP_INDEX] = 0;
         distances[FENDER_INDEX] = fenderDepth + shooterToBumper;
         distances[FENDER_SIDE_INDEX] = halfFenderWidth + shooterToBumper;
         distances[FENDER_WIDE_INDEX] = distances[FENDER_INDEX] + wideBot;
@@ -96,7 +100,8 @@ public class Flywheel extends Subsystem {
         for (int i = 0; i < distances.length; i++) {
             System.out.println(distances[i]);
         }
-        speedsTopHoop[FENDER_INDEX] = 1000;
+        speedsTopHoop[STOP_INDEX] = 0;
+        speedsTopHoop[FENDER_INDEX] = 300; // lower for shooting in hallway; was 1000 in real life
         speedsTopHoop[FENDER_SIDE_INDEX] = 1000;
         speedsTopHoop[FENDER_WIDE_INDEX] = 1010;
         speedsTopHoop[HIGHEST_BACKBOARD_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
