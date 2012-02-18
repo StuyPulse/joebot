@@ -111,7 +111,6 @@ public class OI {
             new JoystickButton(shooterStick, 6).whileHeld(new ConveyReverseManual());
             new JoystickButton(shooterStick, 7).whileHeld(new AcquirerAcquire());
             new JoystickButton(shooterStick, 8).whileHeld(new ConveyAutomatic());
-            new JoystickButton(shooterStick, 9).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
 
             // see getDistanceButton()
         }
@@ -149,16 +148,13 @@ public class OI {
      * button will be returned from the voltage (if it returns 0, no button is pressed).
      */
     public int getDistanceButton() {
-       if (shooterStick.getRawButton(8)) {
+       if (shooterStick.getRawButton(9)) {
            distanceButton = DISTANCE_BUTTON_STOP;
        }
-       if (shooterStick.getRawButton(9)) {
+       else if(shooterStick.getRawButton(10)) {
            distanceButton = DISTANCE_BUTTON_FENDER;
        }
-       if (shooterStick.getRawButton(10)) {
-           distanceButton = DISTANCE_BUTTON_FENDER_SIDE;
-       }
-       if (shooterStick.getRawButton(11)) {
+       else if(shooterStick.getRawButton(11)) {
            distanceButton = DISTANCE_BUTTON_FAR;
        }
        int preValue = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 8)) + 0.5);
@@ -207,7 +203,7 @@ public class OI {
         try {
             topHoop = !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
         } catch (EnhancedIOException ex) {
-            topHoop = false;
+            topHoop = true;
         }
         return (topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop);
     }
