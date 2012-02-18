@@ -52,7 +52,7 @@ public class JoeBot extends IterativeRobot {
     
     public void disabledPeriodic() {
         updateSmartDashboard();
-        CommandBase.oi.turnOffLights();
+        CommandBase.oi.resetBox();
         CameraVision.getInstance().setCamera(false);
     }
 
