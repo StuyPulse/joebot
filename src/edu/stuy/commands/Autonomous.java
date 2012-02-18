@@ -35,7 +35,7 @@ public class Autonomous extends CommandGroup {
 
     public Autonomous() {
         addSequential(new DrivetrainSetGear(true));
-        addSequential(new WaitCommand( 1000 * (CommandBase.oi.getSpeedPot()))) ;
+        addSequential(new WaitCommand(CommandBase.oi.getDelayTime())) ;
         switch(CommandBase.oi.getAutonSetting()){
             case 0:
                 addSequential(new AutonSetting0());

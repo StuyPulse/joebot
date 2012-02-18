@@ -98,10 +98,8 @@ public class CameraVision extends Thread {
 
                 filteredImage.free();
                
-             } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
-                ex.printStackTrace();
+            } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
             } catch (NIVisionException ex) {
-                ex.printStackTrace();
             }
         }
     }

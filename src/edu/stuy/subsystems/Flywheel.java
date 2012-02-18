@@ -5,7 +5,6 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.speed.JoeSpeed;
@@ -127,8 +126,7 @@ public class Flywheel extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new FlywheelRun(CommandBase.oi.getDistanceFromHeightButton(),
-                                                  //CommandBase.oi.getHeightFromButton()));
+        setDefaultCommand(new FlywheelRun(Flywheel.speedsTopHoop));
     }
 
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {

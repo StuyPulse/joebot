@@ -53,7 +53,7 @@ public class OI {
     // EnhancedIO analog input
     private static final int DISTANCE_BUTTONS_CHANNEL = 1;
     private static final int SPEED_TRIM_POT_CHANNEL = 2;
-    private static final int SPIN_TRIM_POT_CHANNEL = 3;
+    private static final int DELAY_POT_CHANNEL = 3;
     private static final int MAX_ANALOG_CHANNEL = 4;
     
     public OI() {
@@ -170,7 +170,7 @@ public class OI {
      * the shooter to use.
      * @return distance for the shooter.
      */
-    public double getDistanceFromHeightButton(){ // TODO: Rename method
+    public double getDistanceFromDistanceButton(){
         switch(distanceButton){
             case DISTANCE_BUTTON_AUTO:
                 distanceInches = CommandBase.drivetrain.getSonarDistance_in();
@@ -302,12 +302,16 @@ public class OI {
         }
     }
 
-    public double getSpinPot() {
+    public double getDelayPot() {
         try {
-            return getMaxVoltage() - enhancedIO.getAnalogIn(SPIN_TRIM_POT_CHANNEL);
+            return getMaxVoltage() - enhancedIO.getAnalogIn(DELAY_POT_CHANNEL);
         } catch (EnhancedIOException ex) {
             return 0.0;
         }
+    }
+    
+    public double getDelayTime(){
+        return getDelayPot() * 1000;
     }
     
     /**
