@@ -4,22 +4,25 @@
  */
 package edu.stuy.commands;
 
+/**
+ *
+ * @author 694
+ */
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- * Drives to fender and shoots balls.
- * @author 694
- */
 public class AutonSetting4 extends CommandGroup {
 
+    /**
+     * Shoots at key. Then backs up and knocks down bridge.
+     */
     public AutonSetting4() {
-        addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_FENDER));
-
-        // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
-
-        double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
+        double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
-        addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME)); //value of 4 is hardcoded. Please change.
+        addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
+        
+        addSequential(new TusksExtend());
+        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
+        addSequential(new TusksRetract());
     }
 }

@@ -5,24 +5,15 @@
 package edu.stuy.commands;
 
 /**
- *
- * @author 694
+ * Shoot from key at slanted position at top hoop.
+ * @author admin
  */
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutonSetting5 extends CommandGroup {
-
-    /**
-     * Shoots at key. Then backs up and knocks down bridge.
-     */
-    public AutonSetting5() {
+public class AutonSetting5 {
+   public AutonSetting5() {
         double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
-        
-        addSequential(new TusksExtend());
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
-        addSequential(new TusksRetract());
-    }
 }
