@@ -17,12 +17,10 @@ public class FlywheelRun extends CommandBase {
     boolean automatic;
     
     public FlywheelRun(double distanceInches, double[] speeds) {
-        //System.out.println("Flywheel constructed");
         requires(flywheel);
         setDistanceInches(distanceInches);
         this.speeds = speeds;
         automatic = false;
-        //System.out.println("distance inches: " + distanceInches);
     }
 
     public FlywheelRun() {
@@ -53,7 +51,6 @@ public class FlywheelRun extends CommandBase {
         }
         double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
         flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
-        //System.out.println("flywheel speeds aer " + rpm[0]);
     }
 
     // Make this return true when this Command no longer needs to run execute()

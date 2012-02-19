@@ -87,9 +87,6 @@ public class FakeFlywheel extends Subsystem {
         distances[FENDER_SIDE_LONG_INDEX] = distances[FENDER_SIDE_INDEX] + longBot;
         distances[KEY_INDEX] = 144.0 + shooterToBumper;
         
-        for (int i = 0; i < distances.length; i++) {
-            System.out.println(distances[i]);
-        }
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speeds[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter);
         }

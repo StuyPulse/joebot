@@ -96,9 +96,7 @@ public class Flywheel extends Subsystem {
         distances[KEY_INDEX] = 144.0 + shooterToBumper;
         distances[KEY_SLANT_INDEX] = 215; //Fix this value through testing
         distances[KEY_MIDDLE_HOOP_INDEX] = 144 + shooterToBumper;
-//        for (int i = 0; i < distances.length; i++) {
-//            System.out.println(distances[i]);
-//        }
+
         speedsTopHoop[STOP_INDEX] = 0;
         speedsTopHoop[FENDER_INDEX] = 1000;
         speedsTopHoop[FENDER_SIDE_INDEX] = 1000;
