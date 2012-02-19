@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
-//    Thread ariel;
+    Thread ariel;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -47,16 +47,17 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
-//        if (!Devmode.DEV_MODE) {
-//            CameraVision.getInstance().setCamera(true);
-//        }
-//        ariel = CameraVision.getInstance();
+        if (!Devmode.DEV_MODE) {
+            CameraVision.getInstance().setCamera(true);
+        }
+        ariel = CameraVision.getInstance();
+        ariel.setPriority(2);
     }
 
     public void disabledPeriodic() {
         updateSmartDashboard();
         CommandBase.oi.resetBox();
-//        CameraVision.getInstance().setCamera(false);
+        CameraVision.getInstance().setCamera(false);
     }
 
     public void autonomousInit() {
@@ -83,8 +84,8 @@ public class JoeBot extends IterativeRobot {
             autonomousCommand.cancel();
         }
         new TusksRetract().start();
-//        CameraVision.getInstance().setCamera(true);
-//        ariel.start();
+        CameraVision.getInstance().setCamera(true);
+        ariel.start();
         new FlywheelRun().start();
     }
 
