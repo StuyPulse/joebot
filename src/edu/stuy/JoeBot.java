@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
-    Thread ariel;
+//    Thread ariel;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -122,6 +122,7 @@ public class JoeBot extends IterativeRobot {
         
         SmartDashboard.putBoolean("Is speed good", CommandBase.flywheel.isSpeedGood());
 
+        SmartDashboard.putDouble("Acquirer value", CommandBase.acquirer.getRoller());
 
         // Camera target info
 //        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
