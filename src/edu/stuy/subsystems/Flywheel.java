@@ -57,7 +57,7 @@ public class Flywheel extends Subsystem {
     public static double rpmTolerance = 16;
 
     /** Positions **/
-    public static final int numDistances = 10;
+    public static final int numDistances = 11;
     public static final double[] distances = new double[numDistances]; // all inches
     public static final double[] speedsTopHoop = new double[numDistances];
     public static final double[] speedsMiddleHoop = new double[numDistances];
