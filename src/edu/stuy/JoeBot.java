@@ -93,10 +93,6 @@ public class JoeBot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 
-        if (!DriverStation.getInstance().isFMSAttached()) {
-            tuneShooter();
-        }
-
         CommandBase.oi.updateLights();
         updateSmartDashboard();
     }
@@ -128,37 +124,5 @@ public class JoeBot extends IterativeRobot {
 //        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
 //        SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
 //        SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
-    }
-
-    private void tuneShooter() {
-        boolean useSmartDashboardTuning = false;
-        try {
-            useSmartDashboardTuning = SmartDashboard.getBoolean("useSDBtuning");
-        }
-        catch (NetworkTableKeyNotDefined e) {
-            useSmartDashboardTuning = false;
-            SmartDashboard.putBoolean("useSDBtuning", false);
-        }
-        double setRpmTop = 0;
-        double setRpmBottom = 0;
-        try {
-            setRpmTop = SmartDashboard.getDouble("setRPMtop");
-            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
-        } catch (NetworkTableKeyNotDefined e) {
-            SmartDashboard.putDouble("setRPMtop", 0);
-            SmartDashboard.putDouble("setRPMbottom", 0);
-        }
-        CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
-
-
-        double rpmTop = Flywheel.upperRoller.getRPM();
-        double rpmBottom = Flywheel.lowerRoller.getRPM();
-        try {
-            SmartDashboard.putDouble("getRPMtop", rpmTop);
-            SmartDashboard.putDouble("getRPMbottom", rpmBottom);
-        } catch (Exception e) {
-        }
-        Flywheel.upperRoller.setPID("upper");
-        Flywheel.lowerRoller.setPID("lower");
     }
 }
