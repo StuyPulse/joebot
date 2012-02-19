@@ -132,6 +132,14 @@ public class JoeBot extends IterativeRobot {
     }
 
     private void tuneShooter() {
+        boolean useSmartDashboardTuning = false;
+        try {
+            useSmartDashboardTuning = SmartDashboard.getBoolean("useSDBtuning");
+        }
+        catch (NetworkTableKeyNotDefined e) {
+            useSmartDashboardTuning = false;
+            SmartDashboard.putBoolean("useSDBtuning", false);
+        }
         double setRpmTop = 0;
         double setRpmBottom = 0;
         try {
