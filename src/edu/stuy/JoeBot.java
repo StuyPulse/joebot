@@ -92,12 +92,14 @@ public class JoeBot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-
         Scheduler.getInstance().run();
 
         if (!DriverStation.getInstance().isFMSAttached()) {
             tuneShooter();
         }
+
+        CommandBase.oi.updateLights();
+        updateSmartDashboard();
     }
 
     // We use SmartDashboard to monitor bot information.
@@ -127,7 +129,6 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
         SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
         SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
-
     }
 
     private void tuneShooter() {
@@ -152,9 +153,5 @@ public class JoeBot extends IterativeRobot {
         }
         Flywheel.upperRoller.setPID("upper");
         Flywheel.lowerRoller.setPID("lower");
-
-        // Debug box actions
-        CommandBase.oi.updateLights();
-        updateSmartDashboard();
     }
 }
