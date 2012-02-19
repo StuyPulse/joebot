@@ -6,17 +6,14 @@
 /*----------------------------------------------------------------------------*/
 package edu.stuy;
 
-import edu.stuy.camera.CameraVision;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -46,17 +43,17 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
-        if (!Devmode.DEV_MODE) {
-            CameraVision.getInstance().setCamera(true);
-        }
-        ariel = CameraVision.getInstance();
-        ariel.setPriority(2);
+//        if (!Devmode.DEV_MODE) {
+//            CameraVision.getInstance().setCamera(true);
+//        }
+//        ariel = CameraVision.getInstance();
+//        ariel.setPriority(2);
     }
 
     public void disabledPeriodic() {
         updateSmartDashboard();
         CommandBase.oi.resetBox();
-        CameraVision.getInstance().setCamera(false);
+//        CameraVision.getInstance().setCamera(false);
     }
 
     public void autonomousInit() {
@@ -122,6 +119,8 @@ public class JoeBot extends IterativeRobot {
 
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
         SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
+        
+        SmartDashboard.putBoolean("Is speed good", CommandBase.flywheel.isSpeedGood());
 
 
         // Camera target info
