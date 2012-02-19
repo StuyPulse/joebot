@@ -36,11 +36,9 @@ public class CheckFlywheelSpeedControl extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         if (isTimedOut()) {
-            System.out.println("Flywheel speed control FAIL! Timed out!");
             return true;
         }
         if (flywheel.isSpeedGood()) {
-            System.out.println("Flywheel speed control PASS!");
             return true;
         }
         return false;

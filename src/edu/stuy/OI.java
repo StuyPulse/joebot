@@ -65,7 +65,7 @@ public class OI {
         debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
         
         distanceButton = DISTANCE_BUTTON_STOP;
-        distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
+        distanceInches = Flywheel.distances[Flywheel.STOP_INDEX];
         
         try {
             if (!Devmode.DEV_MODE) {
@@ -174,7 +174,7 @@ public class OI {
                 distanceInches = CommandBase.drivetrain.getSonarDistance_in();
                 break;
             case DISTANCE_BUTTON_FAR:
-                distanceInches = 725; 
+                distanceInches = Flywheel.distances[Flywheel.MAX_DIST]; 
             case DISTANCE_BUTTON_FENDER_LENGTH:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_LONG_INDEX];
                 break;
@@ -202,7 +202,7 @@ public class OI {
         } catch (EnhancedIOException ex) {
             topHoop = true;
         }
-        return (topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop);
+        return (topHoop ? Flywheel.speedsTopHoop : Flywheel.speedsMiddleHoop);
     }
     
     // Copied from last year's DesDroid code. 

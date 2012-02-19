@@ -5,6 +5,9 @@
 package edu.stuy.commands;
 
 import edu.stuy.subsystems.Flywheel;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -15,14 +18,13 @@ public class FlywheelRun extends CommandBase {
     double distanceInches;
     double[] speeds;
     boolean automatic;
+    boolean isFMSAttached = false;
     
     public FlywheelRun(double distanceInches, double[] speeds) {
-        //System.out.println("Flywheel constructed");
         requires(flywheel);
         setDistanceInches(distanceInches);
         this.speeds = speeds;
         automatic = false;
-        //System.out.println("distance inches: " + distanceInches);
     }
 
     public FlywheelRun() {
@@ -42,18 +44,62 @@ public class FlywheelRun extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        // SmartDashboard should override OI or passed-in distance when tuning
+        if (useSmartDashboardTuning()) {
+                tuneShooter();
+                return;
+        }
         if (automatic) {
             setDistanceInches(CommandBase.oi.getDistanceFromDistanceButton());
             if (CommandBase.oi.getHoopHeightButton()) {
                 this.speeds = Flywheel.speedsTopHoop;
-            }
-            else {
+            } else {
                 this.speeds = Flywheel.speedsMiddleHoop;
             }
         }
         double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
         flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
-        //System.out.println("flywheel speeds aer " + rpm[0]);
+        SmartDashboard.putDouble("setRPMtop", rpm[0]);
+        SmartDashboard.putDouble("setRPMottom", rpm[1]);
+    }
+
+    private boolean useSmartDashboardTuning() {
+        if (isFMSAttached || DriverStation.getInstance().isFMSAttached()) {
+            isFMSAttached = true;
+            return false;
+        }
+        boolean useSmartDashboardTuning = false;
+        try {
+            try {
+                useSmartDashboardTuning = SmartDashboard.getBoolean("useSDBtuning");
+            } catch (NetworkTableKeyNotDefined e) {
+                useSmartDashboardTuning = false;
+                SmartDashboard.putBoolean("useSDBtuning", false);
+            }
+        }
+        catch (Exception e) { // Don't use SmartDashboard if anything went wrong
+                              // (i.e. SmartDashboard throws another Exception)
+        }
+        return useSmartDashboardTuning;
+    }
+
+    private void tuneShooter() {
+        double setRpmTop = 0;
+        double setRpmBottom = 0;
+        try {
+            setRpmTop = SmartDashboard.getDouble("setRPMtop");
+            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
+        } catch (NetworkTableKeyNotDefined e) {
+            SmartDashboard.putDouble("setRPMtop", 0);
+            SmartDashboard.putDouble("setRPMbottom", 0);
+        }
+        CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
+
+
+        double rpmTop = Flywheel.upperRoller.getRPM();
+        double rpmBottom = Flywheel.lowerRoller.getRPM();
+        Flywheel.upperRoller.setPID("upper");
+        Flywheel.lowerRoller.setPID("lower");
     }
 
     // Make this return true when this Command no longer needs to run execute()

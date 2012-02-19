@@ -57,7 +57,7 @@ public class Flywheel extends Subsystem {
     public static double rpmTolerance = 16;
 
     /** Positions **/
-    public static final int numDistances = 11;
+    public static final int numDistances = 14;
     public static final double[] distances = new double[numDistances]; // all inches
     public static final double[] speedsTopHoop = new double[numDistances];
     public static final double[] speedsMiddleHoop = new double[numDistances];
@@ -82,6 +82,7 @@ public class Flywheel extends Subsystem {
     public static final int KEY_INDEX = 9;
     public static final int KEY_SLANT_INDEX = 10;
     public static final int KEY_MIDDLE_HOOP_INDEX = 12;
+    public static final int MAX_DIST = 13;
     
     static {
         distances[STOP_INDEX] = 0;
@@ -96,9 +97,8 @@ public class Flywheel extends Subsystem {
         distances[KEY_INDEX] = 144.0 + shooterToBumper;
         distances[KEY_SLANT_INDEX] = 215; //Fix this value through testing
         distances[KEY_MIDDLE_HOOP_INDEX] = 144 + shooterToBumper;
-//        for (int i = 0; i < distances.length; i++) {
-//            System.out.println(distances[i]);
-//        }
+        distances[MAX_DIST] = 300;
+
         speedsTopHoop[STOP_INDEX] = 0;
         speedsTopHoop[FENDER_INDEX] = 1000;
         speedsTopHoop[FENDER_SIDE_INDEX] = 1000;
@@ -109,8 +109,9 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[FENDER_LONG_INDEX] = 1075;
         speedsTopHoop[FENDER_SIDE_LONG_INDEX] = 1000; //NOT TESTED
         speedsTopHoop[KEY_INDEX] = 1300;
-        speedsTopHoop[KEY_SLANT_INDEX] = 1500; //Fix this value through testing
-        speedsTopHoop[KEY_MIDDLE_HOOP_INDEX] = 1800; //Fix value through testing
+        speedsTopHoop[KEY_SLANT_INDEX] = 1500; //TODO: Fix this value through testing
+        speedsTopHoop[KEY_MIDDLE_HOOP_INDEX] = 1800; //TODO: Fix value through testing
+        speedsTopHoop[MAX_DIST] = 2000; // TODO: FIx this value through testing
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
         }
