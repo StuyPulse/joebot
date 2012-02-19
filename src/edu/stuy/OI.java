@@ -65,7 +65,7 @@ public class OI {
         debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
         
         distanceButton = DISTANCE_BUTTON_STOP;
-        distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
+        distanceInches = Flywheel.distances[Flywheel.STOP_INDEX];
         
         try {
             if (!Devmode.DEV_MODE) {

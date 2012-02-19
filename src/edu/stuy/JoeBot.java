@@ -120,6 +120,10 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
         SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
 
+        SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
+        SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
+
+
         // Camera target info
 //        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
 //        SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));

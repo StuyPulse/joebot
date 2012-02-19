@@ -59,6 +59,8 @@ public class FlywheelRun extends CommandBase {
         }
         double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
         flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
+        SmartDashboard.putDouble("setRPMtop", rpm[0]);
+        SmartDashboard.putDouble("setRPMottom", rpm[1]);
     }
 
     private boolean useSmartDashboardTuning() {
@@ -96,11 +98,6 @@ public class FlywheelRun extends CommandBase {
 
         double rpmTop = Flywheel.upperRoller.getRPM();
         double rpmBottom = Flywheel.lowerRoller.getRPM();
-        try {
-            SmartDashboard.putDouble("getRPMtop", rpmTop);
-            SmartDashboard.putDouble("getRPMbottom", rpmBottom);
-        } catch (Exception e) {
-        }
         Flywheel.upperRoller.setPID("upper");
         Flywheel.lowerRoller.setPID("lower");
     }
