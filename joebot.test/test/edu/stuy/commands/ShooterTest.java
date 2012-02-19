@@ -61,7 +61,6 @@ public class ShooterTest {
                     CommandBase.flywheel.lookupRPM(distanceInches, Flywheel.speedsTopHoop)[0] + ", " +
                     CommandBase.flywheel.lookupRPM(distanceInches, Flywheel.speedsMiddleHoop)[0]);
         }
-<<<<<<< HEAD
     }
 
     @Test
@@ -87,12 +86,6 @@ public class ShooterTest {
         System.out.println(max);
         System.out.println("error: " + (max - mid));
         System.out.println("error: " + (mid - min));
-=======
-        /*System.out.println(distanceInches);
-        System.out.println(distanceInches + 4 + " " + Shooter.theoreticalDesiredExitRPM(distanceInches + 4.0));
-        System.out.println(distanceInches + " " + Shooter.theoreticalDesiredExitRPM(distanceInches));
-        System.out.println(distanceInches - 4 + " " + Shooter.theoreticalDesiredExitRPM(distanceInches - 4.0));*/
->>>>>>> 2584c84ca7485312df0ac5c22e2330a51b5d9883
     }
 
 }

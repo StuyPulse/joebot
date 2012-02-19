@@ -51,15 +51,13 @@ public class OI {
     private static final int DISTANCE_BUTTON_STOP_LIGHT_CHANNEL = 16;
     
     // EnhancedIO analog input
-    private static final int DISTANCE_BUTTONS_CHANNEL = 1;
-    private static final int SPEED_TRIM_POT_CHANNEL = 2;
-    private static final int DELAY_POT_CHANNEL = 3;
-    private static final int MAX_ANALOG_CHANNEL = 4;
+    public static final int DISTANCE_BUTTONS_CHANNEL = 1;
+    public static final int SPEED_TRIM_POT_CHANNEL = 2;
+    public static final int DELAY_POT_CHANNEL = 3;
+    public static final int MAX_ANALOG_CHANNEL = 4;
     
     public OI() {
-        if (!Devmode.DEV_MODE) {
-            enhancedIO = DriverStation.getInstance().getEnhancedIO();
-        }
+        enhancedIO = DriverStation.getInstance().getEnhancedIO();
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
 
@@ -176,8 +174,7 @@ public class OI {
                 distanceInches = CommandBase.drivetrain.getSonarDistance_in();
                 break;
             case DISTANCE_BUTTON_FAR:
-                distanceInches = 725; // TODO: Max distance to max speed?
-                break;
+                distanceInches = 725; 
             case DISTANCE_BUTTON_FENDER_LENGTH:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_LONG_INDEX];
                 break;
