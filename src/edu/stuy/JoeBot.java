@@ -85,7 +85,6 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
-        new FlywheelRun().start();
     }
 
     /**
