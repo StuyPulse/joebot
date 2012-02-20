@@ -27,8 +27,8 @@ public class OI {
     
     // EnhancedIO digital input
     
-    public static final int CONVEYOR_IN_SWITCH_CHANNEL = 1;
-    public static final int CONVEYOR_OUT_SWITCH_CHANNEL = 2;
+    public static final int CONVEYOR_DOWN_SWITCH_CHANNEL = 1;
+    public static final int CONVEYOR_UP_SWITCH_CHANNEL = 2;
     public static final int BIT_1_CHANNEL = 5;
     public static final int BIT_2_CHANNEL = 4;
     public static final int BIT_3_CHANNEL = 3;
@@ -74,8 +74,8 @@ public class OI {
                 enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(ACQUIRER_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(ACQUIRER_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-                enhancedIO.setDigitalConfig(CONVEYOR_IN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-                enhancedIO.setDigitalConfig(CONVEYOR_OUT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(CONVEYOR_UP_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(CONVEYOR_DOWN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(SHOOTER_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(HOOP_HEIGHT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
 
@@ -99,8 +99,8 @@ public class OI {
             // OI box switches
             new InverseDigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
             new InverseDigitalIOButton(ACQUIRER_OUT_SWITCH_CHANNEL).whileHeld(new AcquirerReverse());
-            new InverseDigitalIOButton(CONVEYOR_IN_SWITCH_CHANNEL).whileHeld(new ConveyManual());
-            new InverseDigitalIOButton(CONVEYOR_OUT_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
+            new InverseDigitalIOButton(CONVEYOR_UP_SWITCH_CHANNEL).whileHeld(new ConveyManual());
+            new InverseDigitalIOButton(CONVEYOR_DOWN_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
             new InverseDigitalIOButton(SHOOTER_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
             
             new JoystickButton(shooterStick, 1).whileHeld(new ConveyManual());
