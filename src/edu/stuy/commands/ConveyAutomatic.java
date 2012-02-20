@@ -17,7 +17,6 @@ public class ConveyAutomatic extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(conveyor);
-        requires(flywheel);
     }
 
     public ConveyAutomatic(double timeout) {

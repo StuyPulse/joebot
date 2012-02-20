@@ -18,7 +18,7 @@ public class AutonSetting2 extends CommandGroup {
      */
     public AutonSetting2() {
         double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
-        addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
-        addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
+        addParallel(new AutonWaitThenConvey());
+        addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
     }
 }
