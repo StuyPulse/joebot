@@ -55,6 +55,8 @@ public class OI {
     public static final int SPEED_TRIM_POT_CHANNEL = 2;
     public static final int DELAY_POT_CHANNEL = 3;
     public static final int MAX_ANALOG_CHANNEL = 4;
+
+    public static final int MAX_WAIT_TIME = 10;
     
     public OI() {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();
@@ -309,7 +311,7 @@ public class OI {
     }
     
     public double getDelayTime(){
-        return 2*getDelayPot();
+        return MAX_WAIT_TIME * getDelayPot() / getMaxVoltage();
     }
     
     /**
