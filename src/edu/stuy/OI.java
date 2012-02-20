@@ -170,9 +170,9 @@ public class OI {
      */
     public double getDistanceFromDistanceButton(){
         switch(distanceButton){
-            case DISTANCE_BUTTON_AUTO:
+            /*case DISTANCE_BUTTON_AUTO:
                 distanceInches = CommandBase.drivetrain.getSonarDistance_in();
-                break;
+                break; */
             case DISTANCE_BUTTON_FAR:
                 distanceInches = Flywheel.distances[Flywheel.MAX_DIST]; 
             case DISTANCE_BUTTON_FENDER_LENGTH:
