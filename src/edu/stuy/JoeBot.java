@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
+    Compressor compressor;
 //    Thread ariel;
 
     /**
@@ -38,7 +39,7 @@ public class JoeBot extends IterativeRobot {
         // autonomousCommand = new ExampleCommand();
 
         if (!Devmode.DEV_MODE) {
-            Compressor compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
+            compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
             compressor.start();
         }
 
@@ -124,6 +125,8 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putBoolean("Is speed good", CommandBase.flywheel.isSpeedGood());
 
         SmartDashboard.putDouble("Acquirer value", CommandBase.acquirer.getRoller());
+        
+        SmartDashboard.putBoolean("Pressure switch", compressor.getPressureSwitchValue());
 
         // Camera target info
 //        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
