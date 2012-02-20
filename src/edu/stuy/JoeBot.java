@@ -12,6 +12,7 @@ import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,9 +44,9 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
-//        if (!Devmode.DEV_MODE) {
-//            CameraVision.getInstance().setCamera(true);
-//        }
+        if (!Devmode.DEV_MODE) {
+            AxisCamera.getInstance();
+        }
 //        ariel = CameraVision.getInstance();
 //        ariel.setPriority(2);
     }
@@ -105,8 +106,8 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
         SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getDigitalValue(OI.SHOOTER_BUTTON_CHANNEL));
         SmartDashboard.putBoolean("Hoop Height Button: ", CommandBase.oi.getDigitalValue(OI.HOOP_HEIGHT_SWITCH_CHANNEL));
-        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_IN_SWITCH_CHANNEL));
-        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_OUT_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_UP_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_DOWN_SWITCH_CHANNEL));
 
         SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
         SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
