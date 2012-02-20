@@ -4,8 +4,6 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.commands.base.CommandBase;
-
 /**
  *
  * @author Kevin Wang
@@ -13,7 +11,7 @@ import edu.stuy.commands.base.CommandBase;
 public class AcquirerAcquire extends CommandBase {
     boolean hasTimeout = false;
     double timeout;
-    
+
     public AcquirerAcquire() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -35,7 +33,7 @@ public class AcquirerAcquire extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        acquirer.roll(1, 1);
+        acquirer.acquire();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -48,11 +46,17 @@ public class AcquirerAcquire extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        acquirer.roll(0, 0);
+        acquirer.stop();
+        //new ConveyorPushDown(1).start();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+
+//    public void cancel() {
+//        super.cancel();
+//        this.end();
+//    }
 }

@@ -4,8 +4,6 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.commands.base.CommandBase;
-
 /**
  *
  * @author Danny
@@ -29,7 +27,7 @@ public class TusksExtend extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return tusks.isExtended();
     }
 
     // Called once after isFinished returns true

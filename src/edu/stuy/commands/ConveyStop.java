@@ -4,18 +4,16 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.commands.base.CommandBase;
-
 /**
  *
- * @author Kevin Wang
+ * @author Danny
  */
-public class ShooterStop extends CommandBase {
+public class ConveyStop extends CommandBase {
+    private boolean done = false;
     
-    public ShooterStop() {
+    public ConveyStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(shooter);
     }
 
     // Called just before this Command runs the first time
@@ -24,12 +22,13 @@ public class ShooterStop extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        shooter.rollRollers(0, 0);
+        conveyor.stop();
+        done = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return done;
     }
 
     // Called once after isFinished returns true

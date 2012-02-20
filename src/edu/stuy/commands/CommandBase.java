@@ -1,9 +1,10 @@
-package edu.stuy.commands.base;
+package edu.stuy.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.stuy.Devmode;
 import edu.stuy.OI;
 import edu.stuy.subsystems.*;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -15,11 +16,21 @@ public abstract class CommandBase extends Command {
     public static OI oi;
     
     // Create a single static instance of all of your subsystems
-    public static Drivetrain drivetrain = new Drivetrain();
-    public static Shooter shooter = new Shooter();
-    public static Tusks tusks = new Tusks();
-    public static Acquirer acquirer = new Acquirer();
-    public static Conveyor conveyor = new Conveyor();
+    public static Drivetrain drivetrain;
+    public static Flywheel flywheel;
+    public static Tusks tusks;
+    public static Acquirer acquirer;
+    public static Conveyor conveyor;
+
+    static {
+        drivetrain = new Drivetrain();
+        conveyor = new Conveyor();
+        flywheel = new Flywheel();
+        acquirer = new Acquirer();
+        if (!Devmode.DEV_MODE) {
+            tusks = new Tusks();
+        }
+    }
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -29,12 +40,14 @@ public abstract class CommandBase extends Command {
         // news. Don't move it.
         oi = new OI();
 
-        // Show what command your subsystem is running on the SmartDashboard
-        SmartDashboard.putData(drivetrain);
-        SmartDashboard.putData(shooter);
-        SmartDashboard.putData(tusks);
-        SmartDashboard.putData(acquirer);
-        SmartDashboard.putData(conveyor);
+        if (!Devmode.DEV_MODE) {
+            // Show what command your subsystem is running on the SmartDashboard
+            SmartDashboard.putData(drivetrain);
+            SmartDashboard.putData(flywheel);
+            SmartDashboard.putData(tusks);
+            SmartDashboard.putData(acquirer);
+            SmartDashboard.putData(conveyor);
+        }
     }
 
     public CommandBase(String name) {
