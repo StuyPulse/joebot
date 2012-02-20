@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonSetting2 extends CommandGroup {
 
     /**
-     * Shoots at key.
+     * Shoots from key.
      */
     public AutonSetting2() {
         double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
