@@ -8,7 +8,7 @@ import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * Drives to Fender, shoots balls, then backs up to bridge, knocks down bridge.
+ * Drives to Fender, shoots balls
  * @author admin
  */
 public class AutonSetting0 extends CommandGroup {
@@ -20,8 +20,5 @@ public class AutonSetting0 extends CommandGroup {
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
 
-        addSequential(new TusksExtend());
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE));
-        addSequential(new TusksRetract());
     }
 }
