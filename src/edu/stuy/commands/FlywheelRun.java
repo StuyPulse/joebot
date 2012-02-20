@@ -65,7 +65,9 @@ public class FlywheelRun extends CommandBase {
     }
 
     public void trimSpeedsFromOI(double[] rpms) {
-        
+        double speedTrim = CommandBase.oi.getSpeedTrim();
+        rpms[0] += speedTrim;
+        rpms[1] += speedTrim;
     }
     
     private boolean useSmartDashboardTuning() {

@@ -84,6 +84,8 @@ public class Flywheel extends Subsystem {
     public static final int KEY_MIDDLE_HOOP_INDEX = 12;
     public static final int MAX_DIST = 13;
     
+    public static final int MAX_TRIM_RPM = 400;
+    
     static {
         distances[STOP_INDEX] = 0;
         distances[FENDER_INDEX] = fenderDepth + shooterToBumper;

@@ -302,6 +302,24 @@ public class OI {
         }
     }
 
+    public double getSpeedTrim() {
+        double trim = getSpeedPot(); // 0 to max voltage (the 0 might be a little negative)
+        double halfMax = getMaxVoltage() / 2;
+        double speed = 0;
+        speed = (trim - halfMax) / halfMax;
+        //deadband
+        if(Math.abs(speed) < 0.1) {
+            speed = 0;
+        }
+        if (speed > 0) {
+            speed -= -0.1;
+        }
+        else {
+            speed += 0.1;
+        }
+        return Flywheel.MAX_TRIM_RPM * speed;
+    }
+    
     public double getDelayPot() {
         try {
             return getMaxVoltage() - enhancedIO.getAnalogIn(DELAY_POT_CHANNEL);
@@ -314,7 +332,7 @@ public class OI {
         double delay = getDelayPot();
 
         if (delay > 0) {        //Just in case the value from the pot is negative. We observed a -.2.
-            return MAX_WAIT_TIME * getDelayPot() / getMaxVoltage();
+            return MAX_WAIT_TIME * delay / getMaxVoltage();
         } else {
             return 0;
         }
