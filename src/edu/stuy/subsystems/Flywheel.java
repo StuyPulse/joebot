@@ -54,7 +54,7 @@ public class Flywheel extends Subsystem {
      * the minimum tolerance among all values (i.e. the tolerance at the key).
      * This way any shot made from within this tolerance will go the correct distance.
      */
-    public static double rpmTolerance = 16;
+    public static double rpmTolerance = 75;
 
     /** Positions **/
     public static final int numDistances = 14;
@@ -102,17 +102,17 @@ public class Flywheel extends Subsystem {
         distances[MAX_DIST] = 300;
 
         speedsTopHoop[STOP_INDEX] = 0;
-        speedsTopHoop[FENDER_INDEX] = 1000;
-        speedsTopHoop[FENDER_SIDE_INDEX] = 1000;
-        speedsTopHoop[FENDER_WIDE_INDEX] = 1010;
+        speedsTopHoop[FENDER_INDEX] = 1200;
+        speedsTopHoop[FENDER_SIDE_INDEX] = 0;
+        speedsTopHoop[FENDER_WIDE_INDEX] = 1340;
         speedsTopHoop[HIGHEST_BACKBOARD_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[LOWEST_SWISH_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
-        speedsTopHoop[FENDER_SIDE_WIDE_INDEX] = 1000; //NOT TESTED
+        speedsTopHoop[FENDER_SIDE_WIDE_INDEX] = 0; //NOT TESTED
         speedsTopHoop[FENDER_LONG_INDEX] = 1075;
-        speedsTopHoop[FENDER_SIDE_LONG_INDEX] = 1000; //NOT TESTED
-        speedsTopHoop[KEY_INDEX] = 1300;
-        speedsTopHoop[KEY_SLANT_INDEX] = 1500; //TODO: Fix this value through testing
-        speedsTopHoop[KEY_MIDDLE_HOOP_INDEX] = 1800; //TODO: Fix value through testing
+        speedsTopHoop[FENDER_SIDE_LONG_INDEX] = 0; //NOT TESTED
+        speedsTopHoop[KEY_INDEX] = 1550;
+        speedsTopHoop[KEY_SLANT_INDEX] = 1560; //TODO: Fix this value through testing
+        speedsTopHoop[KEY_MIDDLE_HOOP_INDEX] = 1425; //TODO: Fix value through testing
         speedsTopHoop[MAX_DIST] = 2000; // TODO: FIx this value through testing
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
