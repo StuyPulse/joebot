@@ -202,7 +202,7 @@ public class OI {
         } catch (EnhancedIOException ex) {
             topHoop = true;
         }
-        return (topHoop ? Flywheel.speedsTopHoop : Flywheel.speedsMiddleHoop);
+        return (topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop);
     }
     
     // Copied from last year's DesDroid code. 
