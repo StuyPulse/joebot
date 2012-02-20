@@ -308,7 +308,7 @@ public class OI {
     }
     
     public double getDelayTime(){
-        return getDelayPot() * 1000;
+        return getDelayPot();
     }
     
     /**
