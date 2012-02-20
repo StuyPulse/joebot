@@ -310,8 +310,14 @@ public class OI {
         }
     }
     
-    public double getDelayTime(){
-        return MAX_WAIT_TIME * getDelayPot() / getMaxVoltage();
+    public double getDelayTime() {
+        double delay = getDelayPot();
+
+        if (delay > 0) {        //Just in case the value from the pot is negative. We observed a -.2.
+            return MAX_WAIT_TIME * getDelayPot() / getMaxVoltage();
+        } else {
+            return 0;
+        }
     }
     
     /**
