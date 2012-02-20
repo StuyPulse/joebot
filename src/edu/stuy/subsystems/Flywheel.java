@@ -253,4 +253,8 @@ public class Flywheel extends Subsystem {
         returnVal[1] = upperRPM;
         return returnVal;
     }
+    
+    public boolean isSpinning() {
+        return upperSetpoint != 0 && lowerSetpoint != 0;
+    }
 }
