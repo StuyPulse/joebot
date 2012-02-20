@@ -9,6 +9,7 @@ import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.speed.JoeSpeed;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -113,7 +114,7 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[KEY_INDEX] = 1550;
         speedsTopHoop[KEY_SLANT_INDEX] = 1560; //TODO: Fix this value through testing
         speedsTopHoop[KEY_MIDDLE_HOOP_INDEX] = 1425; //TODO: Fix value through testing
-        speedsTopHoop[MAX_DIST] = 2000; // TODO: FIx this value through testing
+        speedsTopHoop[MAX_DIST] = 3000; // TODO: FIx this value through testing
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
         }
@@ -138,6 +139,8 @@ public class Flywheel extends Subsystem {
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {
         upperRoller.setRPM(upperRPM);
         lowerRoller.setRPM(lowerRPM);
+        lowerSetpoint = lowerRPM;
+        upperSetpoint = upperRPM;
     }
 
     /**
@@ -146,8 +149,10 @@ public class Flywheel extends Subsystem {
      * on or off the speed light accordingly.
      */
     public boolean isSpeedGood() {
-        boolean speedGood = (Math.abs(upperSetpoint - upperRoller.getRPM()) < rpmTolerance) &&
-                            (Math.abs(lowerSetpoint - lowerRoller.getRPM()) < rpmTolerance);
+        boolean speedGood = (Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())) < rpmTolerance) &&
+                            (Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())) < rpmTolerance);
+        SmartDashboard.putDouble("Upper error", Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())));
+        SmartDashboard.putDouble("Lower error", Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())));
         return speedGood;
     }
 
@@ -246,8 +251,6 @@ public class Flywheel extends Subsystem {
         
         returnVal[0] = lowerRPM;
         returnVal[1] = upperRPM;
-        lowerSetpoint = lowerRPM;
-        upperSetpoint = upperRPM;
         return returnVal;
     }
 }
