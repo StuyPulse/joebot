@@ -1,13 +1,8 @@
-AutonSetting0 - Drive to fender, set flywheel at same time.
-		Score, extend tusks at same time.
-		Back up to bridge, knock it down.
-		Retract tusks.
+AutonSetting0 - Drive to fender, set flywheel at same time and Score
 
 AutonSetting1 - Extend tusks.
 		Back up to bridge, knock it down.
 		Retract tusks.
-		Drive to the fender, set flywheel at same time.
-		Score.
 
 AutonSetting2 - Set flywheel directly in front of key.
 		Score.
@@ -16,14 +11,10 @@ AutonSetting3 - Drive to Fender
 		Shoot.
 		Back up to Bridge.
 
-AutonSetting4 - Drive to fender, set flywheel at same time.
-		Score in the top hoop.
+AutonSetting4 - set flywheel directly in front of key and score
 		Back up to Bridge.
 
 AutonSetting5 - Set flywheel at slanted position at top hoop.
 		Score.
-		Extend tusks.
-		Back up to bridge, knock it down.
-		Retract tusks.
 
 AutonSetting6 - Shoot from key at two point hoop.
