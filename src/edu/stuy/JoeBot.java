@@ -12,6 +12,7 @@ import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,9 +44,9 @@ public class JoeBot extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
-//        if (!Devmode.DEV_MODE) {
-//            CameraVision.getInstance().setCamera(true);
-//        }
+        if (!Devmode.DEV_MODE) {
+            AxisCamera.getInstance();
+        }
 //        ariel = CameraVision.getInstance();
 //        ariel.setPriority(2);
     }
