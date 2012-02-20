@@ -32,7 +32,7 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (flywheel.isSpeedGood() || !conveyor.ballAtTop()) {
+        if (flywheel.isSpeedGood()) {
             conveyor.convey();
         }
         else {
@@ -50,7 +50,7 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-//        (new ConveyorPushDown(1)).start();
+        conveyor.stop();
     }
 
     // Called when another command which requires one or more of the same
