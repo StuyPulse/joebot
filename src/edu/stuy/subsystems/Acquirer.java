@@ -5,7 +5,7 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.stuy.commands.CommandBase;
+import edu.stuy.commands.AcquirerStop;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -33,7 +33,7 @@ public class Acquirer extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new AcquirerStop());
+        setDefaultCommand(new AcquirerStop());
     }
     
     /**
@@ -54,12 +54,12 @@ public class Acquirer extends Subsystem {
     }
 
     public void acquire() {
-        if (!CommandBase.conveyor.ballAtTop()) {
+//        if (!CommandBase.conveyor.ballAtTop()) {
             isAcquiring = true;
             roll(FWD); // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
-        } else {
-            stop();
-        }
+//        } else {
+//            stop();
+//        }
     }
 
     public void acquireReverse() {

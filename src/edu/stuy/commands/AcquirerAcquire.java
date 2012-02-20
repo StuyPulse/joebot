@@ -55,8 +55,8 @@ public class AcquirerAcquire extends CommandBase {
     protected void interrupted() {
     }
 
-    public void cancel() {
-        super.cancel();
-        this.end();
-    }
+//    public void cancel() {
+//        super.cancel();
+//        this.end();
+//    }
 }
