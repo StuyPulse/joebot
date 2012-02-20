@@ -20,8 +20,8 @@ public class Tusks extends Subsystem {
     // here. Call these from Commands.
     
     public Tusks() {
-        solenoidExtend = new Solenoid(RobotMap.TUSKS_SOLENOID_EXTEND);
-        solenoidRetract = new Solenoid(RobotMap.TUSKS_SOLENOID_RETRACT);
+        solenoidExtend = new Solenoid(2, RobotMap.TUSKS_SOLENOID_EXTEND);
+        solenoidRetract = new Solenoid(2, RobotMap.TUSKS_SOLENOID_RETRACT);
     }
 
     public void initDefaultCommand() {
