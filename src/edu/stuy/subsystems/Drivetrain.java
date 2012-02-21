@@ -28,6 +28,9 @@ public class Drivetrain extends Subsystem {
     public Encoder encoderRight;
     Gyro gyro;
     SendablePIDController controller;
+    private Relay leftUnderbodyLight;
+    private Relay rightUnderbodyLight;
+    private Relay frontUnderbodyLight;
     final int WHEEL_RADIUS = 3;
     final double CIRCUMFERENCE = 2 * Math.PI * WHEEL_RADIUS;
     final int ENCODER_CODES_PER_REV = 360;
@@ -67,6 +70,10 @@ public class Drivetrain extends Subsystem {
        gearShiftHigh = new Solenoid(2, RobotMap.GEAR_SHIFT_HIGH);
        sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
        vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
+       
+       leftUnderbodyLight = new Relay(RobotMap.LEFT_UNDERBODY);
+       rightUnderbodyLight = new Relay(RobotMap.RIGHT_UNDERBODY);
+       frontUnderbodyLight = new Relay(RobotMap.FRONT_UNDERBODY);
     }
 
     /**
@@ -183,7 +190,13 @@ public class Drivetrain extends Subsystem {
     public double getGyroAngle() {
         return gyro.getAngle();
     }
-
+    
+    public void setUnderbodyLights(boolean on) {
+        leftUnderbodyLight.set(on ? Relay.Value.kOn : Relay.Value.kOff);
+        rightUnderbodyLight.set(on ? Relay.Value.kOn : Relay.Value.kOff);
+        frontUnderbodyLight.set(on ? Relay.Value.kOn : Relay.Value.kOff);
+    }
+    
     public static class SpeedRamp {
         /**
          * Profiles based on generic distance measurement to wall and the distance to travel.
