@@ -51,10 +51,7 @@ public class RobotMap {
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
     public static final int REFLECTIVE_LIGHT = 2;
     public static final int TARGET_LIGHT = 3;
-    // TODO: we need these for the underbody lights
-    public static final int LEFT_UNDERBODY = 4;
-    public static final int RIGHT_UNDERBODY = 5;
-    public static final int FRONT_UNDERBODY = 6;
+    public static final int UNDERBODY_LIGHTS = 4;
      
 
     /* SOLENOID */

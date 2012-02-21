@@ -28,9 +28,7 @@ public class Drivetrain extends Subsystem {
     public Encoder encoderRight;
     Gyro gyro;
     SendablePIDController controller;
-    private Relay leftUnderbodyLight;
-    private Relay rightUnderbodyLight;
-    private Relay frontUnderbodyLight;
+    private Relay underbodyLights;
     final int WHEEL_RADIUS = 3;
     final double CIRCUMFERENCE = 2 * Math.PI * WHEEL_RADIUS;
     final int ENCODER_CODES_PER_REV = 360;
@@ -71,9 +69,7 @@ public class Drivetrain extends Subsystem {
        sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
        vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
        
-       leftUnderbodyLight = new Relay(RobotMap.LEFT_UNDERBODY);
-       rightUnderbodyLight = new Relay(RobotMap.RIGHT_UNDERBODY);
-       frontUnderbodyLight = new Relay(RobotMap.FRONT_UNDERBODY);
+       underbodyLights = new Relay(RobotMap.UNDERBODY_LIGHTS);
     }
 
     /**
@@ -192,9 +188,7 @@ public class Drivetrain extends Subsystem {
     }
     
     public void setUnderbodyLights(boolean on) {
-        leftUnderbodyLight.set(on ? Relay.Value.kOn : Relay.Value.kOff);
-        rightUnderbodyLight.set(on ? Relay.Value.kOn : Relay.Value.kOff);
-        frontUnderbodyLight.set(on ? Relay.Value.kOn : Relay.Value.kOff);
+        underbodyLights.set(on ? Relay.Value.kOn : Relay.Value.kOff);
     }
     
     public static class SpeedRamp {
