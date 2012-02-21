@@ -308,14 +308,14 @@ public class OI {
         double speed = 0;
         speed = (trim - halfMax) / halfMax;
         //deadband
-        if(Math.abs(speed) < 0.3) {
+        if(speed < -0.1) {
+            speed = speed * 1.0/0.9;
+        }
+        else if (speed < 0.1) {
             speed = 0;
         }
-        if (speed > 0) {
-            speed -= -0.3;
-        }
         else {
-            speed += 0.3;
+            speed = speed * 1.0 / 0.9;
         }
         return Flywheel.MAX_TRIM_RPM * speed;
     }
