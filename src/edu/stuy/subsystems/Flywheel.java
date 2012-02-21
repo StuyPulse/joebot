@@ -255,6 +255,8 @@ public class Flywheel extends Subsystem {
     }
     
     public boolean isSpinning() {
+        //dwai. we're comparing doubles.
+        //this is ok since when the wheel is not spinning the set points are EXACTLY 0.
         return upperSetpoint != 0 && lowerSetpoint != 0;
     }
 }

@@ -30,7 +30,7 @@ public class AutonWaitThenConvey extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-        addSequential(new WaitCommand(2));
+        addSequential(new WaitCommand(2)); //2 is an arbitrary number. can change it if you want.
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
     }
 }
