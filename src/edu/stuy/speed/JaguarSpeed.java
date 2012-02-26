@@ -5,6 +5,7 @@
 package edu.stuy.speed;
 
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,14 +32,23 @@ public class JaguarSpeed implements JoeSpeed {
         speedSetpoint = 0;
         this.toleranceRPM = toleranceRPM;
         try {
-            jaguar = new CANJaguar(id, CANJaguar.ControlMode.kSpeed);
-            jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-            jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
-            jaguar.setPID(KP, KI, KD);
-            jaguar.enableControl();
-        } catch (CANTimeoutException e) {
+            jaguar = new CANJaguar(id);
+            jaguarInit();
+        }
+        catch (CANTimeoutException e) {
+            if (!DriverStation.getInstance().isFMSAttached()) {
+                e.printStackTrace();
+            }
         }
 
+    }
+
+    public void jaguarInit() throws CANTimeoutException {
+        jaguar.changeControlMode(CANJaguar.ControlMode.kSpeed);
+        jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+        jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+        jaguar.setPID(KP, KI, KD);
+        jaguar.enableControl();
     }
 
     public double getRPM() {
@@ -53,7 +63,13 @@ public class JaguarSpeed implements JoeSpeed {
         speedSetpoint = rpm;
         try {
             jaguar.setX(-rpm);
+            if (jaguar.getPowerCycled()) {
+                jaguarInit();
+            }
         } catch (CANTimeoutException e) {
+            if (!DriverStation.getInstance().isFMSAttached()) {
+                e.printStackTrace();
+            }
         }
     }
 
