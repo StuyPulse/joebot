@@ -11,6 +11,7 @@ import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
@@ -130,6 +131,7 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Acquirer value", CommandBase.acquirer.getRoller());
         
         SmartDashboard.putBoolean("Pressure switch", compressor.getPressureSwitchValue());
+        SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
         // Camera target info
 //        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
