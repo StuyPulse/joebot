@@ -48,6 +48,7 @@ public class JaguarSpeed implements JoeSpeed {
         jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
         jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
         jaguar.setPID(KP, KI, KD);
+        jaguar.configFaultTime(0.5);
         jaguar.enableControl();
     }
 
