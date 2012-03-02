@@ -37,6 +37,7 @@ public class Drivetrain extends Subsystem {
     double Ki = 0.0005;
     double Kd = 1.0;
     private double previousReading = -1.0;
+    public Compressor compressor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -70,6 +71,10 @@ public class Drivetrain extends Subsystem {
        vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
        
        underbodyLights = new Relay(RobotMap.UNDERBODY_LIGHTS);
+       
+       
+        compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
+        compressor.start();
     }
 
     /**

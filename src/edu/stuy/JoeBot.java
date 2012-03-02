@@ -10,6 +10,7 @@ import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
+import edu.stuy.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -28,7 +29,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
-    Compressor compressor;
 //    Thread ariel;
 
     /**
@@ -40,8 +40,6 @@ public class JoeBot extends IterativeRobot {
         // autonomousCommand = new ExampleCommand();
 
         if (!Devmode.DEV_MODE) {
-            compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
-            compressor.start();
         }
 
         // Initialize all subsystems
@@ -66,6 +64,7 @@ public class JoeBot extends IterativeRobot {
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
         CommandBase.drivetrain.setUnderbodyLights(true);
+        CommandBase.drivetrain.compressor.start();
     }
 
     /**
