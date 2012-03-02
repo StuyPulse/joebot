@@ -129,7 +129,7 @@ public class JoeBot extends IterativeRobot {
 
         SmartDashboard.putDouble("Acquirer value", CommandBase.acquirer.getRoller());
         
-        SmartDashboard.putBoolean("Pressure switch", compressor.getPressureSwitchValue());
+        SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
         SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
         // Camera target info
