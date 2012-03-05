@@ -113,6 +113,16 @@ public class OI {
             new JoystickButton(shooterStick, 8).whileHeld(new ConveyAutomatic());
 
             // see getDistanceButton()
+            
+            // Debug box switches
+            new JoystickButton(debugBox, 1).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
+            new JoystickButton(debugBox, 2).whileHeld(new AcquirerAcquire());
+            new JoystickButton(debugBox, 3).whileHeld(new ConveyAutomatic());
+            // Debug box buttons
+            new JoystickButton(debugBox, 5).whileHeld(new DrivetrainSetGear(false)); // low gear
+            new JoystickButton(debugBox, 6).whileHeld(new DrivetrainSetGear(true)); // high gear
+            new JoystickButton(debugBox, 9).whileHeld(new TusksExtend());
+            new JoystickButton(debugBox, 10).whileHeld(new TusksRetract());
         }
     }
     
