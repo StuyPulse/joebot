@@ -35,7 +35,6 @@ public class JaguarSpeed implements JoeSpeed {
         speedSetpoint = 0;
         this.toleranceRPM = toleranceRPM;
         try {
-            jaguar = new CANJaguar(id);
             jaguarInit();
         }
         catch (CANTimeoutException e) {
