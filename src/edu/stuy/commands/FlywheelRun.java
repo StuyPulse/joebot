@@ -22,6 +22,7 @@ public class FlywheelRun extends CommandBase {
     
     public FlywheelRun(double distanceInches, double[] speeds) {
         requires(flywheel);
+        this.distanceInches = 0;
         setDistanceInches(distanceInches);
         this.speeds = speeds;
         automatic = false;
@@ -32,9 +33,24 @@ public class FlywheelRun extends CommandBase {
         this.speeds = Flywheel.speedsTopHoop;
         automatic = true;
     }
-    
-    private void setDistanceInches(double distanceInches) {
-        this.distanceInches = distanceInches;
+
+    /**
+     * Sets the distance setpoint instance variable to a distance.
+     *
+     * If the distance has changed from the last check, reset the Jaguars.
+     *
+     * @param newDistanceInches Distance setpoint
+     */
+    private void setDistanceInches(double newDistanceInches) {
+
+        // If the new distance is different from the old distance, reset the Jaguars
+        if (Math.abs(distanceInches - newDistanceInches) > 0.1) {
+            flywheel.resetJaguars();
+        }
+
+        //Set the new distanceInches
+        distanceInches = newDistanceInches;
+
     }
 
     // Called just before this Command runs the first time
@@ -51,6 +67,8 @@ public class FlywheelRun extends CommandBase {
         }
         if (automatic) {
             setDistanceInches(CommandBase.oi.getDistanceFromDistanceButton());
+
+
             if (CommandBase.oi.getHoopHeightButton()) {
                 this.speeds = Flywheel.speedsTopHoop;
             } else {
