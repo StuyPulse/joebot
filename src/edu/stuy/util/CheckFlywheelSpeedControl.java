@@ -29,8 +29,8 @@ public class CheckFlywheelSpeedControl extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double[] rpm = flywheel.lookupRPM(distanceInches, Flywheel.speedsTopHoop);
-        flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
+        //double[] rpm = flywheel.lookupRPM(distanceInches, Flywheel.speedsTopHoop);
+        //flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
     }
 
     // Make this return true when this Command no longer needs to run execute()

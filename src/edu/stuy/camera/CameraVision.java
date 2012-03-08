@@ -154,4 +154,12 @@ public class CameraVision extends Thread {
     public void setCamera(boolean  isRunning){
         cameraOn = isRunning;
     }
+    
+    public void servoUp() {
+        // move the servo UP
+    }
+    
+    public void servoDown() {
+        // move the servo DOWN
+    }
 }

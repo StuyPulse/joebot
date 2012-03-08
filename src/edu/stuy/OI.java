@@ -13,7 +13,8 @@ public class OI {
     private Joystick leftStick;
     private Joystick rightStick;
     private Joystick shooterStick;
-    private Joystick debugBox;
+    //private Joystick debugBox;
+    private Joystick cameraStick;
     
     public static final int DISTANCE_BUTTON_AUTO = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
@@ -64,7 +65,9 @@ public class OI {
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
 
         shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
-        debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
+        //debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
+        cameraStick = new Joystick(RobotMap.CAMERA_JOYSTICK_PORT);
+        System.out.println("Camera stick added");
         
         distanceButton = DISTANCE_BUTTON_STOP;
         distanceInches = Flywheel.distances[Flywheel.STOP_INDEX];
@@ -114,7 +117,7 @@ public class OI {
 
             // see getDistanceButton()
             
-            // Debug box switches
+            /*// Debug box switches
             new JoystickButton(debugBox, 1).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
             new JoystickButton(debugBox, 2).whileHeld(new AcquirerAcquire());
             new JoystickButton(debugBox, 3).whileHeld(new ConveyAutomatic());
@@ -122,7 +125,11 @@ public class OI {
             new JoystickButton(debugBox, 5).whileHeld(new DrivetrainSetGear(false)); // low gear
             new JoystickButton(debugBox, 6).whileHeld(new DrivetrainSetGear(true)); // high gear
             new JoystickButton(debugBox, 9).whileHeld(new TusksExtend());
-            new JoystickButton(debugBox, 10).whileHeld(new TusksRetract());
+            new JoystickButton(debugBox, 10).whileHeld(new TusksRetract());*/
+            
+            // testing camera servo
+            new JoystickButton(cameraStick, 4).whenPressed(new MoveCamera(true));
+            new JoystickButton(cameraStick, 5).whenPressed(new MoveCamera(false));
         }
     }
     
@@ -228,9 +235,9 @@ public class OI {
         return rightStick;
     }
     
-    public Joystick getDebugBox() {
+/*    public Joystick getDebugBox() {
         return debugBox;
-    }
+    }*/
 
     /**
      * Gets value of hoop height toggle switch.
@@ -282,16 +289,16 @@ public class OI {
         int switchNum = 0;
         int[] binaryValue = new int[4];
 
-        boolean[] dIO = {debugBox.getRawButton(1), debugBox.getRawButton(2), debugBox.getRawButton(3), debugBox.getRawButton(4)};
+        //boolean[] dIO = {debugBox.getRawButton(1), debugBox.getRawButton(2), debugBox.getRawButton(3), debugBox.getRawButton(4)};
 
-        for (int i = 0; i < 4; i++) {
+        /*for (int i = 0; i < 4; i++) {
             if (dIO[i]) {
                 binaryValue[i] = 1;
             }
             else {
                 binaryValue[i] = 0;
             }
-        }
+        }*/
 
         binaryValue[0] *= 8; // convert all binaryValues to decimal values
         binaryValue[1] *= 4;

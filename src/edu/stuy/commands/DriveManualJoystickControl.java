@@ -21,7 +21,7 @@ public class DriveManualJoystickControl extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        drivetrain.compressor.start();
+        //drivetrain.compressor.start();
         
     }
 
@@ -29,11 +29,11 @@ public class DriveManualJoystickControl extends CommandBase {
     protected void execute() {
         drivetrain.tankDrive(-oi.getLeftStick().getY(), -oi.getRightStick().getY());
         // If we're driving, stop the compressor from turning on. Otherwise, it's fine.
-        if ( Math.abs(oi.getLeftStick().getY()) < 0.1  || Math.abs(oi.getRightStick().getY()) < 0.1) {
+        /*if ( Math.abs(oi.getLeftStick().getY()) < 0.1  || Math.abs(oi.getRightStick().getY()) < 0.1) {
             drivetrain.compressor.stop();
         } else {
             drivetrain.compressor.start();
-        }
+        }*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
