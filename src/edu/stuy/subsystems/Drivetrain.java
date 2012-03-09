@@ -21,8 +21,8 @@ public class Drivetrain extends Subsystem {
     public RobotDrive drive;
     
     Solenoid gearShiftLow;
-    Solenoid gearShiftHigh; 
-    AnalogChannel sonar;
+    Solenoid gearShiftHigh;
+
     AnalogChannel vcc;
     public Encoder encoderLeft;
     public Encoder encoderRight;
@@ -67,7 +67,6 @@ public class Drivetrain extends Subsystem {
 
        gearShiftLow = new Solenoid(2, RobotMap.GEAR_SHIFT_LOW);
        gearShiftHigh = new Solenoid(2, RobotMap.GEAR_SHIFT_HIGH);
-       sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
        vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
        
        underbodyLights = new Relay(RobotMap.UNDERBODY_LIGHTS);
@@ -77,21 +76,7 @@ public class Drivetrain extends Subsystem {
         compressor.start();
     }
 
-    /**
-     * Gets the analog voltage of the MaxBotics ultrasonic sensor, and debounces the input
-     * @return Analog voltage reading from 0 to 5
-     */
-    public double getSonarVoltage() {
-        double newReading = sonar.getVoltage();
-        double goodReading = previousReading;
-        if (previousReading - (-1) < .001 || (newReading - previousReading) < .5) {
-            goodReading = newReading;
-            previousReading = newReading;
-        } else {
-            previousReading = newReading;
-        }
-        return goodReading;
-    }
+
 
     /**
      * Get value of maximum analog input in volts.
@@ -101,14 +86,7 @@ public class Drivetrain extends Subsystem {
         return vcc.getVoltage();
     }
 
-    /**
-     * Scales sonar voltage reading to inches
-     * @return distance from alliance wall in inches, as measured by sonar sensor
-     */
-    public double getSonarDistance_in() {
-        double cm = getSonarVoltage() * 1024 / getVcc(); // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
-        return cm / 2.54; // 1 cm is 1/2.54 inch
-    }
+
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

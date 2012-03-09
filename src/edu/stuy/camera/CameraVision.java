@@ -132,8 +132,9 @@ public class CameraVision extends Thread {
      * If Alliance Wall is within 144 inches, then turn on light.  Else, turn off.
      */
     public boolean toggleReflectLightIfInRange() {
-        boolean withinRange = CommandBase.drivetrain.getSonarVoltage() < 144; // TODO: Find actual effective limit for range of LEDs
+        boolean withinRange = false;
         reflectiveLight.set(withinRange ? Relay.Value.kOn : Relay.Value.kOff);
+
 
         return withinRange;
     }
