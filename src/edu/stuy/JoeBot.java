@@ -55,7 +55,6 @@ public class JoeBot extends IterativeRobot {
         updateSmartDashboard();
         CommandBase.oi.resetBox();
 //        CameraVision.getInstance().setCamera(false);
-        CommandBase.drivetrain.setUnderbodyLights(false);
     }
 
     public void autonomousInit() {
@@ -63,7 +62,6 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
-        CommandBase.drivetrain.setUnderbodyLights(true);
         CommandBase.drivetrain.compressor.start();
     }
 
@@ -86,7 +84,6 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
-        CommandBase.drivetrain.setUnderbodyLights(true);
     }
 
     /**
