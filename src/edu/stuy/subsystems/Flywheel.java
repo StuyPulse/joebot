@@ -110,12 +110,21 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[KEY_SLANT_INDEX] = 1560; //TODO: Fix this value through testing
         speedsTopHoop[KEY_MIDDLE_HOOP_INDEX] = 1425; //TODO: Fix value through testing
         speedsTopHoop[MAX_DIST] = 3000; // TODO: FIx this value through testing
-        for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
-            speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
-        }
-        for (int i = LOWEST_SWISH_INDEX; i < numDistances; i++) {
-            speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i], MIDDLE_HOOP_HEIGHT);
-        }
+
+        // fill these in at competition if we have time
+        speedsMiddleHoop[STOP_INDEX] = 0;
+        speedsMiddleHoop[FENDER_INDEX] = 0;
+        speedsMiddleHoop[FENDER_SIDE_INDEX] = 0;
+        speedsMiddleHoop[FENDER_WIDE_INDEX] = 0;
+        speedsMiddleHoop[HIGHEST_BACKBOARD_INDEX] = speedsMiddleHoop[FENDER_WIDE_INDEX];
+        speedsMiddleHoop[LOWEST_SWISH_INDEX] = speedsMiddleHoop[FENDER_WIDE_INDEX];
+        speedsMiddleHoop[FENDER_SIDE_WIDE_INDEX] = 0; //NOT TESTED
+        speedsMiddleHoop[FENDER_LONG_INDEX] = 0;
+        speedsMiddleHoop[FENDER_SIDE_LONG_INDEX] = 0; //NOT TESTED
+        speedsMiddleHoop[KEY_INDEX] = 0;
+        speedsMiddleHoop[KEY_SLANT_INDEX] = 0; //TODO: Fix this value through testing
+        speedsMiddleHoop[KEY_MIDDLE_HOOP_INDEX] = 0; //TODO: Fix value through testing
+        speedsMiddleHoop[MAX_DIST] = 0; // TODO: FIx this value through testing
     }
 
     // Put methods for controlling this subsystem
@@ -152,22 +161,6 @@ public class Flywheel extends Subsystem {
         SmartDashboard.putDouble("Upper error", Math.abs(upperError));
         SmartDashboard.putDouble("Lower error", Math.abs(lowerError));
         return speedGood;
-    }
-
-    /**
-     * Given a distance that we want to shoot the ball, calculate
-     * the flywheel RPM necessary to shoot the ball that distance
-     */
-    public static double theoreticalDesiredExitRPM(double distanceInches, double hoopHeightInches) {
-        double g = 387; // gravity: inches per second squared
-        double shooterHeightInches = 36.0;
-        double h = hoopHeightInches - shooterHeightInches; // height of hoop above the shooter: inches
-        double linearSpeedInchesPerSecond = (distanceInches * Math.sqrt(g))
-                / (Math.sqrt(2) * Math.cos(THETA_RADIANS) * Math.sqrt(distanceInches * Math.tan(THETA_RADIANS) - h));
-        double wheelRadiusInches = 3.0;
-        double wheelCircumferenceInches = 2 * Math.PI * wheelRadiusInches;
-        double RPM = 60 * linearSpeedInchesPerSecond / wheelCircumferenceInches;
-        return RPM;
     }
 
     /**
