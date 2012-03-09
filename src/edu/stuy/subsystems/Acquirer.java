@@ -59,6 +59,7 @@ public class Acquirer extends Subsystem {
     }
 
     public void acquireReverse() {
+        isAcquiring = false;
         roll(REV);// WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
     }
 
