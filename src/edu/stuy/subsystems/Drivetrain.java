@@ -23,7 +23,6 @@ public class Drivetrain extends Subsystem {
     Solenoid gearShiftLow;
     Solenoid gearShiftHigh;
 
-    AnalogChannel vcc;
     public Encoder encoderLeft;
     public Encoder encoderRight;
     Gyro gyro;
@@ -67,7 +66,6 @@ public class Drivetrain extends Subsystem {
 
        gearShiftLow = new Solenoid(2, RobotMap.GEAR_SHIFT_LOW);
        gearShiftHigh = new Solenoid(2, RobotMap.GEAR_SHIFT_HIGH);
-       vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
        
        underbodyLights = new Relay(RobotMap.UNDERBODY_LIGHTS);
        
@@ -75,17 +73,6 @@ public class Drivetrain extends Subsystem {
         compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
         compressor.start();
     }
-
-
-
-    /**
-     * Get value of maximum analog input in volts.
-     * @return value of maximum analog input in volts.
-     */
-    public double getVcc() {
-        return vcc.getVoltage();
-    }
-
 
 
     public void initDefaultCommand() {
