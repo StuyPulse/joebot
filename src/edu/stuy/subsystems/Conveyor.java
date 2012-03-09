@@ -36,11 +36,18 @@ public class Conveyor extends Subsystem {
         upperSensor = new DigitalInput(RobotMap.UPPER_CONVEYOR_SENSOR);
         lowerSensor = new DigitalInput(RobotMap.LOWER_CONVEYOR_SENSOR);
     }
-    
-    public void roll(double speed) {
+
+    /**
+     * Should be set to either FORWARD or BACKWARD or 0
+     * @param speed
+     */
+    private void roll(double speed) {
         roller.set(speed);
     }
 
+    /**
+     * Conveys ball upwards towards the top of the conveyor
+     */
     public void convey() {
         roll(FORWARD);
     }
