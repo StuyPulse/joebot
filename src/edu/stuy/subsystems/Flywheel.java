@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Flywheel extends Subsystem {
 
-    /** Distances **/
+    /** Distances (in inches) **/
     static final double stop = 0;
     static final double wideBot = 28.0;
     static final double longBot = 38.0;
@@ -53,6 +53,10 @@ public class Flywheel extends Subsystem {
     public static double rpmTolerance = 75;
     /** Positions **/
     public static final int numDistances = 14;
+
+    // distances, speedsTopHoop and speedsMiddleHoop are correlated
+    // if we're shooting from distances[i], set the flywheel
+    // speed to speedsTopHoop[i]
     public static final double[] distances = new double[numDistances]; // all inches
     public static final double[] speedsTopHoop = new double[numDistances];
     public static final double[] speedsMiddleHoop = new double[numDistances];
@@ -260,7 +264,7 @@ public class Flywheel extends Subsystem {
             lowerRoller.jaguarInit();
             upperRoller.jaguarInit();
         } catch (CANTimeoutException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // not run in a continuous loop, so print statements shouldn't cause lag
         }
     }
 }
