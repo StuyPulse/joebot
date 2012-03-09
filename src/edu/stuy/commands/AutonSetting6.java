@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonSetting6 extends CommandGroup {
     public AutonSetting6 () {
         double distanceInches = Flywheel.distances[Flywheel.KEY_MIDDLE_HOOP_INDEX];
-        addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
+        addParallel(new FlywheelRun(distanceInches, Flywheel.speedsMiddleHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
     }
 }
