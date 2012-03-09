@@ -45,6 +45,7 @@ public class Drivetrain extends Subsystem {
         drive = new VictorRobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
 
+        // The following encoders constantly return zero
         encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
         encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
 
@@ -65,7 +66,8 @@ public class Drivetrain extends Subsystem {
             }
         }, 0.005);
 
-       gearShiftLow = new Solenoid(2, RobotMap.GEAR_SHIFT_LOW);
+       // In "2nd" cRio slot, or 4th physical
+       gearShiftLow = new Solenoid(2, RobotMap.GEAR_SHIFT_LOW); 
        gearShiftHigh = new Solenoid(2, RobotMap.GEAR_SHIFT_HIGH);
        
        
@@ -89,11 +91,19 @@ public class Drivetrain extends Subsystem {
         drive.tankDrive(leftValue, rightValue);
     }
 
+    /**
+     * Sets high gear if high is true; else low
+     * @param high true if drivetrain should be in high gear
+     */
     public void setGear(boolean high) {
         gearShiftHigh.set(high);
         gearShiftLow.set(!high);
     }
 
+    /**
+     * Gear state
+     * @return true if in high gear; else false
+     */
     public boolean getGear() {
         return gearShiftHigh.get();
     }
@@ -124,10 +134,7 @@ public class Drivetrain extends Subsystem {
             }
         }, 0.005);
     }
-
-    public void driveStraight() {
-        controller.setSetpoint(0);  // Go straight
-    }
+    
 
     /**
      * Calculate average distance of the two encoders.  
