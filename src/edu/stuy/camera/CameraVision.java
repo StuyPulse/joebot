@@ -105,7 +105,7 @@ public class CameraVision extends Thread {
     }
     }
     /**
-     * Displays the center of the largest, rectangular target detected
+4     * Displays the center of the largest, rectangular target detected
      * @return targetCenter
      */
     public double getTargetCenter() {
