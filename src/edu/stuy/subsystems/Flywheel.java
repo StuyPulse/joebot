@@ -7,7 +7,6 @@ package edu.stuy.subsystems;
 import edu.stuy.RobotMap;
 import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JaguarSpeed;
-import edu.stuy.speed.JoeSpeed;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
