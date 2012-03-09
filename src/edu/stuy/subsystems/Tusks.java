@@ -20,6 +20,7 @@ public class Tusks extends Subsystem {
     // here. Call these from Commands.
     
     public Tusks() {
+       // In "2nd" cRio slot, or 4th physical
         solenoidExtend = new Solenoid(2, RobotMap.TUSKS_SOLENOID_EXTEND);
         solenoidRetract = new Solenoid(2, RobotMap.TUSKS_SOLENOID_RETRACT);
     }
