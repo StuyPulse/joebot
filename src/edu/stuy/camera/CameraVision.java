@@ -38,7 +38,7 @@ public class CameraVision extends Thread {
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
     private Relay targetLight;              // Are-we-aligned? indicator
     private Relay reflectiveLight;          // To make the targets luminous
-    private int targetCenter;               // x-coord os the particle center-of-mass
+    private int targetCenter;               // x-coord of the particle center-of-mass
     int CAMERA_CENTER;                      // center of camera width
     Vector massCenter = new Vector();       // list of center-of-mass-es
     boolean cameraOn;

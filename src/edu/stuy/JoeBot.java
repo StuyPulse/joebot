@@ -10,7 +10,9 @@ import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
+import edu.stuy.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +29,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
-    Compressor compressor;
 //    Thread ariel;
 
     /**
@@ -39,8 +40,6 @@ public class JoeBot extends IterativeRobot {
         // autonomousCommand = new ExampleCommand();
 
         if (!Devmode.DEV_MODE) {
-            compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
-            compressor.start();
         }
 
         // Initialize all subsystems
@@ -56,6 +55,7 @@ public class JoeBot extends IterativeRobot {
         updateSmartDashboard();
         CommandBase.oi.resetBox();
 //        CameraVision.getInstance().setCamera(false);
+        CommandBase.drivetrain.setUnderbodyLights(false);
     }
 
     public void autonomousInit() {
@@ -63,6 +63,8 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
+        CommandBase.drivetrain.setUnderbodyLights(true);
+        CommandBase.drivetrain.compressor.start();
     }
 
     /**
@@ -84,6 +86,7 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
+        CommandBase.drivetrain.setUnderbodyLights(true);
     }
 
     /**
@@ -126,7 +129,8 @@ public class JoeBot extends IterativeRobot {
 
         SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
-        SmartDashboard.putBoolean("Pressure switch", compressor.getPressureSwitchValue());
+        SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
+        SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
         // Camera target info
 //        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));

@@ -28,6 +28,7 @@ public class Drivetrain extends Subsystem {
     public Encoder encoderRight;
     Gyro gyro;
     SendablePIDController controller;
+    private Relay underbodyLights;
     final int WHEEL_RADIUS = 3;
     final double CIRCUMFERENCE = 2 * Math.PI * WHEEL_RADIUS;
     final int ENCODER_CODES_PER_REV = 360;
@@ -36,6 +37,7 @@ public class Drivetrain extends Subsystem {
     double Ki = 0.0005;
     double Kd = 1.0;
     private double previousReading = -1.0;
+    public Compressor compressor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -67,6 +69,12 @@ public class Drivetrain extends Subsystem {
        gearShiftHigh = new Solenoid(2, RobotMap.GEAR_SHIFT_HIGH);
        sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
        vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
+       
+       underbodyLights = new Relay(RobotMap.UNDERBODY_LIGHTS);
+       
+       
+        compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
+        compressor.start();
     }
 
     /**
@@ -183,7 +191,11 @@ public class Drivetrain extends Subsystem {
     public double getGyroAngle() {
         return gyro.getAngle();
     }
-
+    
+    public void setUnderbodyLights(boolean on) {
+        underbodyLights.set(on ? Relay.Value.kOn : Relay.Value.kOff);
+    }
+    
     public static class SpeedRamp {
         /**
          * Profiles based on generic distance measurement to wall and the distance to travel.

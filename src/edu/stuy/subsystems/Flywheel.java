@@ -8,6 +8,7 @@ import edu.stuy.RobotMap;
 import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.speed.JoeSpeed;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Kevin Wang
  */
 public class Flywheel extends Subsystem {
+
     /** Distances **/
     static final double stop = 0;
     static final double wideBot = 28.0;
@@ -24,19 +26,14 @@ public class Flywheel extends Subsystem {
     static final double fenderDepth = 38.75;
     static final double backboardToHoopCenter = 6 + 9;
     static final double halfFenderWidth = 50.5;
-
     public static final double THETA_DEGREES = 72;
     public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
-    
     public double lowerSetpoint;
     public double upperSetpoint;
-    
-    public static JoeSpeed upperRoller;
-    public static JoeSpeed lowerRoller;
-
+    public static JaguarSpeed upperRoller;
+    public static JaguarSpeed lowerRoller;
     public static final double TOP_HOOP_HEIGHT = 98.0;
     public static final double MIDDLE_HOOP_HEIGHT = 61.0;
-
     /**
      * The two points that we're in between for shooting.
      * Set to the same value if you're at an exact point, like fenderIndex
@@ -44,7 +41,6 @@ public class Flywheel extends Subsystem {
     public int indexSetPointLower;
     public int indexSetPointHigher;
     public double ratioBetweenDistances; // 0-1 position of distance setpoint between two closest points.
-
     /**
      * The maximum error in speed that will still result in a basket (5 inches
      * leeway on either end). Technically this is different for each distance
@@ -56,7 +52,6 @@ public class Flywheel extends Subsystem {
      * This way any shot made from within this tolerance will go the correct distance.
      */
     public static double rpmTolerance = 75;
-
     /** Positions **/
     public static final int numDistances = 14;
     public static final double[] distances = new double[numDistances]; // all inches
@@ -69,8 +64,6 @@ public class Flywheel extends Subsystem {
      *
      */
     public static double[] spinBottomMinusTopRPM = new double[numDistances];
-
-
     public static final int STOP_INDEX = 0;
     public static final int FENDER_INDEX = 1;
     public static final int FENDER_SIDE_INDEX = 2;
@@ -84,9 +77,8 @@ public class Flywheel extends Subsystem {
     public static final int KEY_SLANT_INDEX = 10;
     public static final int KEY_MIDDLE_HOOP_INDEX = 12;
     public static final int MAX_DIST = 13;
-    
     public static final int MAX_TRIM_RPM = 400;
-    
+
     static {
         distances[STOP_INDEX] = 0;
         distances[FENDER_INDEX] = fenderDepth + shooterToBumper;
@@ -126,7 +118,7 @@ public class Flywheel extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Flywheel() {
-       // speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
+        // speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
         lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
     }
@@ -149,8 +141,8 @@ public class Flywheel extends Subsystem {
      * on or off the speed light accordingly.
      */
     public boolean isSpeedGood() {
-        boolean speedGood = (Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())) < rpmTolerance) &&
-                            (Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())) < rpmTolerance);
+        boolean speedGood = (Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())) < rpmTolerance)
+                && (Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())) < rpmTolerance);
         SmartDashboard.putDouble("Upper error", Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())));
         SmartDashboard.putDouble("Lower error", Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())));
         return speedGood;
@@ -186,16 +178,18 @@ public class Flywheel extends Subsystem {
      */
     public double[] lookupRPM(double distanceInches, double[] speeds) {
         double[] returnVal = new double[2];
-        
+
         // Linear search for given distance in distances array.
         // The distances[] array must be sorted from smallest to largest.
         // Assuming the generic case of a distance that's not already in the table,
         // this loop finds which two points it's in between.
         for (int i = 1; i < distances.length; i++) {
             indexSetPointHigher = i;
-            indexSetPointLower = i-1;
-            if (distances[i] > distanceInches) break;
-            
+            indexSetPointLower = i - 1;
+            if (distances[i] > distanceInches) {
+                break;
+            }
+
             /* Keep iterating through the loop until we find the two points that
              * distanceInches is in-between.  We know we're finished when
              *     distances[i-1] < distanceInches < distances[i]
@@ -221,7 +215,7 @@ public class Flywheel extends Subsystem {
              * for 35 are indices 2 and 3 (values 30 and 40).
              */
         }
-        
+
         /** ratioBetweenDistances gives a value between 0-1 describing where
          *  distanceInches is between its two closest points.
          *    0.0: exactly equal to distances[indexSetPointLower]
@@ -229,34 +223,45 @@ public class Flywheel extends Subsystem {
          *    1.0: exactly equal to distances[indexSetPointHigher]
          */
         ratioBetweenDistances = (distanceInches - distances[indexSetPointLower])
-                /
-                (distances[indexSetPointHigher] - distances[indexSetPointLower]);
-        
+                / (distances[indexSetPointHigher] - distances[indexSetPointLower]);
+
         /* Set upperRPM to be a speed between indexSetPointLower and indexSetPointHigher,
          * in the same proportion as the distances.
          * Basically plot an intermediate point on the line connecting the two closest points.
          */
-        double upperRPM = speeds[indexSetPointLower] +
-                ((speeds[indexSetPointHigher] - speeds[indexSetPointLower]) *
-                (ratioBetweenDistances));
-        
+        double upperRPM = speeds[indexSetPointLower]
+                + ((speeds[indexSetPointHigher] - speeds[indexSetPointLower])
+                * (ratioBetweenDistances));
+
         /* Add some backspin to lowerRPM, again using a value in between the two closest points.
          * Interpolation doesn't do so much here, but at least it sets it to the
          * correct spin for backboard vs. swish
          */
-        double lowerRPM = upperRPM +
-                spinBottomMinusTopRPM[indexSetPointLower] +
-                (spinBottomMinusTopRPM[indexSetPointHigher] - spinBottomMinusTopRPM[indexSetPointLower]) *
-                ratioBetweenDistances;
-        
+        double lowerRPM = upperRPM
+                + spinBottomMinusTopRPM[indexSetPointLower]
+                + (spinBottomMinusTopRPM[indexSetPointHigher] - spinBottomMinusTopRPM[indexSetPointLower])
+                * ratioBetweenDistances;
+
         returnVal[0] = lowerRPM;
         returnVal[1] = upperRPM;
         return returnVal;
     }
-    
+
     public boolean isSpinning() {
         //dwai. we're comparing doubles.
         //this is ok since when the wheel is not spinning the set points are EXACTLY 0.
         return upperSetpoint != 0 && lowerSetpoint != 0;
+    }
+
+    /**
+     * Resets the upper and lower jaguars
+     */
+    public void resetJaguars() {
+        try {
+            lowerRoller.jaguarInit();
+            upperRoller.jaguarInit();
+        } catch (CANTimeoutException e) {
+            e.printStackTrace();
+        }
     }
 }

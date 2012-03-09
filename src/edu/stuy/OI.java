@@ -113,8 +113,19 @@ public class OI {
             new JoystickButton(shooterStick, 8).whileHeld(new ConveyAutomatic());
 
             // see getDistanceButton()
+            
+            // Debug box switches
+            new JoystickButton(debugBox, 1).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
+            new JoystickButton(debugBox, 2).whileHeld(new AcquirerAcquire());
+            new JoystickButton(debugBox, 3).whileHeld(new ConveyAutomatic());
+            // Debug box buttons
+            new JoystickButton(debugBox, 5).whileHeld(new DrivetrainSetGear(false)); // low gear
+            new JoystickButton(debugBox, 6).whileHeld(new DrivetrainSetGear(true)); // high gear
+            new JoystickButton(debugBox, 9).whileHeld(new TusksExtend());
+            new JoystickButton(debugBox, 10).whileHeld(new TusksRetract());
         }
     }
+
     
     // Copied from last year's DesDroid code. 
     
@@ -308,14 +319,14 @@ public class OI {
         double speed = 0;
         speed = (trim - halfMax) / halfMax;
         //deadband
-        if(Math.abs(speed) < 0.3) {
+        if(speed < -0.1) {
+            speed = speed * 1.0/0.9;
+        }
+        else if (speed < 0.1) {
             speed = 0;
         }
-        if (speed > 0) {
-            speed -= -0.3;
-        }
         else {
-            speed += 0.3;
+            speed = speed * 1.0 / 0.9;
         }
         return Flywheel.MAX_TRIM_RPM * speed;
     }
