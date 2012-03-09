@@ -127,9 +127,6 @@ public class FlywheelRun extends CommandBase {
         }
         CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
 
-
-        double rpmTop = Flywheel.upperRoller.getRPM();
-        double rpmBottom = Flywheel.lowerRoller.getRPM();
         Flywheel.upperRoller.setPID("upper");
         Flywheel.lowerRoller.setPID("lower");
     }
