@@ -144,10 +144,13 @@ public class Flywheel extends Subsystem {
      * on or off the speed light accordingly.
      */
     public boolean isSpeedGood() {
-        boolean speedGood = (Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())) < rpmTolerance)
-                && (Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())) < rpmTolerance);
-        SmartDashboard.putDouble("Upper error", Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())));
-        SmartDashboard.putDouble("Lower error", Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())));
+        double upperError = Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM());
+        double lowerError = Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM());
+        boolean speedGood =
+                Math.abs(upperError) < rpmTolerance
+             && Math.abs(lowerError) < rpmTolerance;
+        SmartDashboard.putDouble("Upper error", Math.abs(upperError));
+        SmartDashboard.putDouble("Lower error", Math.abs(lowerError));
         return speedGood;
     }
 
