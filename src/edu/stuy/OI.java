@@ -209,15 +209,6 @@ public class OI {
         }
         return distanceInches;
     }
-
-    public double[] getHeightFromButton() {
-        try {
-            topHoop = !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
-        } catch (EnhancedIOException ex) {
-            topHoop = true;
-        }
-        return (topHoop ? Flywheel.speedsMiddleHoop : Flywheel.speedsTopHoop);
-    }
     
     // Copied from last year's DesDroid code. 
     
