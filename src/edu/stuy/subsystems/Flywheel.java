@@ -80,33 +80,34 @@ public class Flywheel extends Subsystem {
     public static final int MAX_TRIM_RPM = 400;
 
     static {
-        distances[STOP_INDEX] = 0;
-        distances[FENDER_INDEX] = fenderDepth + shooterToBumper;
-        distances[FENDER_SIDE_INDEX] = halfFenderWidth + shooterToBumper;
-        distances[FENDER_WIDE_INDEX] = distances[FENDER_INDEX] + wideBot;
+        distances[STOP_INDEX]              = 0;
+        distances[FENDER_INDEX]            = fenderDepth + shooterToBumper;
+        distances[FENDER_SIDE_INDEX]       = halfFenderWidth + shooterToBumper;
+        distances[FENDER_WIDE_INDEX]       = distances[FENDER_INDEX] + wideBot;
         distances[HIGHEST_BACKBOARD_INDEX] = distances[FENDER_WIDE_INDEX];
-        distances[LOWEST_SWISH_INDEX] = distances[HIGHEST_BACKBOARD_INDEX];
-        distances[FENDER_SIDE_WIDE_INDEX] = distances[FENDER_SIDE_INDEX] + wideBot;
-        distances[FENDER_LONG_INDEX] = distances[FENDER_INDEX] + longBot;
-        distances[FENDER_SIDE_LONG_INDEX] = distances[FENDER_SIDE_INDEX] + longBot;
-        distances[KEY_INDEX] = 144.0 + shooterToBumper;
-        distances[KEY_SLANT_INDEX] = 215; //Fix this value through testing
-        distances[KEY_MIDDLE_HOOP_INDEX] = 144 + shooterToBumper;
-        distances[MAX_DIST] = 300;
+        distances[LOWEST_SWISH_INDEX]      = distances[HIGHEST_BACKBOARD_INDEX];
+        distances[FENDER_SIDE_WIDE_INDEX]  = distances[FENDER_SIDE_INDEX] + wideBot;
+        distances[FENDER_LONG_INDEX]       = distances[FENDER_INDEX] + longBot;
+        distances[FENDER_SIDE_LONG_INDEX]  = distances[FENDER_SIDE_INDEX] + longBot;
+        distances[KEY_INDEX]               = 144.0 + shooterToBumper;
+        distances[KEY_SLANT_INDEX]         = 215; //Fix this value through testing
+        distances[KEY_MIDDLE_HOOP_INDEX]   = 144 + shooterToBumper;
+        distances[MAX_DIST]                = 300;
 
-        speedsTopHoop[STOP_INDEX] = 0;
-        speedsTopHoop[FENDER_INDEX] = 1200;
-        speedsTopHoop[FENDER_SIDE_INDEX] = 0;
-        speedsTopHoop[FENDER_WIDE_INDEX] = 1340;
-        speedsTopHoop[HIGHEST_BACKBOARD_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
-        speedsTopHoop[LOWEST_SWISH_INDEX] = speedsTopHoop[FENDER_WIDE_INDEX];
-        speedsTopHoop[FENDER_SIDE_WIDE_INDEX] = 0; //NOT TESTED
-        speedsTopHoop[FENDER_LONG_INDEX] = 1075;
-        speedsTopHoop[FENDER_SIDE_LONG_INDEX] = 0; //NOT TESTED
-        speedsTopHoop[KEY_INDEX] = 1550;
-        speedsTopHoop[KEY_SLANT_INDEX] = 1560; //TODO: Fix this value through testing
-        speedsTopHoop[KEY_MIDDLE_HOOP_INDEX] = 1425; //TODO: Fix value through testing
-        speedsTopHoop[MAX_DIST] = 3000; // TODO: FIx this value through testing
+        speedsTopHoop[STOP_INDEX]                 = 0;
+        speedsTopHoop[FENDER_INDEX]               = 1200;
+        speedsTopHoop[FENDER_SIDE_INDEX]          = 0;
+        speedsTopHoop[FENDER_WIDE_INDEX]          = 1340;
+        speedsTopHoop[HIGHEST_BACKBOARD_INDEX]    = speedsTopHoop[FENDER_WIDE_INDEX];
+        speedsTopHoop[LOWEST_SWISH_INDEX]         = speedsTopHoop[FENDER_WIDE_INDEX];
+        speedsTopHoop[FENDER_SIDE_WIDE_INDEX]     = 0; //NOT TESTED
+        speedsTopHoop[FENDER_LONG_INDEX]          = 1075;
+        speedsTopHoop[FENDER_SIDE_LONG_INDEX]     = 0; //NOT TESTED
+        speedsTopHoop[KEY_INDEX]                  = 1550;
+        speedsTopHoop[KEY_SLANT_INDEX]            = 1560; //TODO: Fix this value through testing
+        speedsTopHoop[KEY_MIDDLE_HOOP_INDEX]      = 1425; //TODO: Fix value through testing
+        speedsTopHoop[MAX_DIST]                   = 3000; // TODO: FIx this value through testing
+        
         for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
             speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
         }
