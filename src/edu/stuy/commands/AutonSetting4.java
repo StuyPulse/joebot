@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonSetting4 extends CommandGroup {
 
     /**
-     * Shoots at key. Then backs up and knocks down bridge.
+     * Shoots at close key. Then backs up and knocks down bridge.
      */
     public AutonSetting4() {
-        double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
+        double distanceInches = Flywheel.distances[Flywheel.FAR_KEY_INDEX];
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
         

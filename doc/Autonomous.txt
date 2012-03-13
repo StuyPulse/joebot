@@ -16,5 +16,3 @@ AutonSetting4 - set flywheel directly in front of key and score
 
 AutonSetting5 - Set flywheel at slanted position at top hoop.
 		Score.
-
-AutonSetting6 - Shoot from key at two point hoop.
