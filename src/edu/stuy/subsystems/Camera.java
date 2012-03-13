@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Camera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    private static final int LOWER_ANGLE = 105;
+    private static final int UPPER_ANGLE = 180;
+
     Servo camServo;
     
     public Camera(){
@@ -28,12 +31,11 @@ public class Camera extends Subsystem {
     
     public void switchView(boolean down){
         if(down){
-            camServo.setAngle(0); // TODO: find out which angle is what
+            camServo.setAngle(LOWER_ANGLE);
         }
         else {
-            camServo.setAngle(180);
+            camServo.setAngle(UPPER_ANGLE);
         }
-        System.out.println(camServo.getAngle());
     }
     
     

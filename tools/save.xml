@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<dashboard>
+	<widget field="lowerD" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="197" y="455"/>
+	</widget>
+	<widget field="lowerI" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="187" y="426"/>
+	</widget>
+	<widget field="lowerP" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="204" y="397"/>
+	</widget>
+	<widget field="upperD" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="348"/>
+	</widget>
+	<widget field="upperI" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="319"/>
+	</widget>
+	<widget field="upperP" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="290"/>
+	</widget>
+	<widget field="setRPMbottom" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="397"/>
+	</widget>
+	<widget field="useSDBtuning" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="468"/>
+	</widget>
+	<widget field="setRPMottom" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="467"/>
+	</widget>
+	<widget field="setRPMtop" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="438"/>
+	</widget>
+	<widget field="getRPMbottom" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
+		<location x="605" y="167"/>
+	</widget>
+	<widget field="getRPMtop" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
+		<location x="154" y="95"/>
+	</widget>
+	<widget field="Lower error" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="193" y="174"/>
+	</widget>
+	<widget field="Drivetrain" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="191" y="145"/>
+	</widget>
+	<widget field="Conveyor Out: " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="232"/>
+	</widget>
+	<widget field="Tusks" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="187" y="116"/>
+	</widget>
+	<widget field="Auton Setting Switch: " type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="203"/>
+	</widget>
+	<widget field="Acquirer Out: " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="174"/>
+	</widget>
+	<widget field="Button Pressed: " type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="145"/>
+	</widget>
+	<widget field="Flywheel" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="227" y="87"/>
+	</widget>
+	<widget field="Speed Trim: " type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="116"/>
+	</widget>
+	<widget field="Upper error" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="200" y="58"/>
+	</widget>
+	<widget field="Max Voltage: " type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="87"/>
+	</widget>
+	<widget field="Upper Conveyor Sensor: " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="58"/>
+	</widget>
+	<widget field="Shoot Button: " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="29"/>
+	</widget>
+	<widget field="Conveyor" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="187" y="29"/>
+	</widget>
+	<widget field="Pressure switch" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="447" y="0"/>
+	</widget>
+	<widget field="Lower Conveyor Sensor: " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="187" y="0"/>
+	</widget>
+	<widget field="Hoop Height Button: " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="261"/>
+	</widget>
+	<widget field="Acquirer" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="0" y="232"/>
+	</widget>
+	<widget field="Is speed good" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="203"/>
+	</widget>
+	<widget field="Conveyor In: " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="174"/>
+	</widget>
+	<widget field="Delay Time: " type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="145"/>
+	</widget>
+	<widget field="Distance: " type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="116"/>
+	</widget>
+	<widget field="Sonar distance (in)" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="87"/>
+	</widget>
+	<widget field="Acquirer value" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="58"/>
+	</widget>
+	<widget field="Delay Pot: " type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="29"/>
+	</widget>
+	<widget field="Acquirer In: " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+	</widget>
+</dashboard>
