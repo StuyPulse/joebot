@@ -29,8 +29,7 @@ public class Camera extends Subsystem {
     public void switchView(boolean down){
         if(down){
             camServo.setAngle(0); // TODO: find out which angle is what
-        }
-        else {
+        } else {
             camServo.setAngle(180);
         }
         System.out.println(camServo.getAngle());
