@@ -6,7 +6,7 @@ package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
 import edu.stuy.commands.AcquirerStop;
-import edu.wpi.first.wpilibj.Victor;
+import edu.stuy.util.StallDetectingVictor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Acquirer extends Subsystem {
-    private Victor roller;
+    private StallDetectingVictor roller;
     private boolean isAcquiring;
 
     // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
@@ -27,7 +27,7 @@ public class Acquirer extends Subsystem {
     // here. Call these from Commands.
     
     public Acquirer() {
-        roller = new Victor(RobotMap.ACQUIRER_ROLLER);
+        roller = new StallDetectingVictor(RobotMap.ACQUIRER_ROLLER, RobotMap.CURRENT_THING_CHANNEL);
         isAcquiring = false;
     }
 
