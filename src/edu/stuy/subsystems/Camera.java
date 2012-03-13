@@ -38,5 +38,4 @@ public class Camera extends Subsystem {
         }
     }
     
-    
 }
