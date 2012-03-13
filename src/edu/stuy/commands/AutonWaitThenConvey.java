@@ -31,10 +31,10 @@ public class AutonWaitThenConvey extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 
-        //2 is an arbitrary number. can change it if you want, but not <0
+        //1 is an arbitrary number. can change it if you want, but not <0
         // should set to 0 after testing this, so that
         // we can shoot as soon as the flywheel is at speed
-        addSequential(new WaitCommand(2)); 
+        addSequential(new WaitCommand(1)); 
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
     }
 }
