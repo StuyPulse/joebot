@@ -21,14 +21,15 @@ public class Drivetrain extends Subsystem {
     public RobotDrive drive;
     
     Solenoid gearShiftLow;
-    Solenoid gearShiftHigh; 
-    AnalogChannel sonar;
-    AnalogChannel vcc;
-    public Encoder encoderLeft;
+    Solenoid gearShiftHigh;
+
+    // The encoders do not return correct values
+    public Encoder encoderLeft; 
     public Encoder encoderRight;
+    
     Gyro gyro;
     SendablePIDController controller;
-    private Relay underbodyLights;
+
     final int WHEEL_RADIUS = 3;
     final double CIRCUMFERENCE = 2 * Math.PI * WHEEL_RADIUS;
     final int ENCODER_CODES_PER_REV = 360;
@@ -36,7 +37,6 @@ public class Drivetrain extends Subsystem {
     double Kp = 0.035;
     double Ki = 0.0005;
     double Kd = 1.0;
-    private double previousReading = -1.0;
     public Compressor compressor;
 
     // Put methods for controlling this subsystem
@@ -45,6 +45,7 @@ public class Drivetrain extends Subsystem {
         drive = new VictorRobotDrive(RobotMap.FRONT_LEFT_MOTOR, RobotMap.REAR_LEFT_MOTOR, RobotMap.FRONT_RIGHT_MOTOR, RobotMap.REAR_RIGHT_MOTOR);
         drive.setSafetyEnabled(false);
 
+        // The following encoders constantly return zero
         encoderLeft = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true);
         encoderRight = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true);
 
@@ -65,50 +66,16 @@ public class Drivetrain extends Subsystem {
             }
         }, 0.005);
 
-       gearShiftLow = new Solenoid(2, RobotMap.GEAR_SHIFT_LOW);
+       // In "2nd" cRio slot, or 4th physical
+       gearShiftLow = new Solenoid(2, RobotMap.GEAR_SHIFT_LOW); 
        gearShiftHigh = new Solenoid(2, RobotMap.GEAR_SHIFT_HIGH);
-       sonar = new AnalogChannel(RobotMap.SONAR_CHANNEL);
-       vcc = new AnalogChannel(RobotMap.VCC_CHANNEL);
        
-       underbodyLights = new Relay(RobotMap.UNDERBODY_LIGHTS);
        
        
         compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
         compressor.start();
     }
 
-    /**
-     * Gets the analog voltage of the MaxBotics ultrasonic sensor, and debounces the input
-     * @return Analog voltage reading from 0 to 5
-     */
-    public double getSonarVoltage() {
-        double newReading = sonar.getVoltage();
-        double goodReading = previousReading;
-        if (previousReading - (-1) < .001 || (newReading - previousReading) < .5) {
-            goodReading = newReading;
-            previousReading = newReading;
-        } else {
-            previousReading = newReading;
-        }
-        return goodReading;
-    }
-
-    /**
-     * Get value of maximum analog input in volts.
-     * @return value of maximum analog input in volts.
-     */
-    public double getVcc() {
-        return vcc.getVoltage();
-    }
-
-    /**
-     * Scales sonar voltage reading to inches
-     * @return distance from alliance wall in inches, as measured by sonar sensor
-     */
-    public double getSonarDistance_in() {
-        double cm = getSonarVoltage() * 1024 / getVcc(); // MaxSonar EZ4 input units are in (Vcc/1024) / cm; multiply by (1024/Vcc) to get centimeters
-        return cm / 2.54; // 1 cm is 1/2.54 inch
-    }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -124,11 +91,19 @@ public class Drivetrain extends Subsystem {
         drive.tankDrive(leftValue, rightValue);
     }
 
+    /**
+     * Sets high gear if high is true; else low
+     * @param high true if drivetrain should be in high gear
+     */
     public void setGear(boolean high) {
         gearShiftHigh.set(high);
         gearShiftLow.set(!high);
     }
 
+    /**
+     * Gear state
+     * @return true if in high gear; else false
+     */
     public boolean getGear() {
         return gearShiftHigh.get();
     }
@@ -159,10 +134,7 @@ public class Drivetrain extends Subsystem {
             }
         }, 0.005);
     }
-
-    public void driveStraight() {
-        controller.setSetpoint(0);  // Go straight
-    }
+    
 
     /**
      * Calculate average distance of the two encoders.  
@@ -190,10 +162,6 @@ public class Drivetrain extends Subsystem {
     
     public double getGyroAngle() {
         return gyro.getAngle();
-    }
-    
-    public void setUnderbodyLights(boolean on) {
-        underbodyLights.set(on ? Relay.Value.kOn : Relay.Value.kOff);
     }
     
     public static class SpeedRamp {

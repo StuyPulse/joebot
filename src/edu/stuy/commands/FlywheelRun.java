@@ -17,7 +17,7 @@ public class FlywheelRun extends CommandBase {
 
     double distanceInches;
     double[] speeds;
-    boolean automatic;
+    boolean useOI;
     boolean isFMSAttached = false;
     
     public FlywheelRun(double distanceInches, double[] speeds) {
@@ -25,13 +25,13 @@ public class FlywheelRun extends CommandBase {
         this.distanceInches = 0;
         setDistanceInches(distanceInches);
         this.speeds = speeds;
-        automatic = false;
+        useOI = false;
     }
 
     public FlywheelRun() {
         requires(flywheel);
         this.speeds = Flywheel.speedsTopHoop;
-        automatic = true;
+        useOI = true;
     }
 
     /**
@@ -65,7 +65,7 @@ public class FlywheelRun extends CommandBase {
                 tuneShooter();
                 return;
         }
-        if (automatic) {
+        if (useOI) {
             setDistanceInches(CommandBase.oi.getDistanceFromDistanceButton());
 
 
@@ -90,7 +90,14 @@ public class FlywheelRun extends CommandBase {
     
     private boolean useSmartDashboardTuning() {
         if (isFMSAttached || DriverStation.getInstance().isFMSAttached()) {
-            isFMSAttached = true;
+            isFMSAttached = true; // cache value of isFMSAttached
+            // comment out "return false" when we want to
+            // use smart dashboard on the field in a
+            // practice match.
+            // ****
+            // ****
+            // un-comment after practice match since
+            // only use the OI
             return false;
         }
         boolean useSmartDashboardTuning = false;
@@ -120,9 +127,6 @@ public class FlywheelRun extends CommandBase {
         }
         CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
 
-
-        double rpmTop = Flywheel.upperRoller.getRPM();
-        double rpmBottom = Flywheel.lowerRoller.getRPM();
         Flywheel.upperRoller.setPID("upper");
         Flywheel.lowerRoller.setPID("lower");
     }

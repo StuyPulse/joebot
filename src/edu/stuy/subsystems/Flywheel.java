@@ -7,7 +7,6 @@ package edu.stuy.subsystems;
 import edu.stuy.RobotMap;
 import edu.stuy.commands.FlywheelRun;
 import edu.stuy.speed.JaguarSpeed;
-import edu.stuy.speed.JoeSpeed;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Flywheel extends Subsystem {
 
-    /** Distances **/
+    /** Distances (in inches) **/
     static final double stop = 0;
     static final double wideBot = 28.0;
     static final double longBot = 38.0;
@@ -54,6 +53,10 @@ public class Flywheel extends Subsystem {
     public static double rpmTolerance = 75;
     /** Positions **/
     public static final int numDistances = 14;
+
+    // distances, speedsTopHoop and speedsMiddleHoop are correlated
+    // if we're shooting from distances[i], set the flywheel
+    // speed to speedsTopHoop[i]
     public static final double[] distances = new double[numDistances]; // all inches
     public static final double[] speedsTopHoop = new double[numDistances];
     public static final double[] speedsMiddleHoop = new double[numDistances];
@@ -107,13 +110,21 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[KEY_SLANT_INDEX]            = 1560; //TODO: Fix this value through testing
         speedsTopHoop[KEY_MIDDLE_HOOP_INDEX]      = 1425; //TODO: Fix value through testing
         speedsTopHoop[MAX_DIST]                   = 3000; // TODO: FIx this value through testing
-        
-        for (int i = 0; i <= HIGHEST_BACKBOARD_INDEX; i++) {
-            speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i] + 2 * backboardToHoopCenter, MIDDLE_HOOP_HEIGHT);
-        }
-        for (int i = LOWEST_SWISH_INDEX; i < numDistances; i++) {
-            speedsMiddleHoop[i] = theoreticalDesiredExitRPM(distances[i], MIDDLE_HOOP_HEIGHT);
-        }
+
+        // fill these in at competition if we have time
+        speedsMiddleHoop[STOP_INDEX] = 0;
+        speedsMiddleHoop[FENDER_INDEX] = 0;
+        speedsMiddleHoop[FENDER_SIDE_INDEX] = 0;
+        speedsMiddleHoop[FENDER_WIDE_INDEX] = 0;
+        speedsMiddleHoop[HIGHEST_BACKBOARD_INDEX] = speedsMiddleHoop[FENDER_WIDE_INDEX];
+        speedsMiddleHoop[LOWEST_SWISH_INDEX] = speedsMiddleHoop[FENDER_WIDE_INDEX];
+        speedsMiddleHoop[FENDER_SIDE_WIDE_INDEX] = 0; //NOT TESTED
+        speedsMiddleHoop[FENDER_LONG_INDEX] = 0;
+        speedsMiddleHoop[FENDER_SIDE_LONG_INDEX] = 0; //NOT TESTED
+        speedsMiddleHoop[KEY_INDEX] = 0;
+        speedsMiddleHoop[KEY_SLANT_INDEX] = 0; //TODO: Fix this value through testing
+        speedsMiddleHoop[KEY_MIDDLE_HOOP_INDEX] = 0; //TODO: Fix value through testing
+        speedsMiddleHoop[MAX_DIST] = 0; // TODO: FIx this value through testing
     }
 
     // Put methods for controlling this subsystem
@@ -142,27 +153,14 @@ public class Flywheel extends Subsystem {
      * on or off the speed light accordingly.
      */
     public boolean isSpeedGood() {
-        boolean speedGood = (Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())) < rpmTolerance)
-                && (Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())) < rpmTolerance);
-        SmartDashboard.putDouble("Upper error", Math.abs(Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM())));
-        SmartDashboard.putDouble("Lower error", Math.abs(Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM())));
+        double upperError = Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM());
+        double lowerError = Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM());
+        boolean speedGood =
+                Math.abs(upperError) < rpmTolerance
+             && Math.abs(lowerError) < rpmTolerance;
+        SmartDashboard.putDouble("Upper error", Math.abs(upperError));
+        SmartDashboard.putDouble("Lower error", Math.abs(lowerError));
         return speedGood;
-    }
-
-    /**
-     * Given a distance that we want to shoot the ball, calculate
-     * the flywheel RPM necessary to shoot the ball that distance
-     */
-    public static double theoreticalDesiredExitRPM(double distanceInches, double hoopHeightInches) {
-        double g = 387; // gravity: inches per second squared
-        double shooterHeightInches = 36.0;
-        double h = hoopHeightInches - shooterHeightInches; // height of hoop above the shooter: inches
-        double linearSpeedInchesPerSecond = (distanceInches * Math.sqrt(g))
-                / (Math.sqrt(2) * Math.cos(THETA_RADIANS) * Math.sqrt(distanceInches * Math.tan(THETA_RADIANS) - h));
-        double wheelRadiusInches = 3.0;
-        double wheelCircumferenceInches = 2 * Math.PI * wheelRadiusInches;
-        double RPM = 60 * linearSpeedInchesPerSecond / wheelCircumferenceInches;
-        return RPM;
     }
 
     /**
@@ -262,7 +260,7 @@ public class Flywheel extends Subsystem {
             lowerRoller.jaguarInit();
             upperRoller.jaguarInit();
         } catch (CANTimeoutException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // not run in a continuous loop, so print statements shouldn't cause lag
         }
     }
 }
