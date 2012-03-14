@@ -28,14 +28,12 @@ public class StallDetectingVictor extends Victor {
     public void set(double value) {
         if (isStalled()) {
             lastStallTime = Timer.getFPGATimestamp();
-            super.set(0);
+            //super.set(0);
         }
         else if (isStallFault()) {
-            super.set(0);
+            //super.set(0);
         }
-        else {
-            super.set(value);
-        }
+        super.set(value);
     }
 
     public double getCurrent() {
