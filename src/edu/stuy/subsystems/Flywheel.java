@@ -76,10 +76,11 @@ public class Flywheel extends Subsystem {
     public static final int FENDER_LONG_INDEX = 6;
     public static final int FENDER_SIDE_WIDE_INDEX = 7;
     public static final int FENDER_SIDE_LONG_INDEX = 8;
-    public static final int KEY_INDEX = 9;
+    public static final int CLOSE_KEY_INDEX = 9;
     public static final int KEY_SLANT_INDEX = 10;
     public static final int KEY_MIDDLE_HOOP_INDEX = 12;
     public static final int MAX_DIST = 13;
+    public static final int FAR_KEY_INDEX = 14;
     public static final int MAX_TRIM_RPM = 400;
 
     static {
@@ -92,10 +93,11 @@ public class Flywheel extends Subsystem {
         distances[FENDER_SIDE_WIDE_INDEX]  = distances[FENDER_SIDE_INDEX] + wideBot;
         distances[FENDER_LONG_INDEX]       = distances[FENDER_INDEX] + longBot;
         distances[FENDER_SIDE_LONG_INDEX]  = distances[FENDER_SIDE_INDEX] + longBot;
-        distances[KEY_INDEX]               = 144.0 + shooterToBumper;
+        distances[CLOSE_KEY_INDEX]         = 144.0 + shooterToBumper;
         distances[KEY_SLANT_INDEX]         = 215; //Fix this value through testing
         distances[KEY_MIDDLE_HOOP_INDEX]   = 144 + shooterToBumper;
         distances[MAX_DIST]                = 300;
+        distances[FAR_KEY_INDEX]           = 144; //TODO: NEED TO TEST THIS
 
         speedsTopHoop[STOP_INDEX]                 = 0;
         speedsTopHoop[FENDER_INDEX]               = 1200;
@@ -106,10 +108,11 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[FENDER_SIDE_WIDE_INDEX]     = 0; //NOT TESTED
         speedsTopHoop[FENDER_LONG_INDEX]          = 1075;
         speedsTopHoop[FENDER_SIDE_LONG_INDEX]     = 0; //NOT TESTED
-        speedsTopHoop[KEY_INDEX]                  = 1550;
+        speedsTopHoop[CLOSE_KEY_INDEX]            = 1550;
         speedsTopHoop[KEY_SLANT_INDEX]            = 1560; //TODO: Fix this value through testing
         speedsTopHoop[KEY_MIDDLE_HOOP_INDEX]      = 1425; //TODO: Fix value through testing
         speedsTopHoop[MAX_DIST]                   = 3000; // TODO: FIx this value through testing
+        speedsTopHoop[FAR_KEY_INDEX]              = 1550; //TODO: Test This
 
         // fill these in at competition if we have time
         speedsMiddleHoop[STOP_INDEX] = 0;
@@ -121,10 +124,11 @@ public class Flywheel extends Subsystem {
         speedsMiddleHoop[FENDER_SIDE_WIDE_INDEX] = 0; //NOT TESTED
         speedsMiddleHoop[FENDER_LONG_INDEX] = 0;
         speedsMiddleHoop[FENDER_SIDE_LONG_INDEX] = 0; //NOT TESTED
-        speedsMiddleHoop[KEY_INDEX] = 0;
+        speedsMiddleHoop[CLOSE_KEY_INDEX] = 0;
         speedsMiddleHoop[KEY_SLANT_INDEX] = 0; //TODO: Fix this value through testing
         speedsMiddleHoop[KEY_MIDDLE_HOOP_INDEX] = 0; //TODO: Fix value through testing
         speedsMiddleHoop[MAX_DIST] = 0; // TODO: FIx this value through testing
+        speedsMiddleHoop[FAR_KEY_INDEX]   = 0; //TODO: TEST THIS
     }
 
     // Put methods for controlling this subsystem

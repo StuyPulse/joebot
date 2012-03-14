@@ -14,15 +14,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonSetting4 extends CommandGroup {
 
     /**
-     * Shoots at key. Then backs up and knocks down bridge.
+     * Backs up from far key
      */
     public AutonSetting4() {
-        double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
-        addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
-        addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
-        
+        double distanceInches = Flywheel.distances[Flywheel.FAR_KEY_INDEX];
         addSequential(new TusksExtend());
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
+        addSequential(new AutonBackUpToBridge(distanceInches));
         addSequential(new TusksRetract());
     }
 }
