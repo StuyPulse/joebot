@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonSetting2 extends CommandGroup {
 
     /**
-     * Shoots from far key.
+     * Shoots from close key.
      */
     public AutonSetting2() {
-        double distanceInches = Flywheel.distances[Flywheel.FAR_KEY_INDEX];
+        double distanceInches = Flywheel.distances[Flywheel.CLOSE_KEY_INDEX];
         addParallel(new AutonWaitThenConvey());
         addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
     }

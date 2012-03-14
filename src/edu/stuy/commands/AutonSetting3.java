@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonSetting3 extends CommandGroup {
 
     /**
-     * Shoots at close key. Then backs up and knocks down bridge.
+     * Shoots from far key. Then backs up and knocks down bridge.
      */
     public AutonSetting3() {
         double distanceInches = Flywheel.distances[Flywheel.FAR_KEY_INDEX];
@@ -22,7 +22,7 @@ public class AutonSetting3 extends CommandGroup {
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
         
         addSequential(new TusksExtend());
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
+        addSequential(new AutonBackUpToBridge(distanceInches));
         addSequential(new TusksRetract());
     }
 }
