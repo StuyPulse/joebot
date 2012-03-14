@@ -25,15 +25,15 @@ public class StallDetectingVictor extends Victor {
         currentThing.start();
     }
 
-    public void set(double value) {
-        if (isStalled()) {
+/**
+ * checks if the current is in danger of stalling or faulting
+ * @return
+ */
+    public boolean checkCurrentFail(){
+        if(isStalled()){
             lastStallTime = Timer.getFPGATimestamp();
-            //super.set(0);
         }
-        else if (isStallFault()) {
-            //super.set(0);
-        }
-        super.set(value);
+        return isStalled() || isStallFault();
     }
 
     public double getCurrent() {
