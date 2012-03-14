@@ -18,7 +18,6 @@ public class FlywheelRun extends CommandBase {
     double distanceInches;
     double[] speeds;
     boolean useOI;
-    boolean isFMSAttached = false;
     
     public FlywheelRun(double distanceInches, double[] speeds) {
         requires(flywheel);
@@ -75,11 +74,11 @@ public class FlywheelRun extends CommandBase {
                 this.speeds = Flywheel.speedsMiddleHoop;
             }
         }
-        double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
+        //double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
         //trimSpeedsFromOI(rpm);
-        flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
-        SmartDashboard.putDouble("setRPMtop", rpm[0]);
-        SmartDashboard.putDouble("setRPMottom", rpm[1]);
+        //flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
+        //SmartDashboard.putDouble("setRPMtop", rpm[0]);
+        //SmartDashboard.putDouble("setRPMottom", rpm[1]);
     }
 
     public void trimSpeedsFromOI(double[] rpms) {
@@ -89,17 +88,6 @@ public class FlywheelRun extends CommandBase {
     }
     
     private boolean useSmartDashboardTuning() {
-        if (isFMSAttached || DriverStation.getInstance().isFMSAttached()) {
-            isFMSAttached = true; // cache value of isFMSAttached
-            // comment out "return false" when we want to
-            // use smart dashboard on the field in a
-            // practice match.
-            // ****
-            // ****
-            // un-comment after practice match since
-            // only use the OI
-            return false;
-        }
         boolean useSmartDashboardTuning = false;
         try {
             try {
