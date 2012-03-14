@@ -50,13 +50,11 @@ public class Acquirer extends Subsystem {
      */
     private void roll(double speed) {
         roller.set(speed);
-        checkWhenStalled();
     }
 
     public void stop() {
         roll(OFF);// WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
         isAcquiring = false;
-        checkWhenStalled();
     }
 
     public void acquire() {
@@ -72,12 +70,10 @@ public class Acquirer extends Subsystem {
     }
 
     public double getRollerSpeed() {
-        checkWhenStalled();
         return roller.get();
     }
 
     public boolean isAcquiring() {
-        checkWhenStalled();
         return isAcquiring;
     }
 

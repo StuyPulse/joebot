@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.stuy.util;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -13,9 +12,9 @@ import edu.wpi.first.wpilibj.Victor;
  * @author 694
  */
 public class StallDetectingVictor extends Victor {
+
     private static double STALL_CURRENT = 30;
     private static double FAULT_TIME = 1;
-    
     private CurrentThing currentThing;
     private double lastStallTime;
 
@@ -25,12 +24,13 @@ public class StallDetectingVictor extends Victor {
         currentThing.start();
     }
 
-/**
- * checks if the current is in danger of stalling or faulting
- * @return
- */
-    public boolean checkCurrentFail(){
-        if(isStalled()){
+    /**
+     * checks if the current is in danger of stalling or faulting
+     *
+     * @return true if we are stalling, else false
+     */
+    public boolean checkCurrentFail() {
+        if (isStalled()) {
             lastStallTime = Timer.getFPGATimestamp();
         }
         return isStalled() || isStallFault();
