@@ -19,21 +19,21 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     // Create a single static instance of all of your subsystems
-    public static FakeDrivetrain drivetrain;
-    public static FakeFlywheel flywheel;
-    public static FakeTusks tusks;
-    public static FakeAcquirer acquirer;
-    public static FakeConveyor conveyor;
+    public static Drivetrain drivetrain;
+    public static Flywheel flywheel;
+    public static Tusks tusks;
+    public static Acquirer acquirer;
+    public static Conveyor conveyor;
     public static Camera camera;
 
     static {
-        drivetrain = new FakeDrivetrain();
-        conveyor = new FakeConveyor();
-        flywheel = new FakeFlywheel();
-        acquirer = new FakeAcquirer();
+        drivetrain = new Drivetrain();
+        conveyor = new Conveyor();
+        flywheel = new Flywheel();
+        acquirer = new Acquirer();
         camera = new Camera();
         if (!Devmode.DEV_MODE) {
-            tusks = new FakeTusks();
+            tusks = new Tusks();
         }
     }
 

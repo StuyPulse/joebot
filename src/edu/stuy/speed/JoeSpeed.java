@@ -4,6 +4,7 @@
  */
 package edu.stuy.speed;
 
+
 /**
  * abstract class for making a common API for the Jaguars and the victors
  * @author admin
@@ -33,4 +34,5 @@ public interface JoeSpeed {
     boolean isAtSetPoint();
 
     public void setPID(String prefix);
+
 }

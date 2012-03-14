@@ -17,24 +17,40 @@ public class FlywheelRun extends CommandBase {
 
     double distanceInches;
     double[] speeds;
-    boolean automatic;
+    boolean useOI;
     boolean isFMSAttached = false;
     
     public FlywheelRun(double distanceInches, double[] speeds) {
         requires(flywheel);
+        this.distanceInches = 0;
         setDistanceInches(distanceInches);
         this.speeds = speeds;
-        automatic = false;
+        useOI = false;
     }
 
     public FlywheelRun() {
         requires(flywheel);
         this.speeds = Flywheel.speedsTopHoop;
-        automatic = true;
+        useOI = true;
     }
-    
-    private void setDistanceInches(double distanceInches) {
-        this.distanceInches = distanceInches;
+
+    /**
+     * Sets the distance setpoint instance variable to a distance.
+     *
+     * If the distance has changed from the last check, reset the Jaguars.
+     *
+     * @param newDistanceInches Distance setpoint
+     */
+    private void setDistanceInches(double newDistanceInches) {
+
+        // If the new distance is different from the old distance, reset the Jaguars
+        if (Math.abs(distanceInches - newDistanceInches) > 0.1) {
+            flywheel.resetJaguars();
+        }
+
+        //Set the new distanceInches
+        distanceInches = newDistanceInches;
+
     }
 
     // Called just before this Command runs the first time
@@ -49,8 +65,10 @@ public class FlywheelRun extends CommandBase {
                 tuneShooter();
                 return;
         }
-        if (automatic) {
+        if (useOI) {
             setDistanceInches(CommandBase.oi.getDistanceFromDistanceButton());
+
+
             if (CommandBase.oi.getHoopHeightButton()) {
                 this.speeds = Flywheel.speedsTopHoop;
             } else {
@@ -72,7 +90,14 @@ public class FlywheelRun extends CommandBase {
     
     private boolean useSmartDashboardTuning() {
         if (isFMSAttached || DriverStation.getInstance().isFMSAttached()) {
-            isFMSAttached = true;
+            isFMSAttached = true; // cache value of isFMSAttached
+            // comment out "return false" when we want to
+            // use smart dashboard on the field in a
+            // practice match.
+            // ****
+            // ****
+            // un-comment after practice match since
+            // only use the OI
             return false;
         }
         boolean useSmartDashboardTuning = false;
@@ -102,9 +127,6 @@ public class FlywheelRun extends CommandBase {
         }
         CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
 
-
-        double rpmTop = Flywheel.upperRoller.getRPM();
-        double rpmBottom = Flywheel.lowerRoller.getRPM();
         Flywheel.upperRoller.setPID("upper");
         Flywheel.lowerRoller.setPID("lower");
     }

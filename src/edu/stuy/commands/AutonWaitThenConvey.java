@@ -30,7 +30,11 @@ public class AutonWaitThenConvey extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-        addSequential(new WaitCommand(2)); //2 is an arbitrary number. can change it if you want.
+
+        //1 is an arbitrary number. can change it if you want, but not <0
+        // should set to 0 after testing this, so that
+        // we can shoot as soon as the flywheel is at speed
+        addSequential(new WaitCommand(1)); 
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
     }
 }

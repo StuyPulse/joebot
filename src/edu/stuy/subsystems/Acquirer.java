@@ -44,7 +44,7 @@ public class Acquirer extends Subsystem {
      * 
      * @param speed Either 1, 0, or -1.
      */
-    public void roll(double speed) {
+    private void roll(double speed) {
         roller.set(speed);
     }
 
@@ -54,19 +54,16 @@ public class Acquirer extends Subsystem {
     }
 
     public void acquire() {
-//        if (!CommandBase.conveyor.ballAtTop()) {
-            isAcquiring = true;
-            roll(FWD); // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
-//        } else {
-//            stop();
-//        }
+        isAcquiring = true;
+        roll(FWD); // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
     }
 
     public void acquireReverse() {
+        isAcquiring = false;
         roll(REV);// WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
     }
 
-    public double getRoller() {
+    public double getRollerSpeed() {
         return roller.get();
     }
 

@@ -62,30 +62,4 @@ public class ShooterTest {
                     CommandBase.flywheel.lookupRPM(distanceInches, Flywheel.speedsMiddleHoop)[0]);
         }
     }
-
-    @Test
-    public void testRPMTolerance() {
-        double min, mid, max;
-        
-        System.out.println("key-shots:");
-        min = Flywheel.theoreticalDesiredExitRPM(129-5, 98.0);
-        System.out.println(min);
-        mid = Flywheel.theoreticalDesiredExitRPM(129, 98.0);
-        System.out.println(mid);
-        max = Flywheel.theoreticalDesiredExitRPM(129+5, 98.0);
-        System.out.println(max);
-        System.out.println("error: " + (max - mid));
-        System.out.println("error: " + (mid - min));
-        
-        System.out.println("fender-shots:");
-        min = Flywheel.theoreticalDesiredExitRPM(77.25-5, 98.0);
-        System.out.println(min);
-        mid = Flywheel.theoreticalDesiredExitRPM(77.25, 98.0);
-        System.out.println(mid);
-        max = Flywheel.theoreticalDesiredExitRPM(77.25+5, 98.0);
-        System.out.println(max);
-        System.out.println("error: " + (max - mid));
-        System.out.println("error: " + (mid - min));
-    }
-
 }

@@ -55,7 +55,6 @@ public class JoeBot extends IterativeRobot {
         updateSmartDashboard();
         CommandBase.oi.resetBox();
 //        CameraVision.getInstance().setCamera(false);
-        //CommandBase.drivetrain.setUnderbodyLights(false);
     }
 
     public void autonomousInit() {
@@ -63,8 +62,6 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
-        /*CommandBase.drivetrain.setUnderbodyLights(true);
-        CommandBase.drivetrain.compressor.start();*/
     }
 
     /**
@@ -86,7 +83,6 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
-        //CommandBase.drivetrain.setUnderbodyLights(true);
     }
 
     /**
@@ -102,7 +98,7 @@ public class JoeBot extends IterativeRobot {
     // We use SmartDashboard to monitor bot information.
     // Here, we put things to the SmartDashboard
     private void updateSmartDashboard() {
-        /*SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+        /*
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
         SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromDistanceButton());
 
@@ -127,7 +123,7 @@ public class JoeBot extends IterativeRobot {
         
         SmartDashboard.putBoolean("Is speed good", CommandBase.flywheel.isSpeedGood());
 
-        SmartDashboard.putDouble("Acquirer value", CommandBase.acquirer.getRoller());
+        SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
         //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
         SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());

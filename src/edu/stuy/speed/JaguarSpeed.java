@@ -22,6 +22,8 @@ public class JaguarSpeed implements JoeSpeed {
     public CANJaguar jaguar;
     private double speedSetpoint;
     public double toleranceRPM;
+
+    private int CANid;
     /**
      * Constructs a new CANJaguar using speed control.
      *
@@ -29,10 +31,10 @@ public class JaguarSpeed implements JoeSpeed {
      * @param toleranceRPM the value of toleranceRPM
      */
     public JaguarSpeed(int id, double toleranceRPM) {
+        CANid = id;
         speedSetpoint = 0;
         this.toleranceRPM = toleranceRPM;
         try {
-            jaguar = new CANJaguar(id);
             jaguarInit();
         }
         catch (CANTimeoutException e) {
@@ -44,6 +46,7 @@ public class JaguarSpeed implements JoeSpeed {
     }
 
     public void jaguarInit() throws CANTimeoutException {
+        jaguar = new CANJaguar(CANid);
         jaguar.changeControlMode(CANJaguar.ControlMode.kSpeed);
         jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
         jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
@@ -64,9 +67,7 @@ public class JaguarSpeed implements JoeSpeed {
         speedSetpoint = rpm;
         try {
             jaguar.setX(-rpm);
-            if (jaguar.getPowerCycled()) {
-                jaguarInit();
-            }
+            
         } catch (CANTimeoutException e) {
             if (!DriverStation.getInstance().isFMSAttached()) {
                 e.printStackTrace();
