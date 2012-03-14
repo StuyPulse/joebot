@@ -184,7 +184,7 @@ public class OI {
     public double getDistanceFromDistanceButton(){
         switch(distanceButton){
             case DISTANCE_BUTTON_KEY:
-                distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
+                distanceInches = Flywheel.distances[Flywheel.CLOSE_KEY_INDEX];
                 break;
             case DISTANCE_BUTTON_FAR:
                 distanceInches = Flywheel.distances[Flywheel.MAX_DIST];
