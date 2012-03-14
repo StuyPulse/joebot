@@ -49,7 +49,7 @@ public class RobotMap {
     
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
-    public static final int TARGET_LIGHT = 3;
+    public static final int STALL_LIGHT = 3;
     public static final int UNDERBODY_LIGHTS = 4;
      
 

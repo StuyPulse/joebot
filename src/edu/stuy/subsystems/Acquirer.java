@@ -7,6 +7,7 @@ package edu.stuy.subsystems;
 import edu.stuy.RobotMap;
 import edu.stuy.commands.AcquirerStop;
 import edu.stuy.util.StallDetectingVictor;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Acquirer extends Subsystem {
     private StallDetectingVictor roller;
     private boolean isAcquiring;
+    private Relay light;
 
     // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
     public static final int FWD = 1;
@@ -29,6 +31,8 @@ public class Acquirer extends Subsystem {
     public Acquirer() {
         roller = new StallDetectingVictor(RobotMap.ACQUIRER_ROLLER, RobotMap.CURRENT_THING_CHANNEL);
         isAcquiring = false;
+        light = new Relay(RobotMap.STALL_LIGHT);
+        light.setDirection(Relay.Direction.kForward);
     }
 
     public void initDefaultCommand() {
@@ -46,28 +50,47 @@ public class Acquirer extends Subsystem {
      */
     private void roll(double speed) {
         roller.set(speed);
+        checkWhenStalled();
     }
 
     public void stop() {
         roll(OFF);// WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
         isAcquiring = false;
+        checkWhenStalled();
     }
 
     public void acquire() {
         isAcquiring = true;
         roll(FWD); // WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
+        checkWhenStalled();
     }
 
     public void acquireReverse() {
         isAcquiring = false;
         roll(REV);// WARNING: The acquirer runs on a FisherPrice motor, meaning you CANNOT use a floating point value between 0 and 1!
+        checkWhenStalled();
     }
 
     public double getRollerSpeed() {
+        checkWhenStalled();
         return roller.get();
     }
 
     public boolean isAcquiring() {
+        checkWhenStalled();
         return isAcquiring;
+    }
+
+    /**
+     * will check whether the StallDetectingVitor believes it's in danger of failing
+     * and act accordingly
+     */
+    public void checkWhenStalled(){
+        if (roller.checkCurrentFail()){
+            light.set(Relay.Value.kOn);
+        }
+        else{
+            light.set(Relay.Value.kOff);
+        }
     }
 }
