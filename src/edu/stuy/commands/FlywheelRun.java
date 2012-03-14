@@ -98,7 +98,7 @@ public class FlywheelRun extends CommandBase {
             // ****
             // un-comment after practice match since
             // only use the OI
-            return false;
+            //return false;
         }
         boolean useSmartDashboardTuning = false;
         try {
