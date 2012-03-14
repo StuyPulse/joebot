@@ -98,7 +98,7 @@ public class JoeBot extends IterativeRobot {
     // We use SmartDashboard to monitor bot information.
     // Here, we put things to the SmartDashboard
     private void updateSmartDashboard() {
-        /*
+
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
         SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromDistanceButton());
 
@@ -128,9 +128,5 @@ public class JoeBot extends IterativeRobot {
         //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
         SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
-        // Camera target info
-//        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
-//        SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
-//        SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());*/
     }
 }
