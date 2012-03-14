@@ -21,7 +21,7 @@ public class DriveManualJoystickControl extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        drivetrain.compressor.start();
+        //drivetrain.compressor.start();
         
     }
 

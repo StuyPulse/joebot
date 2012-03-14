@@ -45,7 +45,7 @@ public class JoeBot extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         if (!Devmode.DEV_MODE) {
-            AxisCamera.getInstance();
+            //AxisCamera.getInstance();
         }
 //        ariel = CameraVision.getInstance();
 //        ariel.setPriority(2);
@@ -62,7 +62,6 @@ public class JoeBot extends IterativeRobot {
         new TusksRetract().start();
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
-        CommandBase.drivetrain.compressor.start();
     }
 
     /**
@@ -99,6 +98,7 @@ public class JoeBot extends IterativeRobot {
     // We use SmartDashboard to monitor bot information.
     // Here, we put things to the SmartDashboard
     private void updateSmartDashboard() {
+        /*
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
         SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromDistanceButton());
 
@@ -115,8 +115,8 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Delay Time: ", CommandBase.oi.getDelayTime());
         SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
 
-        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
-        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
+        //SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
+        //SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
 
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
         SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
@@ -125,12 +125,12 @@ public class JoeBot extends IterativeRobot {
 
         SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
-        SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
+        //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
         SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
         // Camera target info
 //        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
 //        SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
-//        SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
+//        SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());*/
     }
 }
