@@ -120,8 +120,6 @@ public class JoeBot extends IterativeRobot {
 
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
         SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
-        
-        SmartDashboard.putBoolean("Is speed good", CommandBase.flywheel.isSpeedGood());
 
         SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
