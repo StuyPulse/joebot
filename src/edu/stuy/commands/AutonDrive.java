@@ -34,7 +34,7 @@ public abstract class AutonDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     public void execute(){
-        drivetrain.tankDrive(0.75 * direction,0.75 * direction);
+        drivetrain.tankDrive(direction, direction);
     }
 
     // Make this return true when this Command no longer needs to run execute()
