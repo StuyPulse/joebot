@@ -22,7 +22,9 @@ public class AutonSetting1 extends CommandGroup {
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
         
         addSequential(new TusksExtend());
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
+
+
+        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER, Autonomous.t_closeKeyToBridge));
         addSequential(new TusksRetract());
     }
 }

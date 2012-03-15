@@ -33,6 +33,18 @@ public class Autonomous extends CommandGroup {
     public static final double RAMPING_CONSTANT = 10 / 9;
     public static final double CONVEY_AUTO_TIME = 4;
 
+
+
+    //TODO: update with testing
+    //Time to delay is (distance to travel)/rate
+    
+    // distance is ~50" or ~4', rate is ~10 ft/s. Time is 0.4s, Your Mileage May Vary
+    public static final double t_farKeyToBridge = 0.6;
+
+    // distance is ~136" or ~12', rate is 10 ft/s. Time is 1.2s, Your Mileage May Vary
+    public static final double t_closeKeyToBridge = 1.4;
+
+
     public Autonomous() {
         addSequential(new DrivetrainSetGear(true));
         addSequential(new WaitCommand(CommandBase.oi.getDelayTime()));

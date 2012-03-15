@@ -12,16 +12,21 @@ package edu.stuy.commands;
 public abstract class AutonDrive extends CommandBase {
     private double inches_to_travel;
     private int direction;
-    
-    public AutonDrive(double inches, int direction) {
+    private double timeoutTime;
+
+    //Low gear speed 4 ft/s
+    //High gear speed 10 ft/s
+    public AutonDrive(double inches, int direction, double time) {
         // Use requires() here to declare subsystem dependencies
         requires(drivetrain);
         inches_to_travel = inches;
         this.direction = direction;
+        timeoutTime = time;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        this.setTimeout(timeoutTime);
         drivetrain.resetEncoders();
         drivetrain.setDriveStraightDistanceAndDirection(inches_to_travel, direction);
         drivetrain.initController(); // Enables "drive straight" controller
@@ -34,7 +39,7 @@ public abstract class AutonDrive extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(drivetrain.getAvgDistance()) > inches_to_travel; // Check if we have traveled the right distance by encoder measure
+        return isTimedOut() || Math.abs(drivetrain.getAvgDistance()) > inches_to_travel; // Check if we have traveled the right distance by encoder measure
     }
 
     // Called once after isFinished returns true
