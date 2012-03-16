@@ -14,7 +14,6 @@ public class OI {
     private Joystick rightStick;
     private Joystick shooterStick;
     private Joystick debugBox;
-    private Joystick cameraStick;
     
     public static final int DISTANCE_BUTTON_KEY = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
@@ -66,8 +65,6 @@ public class OI {
 
         shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
         debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
-        cameraStick = new Joystick(RobotMap.CAMERA_JOYSTICK_PORT);
-        System.out.println("Camera stick added");
         
         distanceButton = DISTANCE_BUTTON_STOP;
         distanceInches = Flywheel.distances[Flywheel.STOP_INDEX];
@@ -100,6 +97,8 @@ public class OI {
             new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
             new JoystickButton(leftStick, 1).whenPressed(new TusksExtend());
             new JoystickButton(leftStick, 2).whenPressed(new TusksRetract());
+            new JoystickButton(rightStick, 4).whenPressed(new MoveCamera(true));
+            new JoystickButton(rightStick, 5).whenPressed(new MoveCamera(false));
             
             // OI box switches
             new InverseDigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
@@ -126,10 +125,6 @@ public class OI {
             new JoystickButton(debugBox, 6).whileHeld(new DrivetrainSetGear(true)); // high gear
             new JoystickButton(debugBox, 9).whileHeld(new TusksExtend());
             new JoystickButton(debugBox, 10).whileHeld(new TusksRetract());
-            
-            // testing camera servo
-            new JoystickButton(cameraStick, 4).whenPressed(new MoveCamera(true));
-            new JoystickButton(cameraStick, 5).whenPressed(new MoveCamera(false));
         }
     }
 
