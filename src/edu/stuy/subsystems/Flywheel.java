@@ -52,7 +52,7 @@ public class Flywheel extends Subsystem {
      */
     public static double rpmTolerance = 75;
     /** Positions **/
-    public static final int numDistances = 14;
+    public static final int numDistances = 15;
 
     // distances, speedsTopHoop and speedsMiddleHoop are correlated
     // if we're shooting from distances[i], set the flywheel
