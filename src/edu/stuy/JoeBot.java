@@ -83,7 +83,7 @@ public class JoeBot extends IterativeRobot {
         // release the bridge too early when balls are rolling down
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
-        new MoveCamera(false).start();
+        new MoveCamera(true).start();
     }
 
     /**
