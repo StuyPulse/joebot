@@ -106,16 +106,16 @@ public class FlywheelRun extends CommandBase {
     }
 
     private void tuneShooter() {
-        double setRpmTop = 0;
-        double setRpmBottom = 0;
+        double RPM = 0;
+//        double setRpmBottom = 0;
         try {
-            setRpmTop = SmartDashboard.getDouble("setRPMtop");
-            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
+            RPM = SmartDashboard.getDouble("setRPM");
+//            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
         } catch (NetworkTableKeyNotDefined e) {
-            SmartDashboard.putDouble("setRPMtop", 0);
-            SmartDashboard.putDouble("setRPMbottom", 0);
+            SmartDashboard.putDouble("setRPM", 0);
+//            SmartDashboard.putDouble("setRPMbottom", 0);
         }
-        CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
+        CommandBase.flywheel.setFlywheelSpeeds(RPM, RPM);
 
 //        Flywheel.upperRoller.setPID("upper");
 //        Flywheel.lowerRoller.setPID("lower");
