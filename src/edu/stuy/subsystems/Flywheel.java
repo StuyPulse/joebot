@@ -100,7 +100,7 @@ public class Flywheel extends Subsystem {
         distances[FAR_KEY_INDEX]           = 144; //TODO: NEED TO TEST THIS
 
         speedsTopHoop[STOP_INDEX]                 = 0;
-        speedsTopHoop[FENDER_INDEX]               = 1175;
+        speedsTopHoop[FENDER_INDEX]               = 1187;
         speedsTopHoop[FENDER_SIDE_INDEX]          = 0;
         speedsTopHoop[FENDER_WIDE_INDEX]          = 1350;
         speedsTopHoop[HIGHEST_BACKBOARD_INDEX]    = speedsTopHoop[FENDER_WIDE_INDEX];
