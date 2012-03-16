@@ -6,7 +6,6 @@ package edu.stuy.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -31,7 +30,6 @@ public class AutonWaitThenConvey extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-        System.out.println("AutonWaitThenConvey");
         addSequential(new WaitCommand(1));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
     }

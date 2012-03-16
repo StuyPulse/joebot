@@ -4,8 +4,6 @@
  */
 package edu.stuy.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  *
  * @author Kevin Wang
@@ -25,14 +23,11 @@ public class ConveyAutomatic extends CommandBase {
         this();
         hasTimeout = true;
         this.timeout = timeout;
-
-        System.out.println("ConveyAutomatic start");
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
         setTimeout(timeout);
-        SmartDashboard.putString("ConveyAutomatic", "start");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -56,8 +51,6 @@ public class ConveyAutomatic extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         conveyor.stop();
-
-        SmartDashboard.putString("ConveyAutomatic", "stop");
     }
 
     // Called when another command which requires one or more of the same

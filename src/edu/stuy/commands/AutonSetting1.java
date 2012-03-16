@@ -10,7 +10,6 @@ package edu.stuy.commands;
  */
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutonSetting1 extends CommandGroup {
 
@@ -18,8 +17,6 @@ public class AutonSetting1 extends CommandGroup {
      * Shoots from close key. Then backs up and knocks down bridge.
      */
     public AutonSetting1() {
-
-        SmartDashboard.putInt("Auton commandgroup added", 1);
         double distanceInches = Flywheel.distances[Flywheel.CLOSE_KEY_INDEX];
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));

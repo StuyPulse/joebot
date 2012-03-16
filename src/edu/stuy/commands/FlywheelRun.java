@@ -55,8 +55,6 @@ public class FlywheelRun extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
 
-
-        SmartDashboard.putString("FlywheelRun", "start");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -131,9 +129,6 @@ public class FlywheelRun extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         flywheel.setFlywheelSpeeds(0, 0);
-
-
-         SmartDashboard.putString("FlywheelRun", "end");
     }
 
     // Called when another command which requires one or more of the same

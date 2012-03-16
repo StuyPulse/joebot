@@ -4,8 +4,6 @@
  */
 package edu.stuy.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  *
  * @author Kevin Wang
