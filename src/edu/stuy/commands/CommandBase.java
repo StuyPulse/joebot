@@ -52,6 +52,7 @@ public abstract class CommandBase extends Command {
             SmartDashboard.putData(tusks);
             SmartDashboard.putData(acquirer);
             SmartDashboard.putData(conveyor);
+            SmartDashboard.putData(camera);
         }
     }
 

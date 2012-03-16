@@ -8,10 +8,9 @@ package edu.stuy;
 
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
+import edu.stuy.commands.MoveCamera;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
-import edu.stuy.subsystems.Drivetrain;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
@@ -84,6 +83,7 @@ public class JoeBot extends IterativeRobot {
         // release the bridge too early when balls are rolling down
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
+        new MoveCamera(false).start();
     }
 
     /**
