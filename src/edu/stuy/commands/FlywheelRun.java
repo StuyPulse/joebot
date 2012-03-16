@@ -117,8 +117,8 @@ public class FlywheelRun extends CommandBase {
         }
         CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
 
-        Flywheel.upperRoller.setPID("upper");
-        Flywheel.lowerRoller.setPID("lower");
+//        Flywheel.upperRoller.setPID("upper");
+//        Flywheel.lowerRoller.setPID("lower");
     }
 
     // Make this return true when this Command no longer needs to run execute()
