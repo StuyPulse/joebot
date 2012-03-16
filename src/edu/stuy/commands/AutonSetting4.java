@@ -20,6 +20,5 @@ public class AutonSetting4 extends CommandGroup {
         double distanceInches = Flywheel.distances[Flywheel.FAR_KEY_INDEX];
         addSequential(new TusksExtend());
         addSequential(new AutonBackUpToBridge(Autonomous.t_farKeyToBridge));
-        addSequential(new TusksRetract());
     }
 }

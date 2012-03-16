@@ -25,6 +25,5 @@ public class AutonSetting3 extends CommandGroup {
 
 
         addSequential(new AutonBackUpToBridge(Autonomous.t_farKeyToBridge));
-        addSequential(new TusksRetract());
     }
 }
