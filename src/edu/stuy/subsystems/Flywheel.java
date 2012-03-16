@@ -108,7 +108,7 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[FENDER_SIDE_WIDE_INDEX]     = 0; //NOT TESTED
         speedsTopHoop[FENDER_LONG_INDEX]          = 1450;
         speedsTopHoop[FENDER_SIDE_LONG_INDEX]     = 0; //NOT TESTED
-        speedsTopHoop[CLOSE_KEY_INDEX]            = 1550;
+        speedsTopHoop[CLOSE_KEY_INDEX]            = 1450;
         speedsTopHoop[KEY_SLANT_INDEX]            = 1560; //TODO: Fix this value through testing
         speedsTopHoop[KEY_MIDDLE_HOOP_INDEX]      = 1425; //TODO: Fix value through testing
         speedsTopHoop[MAX_DIST]                   = 3000; // TODO: FIx this value through testing

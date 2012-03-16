@@ -129,5 +129,7 @@ public class JoeBot extends IterativeRobot {
 
         SmartDashboard.putDouble("Left joystick", -CommandBase.oi.getLeftStick().getY());
         SmartDashboard.putDouble("Right joystick", -CommandBase.oi.getRightStick().getY());
+
+        SmartDashboard.putDouble("Acquirer current", CommandBase.acquirer.roller.getCurrent());
     }
 }

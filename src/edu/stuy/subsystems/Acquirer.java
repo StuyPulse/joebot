@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Kevin Wang
  */
 public class Acquirer extends Subsystem {
-    private StallDetectingVictor roller;
+    public StallDetectingVictor roller;
     private boolean isAcquiring;
     private Relay light;
 
