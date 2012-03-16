@@ -20,14 +20,16 @@ public class Autonomous extends CommandGroup {
 
 
     //TODO: update with testing
-    //Time to delay is (distance to travel)/rate + 0.2
+    //Time to delay is [(distance to travel)/rate + 0.2] * 1.25
     // 0.2 is a guess for the amount of time to reach max speed
+    // 1.25:  add 25% more time to account for friction
+    //    drive train speed is based on free speed; friction will make it slower
     
     // distance is ~50" or ~4', rate is ~10 ft/s. Time is 0.4s, Your Mileage May Vary
-    public static final double t_farKeyToBridge = 0.6;
+    public static final double t_farKeyToBridge = 0.75;
 
     // distance is ~136" or ~12', rate is 10 ft/s. Time is 1.2s, Your Mileage May Vary
-    public static final double t_closeKeyToBridge = 1.4;
+    public static final double t_closeKeyToBridge = 1.75;
 
 
     public Autonomous() {
