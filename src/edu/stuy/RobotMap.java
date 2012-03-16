@@ -38,6 +38,7 @@ public class RobotMap {
     public static final int SHOOTER_UPPER_ROLLER = 3;
     public static final int SHOOTER_LOWER_ROLLER = 2;
 
+    /* DIGITAL INPUTS */
     public static final int UPPER_CONVEYOR_SENSOR = 10;
     public static final int LOWER_CONVEYOR_SENSOR = 11;
 
