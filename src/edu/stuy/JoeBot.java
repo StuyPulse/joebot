@@ -45,7 +45,7 @@ public class JoeBot extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         if (!Devmode.DEV_MODE) {
-            //AxisCamera.getInstance();
+            AxisCamera.getInstance();
         }
 //        ariel = CameraVision.getInstance();
 //        ariel.setPriority(2);
