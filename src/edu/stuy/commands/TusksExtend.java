@@ -4,6 +4,8 @@
  */
 package edu.stuy.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  * @author Danny
@@ -18,6 +20,7 @@ public class TusksExtend extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        SmartDashboard.putString("TusksExtend", "start");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,6 +35,7 @@ public class TusksExtend extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+         SmartDashboard.putString("TusksExtend", "stop");
     }
 
     // Called when another command which requires one or more of the same

@@ -10,6 +10,7 @@ package edu.stuy.commands;
  */
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutonSetting0 extends CommandGroup {
 
@@ -17,6 +18,7 @@ public class AutonSetting0 extends CommandGroup {
      * Shoots from close key.
      */
     public AutonSetting0() {
+        SmartDashboard.putInt("Auton commandgroup added", 0);
         double distanceInches = Flywheel.distances[Flywheel.CLOSE_KEY_INDEX];
         addParallel(new AutonWaitThenConvey());
         addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));

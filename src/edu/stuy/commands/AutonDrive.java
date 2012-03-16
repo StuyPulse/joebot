@@ -5,6 +5,8 @@
 
 package edu.stuy.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  * @author English
@@ -25,6 +27,7 @@ public abstract class AutonDrive extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
         this.setTimeout(timeoutTime);
+        SmartDashboard.putString("AutonDrive", "start");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,6 +45,8 @@ public abstract class AutonDrive extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         drivetrain.tankDrive(0, 0);
+
+        SmartDashboard.putString("AutonDrive", "stop");
     }
 
     // Called when another command which requires one or more of the same
