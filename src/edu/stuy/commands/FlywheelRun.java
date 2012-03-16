@@ -74,9 +74,11 @@ public class FlywheelRun extends CommandBase {
                 this.speeds = Flywheel.speedsMiddleHoop;
             }
         }
-        //double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
-        //trimSpeedsFromOI(rpm);
-        //flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
+        double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
+        if (rpm[0] != 0 && rpm[1] != 0) {
+            trimSpeedsFromOI(rpm);
+        }
+        flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
         //SmartDashboard.putDouble("setRPMtop", rpm[0]);
         //SmartDashboard.putDouble("setRPMottom", rpm[1]);
     }
