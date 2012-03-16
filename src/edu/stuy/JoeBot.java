@@ -80,7 +80,8 @@ public class JoeBot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        new TusksRetract().start();
+        // do not retract tusks immediately.  wait for driver command so we don't
+        // release the bridge too early when balls are rolling down
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
     }
