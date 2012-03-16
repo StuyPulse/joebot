@@ -127,5 +127,7 @@ public class JoeBot extends IterativeRobot {
         //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
         SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
+        SmartDashboard.putDouble("Left joystick", -CommandBase.oi.getLeftStick().getY());
+        SmartDashboard.putDouble("Right joystick", -CommandBase.oi.getRightStick().getY());
     }
 }
