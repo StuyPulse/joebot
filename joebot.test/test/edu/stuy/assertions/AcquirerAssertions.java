@@ -15,10 +15,10 @@ import static org.junit.Assert.*;
 public class AcquirerAssertions {
 
     public static void assertAcquirerIsRunning() {
-        assertEquals(1, CommandBase.acquirer.getRoller(), 0.01);
+        assertEquals(1, CommandBase.acquirer.getRollerSpeed(), 0.01);
     }
 
     public static void assertAcquirerIsNotRunning() {
-        assertEquals(0, CommandBase.acquirer.getRoller(), 0.01);
+        assertEquals(0, CommandBase.acquirer.getRollerSpeed(), 0.01);
     }
 }

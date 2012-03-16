@@ -10,7 +10,9 @@ import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
+import edu.stuy.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +29,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
-    Compressor compressor;
 //    Thread ariel;
 
     /**
@@ -39,8 +40,6 @@ public class JoeBot extends IterativeRobot {
         // autonomousCommand = new ExampleCommand();
 
         if (!Devmode.DEV_MODE) {
-            compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
-            compressor.start();
         }
 
         // Initialize all subsystems
@@ -81,7 +80,8 @@ public class JoeBot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        new TusksRetract().start();
+        // do not retract tusks immediately.  wait for driver command so we don't
+        // release the bridge too early when balls are rolling down
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
     }
@@ -99,7 +99,7 @@ public class JoeBot extends IterativeRobot {
     // We use SmartDashboard to monitor bot information.
     // Here, we put things to the SmartDashboard
     private void updateSmartDashboard() {
-        SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+
         SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
         SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromDistanceButton());
 
@@ -121,16 +121,11 @@ public class JoeBot extends IterativeRobot {
 
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
         SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
-        
-        SmartDashboard.putBoolean("Is speed good", CommandBase.flywheel.isSpeedGood());
 
-        SmartDashboard.putDouble("Acquirer value", CommandBase.acquirer.getRoller());
+        SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
-        SmartDashboard.putBoolean("Pressure switch", compressor.getPressureSwitchValue());
+        //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
+        SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
-        // Camera target info
-//        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
-//        SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
-//        SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
     }
 }

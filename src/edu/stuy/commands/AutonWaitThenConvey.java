@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  * @author admin
  */
 public class AutonWaitThenConvey extends CommandGroup {
-    
+
     public AutonWaitThenConvey() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -30,7 +30,7 @@ public class AutonWaitThenConvey extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-        addSequential(new WaitCommand(2));
+        addSequential(new WaitCommand(1));
         addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
     }
 }

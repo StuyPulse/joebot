@@ -31,17 +31,13 @@ public class RobotMap {
 
     public static final int ACQUIRER_ROLLER = 5;
     public static final int CONVEYOR_ROLLER = 1;
+    public static final int CAMERA_SERVO = 4;
     
     /* CAN IDS */
     public static final int SHOOTER_UPPER_ROLLER = 3;
     public static final int SHOOTER_LOWER_ROLLER = 2;
 
     /* DIGITAL INPUTS */
-    public static final int LEFT_ENCODER_CHANNEL_A = 5;
-    public static final int LEFT_ENCODER_CHANNEL_B = 6;
-    public static final int RIGHT_ENCODER_CHANNEL_A = 7;
-    public static final int RIGHT_ENCODER_CHANNEL_B = 8;
-
     public static final int UPPER_CONVEYOR_SENSOR = 10;
     public static final int LOWER_CONVEYOR_SENSOR = 11;
 
@@ -49,8 +45,8 @@ public class RobotMap {
     
     /* RELAY OUTPUTS */
     public static final int COMPRESSOR_RELAY_CHANNEL = 1;
-    public static final int REFLECTIVE_LIGHT = 2;
-    public static final int TARGET_LIGHT = 3;
+    public static final int STALL_LIGHT = 3;
+    public static final int UNDERBODY_LIGHTS = 4;
      
 
     /* SOLENOID */
@@ -65,9 +61,7 @@ public class RobotMap {
 
 
     /* ANALOG INPUTS */
-    public static final int GYRO_CHANNEL = 1;
-    public static final int SONAR_CHANNEL = 2;
-    public static final int VCC_CHANNEL = 4;
+    public static final int CURRENT_THING_CHANNEL = 2;
 
     static {
         for (int i = 0; i < VIRSYS_OUTPUT_MAP.length; i++) {
@@ -81,9 +75,5 @@ public class RobotMap {
         for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
             VIRSYS_INPUT_MAP[i] = 0;
         }
-        VIRSYS_INPUT_MAP[LEFT_ENCODER_CHANNEL_A] = 1;
-        VIRSYS_INPUT_MAP[LEFT_ENCODER_CHANNEL_B] = 1;
-        VIRSYS_INPUT_MAP[RIGHT_ENCODER_CHANNEL_A] = 2;
-        VIRSYS_INPUT_MAP[RIGHT_ENCODER_CHANNEL_B] = 2;
     }
 }

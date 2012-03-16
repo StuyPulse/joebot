@@ -17,24 +17,39 @@ public class FlywheelRun extends CommandBase {
 
     double distanceInches;
     double[] speeds;
-    boolean automatic;
-    boolean isFMSAttached = false;
+    boolean useOI;
     
     public FlywheelRun(double distanceInches, double[] speeds) {
         requires(flywheel);
+        this.distanceInches = 0;
         setDistanceInches(distanceInches);
         this.speeds = speeds;
-        automatic = false;
+        useOI = false;
     }
 
     public FlywheelRun() {
         requires(flywheel);
         this.speeds = Flywheel.speedsTopHoop;
-        automatic = true;
+        useOI = true;
     }
-    
-    private void setDistanceInches(double distanceInches) {
-        this.distanceInches = distanceInches;
+
+    /**
+     * Sets the distance setpoint instance variable to a distance.
+     *
+     * If the distance has changed from the last check, reset the Jaguars.
+     *
+     * @param newDistanceInches Distance setpoint
+     */
+    private void setDistanceInches(double newDistanceInches) {
+
+        // If the new distance is different from the old distance, reset the Jaguars
+        if (Math.abs(distanceInches - newDistanceInches) > 0.1) {
+            flywheel.resetJaguars();
+        }
+
+        //Set the new distanceInches
+        distanceInches = newDistanceInches;
+
     }
 
     // Called just before this Command runs the first time
@@ -49,8 +64,10 @@ public class FlywheelRun extends CommandBase {
                 tuneShooter();
                 return;
         }
-        if (automatic) {
+        if (useOI) {
             setDistanceInches(CommandBase.oi.getDistanceFromDistanceButton());
+
+
             if (CommandBase.oi.getHoopHeightButton()) {
                 this.speeds = Flywheel.speedsTopHoop;
             } else {
@@ -58,10 +75,12 @@ public class FlywheelRun extends CommandBase {
             }
         }
         double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
-        //trimSpeedsFromOI(rpm);
+        if (rpm[0] != 0 && rpm[1] != 0) {
+            trimSpeedsFromOI(rpm);
+        }
         flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
-        SmartDashboard.putDouble("setRPMtop", rpm[0]);
-        SmartDashboard.putDouble("setRPMottom", rpm[1]);
+        //SmartDashboard.putDouble("setRPMtop", rpm[0]);
+        //SmartDashboard.putDouble("setRPMottom", rpm[1]);
     }
 
     public void trimSpeedsFromOI(double[] rpms) {
@@ -71,10 +90,6 @@ public class FlywheelRun extends CommandBase {
     }
     
     private boolean useSmartDashboardTuning() {
-        if (isFMSAttached || DriverStation.getInstance().isFMSAttached()) {
-            isFMSAttached = true;
-            return false;
-        }
         boolean useSmartDashboardTuning = false;
         try {
             try {
@@ -102,11 +117,8 @@ public class FlywheelRun extends CommandBase {
         }
         CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
 
-
-        double rpmTop = Flywheel.upperRoller.getRPM();
-        double rpmBottom = Flywheel.lowerRoller.getRPM();
-        Flywheel.upperRoller.setPID("upper");
-        Flywheel.lowerRoller.setPID("lower");
+//        Flywheel.upperRoller.setPID("upper");
+//        Flywheel.lowerRoller.setPID("lower");
     }
 
     // Make this return true when this Command no longer needs to run execute()

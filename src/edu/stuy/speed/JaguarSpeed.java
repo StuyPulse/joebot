@@ -5,6 +5,7 @@
 package edu.stuy.speed;
 
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +22,8 @@ public class JaguarSpeed implements JoeSpeed {
     public CANJaguar jaguar;
     private double speedSetpoint;
     public double toleranceRPM;
+
+    private int CANid;
     /**
      * Constructs a new CANJaguar using speed control.
      *
@@ -28,17 +31,28 @@ public class JaguarSpeed implements JoeSpeed {
      * @param toleranceRPM the value of toleranceRPM
      */
     public JaguarSpeed(int id, double toleranceRPM) {
+        CANid = id;
         speedSetpoint = 0;
         this.toleranceRPM = toleranceRPM;
         try {
-            jaguar = new CANJaguar(id, CANJaguar.ControlMode.kSpeed);
-            jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-            jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
-            jaguar.setPID(KP, KI, KD);
-            jaguar.enableControl();
-        } catch (CANTimeoutException e) {
+            jaguarInit();
+        }
+        catch (CANTimeoutException e) {
+            if (!DriverStation.getInstance().isFMSAttached()) {
+                e.printStackTrace();
+            }
         }
 
+    }
+
+    public void jaguarInit() throws CANTimeoutException {
+        jaguar = new CANJaguar(CANid);
+        jaguar.changeControlMode(CANJaguar.ControlMode.kSpeed);
+        jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+        jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+        jaguar.setPID(KP, KI, KD);
+        jaguar.configFaultTime(0.5);
+        jaguar.enableControl();
     }
 
     public double getRPM() {
@@ -53,7 +67,11 @@ public class JaguarSpeed implements JoeSpeed {
         speedSetpoint = rpm;
         try {
             jaguar.setX(-rpm);
+            
         } catch (CANTimeoutException e) {
+            if (!DriverStation.getInstance().isFMSAttached()) {
+                e.printStackTrace();
+            }
         }
     }
 
