@@ -119,8 +119,8 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
         SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
 
-        SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
-        SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
+//        SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
+//        SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
 
         SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
