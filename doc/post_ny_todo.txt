@@ -11,7 +11,7 @@ Hartford todo
 - (minor) Swap the red screw and the white screw on the lower jaguar on JoeBot
 
 When we get there
-- Tune back key
+- Tune far key
 
 Off-season
 - Teach the world how to VC
