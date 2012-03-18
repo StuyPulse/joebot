@@ -15,7 +15,7 @@ public class Autonomous extends CommandGroup {
 
     public static final double FENDER_DEPTH = 38.5;
 
-    public static final double CONVEY_AUTO_TIME = 4;
+    public static final double CONVEY_AUTO_TIME = 6;
 
 
 
