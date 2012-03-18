@@ -1,0 +1,17 @@
+Soon
+- Teach that team how to VC
+- Talk to strategy about communication, transparency needs
+
+Hartford todo
+- Develop Vbus Victor flywheel code
+- Add shooter reverse
+- Add balancing piston
+- Clean up branches
+- Update debug box functions
+- (minor) Swap the red screw and the white screw on the lower jaguar on JoeBot
+
+When we get there
+- Tune back key
+
+Off-season
+- Teach the world how to VC
