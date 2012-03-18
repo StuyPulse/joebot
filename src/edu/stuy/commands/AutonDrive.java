@@ -29,7 +29,7 @@ public abstract class AutonDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     public void execute(){
-        drivetrain.tankDrive(0.4 * direction, 0.4 * direction);
+        drivetrain.tankDrive(0.6 * direction, 0.6 * direction);
         // slower than full speed so that we actually bring down the bridge,
         // not just slam it and push balls the wrong way
     }
