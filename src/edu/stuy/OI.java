@@ -19,7 +19,7 @@ public class OI {
     public static final int DISTANCE_BUTTON_FAR = 6;
     public static final int DISTANCE_BUTTON_FENDER_LENGTH = 5;
     public static final int DISTANCE_BUTTON_FENDER_WIDTH = 4;
-    public static final int DISTANCE_BUTTON_FENDER_SIDE = 3;
+    public static final int DISTANCE_BUTTON_REVERSE = 3;
     public static final int DISTANCE_BUTTON_FENDER = 2;
     public static final int DISTANCE_BUTTON_STOP = 1;
     
@@ -46,7 +46,7 @@ public class OI {
     private static final int DISTANCE_BUTTON_FAR_LIGHT_CHANNEL = 11;
     private static final int DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL = 12;
     private static final int DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL = 13;
-    private static final int DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL = 15;
+    private static final int DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL = 15;
     private static final int DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL = 14;
     private static final int DISTANCE_BUTTON_STOP_LIGHT_CHANNEL = 16;
     
@@ -85,7 +85,7 @@ public class OI {
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
             }
@@ -198,8 +198,8 @@ public class OI {
             case DISTANCE_BUTTON_FENDER_WIDTH:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_WIDE_INDEX];
                 break;
-            case DISTANCE_BUTTON_FENDER_SIDE:
-                distanceInches = Flywheel.distances[Flywheel.FENDER_SIDE_INDEX];
+            case DISTANCE_BUTTON_REVERSE:
+                distanceInches = Flywheel.distances[Flywheel.REVERSE_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
@@ -365,7 +365,7 @@ public class OI {
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, false);
-            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, false);
         }
@@ -382,7 +382,7 @@ public class OI {
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, true);
-            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, true);
         }
@@ -409,8 +409,8 @@ public class OI {
             case DISTANCE_BUTTON_FENDER_WIDTH:
                 setLight(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL);
                 break;
-            case DISTANCE_BUTTON_FENDER_SIDE:
-                setLight(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL);
+            case DISTANCE_BUTTON_REVERSE:
+                setLight(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL);
                 break;
             case DISTANCE_BUTTON_FENDER:
                 setLight(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL);
