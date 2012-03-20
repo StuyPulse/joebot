@@ -120,6 +120,7 @@ public class OI {
             new JoystickButton(debugBox, 1).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
             new JoystickButton(debugBox, 2).whileHeld(new AcquirerAcquire());
             new JoystickButton(debugBox, 3).whileHeld(new ConveyAutomatic());
+            new JoystickButton(debugBox, 4).whileHeld(new ConveyManual());
             // Debug box buttons
             new JoystickButton(debugBox, 5).whileHeld(new DrivetrainSetGear(false)); // low gear
             new JoystickButton(debugBox, 6).whileHeld(new DrivetrainSetGear(true)); // high gear
