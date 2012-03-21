@@ -21,8 +21,7 @@ public class RobotMap {
     public static final int LEFT_JOYSTICK_PORT = 1;
     public static final int RIGHT_JOYSTICK_PORT = 2;
     public static final int SHOOTER_JOYSTICK_PORT = 3;
-    //public static final int DEBUG_BOX_PORT = 4;
-    public static final int CAMERA_JOYSTICK_PORT = 4;
+    public static final int DEBUG_BOX_PORT = 4;
 
     /* PWM OUTPUTS */
     public static final int FRONT_LEFT_MOTOR = 6;
@@ -39,11 +38,6 @@ public class RobotMap {
     public static final int SHOOTER_LOWER_ROLLER = 2;
 
     /* DIGITAL INPUTS */
-    public static final int LEFT_ENCODER_CHANNEL_A = 5;
-    public static final int LEFT_ENCODER_CHANNEL_B = 6;
-    public static final int RIGHT_ENCODER_CHANNEL_A = 7;
-    public static final int RIGHT_ENCODER_CHANNEL_B = 8;
-
     public static final int UPPER_CONVEYOR_SENSOR = 10;
     public static final int LOWER_CONVEYOR_SENSOR = 11;
 
@@ -60,6 +54,8 @@ public class RobotMap {
     public static final int GEAR_SHIFT_HIGH = 4;
     public static final int TUSKS_SOLENOID_RETRACT = 5;
     public static final int TUSKS_SOLENOID_EXTEND = 6;
+    public static final int BRIDGE_BALANCING_EXTEND = 7;
+    public static final int BRIDGE_BALANCING_RETRACT = 8;
 
     /* VIRSYSJ */
     public static final int[] VIRSYS_OUTPUT_MAP = new int[15];
@@ -67,7 +63,6 @@ public class RobotMap {
 
 
     /* ANALOG INPUTS */
-    public static final int GYRO_CHANNEL = 1;
     public static final int CURRENT_THING_CHANNEL = 2;
 
     static {
@@ -82,9 +77,5 @@ public class RobotMap {
         for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
             VIRSYS_INPUT_MAP[i] = 0;
         }
-        VIRSYS_INPUT_MAP[LEFT_ENCODER_CHANNEL_A] = 1;
-        VIRSYS_INPUT_MAP[LEFT_ENCODER_CHANNEL_B] = 1;
-        VIRSYS_INPUT_MAP[RIGHT_ENCODER_CHANNEL_A] = 2;
-        VIRSYS_INPUT_MAP[RIGHT_ENCODER_CHANNEL_B] = 2;
     }
 }

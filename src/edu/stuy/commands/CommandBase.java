@@ -25,6 +25,7 @@ public abstract class CommandBase extends Command {
     public static Acquirer acquirer;
     public static Conveyor conveyor;
     public static Camera camera;
+    public static BridgePiston bridgePiston;
 
     static {
         drivetrain = new Drivetrain();
@@ -35,6 +36,7 @@ public abstract class CommandBase extends Command {
         if (!Devmode.DEV_MODE) {
             tusks = new Tusks();
         }
+        bridgePiston = new BridgePiston();
     }
 
     public static void init() {
@@ -52,6 +54,8 @@ public abstract class CommandBase extends Command {
             SmartDashboard.putData(tusks);
             SmartDashboard.putData(acquirer);
             SmartDashboard.putData(conveyor);
+            SmartDashboard.putData(camera);
+            SmartDashboard.putData(bridgePiston);
         }
     }
 

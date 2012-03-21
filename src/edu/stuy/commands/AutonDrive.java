@@ -10,16 +10,14 @@ package edu.stuy.commands;
  * @author English
  */
 public abstract class AutonDrive extends CommandBase {
-    private double inches_to_travel;
     private int direction;
     private double timeoutTime;
 
     //Low gear speed 4 ft/s
     //High gear speed 10 ft/s
-    public AutonDrive(double inches, int direction, double time) {
+    public AutonDrive(int direction, double time) {
         // Use requires() here to declare subsystem dependencies
         requires(drivetrain);
-        inches_to_travel = inches;
         this.direction = direction;
         timeoutTime = time;
     }
@@ -27,24 +25,22 @@ public abstract class AutonDrive extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
         this.setTimeout(timeoutTime);
-        drivetrain.resetEncoders();
-        drivetrain.setDriveStraightDistanceAndDirection(inches_to_travel, direction);
-        drivetrain.initController(); // Enables "drive straight" controller
     }
 
     // Called repeatedly when this Command is scheduled to run
     public void execute(){
-        drivetrain.tankDrive(direction, direction);
+        drivetrain.tankDrive(0.6 * direction, 0.6 * direction);
+        // slower than full speed so that we actually bring down the bridge,
+        // not just slam it and push balls the wrong way
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut() || Math.abs(drivetrain.getAvgDistance()) > inches_to_travel; // Check if we have traveled the right distance by encoder measure
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        drivetrain.endController();
         drivetrain.tankDrive(0, 0);
     }
 

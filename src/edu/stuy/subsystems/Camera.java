@@ -21,7 +21,7 @@ public class Camera extends Subsystem {
     Servo camServo;
     
     public Camera(){
-       camServo = new Servo(2, RobotMap.CAMERA_SERVO); 
+       camServo = new Servo(RobotMap.CAMERA_SERVO);
        
     }
     public void initDefaultCommand() {

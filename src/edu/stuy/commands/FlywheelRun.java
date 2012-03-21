@@ -74,9 +74,19 @@ public class FlywheelRun extends CommandBase {
                 this.speeds = Flywheel.speedsMiddleHoop;
             }
         }
-        //double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
-        //trimSpeedsFromOI(rpm);
-        //flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
+        double[] rpm;
+        if(distanceInches < 0){
+            rpm = new double[2];
+            rpm[0] = Flywheel.reverseRPM;
+            rpm[1] = Flywheel.reverseRPM;
+        }
+        else{
+            rpm = flywheel.lookupRPM(distanceInches, speeds);
+            if (rpm[0] != 0 && rpm[1] != 0) {
+                trimSpeedsFromOI(rpm);
+            }
+        }
+        flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
         //SmartDashboard.putDouble("setRPMtop", rpm[0]);
         //SmartDashboard.putDouble("setRPMottom", rpm[1]);
     }
@@ -104,19 +114,19 @@ public class FlywheelRun extends CommandBase {
     }
 
     private void tuneShooter() {
-        double setRpmTop = 0;
-        double setRpmBottom = 0;
+        double RPM = 0;
+//        double setRpmBottom = 0;
         try {
-            setRpmTop = SmartDashboard.getDouble("setRPMtop");
-            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
+            RPM = SmartDashboard.getDouble("setRPM");
+//            setRpmBottom = SmartDashboard.getDouble("setRPMbottom");
         } catch (NetworkTableKeyNotDefined e) {
-            SmartDashboard.putDouble("setRPMtop", 0);
-            SmartDashboard.putDouble("setRPMbottom", 0);
+            SmartDashboard.putDouble("setRPM", 0);
+//            SmartDashboard.putDouble("setRPMbottom", 0);
         }
-        CommandBase.flywheel.setFlywheelSpeeds(setRpmTop, setRpmBottom);
+        CommandBase.flywheel.setFlywheelSpeeds(RPM, RPM);
 
-        Flywheel.upperRoller.setPID("upper");
-        Flywheel.lowerRoller.setPID("lower");
+//        Flywheel.upperRoller.setPID("upper");
+//        Flywheel.lowerRoller.setPID("lower");
     }
 
     // Make this return true when this Command no longer needs to run execute()

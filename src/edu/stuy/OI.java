@@ -13,14 +13,13 @@ public class OI {
     private Joystick leftStick;
     private Joystick rightStick;
     private Joystick shooterStick;
-    //private Joystick debugBox;
-    private Joystick cameraStick;
+    private Joystick debugBox;
     
     public static final int DISTANCE_BUTTON_KEY = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
     public static final int DISTANCE_BUTTON_FENDER_LENGTH = 5;
     public static final int DISTANCE_BUTTON_FENDER_WIDTH = 4;
-    public static final int DISTANCE_BUTTON_FENDER_SIDE = 3;
+    public static final int DISTANCE_BUTTON_REVERSE = 3;
     public static final int DISTANCE_BUTTON_FENDER = 2;
     public static final int DISTANCE_BUTTON_STOP = 1;
     
@@ -47,7 +46,7 @@ public class OI {
     private static final int DISTANCE_BUTTON_FAR_LIGHT_CHANNEL = 11;
     private static final int DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL = 12;
     private static final int DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL = 13;
-    private static final int DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL = 15;
+    private static final int DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL = 15;
     private static final int DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL = 14;
     private static final int DISTANCE_BUTTON_STOP_LIGHT_CHANNEL = 16;
     
@@ -65,9 +64,7 @@ public class OI {
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
 
         shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
-        //debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
-        cameraStick = new Joystick(RobotMap.CAMERA_JOYSTICK_PORT);
-        System.out.println("Camera stick added");
+        debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
         
         distanceButton = DISTANCE_BUTTON_STOP;
         distanceInches = Flywheel.distances[Flywheel.STOP_INDEX];
@@ -88,7 +85,7 @@ public class OI {
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
             }
@@ -96,10 +93,12 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(rightStick, 1).whenPressed(new DrivetrainSetGear(false));
-            new JoystickButton(rightStick, 2).whenPressed(new DrivetrainSetGear(true));
-            new JoystickButton(leftStick, 1).whenPressed(new TusksExtend());
-            new JoystickButton(leftStick, 2).whenPressed(new TusksRetract());
+            new JoystickButton(leftStick, 1).whenPressed(new DrivetrainSetGear(false));
+            new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(true));
+            new JoystickButton(rightStick, 1).whenPressed(new TusksExtend());
+            new JoystickButton(rightStick, 2).whenPressed(new TusksRetract());
+            new JoystickButton(rightStick, 4).whenPressed(new MoveCamera(true));
+            new JoystickButton(rightStick, 5).whenPressed(new MoveCamera(false));
             
             // OI box switches
             new InverseDigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
@@ -117,19 +116,16 @@ public class OI {
 
             // see getDistanceButton()
             
-            /*// Debug box switches
+            // Debug box switches
             new JoystickButton(debugBox, 1).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
             new JoystickButton(debugBox, 2).whileHeld(new AcquirerAcquire());
             new JoystickButton(debugBox, 3).whileHeld(new ConveyAutomatic());
+            new JoystickButton(debugBox, 4).whileHeld(new ConveyManual());
             // Debug box buttons
             new JoystickButton(debugBox, 5).whileHeld(new DrivetrainSetGear(false)); // low gear
             new JoystickButton(debugBox, 6).whileHeld(new DrivetrainSetGear(true)); // high gear
             new JoystickButton(debugBox, 9).whileHeld(new TusksExtend());
-            new JoystickButton(debugBox, 10).whileHeld(new TusksRetract());*/
-            
-            // testing camera servo
-            new JoystickButton(cameraStick, 4).whenPressed(new MoveCamera(true));
-            new JoystickButton(cameraStick, 5).whenPressed(new MoveCamera(false));
+            new JoystickButton(debugBox, 10).whileHeld(new TusksRetract());
         }
     }
 
@@ -202,8 +198,8 @@ public class OI {
             case DISTANCE_BUTTON_FENDER_WIDTH:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_WIDE_INDEX];
                 break;
-            case DISTANCE_BUTTON_FENDER_SIDE:
-                distanceInches = Flywheel.distances[Flywheel.FENDER_SIDE_INDEX];
+            case DISTANCE_BUTTON_REVERSE:
+                distanceInches = Flywheel.distances[Flywheel.REVERSE_INDEX];
                 break;
             case DISTANCE_BUTTON_FENDER:
                 distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
@@ -227,9 +223,9 @@ public class OI {
         return rightStick;
     }
     
-/*    public Joystick getDebugBox() {
+    public Joystick getDebugBox() {
         return debugBox;
-    }*/
+    }
 
     /**
      * Gets value of hoop height toggle switch.
@@ -369,7 +365,7 @@ public class OI {
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, false);
-            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, false);
         }
@@ -386,7 +382,7 @@ public class OI {
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, true);
-            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_STOP_LIGHT_CHANNEL, true);
         }
@@ -413,8 +409,8 @@ public class OI {
             case DISTANCE_BUTTON_FENDER_WIDTH:
                 setLight(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL);
                 break;
-            case DISTANCE_BUTTON_FENDER_SIDE:
-                setLight(DISTANCE_BUTTON_FENDER_SIDE_LIGHT_CHANNEL);
+            case DISTANCE_BUTTON_REVERSE:
+                setLight(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL);
                 break;
             case DISTANCE_BUTTON_FENDER:
                 setLight(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL);

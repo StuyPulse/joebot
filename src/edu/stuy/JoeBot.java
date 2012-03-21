@@ -8,10 +8,9 @@ package edu.stuy;
 
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
+import edu.stuy.commands.MoveCamera;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
-import edu.stuy.subsystems.Drivetrain;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
@@ -45,7 +44,7 @@ public class JoeBot extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         if (!Devmode.DEV_MODE) {
-            //AxisCamera.getInstance();
+            AxisCamera.getInstance();
         }
 //        ariel = CameraVision.getInstance();
 //        ariel.setPriority(2);
@@ -80,9 +79,11 @@ public class JoeBot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        new TusksRetract().start();
+        // do not retract tusks immediately.  wait for driver command so we don't
+        // release the bridge too early when balls are rolling down
 //        CameraVision.getInstance().setCamera(true);
 //        ariel.start();
+        new MoveCamera(true).start();
     }
 
     /**
@@ -115,8 +116,8 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Delay Time: ", CommandBase.oi.getDelayTime());
         SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
 
-        //SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
-        //SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
+        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
+        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
 
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
         SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
@@ -126,5 +127,9 @@ public class JoeBot extends IterativeRobot {
         //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
         SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
+        SmartDashboard.putDouble("Left joystick", -CommandBase.oi.getLeftStick().getY());
+        SmartDashboard.putDouble("Right joystick", -CommandBase.oi.getRightStick().getY());
+
+        SmartDashboard.putDouble("Acquirer current", CommandBase.acquirer.roller.getCurrent());
     }
 }

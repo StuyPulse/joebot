@@ -10,7 +10,7 @@ package edu.stuy.commands;
  */
 public class AutonDriveToFender extends AutonDrive {
     public AutonDriveToFender(double inches, double time) {
-        super(inches, 1, time);
+        super(1, time);
     }
 
     // Called just before this Command runs the first time

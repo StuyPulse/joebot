@@ -19,12 +19,11 @@ public class AutonSetting1 extends CommandGroup {
     public AutonSetting1() {
         double distanceInches = Flywheel.distances[Flywheel.CLOSE_KEY_INDEX];
         addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
-        addSequential(new ConveyAutomatic(Autonomous.CONVEY_AUTO_TIME));
+        addSequential(new ConveyAutomaticAuton(Autonomous.CONVEY_AUTO_TIME));
         
         addSequential(new TusksExtend());
 
 
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER, Autonomous.t_closeKeyToBridge));
-        addSequential(new TusksRetract());
+        addSequential(new AutonBackUpToBridge(Autonomous.t_closeKeyToBridge));
     }
 }

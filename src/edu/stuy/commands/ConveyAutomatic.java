@@ -32,12 +32,12 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        /*if (flywheel.isSpeedGood() && flywheel.isSpinning()) {
+        if (flywheel.isSpeedGood() && flywheel.isSpinning()) {
             conveyor.convey();
         }
         else {
             conveyor.stop();
-        }*/
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
