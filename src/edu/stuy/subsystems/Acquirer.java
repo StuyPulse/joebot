@@ -50,6 +50,7 @@ public class Acquirer extends Subsystem {
      */
     private void roll(double speed) {
         roller.set(speed);
+        checkWhenStalled();
     }
 
     public void stop() {
