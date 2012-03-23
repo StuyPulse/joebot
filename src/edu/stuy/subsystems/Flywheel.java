@@ -84,7 +84,7 @@ public class Flywheel extends Subsystem {
     public static final int REVERSE_INDEX = 15;
     public static final int MAX_TRIM_RPM = 400;
 
-    public static final double reverseRPM = -300;
+    public static final double reverseRPM = -1450;
 
     static {
         distances[STOP_INDEX]              = 0;
