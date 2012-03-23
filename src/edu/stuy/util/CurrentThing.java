@@ -66,7 +66,7 @@ public class CurrentThing {
             for (int i = 0; i < measurements.size(); i++) {
                 sum += ((Double) measurements.elementAt(i)).doubleValue();
             }
-            return sum / 0.01;
+            return sum / 0.1;
         }
     }
 }
