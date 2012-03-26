@@ -68,11 +68,11 @@ public class FlywheelRun extends CommandBase {
             setDistanceInches(CommandBase.oi.getDistanceFromDistanceButton());
 
 
-            if (CommandBase.oi.getHoopHeightButton()) {
-                this.speeds = Flywheel.speedsTopHoop;
-            } else {
-                this.speeds = Flywheel.speedsMiddleHoop;
-            }
+//            if (CommandBase.oi.getHoopHeightButton()) {
+            this.speeds = Flywheel.speedsTopHoop;
+//            } else {
+//                this.speeds = Flywheel.speedsMiddleHoop;
+//            }
         }
         double[] rpm;
         if(distanceInches < 0){
