@@ -5,6 +5,7 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
+import edu.stuy.commands.StingerRetract;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -22,7 +23,7 @@ public class Stinger extends Subsystem {
     }
     
     public void initDefaultCommand() {
-        
+        setDefaultCommand(new StingerRetract());
     }
     
     public void extend() {

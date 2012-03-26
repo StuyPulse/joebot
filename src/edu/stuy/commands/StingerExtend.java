@@ -21,7 +21,7 @@ public class StingerExtend extends CommandBase {
     }
     
     protected boolean isFinished() {
-        return stinger.isExtended();
+        return false;
     }
     
     protected void end() {

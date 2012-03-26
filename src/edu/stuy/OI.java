@@ -33,7 +33,7 @@ public class OI {
     public static final int BIT_2_CHANNEL = 4;
     public static final int BIT_3_CHANNEL = 3;
     public static final int SHOOTER_BUTTON_CHANNEL = 7;
-    public static final int HOOP_HEIGHT_SWITCH_CHANNEL = 6;
+    public static final int STINGER_SWITCH_CHANNEL = 6;
     public static final int ACQUIRER_IN_SWITCH_CHANNEL = 9;
     public static final int ACQUIRER_OUT_SWITCH_CHANNEL = 8;
     
@@ -79,7 +79,7 @@ public class OI {
                 enhancedIO.setDigitalConfig(CONVEYOR_UP_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(CONVEYOR_DOWN_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
                 enhancedIO.setDigitalConfig(SHOOTER_BUTTON_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-                enhancedIO.setDigitalConfig(HOOP_HEIGHT_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+                enhancedIO.setDigitalConfig(STINGER_SWITCH_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
 
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_KEY_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
@@ -106,6 +106,7 @@ public class OI {
             new InverseDigitalIOButton(CONVEYOR_UP_SWITCH_CHANNEL).whileHeld(new ConveyManual());
             new InverseDigitalIOButton(CONVEYOR_DOWN_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
             new InverseDigitalIOButton(SHOOTER_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
+            new InverseDigitalIOButton(STINGER_SWITCH_CHANNEL).whileHeld(new StingerExtend());
             
             new JoystickButton(shooterStick, 1).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whenPressed(new FlywheelStop());
@@ -231,9 +232,9 @@ public class OI {
      * Gets value of hoop height toggle switch.
      * @return true if high setting, false if middle
      */
-    public boolean getHoopHeightButton() {
+    public boolean getStingerSwitch() {
         try {
-            return !enhancedIO.getDigital(HOOP_HEIGHT_SWITCH_CHANNEL);
+            return !enhancedIO.getDigital(STINGER_SWITCH_CHANNEL);
         } catch (EnhancedIOException ex) {
             return true;
         }
