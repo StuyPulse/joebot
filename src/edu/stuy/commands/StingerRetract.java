@@ -8,20 +8,20 @@ package edu.stuy.commands;
  *
  * @author admin
  */
-public class BridgePistonRetract extends CommandBase {
-    public BridgePistonRetract() {
-        requires(bridgePiston);
+public class StingerRetract extends CommandBase {
+    public StingerRetract() {
+        requires(stinger);
     }
     
     protected void initialize() {
     }
     
     protected void execute() {
-        bridgePiston.retract();
+        stinger.retract();
     }
     
     protected boolean isFinished() {
-        return !bridgePiston.isExtended();
+        return !stinger.isExtended();
     }
     
     protected void end() {

@@ -8,20 +8,20 @@ package edu.stuy.commands;
  *
  * @author admin
  */
-public class BridgePistonExtend extends CommandBase {
-    public BridgePistonExtend() {
-        requires(bridgePiston);
+public class StingerExtend extends CommandBase {
+    public StingerExtend() {
+        requires(stinger);
     }
     
     protected void initialize() {
     }
     
     protected void execute() {
-        bridgePiston.extend();
+        stinger.extend();
     }
     
     protected boolean isFinished() {
-        return bridgePiston.isExtended();
+        return stinger.isExtended();
     }
     
     protected void end() {
