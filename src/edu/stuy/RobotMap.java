@@ -54,8 +54,8 @@ public class RobotMap {
     public static final int GEAR_SHIFT_HIGH = 4;
     public static final int TUSKS_SOLENOID_RETRACT = 5;
     public static final int TUSKS_SOLENOID_EXTEND = 6;
-    public static final int BRIDGE_BALANCING_EXTEND = 7;
-    public static final int BRIDGE_BALANCING_RETRACT = 8;
+    public static final int STINGER_SOLENOID_EXTEND = 7;
+    public static final int STINGER_SOLENOID_RETRACT = 8;
 
     /* VIRSYSJ */
     public static final int[] VIRSYS_OUTPUT_MAP = new int[15];
