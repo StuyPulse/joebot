@@ -1,5 +1,6 @@
 @ECHO THIS NEEDS TO BE TUNED FOR EACH COMPUTER. THE NAME OF THIS COMPUTER IS ... NEEDS TO BE MODIFIED
 @ECHO This fanciness is brought to you by Folders!
+@ECHO And has been modified by Team 694 (www.github.com/prog694)
 @ECHO You may have to change the text in "Wireless Network Connection"
 
 @set /P lastnumberofip=ENTER_LAST_DIGIT_OF_IP_YOU_WANT_TO_USE:
