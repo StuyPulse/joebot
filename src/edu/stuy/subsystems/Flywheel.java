@@ -52,7 +52,7 @@ public class Flywheel extends Subsystem {
      */
     public static double rpmTolerance = 75;
     /** Positions **/
-    public static final int numDistances = 15;
+    public static final int numDistances = 16;
 
     // distances, speedsTopHoop and speedsMiddleHoop are correlated
     // if we're shooting from distances[i], set the flywheel
@@ -81,7 +81,10 @@ public class Flywheel extends Subsystem {
     public static final int KEY_MIDDLE_HOOP_INDEX = 12;
     public static final int MAX_DIST = 13;
     public static final int FAR_KEY_INDEX = 14;
+    public static final int REVERSE_INDEX = 15;
     public static final int MAX_TRIM_RPM = 400;
+
+    public static final double reverseRPM = -1450;
 
     static {
         distances[STOP_INDEX]              = 0;
@@ -98,11 +101,12 @@ public class Flywheel extends Subsystem {
         distances[KEY_MIDDLE_HOOP_INDEX]   = 144 + shooterToBumper;
         distances[MAX_DIST]                = 300;
         distances[FAR_KEY_INDEX]           = 144; //TODO: NEED TO TEST THIS
+        distances[REVERSE_INDEX]           = -9001;
 
         speedsTopHoop[STOP_INDEX]                 = 0;
         speedsTopHoop[FENDER_INDEX]               = 1187;
         speedsTopHoop[FENDER_SIDE_INDEX]          = 0;
-        speedsTopHoop[FENDER_WIDE_INDEX]          = 1350;
+        speedsTopHoop[FENDER_WIDE_INDEX]          = 900; // Middle fender
         speedsTopHoop[HIGHEST_BACKBOARD_INDEX]    = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[LOWEST_SWISH_INDEX]         = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[FENDER_SIDE_WIDE_INDEX]     = 0; //NOT TESTED

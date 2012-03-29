@@ -68,15 +68,23 @@ public class FlywheelRun extends CommandBase {
             setDistanceInches(CommandBase.oi.getDistanceFromDistanceButton());
 
 
-            if (CommandBase.oi.getHoopHeightButton()) {
-                this.speeds = Flywheel.speedsTopHoop;
-            } else {
-                this.speeds = Flywheel.speedsMiddleHoop;
-            }
+//            if (CommandBase.oi.getHoopHeightButton()) {
+            this.speeds = Flywheel.speedsTopHoop;
+//            } else {
+//                this.speeds = Flywheel.speedsMiddleHoop;
+//            }
         }
-        double[] rpm = flywheel.lookupRPM(distanceInches, speeds);
-        if (rpm[0] != 0 && rpm[1] != 0) {
-            trimSpeedsFromOI(rpm);
+        double[] rpm;
+        if(distanceInches < 0){
+            rpm = new double[2];
+            rpm[0] = Flywheel.reverseRPM;
+            rpm[1] = Flywheel.reverseRPM;
+        }
+        else{
+            rpm = flywheel.lookupRPM(distanceInches, speeds);
+            if (rpm[0] != 0 && rpm[1] != 0) {
+                trimSpeedsFromOI(rpm);
+            }
         }
         flywheel.setFlywheelSpeeds(rpm[0], rpm[1]);
         //SmartDashboard.putDouble("setRPMtop", rpm[0]);
