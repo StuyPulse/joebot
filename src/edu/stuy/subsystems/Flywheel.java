@@ -29,8 +29,8 @@ public class Flywheel extends Subsystem {
     public static final double THETA_RADIANS = Math.toRadians(THETA_DEGREES);
     public double lowerSetpoint;
     public double upperSetpoint;
-//    public static JaguarSpeed upperRoller;
-//    public static JaguarSpeed lowerRoller;
+    public static JaguarSpeed upperRoller;
+    public static JaguarSpeed lowerRoller;
     public static final double TOP_HOOP_HEIGHT = 98.0;
     public static final double MIDDLE_HOOP_HEIGHT = 61.0;
     /**
@@ -139,8 +139,8 @@ public class Flywheel extends Subsystem {
     // here. Call these from Commands.
     public Flywheel() {
         // speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
-//        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
-//        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
+        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
+        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
     }
 
     public void initDefaultCommand() {
@@ -149,8 +149,8 @@ public class Flywheel extends Subsystem {
     }
 
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {
-//        upperRoller.setRPM(upperRPM);
-//        lowerRoller.setRPM(lowerRPM);
+        upperRoller.setRPM(upperRPM);
+        lowerRoller.setRPM(lowerRPM);
         lowerSetpoint = lowerRPM;
         upperSetpoint = upperRPM;
     }
@@ -162,16 +162,15 @@ public class Flywheel extends Subsystem {
      */
 
    public boolean isSpeedGood() {
-//        double upperError = Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM());
-//        double lowerError = Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM());
-//        boolean speedGood =
-//                Math.abs(upperError) < rpmTolerance
-//             && Math.abs(lowerError) < rpmTolerance;
-//        SmartDashboard.putDouble("Upper error", Math.abs(upperError));
-//        SmartDashboard.putDouble("Lower error", Math.abs(lowerError));
-//        return speedGood;
-       return true;
-   }
+        double upperError = Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM());
+        double lowerError = Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM());
+        boolean speedGood =
+                Math.abs(upperError) < rpmTolerance
+             && Math.abs(lowerError) < rpmTolerance;
+        SmartDashboard.putDouble("Upper error", Math.abs(upperError));
+        SmartDashboard.putDouble("Lower error", Math.abs(lowerError));
+        return speedGood;
+    }
 
     /**
      * Use the `speeds' lookup table.
@@ -266,11 +265,11 @@ public class Flywheel extends Subsystem {
      * Resets the upper and lower jaguars
      */
     public void resetJaguars() {
-//        try {
-//            lowerRoller.jaguarInit();
-//            upperRoller.jaguarInit();
-//        } catch (CANTimeoutException e) {
-//            e.printStackTrace(); // not run in a continuous loop, so print statements shouldn't cause lag
-//        }
+        try {
+            lowerRoller.jaguarInit();
+            upperRoller.jaguarInit();
+        } catch (CANTimeoutException e) {
+            e.printStackTrace(); // not run in a continuous loop, so print statements shouldn't cause lag
+        }
     }
 }
