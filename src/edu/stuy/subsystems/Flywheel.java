@@ -106,7 +106,7 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[STOP_INDEX]                 = 0;
         speedsTopHoop[FENDER_INDEX]               = 1187;
         speedsTopHoop[FENDER_SIDE_INDEX]          = 0;
-        speedsTopHoop[FENDER_WIDE_INDEX]          = speedsMiddleHoop[FENDER_INDEX];
+        speedsTopHoop[FENDER_WIDE_INDEX]          = 900; // Middle fender
         speedsTopHoop[HIGHEST_BACKBOARD_INDEX]    = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[LOWEST_SWISH_INDEX]         = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[FENDER_SIDE_WIDE_INDEX]     = 0; //NOT TESTED
