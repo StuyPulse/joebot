@@ -44,9 +44,9 @@ public class OI {
     // EnhancedIO digital output
     private static final int DISTANCE_BUTTON_KEY_LIGHT_CHANNEL = 10;
     private static final int DISTANCE_BUTTON_FAR_LIGHT_CHANNEL = 11;
-    private static final int DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL = 12;
+    private static final int DISTANCE_BUTTON_FENDER_2PT_LIGHT_CHANNEL = 15;
     private static final int DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL = 13;
-    private static final int DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL = 15;
+    private static final int DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL = 12;
     private static final int DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL = 14;
     private static final int DISTANCE_BUTTON_STOP_LIGHT_CHANNEL = 16;
     
@@ -83,7 +83,7 @@ public class OI {
 
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_KEY_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+                enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_2PT_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
                 enhancedIO.setDigitalConfig(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
@@ -364,7 +364,7 @@ public class OI {
         try {
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_KEY_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, false);
-            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, false);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_2PT_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, false);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, false);
@@ -381,7 +381,7 @@ public class OI {
         try {
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_KEY_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL, true);
-            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL, true);
+            enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_2PT_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_REVERSE_LIGHT_CHANNEL, true);
             enhancedIO.setDigitalOutput(DISTANCE_BUTTON_FENDER_LIGHT_CHANNEL, true);
@@ -405,7 +405,7 @@ public class OI {
                 setLight(DISTANCE_BUTTON_FAR_LIGHT_CHANNEL);
                 break;
             case DISTANCE_BUTTON_FENDER_LENGTH:
-                setLight(DISTANCE_BUTTON_FENDER_WIDE_LIGHT_CHANNEL);
+                setLight(DISTANCE_BUTTON_FENDER_2PT_LIGHT_CHANNEL);
                 break;
             case DISTANCE_BUTTON_FENDER_WIDTH:
                 setLight(DISTANCE_BUTTON_FENDER_NARROW_LIGHT_CHANNEL);
