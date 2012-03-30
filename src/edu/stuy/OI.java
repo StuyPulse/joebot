@@ -18,8 +18,8 @@ public class OI {
     public static final int DISTANCE_BUTTON_KEY = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
     public static final int DISTANCE_BUTTON_FENDER_LENGTH = 5;
-    public static final int DISTANCE_BUTTON_FENDER_WIDTH = 4;
-    public static final int DISTANCE_BUTTON_REVERSE = 3;
+    public static final int DISTANCE_BUTTON_FENDER_WIDTH = 3;
+    public static final int DISTANCE_BUTTON_REVERSE = 4;
     public static final int DISTANCE_BUTTON_FENDER = 2;
     public static final int DISTANCE_BUTTON_STOP = 1;
     
