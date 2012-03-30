@@ -115,7 +115,7 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[CLOSE_KEY_INDEX]            = 1660;
         speedsTopHoop[KEY_SLANT_INDEX]            = 1560; //TODO: Fix this value through testing
         speedsTopHoop[KEY_MIDDLE_HOOP_INDEX]      = 1425; //TODO: Fix value through testing
-        speedsTopHoop[MAX_DIST]                   = 3000; // TODO: FIx this value through testing
+        speedsTopHoop[MAX_DIST]                   = 3500; // TODO: FIx this value through testing
         speedsTopHoop[FAR_KEY_INDEX]              = 2000; //TODO: Test This
 
         // fill these in at competition if we have time
