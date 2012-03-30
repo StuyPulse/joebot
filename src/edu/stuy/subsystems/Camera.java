@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Camera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    private static final int LOWER_ANGLE = 115;
+    private static final int LOWER_ANGLE = 125;
     private static final int UPPER_ANGLE = 180;
 
     Servo camServo;
