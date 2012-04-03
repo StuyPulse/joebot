@@ -1,18 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.stuy.commands;
 
 /**
- * Vomit balls
- * @author Kevin Wang
+ * Drives to fender, shoots balls.
+ * @author admin
  */
 
+import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutonSetting6 extends CommandGroup {
+
     public AutonSetting6() {
-       addSequential(new AutonVomit());
+        addSequential(new AutonDriveToFender(Autonomous.t_closeKeyToFender));
+        double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
+        addParallel(new AutonWaitThenConvey());
+        addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
     }
 }

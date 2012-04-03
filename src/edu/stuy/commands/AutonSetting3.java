@@ -5,25 +5,14 @@
 package edu.stuy.commands;
 
 /**
- *
- * @author 694
+ * Vomit balls
+ * @author Kevin Wang
  */
-import edu.stuy.subsystems.Flywheel;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutonSetting3 extends CommandGroup {
-
-    /**
-     * Shoots from far key. Then backs up and knocks down bridge.
-     */
     public AutonSetting3() {
-        double distanceInches = Flywheel.distances[Flywheel.FAR_KEY_INDEX];
-        addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
-        addSequential(new ConveyAutomaticAuton(Autonomous.CONVEY_AUTO_TIME));
-        
-        addSequential(new TusksExtend());
-
-
-        addSequential(new AutonBackUpToBridge(Autonomous.t_farKeyToBridge));
+       addSequential(new AutonVomit());
     }
 }
