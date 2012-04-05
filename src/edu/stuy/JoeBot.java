@@ -96,7 +96,7 @@ public class JoeBot extends IterativeRobot {
     }
     
     private void updateSmartDashboard() {
-        SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+        /*SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
         
         SmartDashboard.putDouble("Left encoder distance", CommandBase.drivetrain.getLeftEncoderDistance());
         SmartDashboard.putDouble("Right encoder distance", CommandBase.drivetrain.getRightEncoderDistance());
@@ -113,6 +113,6 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
         SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
         SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
-
+*/
     }
 }
