@@ -9,7 +9,7 @@ package edu.stuy.commands;
  * @author Kevin Wang
  */
 public class AutonDriveToFender extends AutonDrive {
-    public AutonDriveToFender(double inches, double time) {
+    public AutonDriveToFender(double time) {
         super(1, time);
     }
 

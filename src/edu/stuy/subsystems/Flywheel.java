@@ -106,7 +106,7 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[STOP_INDEX]                 = 0;
         speedsTopHoop[FENDER_INDEX]               = 1262;
         speedsTopHoop[FENDER_SIDE_INDEX]          = 0;
-        speedsTopHoop[FENDER_WIDE_INDEX]          = 900; // Middle fender
+        speedsTopHoop[FENDER_WIDE_INDEX]          = 900; // Actual 2-point fender rpm
         speedsTopHoop[HIGHEST_BACKBOARD_INDEX]    = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[LOWEST_SWISH_INDEX]         = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[FENDER_SIDE_WIDE_INDEX]     = 0; //NOT TESTED
@@ -120,7 +120,7 @@ public class Flywheel extends Subsystem {
 
         // fill these in at competition if we have time
         speedsMiddleHoop[STOP_INDEX] = 0;
-        speedsMiddleHoop[FENDER_INDEX] = 1063;
+        speedsMiddleHoop[FENDER_INDEX] = 1063; // Do not use this. Use speedsTopHoop[FENDER_WIDE_INDEX]
         speedsMiddleHoop[FENDER_SIDE_INDEX] = 0;
         speedsMiddleHoop[FENDER_WIDE_INDEX] = 0;
         speedsMiddleHoop[HIGHEST_BACKBOARD_INDEX] = speedsMiddleHoop[FENDER_WIDE_INDEX];
