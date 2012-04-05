@@ -12,8 +12,8 @@ public class AutonSetting7 extends CommandGroup {
 
     public AutonSetting7() {
         addSequential(new AutonDriveToFender(Autonomous.t_closeKeyToFender));
-        double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
+        double distanceInches = Flywheel.distances[Flywheel.FENDER_WIDE_INDEX];
         addParallel(new AutonWaitThenConvey());
-        addSequential(new FlywheelRun(distanceInches, Flywheel.speedsMiddleHoop));
+        addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
     }
 }
