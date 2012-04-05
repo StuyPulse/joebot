@@ -26,6 +26,7 @@ public abstract class CommandBase extends Command {
     public static Conveyor conveyor;
     public static Camera camera;
     public static Stinger stinger;
+    public static BallLight ballLight;
 
     static {
         drivetrain = new Drivetrain();
@@ -37,6 +38,7 @@ public abstract class CommandBase extends Command {
             tusks = new Tusks();
         }
         stinger = new Stinger();
+        ballLight = new BallLight();
     }
 
     public static void init() {
@@ -56,6 +58,7 @@ public abstract class CommandBase extends Command {
             SmartDashboard.putData(conveyor);
             SmartDashboard.putData(camera);
             SmartDashboard.putData(stinger);
+            SmartDashboard.putData(ballLight);
         }
     }
 
