@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class BallLight extends Subsystem {
     private Relay ballLight;
+    private boolean isOn = false;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -23,7 +24,12 @@ public class BallLight extends Subsystem {
     }
     
     public void setLight(boolean on) {
-        ballLight.set(on ? Relay.Value.kOn : Relay.Value.kOff);
+        // Sets the light and the light state variable
+        ballLight.set((isOn = on) ? Relay.Value.kOn : Relay.Value.kOff);
+    }
+
+    public boolean isOn() {
+        return isOn;
     }
 
     public void initDefaultCommand() {
