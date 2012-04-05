@@ -24,7 +24,10 @@ public class Autonomous extends CommandGroup {
     // 0.2 is a guess for the amount of time to reach max speed
     // 1.25:  add 25% more time to account for friction
     //    drive train speed is based on free speed; friction will make it slower
-    
+
+    // distance is ~68" or ~5.7', rate is 10 ft/s. Time is 1.2s, Your Mileage May Vary
+    public static final double t_closeKeyToFender = 3.9;
+
     // distance is ~50" or ~4', rate is ~10 ft/s. Time is 0.4s, Your Mileage May Vary
     //public static final double t_farKeyToBridge = 0.75;
     public static final double t_farKeyToBridge = 2.7; // lower speed, try this (untested)
@@ -37,9 +40,6 @@ public class Autonomous extends CommandGroup {
         addSequential(new DrivetrainSetGear(true));
         addSequential(new WaitCommand(CommandBase.oi.getDelayTime()));
         switch (CommandBase.oi.getAutonSetting()) {
-            case 0:
-                addSequential(new AutonSetting0());
-                break;
             case 1:
                 addSequential(new AutonSetting1());
                 break;
