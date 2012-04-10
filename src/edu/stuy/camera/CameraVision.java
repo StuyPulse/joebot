@@ -66,43 +66,50 @@ public class CameraVision extends Thread {
     }
 
     public void doCamera() {
-        while(cameraOn){
-        if (toggleReflectLightIfInRange()) { // if we're within image-accurate distance
-            try {
-                 // Do the image capture with the camera and apply the algorithm described above.
-                ColorImage image = camera.getImage(); // get the image from the camera
-                BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255); // mark only areas that have high
-                image.free();                                                                        // luminance (the last two numbers
-                                                                                        // are low-high limits
-                BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
-                rectImage.free();
-                BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
-                bigObjectsImage.free();
-                BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // filter particles using our criteria
-                convexHullImage.free();
-                ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
-                massCenter.removeAllElements();                                         // remove previous center-of-mass-es
-                
-                
-                ParticleAnalysisReport r = reports[0]; // Gets largest detected target
-                
-                // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
-                // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
-                int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
-                massCenter.addElement(new Integer(r.center_mass_x));                    // add each center-of-mass to our list
+        while (cameraOn) {
+            if (toggleReflectLightIfInRange()) { // if we're within image-accurate distance
+                try {
+                    // Do the image capture with the camera and apply the algorithm described above.
+                    ColorImage image = camera.getImage(); // get the image from the camera
+                    BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255); // mark only areas that have high
+                    image.free();                                                                        // luminance (the last two numbers
+                    // are low-high limits
+                    BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
+                    rectImage.free();
+                    BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
+                    bigObjectsImage.free();
+                    BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // filter particles using our criteria
+                    convexHullImage.free();
+                    ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
+                    massCenter.removeAllElements();                                         // remove previous center-of-mass-es
 
 
-                if (massCenter.size() > 0) {            // if there are center-of-mass-es in the list
-                    targetCenter = getCenterMass(0);    // set targetCenter to the largest one (the first one)
+                    ParticleAnalysisReport r = reports[0]; // Gets largest detected target
+
+                    // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
+                    // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
+                    int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
+                    massCenter.addElement(new Integer(r.center_mass_x));                    // add each center-of-mass to our list
+
+
+                    if (massCenter.size() > 0) {            // if there are center-of-mass-es in the list
+                        targetCenter = getCenterMass(0);    // set targetCenter to the largest one (the first one)
+                    }
+
+                    filteredImage.free();
+
+                } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
+                } catch (NIVisionException ex) {
                 }
-
-                filteredImage.free();
-               
-            } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
-            } catch (NIVisionException ex) {
+            }
+            
+            // Delay for a quarter second for less lag
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
             }
         }
-    }
     }
     /**
      * Displays the center of the largest, rectangular target detected
@@ -151,7 +158,7 @@ public class CameraVision extends Thread {
         toggleReflectLightIfInRange();
     }
 
-    public void setCamera(boolean  isRunning){
+    public void setCamera(boolean isRunning){
         cameraOn = isRunning;
     }
     
