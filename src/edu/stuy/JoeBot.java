@@ -116,8 +116,8 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Delay Time: ", CommandBase.oi.getDelayTime());
         SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
 
-        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
-        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
+        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.ballAtTop());
+        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.ballAtBottom());
 
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
         SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
@@ -129,7 +129,5 @@ public class JoeBot extends IterativeRobot {
 
         SmartDashboard.putDouble("Left joystick", -CommandBase.oi.getLeftStick().getY());
         SmartDashboard.putDouble("Right joystick", -CommandBase.oi.getRightStick().getY());
-
-        SmartDashboard.putDouble("Acquirer current", CommandBase.acquirer.roller.getCurrent());
     }
 }
