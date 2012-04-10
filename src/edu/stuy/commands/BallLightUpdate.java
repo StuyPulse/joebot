@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
  * @author admin
  */
 public class BallLightUpdate extends CommandBase {
-    private int BLINK_FREQUENCY_HZ = 10;
+    private int BLINK_FREQUENCY_HZ = 7;
     private double lastTime = 0;
     
     public BallLightUpdate() {
