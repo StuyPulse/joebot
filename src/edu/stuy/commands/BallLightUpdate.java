@@ -33,6 +33,9 @@ public class BallLightUpdate extends CommandBase {
                 lastTime = time;
             }
         }
+        else if (conveyor.ballAtBottom()) {
+            ballLight.setLight(true);
+        }
         else {
             ballLight.setLight(false);
         }
