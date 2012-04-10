@@ -18,6 +18,7 @@ public class AcquirerReverse extends CommandBase {
         requires(acquirer);
     }
 
+    // Reverses acquirer for timeout seconds
     public AcquirerReverse(double timeout) {
         this();
         hasTimeout = true;
@@ -33,7 +34,7 @@ public class AcquirerReverse extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        acquirer.roll(-1);
+        acquirer.acquireReverse();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,7 +47,7 @@ public class AcquirerReverse extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        acquirer.roll(0);
+        acquirer.stop();
     }
 
     // Called when another command which requires one or more of the same

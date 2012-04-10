@@ -4,25 +4,26 @@
  */
 package edu.stuy.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+
 /**
  *
- * @author belias
+ * @author Kevin Wang
  */
-public class ConveyorPushDown extends CommandBase {
+public class ConveyAutomaticAuton extends CommandBase {
+    double PAUSE_DURATION = 1;
     
-    double timeout;
     boolean hasTimeout = false;
+    double timeout;
+    double pauseTime = 0;
 
-    public ConveyorPushDown() {
+    public ConveyAutomaticAuton() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        
-        setInterruptible(false);
         requires(conveyor);
-        requires(acquirer);
     }
 
-    public ConveyorPushDown(double timeout) {
+    public ConveyAutomaticAuton(double timeout) {
         this();
         hasTimeout = true;
         this.timeout = timeout;
@@ -30,27 +31,34 @@ public class ConveyorPushDown extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        acquirer.stop();
+        setTimeout(timeout);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (conveyor.ballAtBottom()) {
+        if (!flywheel.isSpeedGood()) {
+            pauseTime = Timer.getFPGATimestamp();
+            conveyor.stop();
+        }
+        else if (Timer.getFPGATimestamp() - pauseTime < PAUSE_DURATION || !flywheel.isSpinning()) {
             conveyor.stop();
         }
         else {
-            conveyor.conveyReverse();
+            conveyor.convey();
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ((hasTimeout && isTimedOut()) ||   // timed out
-                conveyor.ballAtBottom());         // or ball is pushed down
+        if (hasTimeout) {
+            return isTimedOut();
+        }
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        conveyor.stop();
     }
 
     // Called when another command which requires one or more of the same

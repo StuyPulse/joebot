@@ -4,17 +4,20 @@
  */
 package edu.stuy.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+
 /**
  *
- * @author Kevin Wang
+ * @author admin
  */
-public class ShooterStop extends CommandBase {
-    private boolean done = false;
+public class BallLightUpdate extends CommandBase {
+    private int BLINK_FREQUENCY_HZ = 7;
+    private double lastTime = 0;
     
-    public ShooterStop() {
+    public BallLightUpdate() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(shooter);
+        requires(ballLight);
     }
 
     // Called just before this Command runs the first time
@@ -23,13 +26,24 @@ public class ShooterStop extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        shooter.setFlywheelSpeeds(0, 0);
-        done = true;
+        double time = Timer.getFPGATimestamp();
+        if (conveyor.ballAtTop()) {
+            if (time - lastTime > (1.0 / BLINK_FREQUENCY_HZ)) {
+                ballLight.setLight(!ballLight.isOn()); // Invert ball light every 1/frequency (period) seconds
+                lastTime = time;
+            }
+        }
+        else if (conveyor.ballAtBottom()) {
+            ballLight.setLight(true);
+        }
+        else {
+            ballLight.setLight(false);
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return done;
+        return false;
     }
 
     // Called once after isFinished returns true

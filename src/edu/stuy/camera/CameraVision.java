@@ -51,8 +51,8 @@ public class CameraVision extends Thread {
     }
 
     private CameraVision() {
-        targetLight = new Relay(RobotMap.TARGET_LIGHT);
-        targetLight.setDirection(Relay.Direction.kForward);
+        /*targetLight = new Relay(RobotMap.TARGET_LIGHT);
+        targetLight.setDirection(Relay.Direction.kForward);*/
 
         reflectiveLight = new Relay(RobotMap.REFLECTIVE_LIGHT);
         reflectiveLight.setDirection(Relay.Direction.kForward);
@@ -67,50 +67,49 @@ public class CameraVision extends Thread {
 
     public void doCamera() {
         while (cameraOn) {
-            if (toggleReflectLightIfInRange()) { // if we're within image-accurate distance
-                try {
-                    // Do the image capture with the camera and apply the algorithm described above.
-                    ColorImage image = camera.getImage(); // get the image from the camera
-                    BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255); // mark only areas that have high
-                    image.free();                                                                        // luminance (the last two numbers
-                    // are low-high limits
-                    BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
-                    rectImage.free();
-                    BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
-                    bigObjectsImage.free();
-                    BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // filter particles using our criteria
-                    convexHullImage.free();
-                    ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
-                    massCenter.removeAllElements();                                         // remove previous center-of-mass-es
+            try {
+                // Do the image capture with the camera and apply the algorithm described above.
+                ColorImage image = camera.getImage(); // get the image from the camera
+                BinaryImage rectImage = image.thresholdHSL(145, 182, 0, 255, 120, 255); // mark only areas that have high
+                image.free();                                                                        // luminance (the last two numbers
+                // are low-high limits
+                BinaryImage bigObjectsImage = rectImage.removeSmallObjects(false, 2);  // remove small artifacts
+                rectImage.free();
+                BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
+                bigObjectsImage.free();
+                BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // filter particles using our criteria
+                convexHullImage.free();
+                ParticleAnalysisReport[] reports = filteredImage.getOrderedParticleAnalysisReports();  // get list of results
+                massCenter.removeAllElements();                                         // remove previous center-of-mass-es
 
 
-                    ParticleAnalysisReport r = reports[0]; // Gets largest detected target
+                ParticleAnalysisReport r = reports[0]; // Gets largest detected target
 
-                    // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
-                    // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
-                    int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
-                    massCenter.addElement(new Integer(r.center_mass_x));                    // add each center-of-mass to our list
+                // [target size feet]/[target size pixels] = [FOV feet]/[FOV pixels]
+                // [FOV feet] = ([FOV pixels]*[target size feet])/[target size pixels]
+                int fovFeet = (360 * 2) / r.boundingRectWidth;                          // use it to calculate our field of view
+                massCenter.addElement(new Integer(r.center_mass_x));                    // add each center-of-mass to our list
 
 
-                    if (massCenter.size() > 0) {            // if there are center-of-mass-es in the list
-                        targetCenter = getCenterMass(0);    // set targetCenter to the largest one (the first one)
-                    }
-
-                    filteredImage.free();
-
-                } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
-                } catch (NIVisionException ex) {
+                if (massCenter.size() > 0) {            // if there are center-of-mass-es in the list
+                    targetCenter = getCenterMass(0);    // set targetCenter to the largest one (the first one)
                 }
+
+                filteredImage.free();
+
+            } catch (AxisCameraException ex) {          // this is needed if the camera.getImage() is called
+            } catch (NIVisionException ex) {
             }
-            
+
+
             // Delay for a quarter second for less lag
             try {
                 Thread.sleep(250);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
             }
         }
     }
+    
     /**
      * Displays the center of the largest, rectangular target detected
      * @return targetCenter
@@ -134,18 +133,6 @@ public class CameraVision extends Thread {
     }
 
     /**
-     * Uses the sonar to determine whether to turn on camera light.
-     *
-     * If Alliance Wall is within 144 inches, then turn on light.  Else, turn off.
-     */
-    public boolean toggleReflectLightIfInRange() {
-        boolean withinRange = CommandBase.drivetrain.getSonarVoltage() < 144; // TODO: Find actual effective limit for range of LEDs
-        reflectiveLight.set(withinRange ? Relay.Value.kOn : Relay.Value.kOff);
-
-        return withinRange;
-    }
-
-    /**
      * If aligned to target, turn on target light.  Else, off.
      */
     public void toggleTargetLightIfAligned() {
@@ -155,7 +142,6 @@ public class CameraVision extends Thread {
     public void run(){
         doCamera();
         toggleTargetLightIfAligned();
-        toggleReflectLightIfInRange();
     }
 
     public void setCamera(boolean isRunning){

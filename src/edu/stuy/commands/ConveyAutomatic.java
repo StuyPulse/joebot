@@ -10,14 +10,13 @@ package edu.stuy.commands;
  */
 public class ConveyAutomatic extends CommandBase {
     
-    double timeout;
     boolean hasTimeout = false;
+    double timeout;
 
     public ConveyAutomatic() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(conveyor);
-        requires(shooter);
     }
 
     public ConveyAutomatic(double timeout) {
@@ -28,13 +27,12 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        setTimeout(timeout);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        System.out.println("shooter is at speed? " + shooter.isSpeedGood());
-        System.out.println("ball at top? " + conveyor.ballAtTop());
-        if (shooter.isSpeedGood() || !conveyor.ballAtTop()) {
+        if (flywheel.isSpeedGood() && flywheel.isSpinning()) {
             conveyor.convey();
         }
         else {
@@ -52,7 +50,7 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        (new ConveyorPushDown(5)).start();
+        conveyor.stop();
     }
 
     // Called when another command which requires one or more of the same

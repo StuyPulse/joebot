@@ -4,29 +4,23 @@
  */
 package edu.stuy.commands;
 
-import edu.stuy.subsystems.Shooter;
-
 /**
- *
+ * Shoots from close key. Then backs up and knocks down bridge.
  * @author 694
  */
+import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutonSetting2 extends CommandGroup {
 
     public AutonSetting2() {
-        // TODO: Get tusks running concurrently with backing up, have them retract after backuptobridge is done
+        double distanceInches = Flywheel.distances[Flywheel.CLOSE_KEY_INDEX];
+        addParallel(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
+        addSequential(new ConveyAutomaticAuton(Autonomous.CONVEY_AUTO_TIME));
+        
         addSequential(new TusksExtend());
 
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE - Autonomous.INCHES_TO_FENDER));
 
-        addSequential(new TusksRetract());
-
-        addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_BRIDGE));
-        // TODO: Call ConveyAutomatic for a set time interval OR ConveySemiauto for two balls
-
-        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-        addSequential(new ShooterMoveFlyWheel(distanceInches));
-        addSequential(new ConveyAutomatic(4));//4 second coded in raw. Needs to be changed.
+        addSequential(new AutonBackUpToBridge(Autonomous.t_closeKeyToBridge));
     }
 }

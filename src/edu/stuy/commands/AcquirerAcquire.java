@@ -11,7 +11,7 @@ package edu.stuy.commands;
 public class AcquirerAcquire extends CommandBase {
     boolean hasTimeout = false;
     double timeout;
-    
+
     public AcquirerAcquire() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -53,4 +53,9 @@ public class AcquirerAcquire extends CommandBase {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+
+//    public void cancel() {
+//        super.cancel();
+//        this.end();
+//    }
 }

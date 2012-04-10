@@ -9,8 +9,8 @@ package edu.stuy.commands;
  * @author Kevin Wang
  */
 public class AutonBackUpToBridge extends AutonDrive {
-    public AutonBackUpToBridge(double inches) {
-        super(inches, -1);
+    public AutonBackUpToBridge(double time) {
+        super(-1, time);
     }
 
     // Called just before this Command runs the first time

@@ -1,8 +1,9 @@
-/*
+ /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package edu.stuy.speed;
+
 
 /**
  * abstract class for making a common API for the Jaguars and the victors
@@ -31,4 +32,7 @@ public interface JoeSpeed {
      * @return atSetPoint
      */
     boolean isAtSetPoint();
+
+    public void setPID(String prefix);
+
 }

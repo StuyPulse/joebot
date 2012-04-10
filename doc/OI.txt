@@ -1,0 +1,66 @@
+LEFT STICK
+  (USB port #1)
+
+  Axes:
+              X:
+              Y:
+              Z:
+
+  Buttons:
+    (trigger) 1:  extend tusks
+              2:  retract tusks
+              3:
+              4:
+              5:
+              6:
+              7:
+              8:
+              9:
+             10:
+             11:
+
+RIGHT STICK
+  (USB port #2)
+
+  Axes:
+              X:
+              Y:
+              Z:
+
+  Buttons:
+    (trigger) 1:  Low gear
+              2:  High gear
+              3:
+              4:
+              5:
+              6:
+              7:
+              8:
+              9:
+             10:
+             11:
+
+
+
+SHOOTER STICK
+  (USB port #3)
+
+  Axes:
+
+              X:
+              Y:
+              Z:
+
+  Buttons:
+
+    (trigger) 1:  Convey Manual
+              2:  
+              3:  
+              4:  Flywheel Stop
+              5:  Acquire Reverse
+              6:  Convey Reverse Manual
+              7:  Acquirer Acquire
+              8:  Convey Automatic
+              9:  Stop Flywheel
+             10:  Flywheel fender speed
+             11:  Flywheel max speed

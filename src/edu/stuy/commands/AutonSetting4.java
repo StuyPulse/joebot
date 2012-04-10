@@ -5,20 +5,16 @@
 package edu.stuy.commands;
 
 /**
- *
- * @author 694
+ * Vomit balls and push down bridge
+ * @author Kevin Wang
  */
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.stuy.subsystems.*;
 
 public class AutonSetting4 extends CommandGroup {
-
-    /**
-     * Shoots at key.
-     */
-    public AutonSetting4() {
-        double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
-        addSequential(new ShooterMoveFlyWheel(distanceInches));
-        addSequential(new ConveyAutomatic(4)); //value of 4 is hardcoded. Please change.
+   public AutonSetting4() {
+       addSequential(new AutonVomit());
+       addSequential(new TusksExtend());
+       addSequential(new AutonBackUpToBridge(Autonomous.t_closeKeyToBridge));
     }
 }

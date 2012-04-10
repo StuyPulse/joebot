@@ -4,26 +4,18 @@
  */
 package edu.stuy.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.stuy.subsystems.*;
-
 /**
- *
- * @author admin
+ * Shoots from close key.
+ * @author 694
  */
+import edu.stuy.subsystems.Flywheel;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
 public class AutonSetting1 extends CommandGroup {
 
     public AutonSetting1() {
-        addSequential(new AutonDriveToFender(Autonomous.INCHES_TO_FENDER));
-
-        double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-        addSequential(new ShooterMoveFlyWheel(distanceInches));
-        addSequential(new ConveyAutomatic(4)); //4 sec is a raw value. Change.
-
-        // TODO: Get tusks running concurrently with backing up, have them retract after backuptobridge is done
-        addParallel(new TusksExtend());
-        addSequential(new AutonBackUpToBridge(Autonomous.INCHES_TO_BRIDGE));
-        addSequential(new TusksRetract());
-
+        double distanceInches = Flywheel.distances[Flywheel.CLOSE_KEY_INDEX];
+        addParallel(new AutonWaitThenConvey());
+        addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
     }
 }

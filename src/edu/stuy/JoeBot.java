@@ -4,16 +4,16 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package edu.stuy;
 
-
-import edu.stuy.camera.CameraVision;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.ConveyorPushDown;
-import edu.wpi.first.wpilibj.Compressor;
+import edu.stuy.commands.MoveCamera;
+import edu.stuy.commands.TusksRetract;
+import edu.stuy.subsystems.Flywheel;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
+//    Thread ariel;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -38,24 +39,26 @@ public class JoeBot extends IterativeRobot {
         // autonomousCommand = new ExampleCommand();
 
         if (!Devmode.DEV_MODE) {
-            /*Compressor compressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_CHANNEL);
-            compressor.start(); */
         }
 
         // Initialize all subsystems
         CommandBase.init();
-        
-        CameraVision.getInstance();
-        CameraVision.getInstance().doCamera();
-        CameraVision.getInstance().toggleTargetLightIfAligned();
+        if (!Devmode.DEV_MODE) {
+            AxisCamera.getInstance();
+        }
+//        ariel = CameraVision.getInstance();
+//        ariel.setPriority(2);
     }
-    
+
     public void disabledPeriodic() {
         updateSmartDashboard();
+        CommandBase.oi.resetBox();
+//        CameraVision.getInstance().setCamera(false);
     }
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        new TusksRetract().start();
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
     }
@@ -69,50 +72,63 @@ public class JoeBot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to 
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to 
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-
-                // Note that OI starts a bunch of other commands
-                // by attaching them to joystick buttons.  Check OI.java
+        // do not retract tusks immediately.  wait for driver command so we don't
+        // release the bridge too early when balls are rolling down
+//        CameraVision.getInstance().setCamera(true);
+//        ariel.start();
+        new MoveCamera(true).start();
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        //
         Scheduler.getInstance().run();
-        
-        CameraVision.getInstance().doCamera();
-        CameraVision.getInstance().toggleTargetLightIfAligned();
-        
-        // Debug box actions
+
+        CommandBase.oi.updateLights();
         updateSmartDashboard();
     }
-    
+
+    // We use SmartDashboard to monitor bot information.
+    // Here, we put things to the SmartDashboard
     private void updateSmartDashboard() {
-        /*SmartDashboard.putDouble("Sonar distance (in)", CommandBase.drivetrain.getSonarDistance_in());
+        SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
+        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromDistanceButton());
+
+        SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getDigitalValue(OI.SHOOTER_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Stinger Switch: ", CommandBase.oi.getDigitalValue(OI.STINGER_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_UP_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_DOWN_SWITCH_CHANNEL));
+
+        SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
+        SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
+        SmartDashboard.putDouble("Delay Pot: ", CommandBase.oi.getDelayPot());
+        SmartDashboard.putDouble("Delay Time: ", CommandBase.oi.getDelayTime());
+        SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
+
+        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
+        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
+
+        SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
+        SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
+
+        SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
-        SmartDashboard.putDouble("Left encoder distance", CommandBase.drivetrain.getLeftEncoderDistance());
-        SmartDashboard.putDouble("Right encoder distance", CommandBase.drivetrain.getRightEncoderDistance());
-        SmartDashboard.putDouble("Encoder average distance", CommandBase.drivetrain.getAvgDistance());
-        
-        SmartDashboard.putDouble("Gyro angle", CommandBase.drivetrain.getGyroAngle());
-        
-        SmartDashboard.putBoolean("Upper conveyor sensor", CommandBase.conveyor.ballAtTop());
-        SmartDashboard.putBoolean("Lower conveyor sensor", CommandBase.conveyor.ballAtBottom());
-        
-        // Camera target info
-        SmartDashboard.putDouble("Distance 0", CameraVision.getInstance().getDistance(0));
-        SmartDashboard.putDouble("Distance 1", CameraVision.getInstance().getDistance(1));
-        SmartDashboard.putInt("Center of mass 0", CameraVision.getInstance().getCenterMass(0));
-        SmartDashboard.putInt("Center of mass 1", CameraVision.getInstance().getCenterMass(1));
-        SmartDashboard.putBoolean("Is aligned", CameraVision.getInstance().isAligned());
-*/
+        //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
+        SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
+
+        SmartDashboard.putDouble("Left joystick", -CommandBase.oi.getLeftStick().getY());
+        SmartDashboard.putDouble("Right joystick", -CommandBase.oi.getRightStick().getY());
+
+        SmartDashboard.putDouble("Acquirer current", CommandBase.acquirer.roller.getCurrent());
     }
 }

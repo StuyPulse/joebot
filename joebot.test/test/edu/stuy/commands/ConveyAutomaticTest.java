@@ -2,7 +2,7 @@ package edu.stuy.commands;
 
 import edu.stuy.speed.JaguarSpeed;
 import edu.stuy.*;
-import edu.stuy.subsystems.Shooter;
+import edu.stuy.subsystems.Flywheel;
 import org.junit.*;
 import static edu.stuy.assertions.ConveyorAssertions.*;
 
@@ -94,14 +94,14 @@ public class ConveyAutomaticTest {
 
     
     public void makeSpeedGood() {
-        double distanceInches = Shooter.distances[Shooter.KEY_INDEX];
-        ShooterMoveFlyWheel cmd = new ShooterMoveFlyWheel(distanceInches);
+        double distanceInches = Flywheel.distances[Flywheel.KEY_INDEX];
+        FlywheelRun cmd = new FlywheelRun(distanceInches);
         cmd.initialize();
         cmd.execute();
     }
 
     public void makeSpeedBad() {
-        JaguarSpeed j = Shooter.lowerRoller;
+        JaguarSpeed j = Flywheel.lowerRoller;
         j.jaguar.value = -100;
     }
 

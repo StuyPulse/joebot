@@ -10,7 +10,6 @@ import com.sun.squawk.microedition.io.FileConnection;
 import com.sun.squawk.util.StringTokenizer;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import javax.microedition.io.Connector;
 
 /**
@@ -33,9 +32,9 @@ public class FileIO {
         try {
             FileConnection c = (FileConnection) Connector.open(url);
             BufferedReader buf = new BufferedReader(new InputStreamReader(c.openInputStream()));
-            String line = "";
+            String line;
 
-            boolean lineRead = false;
+            boolean lineRead;
             while ((line = buf.readLine()) != null) {
                 lineRead = false;
                 if (line.charAt(0) != '#') {
@@ -54,7 +53,6 @@ public class FileIO {
             c.close();
         }
         catch (IOException e) {
-            reportError("FILEIO", e, "Could not get file contents");
         }
         return contents;
     }
@@ -75,34 +73,4 @@ public class FileIO {
         return array;
     }
 
-    /**
-     * Reports errors giving information on which class the error was in
-     * along with an error message from the catch block.
-     * @param context States in which class the error has occured.
-     * @param e Name of the exception.
-     * @param customMessage Displays the custom message in the catch block.
-     */
-    public static void reportError(String context, Exception e, String customMessage) {
-        try {
-            String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage() + ": " + customMessage + "\n";
-            log.append(message);
-
-        } catch (Exception ex) {
-            // Do nothing
-        }
-    }
-    /**
-     * Records a log of exceptions to competition.log.
-     */
-    public static void writeLog() {
-        String url = "file:///competition.log";
-        try {
-            FileConnection c = (FileConnection) Connector.open(url);
-            OutputStreamWriter writer = new OutputStreamWriter(c.openOutputStream());
-            writer.write(log.toString());
-            c.close();
-        } catch (Exception e) {
-            //Do nothing
-        }
-    }
 }

@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 import edu.stuy.*;
 
-import edu.stuy.subsystems.Shooter;
+import edu.stuy.subsystems.Flywheel;
 /**
  *
  * @author prog694
@@ -48,42 +48,18 @@ public class ShooterTest {
 
     @Test
     public void testdesiredExitRPM() {
-        System.out.println("Actual points\ndistance, speed");
-        for (int i = 0; i < Shooter.numDistances; i++) {
-            System.out.println(Shooter.distances[i] + ", " + Shooter.speeds[i]);
+        System.out.println("Actual points\ndistance, top hoop speed, mid hoop speed");
+        for (int i = 0; i < Flywheel.numDistances; i++) {
+            System.out.println(Flywheel.distances[i] + ", " + Flywheel.speedsTopHoop[i]);
         }
 
         System.out.println("Interpolated points\ndistance, speed");
-        for (double distanceInches = Shooter.distances[Shooter.FENDER_INDEX];
-             distanceInches <= Shooter.distances[Shooter.KEY_INDEX];
+        for (double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
+             distanceInches <= Flywheel.distances[Flywheel.KEY_INDEX];
              distanceInches += 1) {
-            System.out.println(distanceInches + ", " + CommandBase.shooter.lookupRPM(distanceInches)[0]);
+            System.out.println(distanceInches + ", " +
+                    CommandBase.flywheel.lookupRPM(distanceInches, Flywheel.speedsTopHoop)[0] + ", " +
+                    CommandBase.flywheel.lookupRPM(distanceInches, Flywheel.speedsMiddleHoop)[0]);
         }
     }
-
-    @Test
-    public void testRPMTolerance() {
-        double min, mid, max;
-        
-        System.out.println("key-shots:");
-        min = Shooter.theoreticalDesiredExitRPM(129-5);
-        System.out.println(min);
-        mid = Shooter.theoreticalDesiredExitRPM(129);
-        System.out.println(mid);
-        max = Shooter.theoreticalDesiredExitRPM(129+5);
-        System.out.println(max);
-        System.out.println("error: " + (max - mid));
-        System.out.println("error: " + (mid - min));
-        
-        System.out.println("fender-shots:");
-        min = Shooter.theoreticalDesiredExitRPM(77.25-5);
-        System.out.println(min);
-        mid = Shooter.theoreticalDesiredExitRPM(77.25);
-        System.out.println(mid);
-        max = Shooter.theoreticalDesiredExitRPM(77.25+5);
-        System.out.println(max);
-        System.out.println("error: " + (max - mid));
-        System.out.println("error: " + (mid - min));
-    }
-
 }

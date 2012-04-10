@@ -5,7 +5,10 @@
 package edu.stuy.speed;
 
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Jaguar motor controller with speed methods
@@ -13,12 +16,14 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
  */
 public class JaguarSpeed implements JoeSpeed {
 
-    public static final double KP = 0.0;
-    public static final double KI = 0.0;
+    public static final double KP = 0.3;
+    public static final double KI = 0.01;
     public static final double KD = 0.0;
     public CANJaguar jaguar;
     private double speedSetpoint;
     public double toleranceRPM;
+
+    private int CANid;
     /**
      * Constructs a new CANJaguar using speed control.
      *
@@ -26,17 +31,28 @@ public class JaguarSpeed implements JoeSpeed {
      * @param toleranceRPM the value of toleranceRPM
      */
     public JaguarSpeed(int id, double toleranceRPM) {
+        CANid = id;
         speedSetpoint = 0;
         this.toleranceRPM = toleranceRPM;
         try {
-            jaguar = new CANJaguar(id, CANJaguar.ControlMode.kSpeed);
-            jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-            jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
-            jaguar.setPID(KP, KI, KD);
-            jaguar.enableControl();
-        } catch (CANTimeoutException e) {
+            jaguarInit();
+        }
+        catch (CANTimeoutException e) {
+            if (!DriverStation.getInstance().isFMSAttached()) {
+                e.printStackTrace();
+            }
         }
 
+    }
+
+    public void jaguarInit() throws CANTimeoutException {
+        jaguar = new CANJaguar(CANid);
+        jaguar.changeControlMode(CANJaguar.ControlMode.kSpeed);
+        jaguar.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+        jaguar.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+        jaguar.setPID(KP, KI, KD);
+        jaguar.configFaultTime(0.5);
+        jaguar.enableControl();
     }
 
     public double getRPM() {
@@ -50,8 +66,25 @@ public class JaguarSpeed implements JoeSpeed {
     public void setRPM(double rpm) {
         speedSetpoint = rpm;
         try {
-            jaguar.setX(rpm);
+            jaguar.setX(-rpm);
+            
         } catch (CANTimeoutException e) {
+            if (!DriverStation.getInstance().isFMSAttached()) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void setPID(String prefix) {
+        try {
+            jaguar.setPID(SmartDashboard.getDouble(prefix+"P"), SmartDashboard.getDouble(prefix+"I"), SmartDashboard.getDouble(prefix+"D"));
+        }
+        catch (NetworkTableKeyNotDefined e) {
+            SmartDashboard.putDouble(prefix+"P", 0);
+            SmartDashboard.putDouble(prefix+"I", 0);
+            SmartDashboard.putDouble(prefix+"D", 0);
+        }
+        catch (CANTimeoutException e) {
         }
     }
 
