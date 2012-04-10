@@ -39,7 +39,11 @@ public class FakeAcquirer extends Subsystem {
         roll(-1);
     }
 
-    public double getRoller() {
+    public double getRollerSpeed() {
         return 0.0;
+    }
+    
+    public boolean isAcquiring() {
+        return false;
     }
 }
