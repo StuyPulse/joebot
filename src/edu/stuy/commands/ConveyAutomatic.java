@@ -17,7 +17,7 @@ public class ConveyAutomatic extends CommandBase {
      * Prevents ball from being shot with extra energy due to the conveyor.
      * Longer / shorter conveyor runs can kill our consistency.
      */
-    public static final int BALL_STATIONARY_TIME = 1;
+    public static final double BALL_STATIONARY_TIME = 0.5;
     
     /**
      * Don't shoot until flywheel has been close enough to the correct speed
