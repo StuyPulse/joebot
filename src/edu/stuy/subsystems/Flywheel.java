@@ -51,6 +51,11 @@ public class Flywheel extends Subsystem {
      * This way any shot made from within this tolerance will go the correct distance.
      */
     public static double rpmTolerance = 75;
+    
+    /**
+     * Will be set by FlywheelRun when the speed has settled to the setpoint.
+     */
+    public static boolean speedSettled = false;
     /** Positions **/
     public static final int numDistances = 16;
 

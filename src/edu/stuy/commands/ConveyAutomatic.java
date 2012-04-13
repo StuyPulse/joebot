@@ -19,17 +19,12 @@ public class ConveyAutomatic extends CommandBase {
      */
     public static final double BALL_STATIONARY_TIME = 0.5;
     
-    /**
-     * Don't shoot until flywheel has been close enough to the correct speed
-     * for at least this much time.
-     */
-    public static final double SPEED_STABILIZE_TIME = 0.5;
+    
     
     boolean hasTimeout = false;
     double timeout;
     
     double startBallDelayTime = -1;
-    double startSpeedGoodTime = -1;
     
     public ConveyAutomatic() {
         // Use requires() here to declare subsystem dependencies
@@ -56,15 +51,9 @@ public class ConveyAutomatic extends CommandBase {
         double ballWaitTime = (startBallDelayTime > 0) ? Timer.getFPGATimestamp() - startBallDelayTime : -1;
         boolean ballSettled = startBallDelayTime < 0 || ballWaitTime > BALL_STATIONARY_TIME;
         
-        // Has the flywheel speed stabilized?
-        boolean speedGood = flywheel.isSpeedGood();
-        if (speedGood && startSpeedGoodTime < 0)  startSpeedGoodTime = Timer.getFPGATimestamp();
-        if (!speedGood) startSpeedGoodTime = -1;
-        double speedWaitTime = (startSpeedGoodTime > 0) ? Timer.getFPGATimestamp() - startSpeedGoodTime : -1;
-        boolean speedSettled = speedWaitTime > SPEED_STABILIZE_TIME;
         
         if (flywheel.isSpeedGood() && flywheel.isSpinning() && // flywheel's at correct speed
-                speedSettled &&                                // flywheel's been stable at correct speed for long enough
+                flywheel.speedSettled &&                                // flywheel's been stable at correct speed for long enough
                 ballSettled) {  // conveyor's not accelerating ball
             conveyor.convey();
             
