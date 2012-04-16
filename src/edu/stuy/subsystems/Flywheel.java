@@ -55,7 +55,7 @@ public class Flywheel extends Subsystem {
     /**
      * Will be set by FlywheelRun when the speed has settled to the setpoint.
      */
-    public static boolean speedSettled = false;
+    private static boolean speedSettled = false;
     /** Positions **/
     public static final int numDistances = 16;
 
@@ -276,5 +276,13 @@ public class Flywheel extends Subsystem {
         } catch (CANTimeoutException e) {
             e.printStackTrace(); // not run in a continuous loop, so print statements shouldn't cause lag
         }
+    }
+    
+    public void setSpeedSettled(boolean settled) {
+        speedSettled = settled;
+    }
+    
+    public boolean isSpeedSettled() {
+        return speedSettled;
     }
 }

@@ -73,7 +73,7 @@ public class FlywheelRun extends CommandBase {
         if (speedGood && startSpeedGoodTime < 0)  startSpeedGoodTime = Timer.getFPGATimestamp();
         if (!speedGood) startSpeedGoodTime = -1;
         double speedWaitTime = (startSpeedGoodTime > 0) ? Timer.getFPGATimestamp() - startSpeedGoodTime : -1;
-        flywheel.speedSettled = speedWaitTime > SPEED_STABILIZE_TIME;
+        flywheel.setSpeedSettled(speedWaitTime > SPEED_STABILIZE_TIME);
 
 
         // SmartDashboard should override OI or passed-in distance when tuning

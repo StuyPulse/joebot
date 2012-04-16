@@ -53,7 +53,7 @@ public class ConveyAutomatic extends CommandBase {
         
         
         if (flywheel.isSpeedGood() && flywheel.isSpinning() && // flywheel's at correct speed
-                flywheel.speedSettled &&                                // flywheel's been stable at correct speed for long enough
+                flywheel.isSpeedSettled() &&                                // flywheel's been stable at correct speed for long enough
                 ballSettled) {  // conveyor's not accelerating ball
             conveyor.convey();
             
