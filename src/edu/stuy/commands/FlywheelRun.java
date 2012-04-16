@@ -6,6 +6,7 @@ package edu.stuy.commands;
 
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,6 +19,14 @@ public class FlywheelRun extends CommandBase {
     double distanceInches;
     double[] speeds;
     boolean useOI;
+
+    /**
+     * Don't shoot until flywheel has been close enough to the correct speed
+     * for at least this much time.
+     */
+    public static final double SPEED_STABILIZE_TIME = 0.5;
+
+    double startSpeedGoodTime = -1;
     
     public FlywheelRun(double distanceInches, double[] speeds) {
         requires(flywheel);
@@ -59,6 +68,14 @@ public class FlywheelRun extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        // Has the flywheel speed stabilized?
+        boolean speedGood = flywheel.isSpeedGood();
+        if (speedGood && startSpeedGoodTime < 0)  startSpeedGoodTime = Timer.getFPGATimestamp();
+        if (!speedGood) startSpeedGoodTime = -1;
+        double speedWaitTime = (startSpeedGoodTime > 0) ? Timer.getFPGATimestamp() - startSpeedGoodTime : -1;
+        flywheel.setSpeedSettled(speedWaitTime > SPEED_STABILIZE_TIME);
+
+
         // SmartDashboard should override OI or passed-in distance when tuning
         if (useSmartDashboardTuning()) {
                 tuneShooter();
