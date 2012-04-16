@@ -139,8 +139,8 @@ public class Flywheel extends Subsystem {
     // here. Call these from Commands.
     public Flywheel() {
         // speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
-        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
-        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
+        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance, true);
+        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance, false);
     }
 
     public void initDefaultCommand() {
