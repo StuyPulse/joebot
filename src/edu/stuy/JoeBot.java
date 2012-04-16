@@ -6,11 +6,14 @@
 /*----------------------------------------------------------------------------*/
 package edu.stuy;
 
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.MoveCamera;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Flywheel;
+import edu.stuy.subsystems.Conveyor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
@@ -28,6 +31,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JoeBot extends IterativeRobot {
 
     Command autonomousCommand;
+
+    public static final double BALL_STATIONARY_TIME = 0.5;
+    
 //    Thread ariel;
 
     /**
@@ -94,6 +100,14 @@ public class JoeBot extends IterativeRobot {
 
         CommandBase.oi.updateLights();
         updateSmartDashboard();
+
+
+        Conveyor conv = CommandBase.conveyor;
+        // Has the ball settled at the top?
+        conv.curBallAtTop = CommandBase.conveyor.ballAtTop();
+        if (conv.curBallAtTop && conv.startBallDelayTime < 0) conv.startBallDelayTime = Timer.getFPGATimestamp();
+        conv.ballWaitTime = (conv.startBallDelayTime > 0) ? Timer.getFPGATimestamp() - conv.startBallDelayTime : -1;
+        conv.ballSettled = conv.startBallDelayTime < 0 || conv.ballWaitTime > BALL_STATIONARY_TIME;
     }
 
     // We use SmartDashboard to monitor bot information.
