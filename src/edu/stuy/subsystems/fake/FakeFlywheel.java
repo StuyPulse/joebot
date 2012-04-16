@@ -155,7 +155,7 @@ public class FakeFlywheel extends Subsystem {
      * bottom and top rollers should run, respectively.
      *
      */
-    public double[] lookupRPM(double distanceInches) {
+    public double[] lookupRPM(double distanceInches, double[] speeds) {
         double[] returnVal = new double[2];
 
         // Linear search for given distance in distances array.
@@ -225,6 +225,13 @@ public class FakeFlywheel extends Subsystem {
         lowerSetpoint = lowerRPM;
         upperSetpoint = upperRPM;
         return returnVal;
+    }
+    
+    public boolean isSpinning() {
+        return false;
+    }
+    
+    public void resetJaguars() {
     }
 }
     
