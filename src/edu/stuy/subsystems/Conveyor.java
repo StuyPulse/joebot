@@ -22,6 +22,10 @@ public class Conveyor extends Subsystem {
     public static final double FORWARD = 1;
     public static final double BACKWARD = -1;
 
+    public static double ballWaitTime;
+    public static boolean ballSettled;
+    public static boolean curBallAtTop;
+    public double startBallDelayTime = -1;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
