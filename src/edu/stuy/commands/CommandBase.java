@@ -24,7 +24,6 @@ public abstract class CommandBase extends Command {
     public static Tusks tusks;
     public static Acquirer acquirer;
     public static Conveyor conveyor;
-    public static Camera camera;
     public static Stinger stinger;
     public static BallLight ballLight;
 
@@ -33,7 +32,6 @@ public abstract class CommandBase extends Command {
         conveyor = new Conveyor();
         flywheel = new Flywheel();
         acquirer = new Acquirer();
-        camera = new Camera();
         if (!Devmode.DEV_MODE) {
             tusks = new Tusks();
         }
@@ -56,7 +54,6 @@ public abstract class CommandBase extends Command {
             SmartDashboard.putData(tusks);
             SmartDashboard.putData(acquirer);
             SmartDashboard.putData(conveyor);
-            SmartDashboard.putData(camera);
             SmartDashboard.putData(stinger);
             SmartDashboard.putData(ballLight);
         }
