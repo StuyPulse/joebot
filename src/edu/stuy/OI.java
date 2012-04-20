@@ -97,8 +97,6 @@ public class OI {
             new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(true));
             new JoystickButton(rightStick, 1).whenPressed(new TusksExtend());
             new JoystickButton(rightStick, 2).whenPressed(new TusksRetract());
-            new JoystickButton(rightStick, 4).whenPressed(new MoveCamera(true));
-            new JoystickButton(rightStick, 5).whenPressed(new MoveCamera(false));
             
             // OI box switches
             new InverseDigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());

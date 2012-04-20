@@ -7,15 +7,14 @@
 package edu.stuy;
 
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.MoveCamera;
 import edu.stuy.commands.TusksRetract;
-import edu.stuy.subsystems.Flywheel;
 import edu.stuy.subsystems.Conveyor;
+import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -85,11 +84,6 @@ public class JoeBot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        // do not retract tusks immediately.  wait for driver command so we don't
-        // release the bridge too early when balls are rolling down
-//        CameraVision.getInstance().setCamera(true);
-//        ariel.start();
-        new MoveCamera(true).start();
     }
 
     /**

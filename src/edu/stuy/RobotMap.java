@@ -31,7 +31,6 @@ public class RobotMap {
 
     public static final int ACQUIRER_ROLLER = 5;
     public static final int CONVEYOR_ROLLER = 1;
-    public static final int CAMERA_SERVO = 4;
     
     /* CAN IDS */
     public static final int SHOOTER_UPPER_ROLLER = 3;
