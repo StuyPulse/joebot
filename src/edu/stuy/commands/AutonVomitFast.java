@@ -13,10 +13,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonVomitFast extends CommandGroup {
     
     public AutonVomitFast() {
-       addParallel(new ConveyReverseManual(.5));
-       addSequential(new AcquirerReverse(.5));
-       addParallel(new ConveyReverseManual(3));
-       addSequential(new AcquirerReverse(3));
+       addParallel(new ConveyReverseManual(5));
+       addSequential(new AcquirerReverse(5));
     }
             
 }
