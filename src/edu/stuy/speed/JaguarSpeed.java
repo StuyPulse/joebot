@@ -17,11 +17,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class JaguarSpeed implements JoeSpeed {
 
     public static final double UPPER_KP = 0.3;
-    public static final double UPPER_KI = 0.3;
-    public static final double UPPER_KD = 0.3;
+    public static final double UPPER_KI = 0.01;
+    public static final double UPPER_KD = 0.0;
     public static final double LOWER_KP = 0.3;
-    public static final double LOWER_KI = 0.3;
-    public static final double LOWER_KD = 0.3;
+    public static final double LOWER_KI = 0.01;
+    public static final double LOWER_KD = 0.0;
     public static double KP;
     public static double KI;
     public static double KD;
