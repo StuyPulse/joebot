@@ -14,9 +14,11 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class AutonVomit extends CommandGroup {
 
     public AutonVomit() {
+        //First ball
        addParallel(new ConveyReverseManual(.5));
-       addSequential(new AcquirerReverse(.5));
-       addSequential(new WaitCommand(2));
+       addSequential(new AcquirerReverse(2.5));
+
+       //Second ball
        addParallel(new ConveyReverseManual(0.75));
        addSequential(new AcquirerReverse(0.75));
     }
