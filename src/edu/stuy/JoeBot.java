@@ -74,6 +74,15 @@ public class JoeBot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         updateSmartDashboard();
+        Conveyor conv = CommandBase.conveyor;
+        // Has the ball settled at the top?
+        conv.curBallAtTop = CommandBase.conveyor.ballAtTop();
+        if (conv.curBallAtTop && conv.startBallDelayTime < 0) {
+            conv.startBallDelayTime = Timer.getFPGATimestamp();
+        }
+        conv.ballWaitTime = (conv.startBallDelayTime > 0) ? Timer.getFPGATimestamp() - conv.startBallDelayTime : -1;
+        conv.ballSettled = conv.startBallDelayTime < 0 || conv.ballWaitTime > BALL_STATIONARY_TIME;
+
     }
 
     public void teleopInit() {
