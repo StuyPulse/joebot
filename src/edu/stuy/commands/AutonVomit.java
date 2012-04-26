@@ -17,7 +17,7 @@ public class AutonVomit extends CommandGroup {
        addParallel(new ConveyReverseManual(.5));
        addSequential(new AcquirerReverse(.5));
        addSequential(new WaitCommand(2));
-       addParallel(new ConveyReverseManual(3));
-       addSequential(new AcquirerReverse(3));
+       addParallel(new ConveyReverseManual(0.75));
+       addSequential(new AcquirerReverse(0.75));
     }
 }
