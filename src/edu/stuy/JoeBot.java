@@ -113,21 +113,21 @@ public class JoeBot extends IterativeRobot {
     // Here, we put things to the SmartDashboard
     private void updateSmartDashboard() {
 
-//        SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
-//        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromDistanceButton());
-//
-//        SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
-//        SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
-//        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getDigitalValue(OI.SHOOTER_BUTTON_CHANNEL));
-//        SmartDashboard.putBoolean("Stinger Switch: ", CommandBase.oi.getDigitalValue(OI.STINGER_SWITCH_CHANNEL));
-//        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_UP_SWITCH_CHANNEL));
-//        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_DOWN_SWITCH_CHANNEL));
-//
-//        SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
-//        SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
-//        SmartDashboard.putDouble("Delay Pot: ", CommandBase.oi.getDelayPot());
-//        SmartDashboard.putDouble("Delay Time: ", CommandBase.oi.getDelayTime());
-//        SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
+        SmartDashboard.putDouble("Button Pressed: ", CommandBase.oi.getDistanceButton());
+        SmartDashboard.putDouble("Distance: ", CommandBase.oi.getDistanceFromDistanceButton());
+
+        SmartDashboard.putBoolean("Acquirer In: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_IN_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Acquirer Out: ", CommandBase.oi.getDigitalValue(OI.ACQUIRER_OUT_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Shoot Button: ", CommandBase.oi.getDigitalValue(OI.SHOOTER_BUTTON_CHANNEL));
+        SmartDashboard.putBoolean("Stinger Switch: ", CommandBase.oi.getDigitalValue(OI.STINGER_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor In: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_UP_SWITCH_CHANNEL));
+        SmartDashboard.putBoolean("Conveyor Out: ", CommandBase.oi.getDigitalValue(OI.CONVEYOR_DOWN_SWITCH_CHANNEL));
+
+        SmartDashboard.putDouble("Auton Setting Switch: ", CommandBase.oi.getAutonSetting());
+        SmartDashboard.putDouble("Speed Trim: ", CommandBase.oi.getSpeedPot());
+        SmartDashboard.putDouble("Delay Pot: ", CommandBase.oi.getDelayPot());
+        SmartDashboard.putDouble("Delay Time: ", CommandBase.oi.getDelayTime());
+        SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
 
         SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.ballAtTop());
         SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.ballAtBottom());
@@ -135,13 +135,13 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
         SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
 
-//        SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
+        SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
         //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
-//        SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
+        SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
-//        SmartDashboard.putBoolean("Ball settled", CommandBase.conveyor.ballSettled);
-//        SmartDashboard.putBoolean("Speed settled", CommandBase.flywheel.isSpeedSettled());
+        SmartDashboard.putBoolean("Ball settled", CommandBase.conveyor.ballSettled);
+        SmartDashboard.putBoolean("Speed settled", CommandBase.flywheel.isSpeedSettled());
 
     }
 }
