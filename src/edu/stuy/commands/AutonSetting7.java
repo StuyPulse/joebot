@@ -17,13 +17,12 @@ public class AutonSetting7 extends CommandGroup {
             leftSpeed = SmartDashboard.getDouble("Auton left speed", 0.0);
             rightSpeed = SmartDashboard.getDouble("Auton right speed", 0.0);
             time = SmartDashboard.getDouble("Auton drive time", 0.0);
+            addSequential(new AutonDriveToFender(leftSpeed, rightSpeed, time));
         }
         else {
-            leftSpeed = 0.6;
-            rightSpeed = 0.6;
             time = Autonomous.t_closeKeyToFender;
+            addSequential(new AutonDriveToFender(time));
         }
-        addSequential(new AutonDriveToFender(leftSpeed, rightSpeed, time));
         double distanceInches = Flywheel.distances[Flywheel.FENDER_WIDE_INDEX];
         addParallel(new AutonWaitThenConvey());
         addSequential(new FlywheelRun(distanceInches, Flywheel.speedsTopHoop));
