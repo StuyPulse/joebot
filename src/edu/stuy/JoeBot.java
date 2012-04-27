@@ -63,6 +63,10 @@ public class JoeBot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        SmartDashboard.putBoolean("SDB auton drive tuning", false);
+        SmartDashboard.putDouble("Auton left speed", 0.0);
+        SmartDashboard.putDouble("Auton right speed", 0.0);
+        SmartDashboard.putDouble("Auton drive time", 0.0);
         new TusksRetract().start();
         autonomousCommand = new Autonomous();
         autonomousCommand.start();

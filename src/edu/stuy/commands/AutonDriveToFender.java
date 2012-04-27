@@ -12,6 +12,10 @@ public class AutonDriveToFender extends AutonDrive {
     public AutonDriveToFender(double time) {
         super(1, time);
     }
+    
+    public AutonDriveToFender(double leftSpeed, double rightSpeed, double time) {
+        super(1, leftSpeed, rightSpeed, time);
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {

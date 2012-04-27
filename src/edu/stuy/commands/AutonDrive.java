@@ -12,6 +12,7 @@ package edu.stuy.commands;
 public abstract class AutonDrive extends CommandBase {
     private int direction;
     private double timeoutTime;
+    private double leftSpeed, rightSpeed;
 
     //Low gear speed 4 ft/s
     //High gear speed 10 ft/s
@@ -19,7 +20,15 @@ public abstract class AutonDrive extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         requires(drivetrain);
         this.direction = direction;
+        leftSpeed = 0.6;
+        rightSpeed = 0.6;
         timeoutTime = time;
+    }
+    
+    public AutonDrive(int direction, double leftSpeed, double rightSpeed, double time) {
+        this(1, time);
+        this.leftSpeed = leftSpeed;
+        this.rightSpeed = rightSpeed;
     }
 
     // Called just before this Command runs the first time
@@ -29,7 +38,7 @@ public abstract class AutonDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     public void execute(){
-        drivetrain.tankDrive(0.6 * direction, 0.6 * direction);
+        drivetrain.tankDrive(leftSpeed * direction, rightSpeed * direction);
         // slower than full speed so that we actually bring down the bridge,
         // not just slam it and push balls the wrong way
     }
