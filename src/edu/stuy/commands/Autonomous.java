@@ -26,7 +26,7 @@ public class Autonomous extends CommandGroup {
     //    drive train speed is based on free speed; friction will make it slower
 
     // distance is ~68" or ~5.7', rate is 10 ft/s. Time is 1.2s, Your Mileage May Vary
-    public static final double t_closeKeyToFender = 3.9;
+    public static final double t_closeKeyToFender = 2.25;
 
     // distance is ~50" or ~4', rate is ~10 ft/s. Time is 0.4s, Your Mileage May Vary
     //public static final double t_farKeyToBridge = 0.75;

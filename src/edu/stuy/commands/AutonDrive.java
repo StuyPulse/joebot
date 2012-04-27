@@ -23,7 +23,7 @@ public abstract class AutonDrive extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         requires(drivetrain);
         this.direction = direction;
-        leftSpeed = 0.6;
+        leftSpeed = 0.7;
         rightSpeed = 0.6;
         timeoutTime = time;
     }
