@@ -30,14 +30,14 @@ public class Autonomous extends CommandGroup {
 
     // distance is ~50" or ~4', rate is ~10 ft/s. Time is 0.4s, Your Mileage May Vary
     //public static final double t_farKeyToBridge = 0.75;
-    public static final double t_farKeyToBridge = 2.7*2.85; // lower speed, try this (untested)
+    public static final double t_farKeyToBridge = 2.7; // lower speed, try this (untested)
 
     // distance is ~136" or ~12', rate is 10 ft/s. Time is 1.2s, Your Mileage May Vary
-    public static final double t_closeKeyToBridge = 5.0*2.85;  // lower speed, try this (untested)
+    public static final double t_closeKeyToBridge = 5.0;  // lower speed, try this (untested)
 
 
     public Autonomous() {
-        addSequential(new DrivetrainSetGear(false));
+        addSequential(new DrivetrainSetGear(true));
         addSequential(new WaitCommand(CommandBase.oi.getDelayTime()));
         switch (CommandBase.oi.getAutonSetting()) {
             case 1:
