@@ -53,12 +53,12 @@ public abstract class AutonDrive extends CommandBase {
         }
 
         if (runTime < 0.1) {
-            leftSpeedRamp = 0.3;
-            rightSpeedRamp = 0.3;
+            leftSpeedRamp = 0.5 * leftSpeed;
+            rightSpeedRamp = 0.5 * rightSpeed;
         }
         else if (runTime < 0.25) {
-            leftSpeedRamp = 0.5;
-            rightSpeedRamp = 0.5;
+            leftSpeedRamp = 0.75 * leftSpeed;
+            rightSpeedRamp = 0.75 * rightSpeed;
         }
         else {
             leftSpeedRamp = leftSpeed;
