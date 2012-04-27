@@ -5,6 +5,8 @@
 
 package edu.stuy.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+
 /**
  *
  * @author English
@@ -13,6 +15,7 @@ public abstract class AutonDrive extends CommandBase {
     private int direction;
     private double timeoutTime;
     private double leftSpeed, rightSpeed;
+    public double startTime = -1;
 
     //Low gear speed 4 ft/s
     //High gear speed 10 ft/s
@@ -38,7 +41,31 @@ public abstract class AutonDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     public void execute(){
-        drivetrain.tankDrive(leftSpeed * direction, rightSpeed * direction);
+        double leftSpeedRamp, rightSpeedRamp;
+
+        double runTime;
+        if (startTime < 0) {
+            startTime = Timer.getFPGATimestamp();
+            runTime = 0;
+        }
+        else {
+            runTime = Timer.getFPGATimestamp() - startTime;
+        }
+
+        if (runTime < 0.1) {
+            leftSpeedRamp = 0.3;
+            rightSpeedRamp = 0.3;
+        }
+        else if (runTime < 0.25) {
+            leftSpeedRamp = 0.5;
+            rightSpeedRamp = 0.5;
+        }
+        else {
+            leftSpeedRamp = leftSpeed;
+            rightSpeedRamp = rightSpeed;
+        }
+
+        drivetrain.tankDrive(leftSpeedRamp * direction, rightSpeedRamp * direction);
         // slower than full speed so that we actually bring down the bridge,
         // not just slam it and push balls the wrong way
     }
