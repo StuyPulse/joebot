@@ -47,16 +47,16 @@ public abstract class CommandBase extends Command {
         // news. Don't move it.
         oi = new OI();
 
-        if (!Devmode.DEV_MODE) {
-            // Show what command your subsystem is running on the SmartDashboard
-            SmartDashboard.putData(drivetrain);
-            SmartDashboard.putData(flywheel);
-            SmartDashboard.putData(tusks);
-            SmartDashboard.putData(acquirer);
-            SmartDashboard.putData(conveyor);
-            SmartDashboard.putData(stinger);
-            SmartDashboard.putData(ballLight);
-        }
+//        if (!Devmode.DEV_MODE) {
+//            // Show what command your subsystem is running on the SmartDashboard
+//            SmartDashboard.putData(drivetrain);
+//            SmartDashboard.putData(flywheel);
+//            SmartDashboard.putData(tusks);
+//            SmartDashboard.putData(acquirer);
+//            SmartDashboard.putData(conveyor);
+//            SmartDashboard.putData(stinger);
+//            SmartDashboard.putData(ballLight);
+//        }
     }
 
     public CommandBase(String name) {
