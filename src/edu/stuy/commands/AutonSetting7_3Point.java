@@ -8,9 +8,9 @@ package edu.stuy.commands;
 import edu.stuy.subsystems.Flywheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutonSetting0 extends CommandGroup {
+public class AutonSetting7_3Point extends CommandGroup {
 
-    public AutonSetting0() {
+    public AutonSetting7_3Point() {
         addSequential(new AutonDriveToFender(Autonomous.t_closeKeyToFender));
         double distanceInches = Flywheel.distances[Flywheel.FENDER_INDEX];
         addParallel(new AutonWaitThenConvey());
