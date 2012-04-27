@@ -12,7 +12,6 @@ import edu.stuy.commands.CommandBase;
 import edu.stuy.commands.TusksRetract;
 import edu.stuy.subsystems.Conveyor;
 import edu.stuy.subsystems.Flywheel;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
@@ -28,12 +27,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class JoeBot extends IterativeRobot {
-
     Command autonomousCommand;
 
     public static final double BALL_STATIONARY_TIME = 0.5;
-    
-//    Thread ariel;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -43,16 +39,11 @@ public class JoeBot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         // autonomousCommand = new ExampleCommand();
 
-        if (!Devmode.DEV_MODE) {
-        }
-
         // Initialize all subsystems
         CommandBase.init();
         if (!Devmode.DEV_MODE) {
             AxisCamera.getInstance();
         }
-//        ariel = CameraVision.getInstance();
-//        ariel.setPriority(2);
     }
 
     public void disabledPeriodic() {
