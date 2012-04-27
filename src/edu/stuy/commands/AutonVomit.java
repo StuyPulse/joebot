@@ -15,11 +15,11 @@ public class AutonVomit extends CommandGroup {
 
     public AutonVomit() {
         //First ball
-       addParallel(new ConveyReverseManual(.5));
-       addSequential(new AcquirerReverse(2.5));
+       addParallel(new ConveyReverseManual(1.25));
+       addSequential(new AcquirerReverse(3.25));
 
        //Second ball
-       addParallel(new ConveyReverseManual(0.75));
-       addSequential(new AcquirerReverse(0.75));
+       addParallel(new ConveyReverseManual(1.875));
+       addSequential(new AcquirerReverse(1.875));
     }
 }
