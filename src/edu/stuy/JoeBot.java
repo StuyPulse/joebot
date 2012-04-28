@@ -138,7 +138,7 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
         //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
-        SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
+        //SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
         SmartDashboard.putBoolean("Ball settled", CommandBase.conveyor.ballSettled);
         SmartDashboard.putBoolean("Speed settled", CommandBase.flywheel.isSpeedSettled());
