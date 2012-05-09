@@ -6,13 +6,14 @@
 /*----------------------------------------------------------------------------*/
 package edu.stuy;
 
+
 import edu.stuy.commands.Autonomous;
 import edu.stuy.commands.CommandBase;
-import edu.stuy.commands.MoveCamera;
 import edu.stuy.commands.TusksRetract;
+import edu.stuy.subsystems.Conveyor;
 import edu.stuy.subsystems.Flywheel;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,9 +27,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class JoeBot extends IterativeRobot {
-
     Command autonomousCommand;
-//    Thread ariel;
+
+    public static final double BALL_STATIONARY_TIME = 0.5;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -38,16 +39,16 @@ public class JoeBot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         // autonomousCommand = new ExampleCommand();
 
-        if (!Devmode.DEV_MODE) {
-        }
-
         // Initialize all subsystems
         CommandBase.init();
         if (!Devmode.DEV_MODE) {
             AxisCamera.getInstance();
         }
-//        ariel = CameraVision.getInstance();
-//        ariel.setPriority(2);
+        
+        SmartDashboard.putBoolean("SDB auton drive tuning", false);
+        SmartDashboard.putDouble("Auton left speed", 0.0);
+        SmartDashboard.putDouble("Auton right speed", 0.0);
+        SmartDashboard.putDouble("Auton drive time", 0.0);
     }
 
     public void disabledPeriodic() {
@@ -69,6 +70,15 @@ public class JoeBot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         updateSmartDashboard();
+        Conveyor conv = CommandBase.conveyor;
+        // Has the ball settled at the top?
+        conv.curBallAtTop = CommandBase.conveyor.ballAtTop();
+        if (conv.curBallAtTop && conv.startBallDelayTime < 0) {
+            conv.startBallDelayTime = Timer.getFPGATimestamp();
+        }
+        conv.ballWaitTime = (conv.startBallDelayTime > 0) ? Timer.getFPGATimestamp() - conv.startBallDelayTime : -1;
+        conv.ballSettled = conv.startBallDelayTime < 0 || conv.ballWaitTime > BALL_STATIONARY_TIME;
+
     }
 
     public void teleopInit() {
@@ -79,11 +89,6 @@ public class JoeBot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        // do not retract tusks immediately.  wait for driver command so we don't
-        // release the bridge too early when balls are rolling down
-//        CameraVision.getInstance().setCamera(true);
-//        ariel.start();
-        new MoveCamera(true).start();
     }
 
     /**
@@ -94,6 +99,14 @@ public class JoeBot extends IterativeRobot {
 
         CommandBase.oi.updateLights();
         updateSmartDashboard();
+
+
+        Conveyor conv = CommandBase.conveyor;
+        // Has the ball settled at the top?
+        conv.curBallAtTop = CommandBase.conveyor.ballAtTop();
+        if (conv.curBallAtTop && conv.startBallDelayTime < 0) conv.startBallDelayTime = Timer.getFPGATimestamp();
+        conv.ballWaitTime = (conv.startBallDelayTime > 0) ? Timer.getFPGATimestamp() - conv.startBallDelayTime : -1;
+        conv.ballSettled = conv.startBallDelayTime < 0 || conv.ballWaitTime > BALL_STATIONARY_TIME;
     }
 
     // We use SmartDashboard to monitor bot information.
@@ -115,8 +128,8 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Delay Time: ", CommandBase.oi.getDelayTime());
         SmartDashboard.putDouble("Max Voltage: ", CommandBase.oi.getMaxVoltage());
 
-        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.upperSensor.get());
-        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.lowerSensor.get());
+        SmartDashboard.putBoolean("Upper Conveyor Sensor: ", CommandBase.conveyor.ballAtTop());
+        SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.ballAtBottom());
 
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
         SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
@@ -124,11 +137,10 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         
         //SmartDashboard.putBoolean("Pressure switch", CommandBase.drivetrain.compressor.getPressureSwitchValue());
-        SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
+        //SmartDashboard.putDouble("Battery voltage", DriverStation.getInstance().getBatteryVoltage());
 
-        SmartDashboard.putDouble("Left joystick", -CommandBase.oi.getLeftStick().getY());
-        SmartDashboard.putDouble("Right joystick", -CommandBase.oi.getRightStick().getY());
+        SmartDashboard.putBoolean("Ball settled", CommandBase.conveyor.ballSettled);
+        SmartDashboard.putBoolean("Speed settled", CommandBase.flywheel.isSpeedSettled());
 
-        SmartDashboard.putDouble("Acquirer current", CommandBase.acquirer.roller.getCurrent());
     }
 }

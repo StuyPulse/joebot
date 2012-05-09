@@ -16,9 +16,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class JaguarSpeed implements JoeSpeed {
 
-    public static final double KP = 0.3;
-    public static final double KI = 0.01;
-    public static final double KD = 0.0;
+    public static final double UPPER_KP = 0.3;
+    public static final double UPPER_KI = 0.01;
+    public static final double UPPER_KD = 0.0;
+    public static final double LOWER_KP = 0.3;
+    public static final double LOWER_KI = 0.01;
+    public static final double LOWER_KD = 0.0;
+    public static double KP;
+    public static double KI;
+    public static double KD;
     public CANJaguar jaguar;
     private double speedSetpoint;
     public double toleranceRPM;
@@ -30,7 +36,7 @@ public class JaguarSpeed implements JoeSpeed {
      * @param id CAN ID of the Jaguar
      * @param toleranceRPM the value of toleranceRPM
      */
-    public JaguarSpeed(int id, double toleranceRPM) {
+    public JaguarSpeed(int id, double toleranceRPM, boolean isUpperRoller) {
         CANid = id;
         speedSetpoint = 0;
         this.toleranceRPM = toleranceRPM;
@@ -42,7 +48,15 @@ public class JaguarSpeed implements JoeSpeed {
                 e.printStackTrace();
             }
         }
-
+        if (isUpperRoller) {
+            KP = UPPER_KP;
+            KI = UPPER_KI;
+            KD = UPPER_KD;
+        } else {
+            KP = LOWER_KP;
+            KI = LOWER_KI;
+            KD = LOWER_KD;
+        }
     }
 
     public void jaguarInit() throws CANTimeoutException {

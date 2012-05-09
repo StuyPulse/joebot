@@ -51,6 +51,11 @@ public class Flywheel extends Subsystem {
      * This way any shot made from within this tolerance will go the correct distance.
      */
     public static double rpmTolerance = 75;
+    
+    /**
+     * Will be set by FlywheelRun when the speed has settled to the setpoint.
+     */
+    private static boolean speedSettled = false;
     /** Positions **/
     public static final int numDistances = 16;
 
@@ -106,7 +111,7 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[STOP_INDEX]                 = 0;
         speedsTopHoop[FENDER_INDEX]               = 1262;
         speedsTopHoop[FENDER_SIDE_INDEX]          = 0;
-        speedsTopHoop[FENDER_WIDE_INDEX]          = 900; // Actual 2-point fender rpm
+        speedsTopHoop[FENDER_WIDE_INDEX]          = 805; // Actual 2-point fender rpm
         speedsTopHoop[HIGHEST_BACKBOARD_INDEX]    = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[LOWEST_SWISH_INDEX]         = speedsTopHoop[FENDER_WIDE_INDEX];
         speedsTopHoop[FENDER_SIDE_WIDE_INDEX]     = 0; //NOT TESTED
@@ -115,7 +120,7 @@ public class Flywheel extends Subsystem {
         speedsTopHoop[CLOSE_KEY_INDEX]            = 1660;
         speedsTopHoop[KEY_SLANT_INDEX]            = 1560; //TODO: Fix this value through testing
         speedsTopHoop[KEY_MIDDLE_HOOP_INDEX]      = 1425; //TODO: Fix value through testing
-        speedsTopHoop[MAX_DIST]                   = 3500; // TODO: FIx this value through testing
+        speedsTopHoop[MAX_DIST]                   = 694694; // TODO: FIx this value through testing
         speedsTopHoop[FAR_KEY_INDEX]              = 2000; //TODO: Test This
 
         // fill these in at competition if we have time
@@ -139,8 +144,8 @@ public class Flywheel extends Subsystem {
     // here. Call these from Commands.
     public Flywheel() {
         // speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
-        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance);
-        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance);
+        upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance, true);
+        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance, false);
     }
 
     public void initDefaultCommand() {
@@ -271,5 +276,13 @@ public class Flywheel extends Subsystem {
         } catch (CANTimeoutException e) {
             e.printStackTrace(); // not run in a continuous loop, so print statements shouldn't cause lag
         }
+    }
+    
+    public void setSpeedSettled(boolean settled) {
+        speedSettled = settled;
+    }
+    
+    public boolean isSpeedSettled() {
+        return speedSettled;
     }
 }

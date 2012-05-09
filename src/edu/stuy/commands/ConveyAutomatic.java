@@ -9,10 +9,17 @@ package edu.stuy.commands;
  * @author Kevin Wang
  */
 public class ConveyAutomatic extends CommandBase {
+    /**
+     * Don't shoot until the ball has been sitting at the top of the conveyor
+     * for at least this much time.
+     * Prevents ball from being shot with extra energy due to the conveyor.
+     * Longer / shorter conveyor runs can kill our consistency.
+     */
+    
     
     boolean hasTimeout = false;
     double timeout;
-
+    
     public ConveyAutomatic() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -32,8 +39,18 @@ public class ConveyAutomatic extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (flywheel.isSpeedGood() && flywheel.isSpinning()) {
+                
+        if (flywheel.isSpeedGood() && flywheel.isSpinning() && // flywheel's at correct speed
+                flywheel.isSpeedSettled() &&                                // flywheel's been stable at correct speed for long enough
+                conveyor.ballSettled) {  // conveyor's not accelerating ball
             conveyor.convey();
+            
+            // Restart ball delay, only after ball exits the top sensor zone
+            // Without this check, this algorithm would continuously halt the 
+            // ball as it passes through the sensor's line of sight
+            if (!conveyor.curBallAtTop) {
+                conveyor.startBallDelayTime = -1;
+            }
         }
         else {
             conveyor.stop();
