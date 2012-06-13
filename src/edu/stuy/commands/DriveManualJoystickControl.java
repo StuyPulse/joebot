@@ -4,6 +4,7 @@
  */
 package edu.stuy.commands;
 
+import edu.stuy.OI;
 import edu.wpi.first.wpilibj.Compressor;
 import java.lang.Math;
 
@@ -27,7 +28,12 @@ public class DriveManualJoystickControl extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        drivetrain.tankDrive(-oi.getLeftStick().getY(), -oi.getRightStick().getY());
+        if(OI.USE_GAMEPAD) {
+            drivetrain.tankDrive(oi.getDriverPad(), 2, oi.getDriverPad(), 4);
+        }
+        else {
+            drivetrain.tankDrive(-oi.getLeftStick().getY(), -oi.getRightStick().getY());
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()

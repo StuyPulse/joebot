@@ -55,6 +55,10 @@ public class Drivetrain extends Subsystem {
     public void tankDrive(double leftValue, double rightValue) {
         drive.tankDrive(leftValue, rightValue);
     }
+    
+    public void tankDrive(GenericHID leftStick, final int leftAxis, GenericHID rightStick, final int rightAxis) {
+        drive.tankDrive(leftStick,leftAxis,rightStick,rightAxis);
+    }
 
     /**
      * Sets high gear if high is true; else low
