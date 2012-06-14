@@ -42,7 +42,7 @@ public class JoeBot extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         if (!Devmode.DEV_MODE) {
-            AxisCamera.getInstance();
+        //    AxisCamera.getInstance();
         }
         
         SmartDashboard.putBoolean("SDB auton drive tuning", false);

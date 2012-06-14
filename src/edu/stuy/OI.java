@@ -20,7 +20,7 @@ public class OI {
     private Joystick driverPad;
     private Joystick operatorPad;
     
-    public static final boolean USE_GAMEPAD = false;
+    public static final boolean USE_GAMEPAD = true;
     
     public static final int DISTANCE_BUTTON_KEY = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
@@ -61,7 +61,7 @@ public class OI {
     public OI() {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();
 
-        if (USE_GAMEPAD) {
+        if (!USE_GAMEPAD) {
             leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
             rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
         } else {
@@ -128,10 +128,10 @@ public class OI {
                 new JoystickButton(operatorPad, 7).whileHeld(new ConveyAutomatic());
                 new InverseDigitalIOButton(STINGER_SWITCH_CHANNEL).whileHeld(new StingerExtend());
                 
-                new AnalogThresholdUpperButton(operatorPad, 4).whileHeld(new AcquirerAcquire());
-                new AnalogThresholdLowerButton(operatorPad, 4).whileHeld(new AcquirerReverse());
-                new AnalogThresholdUpperButton(operatorPad, 2).whileHeld(new ConveyManual());
-                new AnalogThresholdLowerButton(operatorPad, 2).whileHeld(new ConveyReverseManual());
+                new AnalogThresholdLowerButton(operatorPad, 4).whileHeld(new AcquirerAcquire());
+                new AnalogThresholdUpperButton(operatorPad, 4).whileHeld(new AcquirerReverse());
+                new AnalogThresholdLowerButton(operatorPad, 2).whileHeld(new ConveyManual());
+                new AnalogThresholdUpperButton(operatorPad, 2).whileHeld(new ConveyReverseManual());
             }
             new JoystickButton(shooterStick, 1).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whenPressed(new FlywheelStop());
@@ -193,10 +193,10 @@ public class OI {
             else if(operatorPad.getRawButton(4)) {
                 distanceButton = DISTANCE_BUTTON_FENDER;
             }
-            else if(Math.abs(operatorPad.getRawAxis(5)) == 1) {
+            else if(Math.abs(operatorPad.getRawAxis(6)) == 1) {
                 distanceButton = DISTANCE_BUTTON_FENDER_WIDTH;
             }
-            else if(Math.abs(operatorPad.getRawAxis(6)) == 1) {
+            else if(Math.abs(operatorPad.getRawAxis(5)) == 1) {
                 distanceButton = DISTANCE_BUTTON_STOP;
             }
             else {
