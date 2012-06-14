@@ -20,7 +20,7 @@ public class OI {
     private Joystick driverPad;
     private Joystick operatorPad;
     
-    public static final boolean USE_GAMEPAD = true;
+    public static final boolean USE_GAMEPAD = false;
     
     public static final int DISTANCE_BUTTON_KEY = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
@@ -128,10 +128,10 @@ public class OI {
                 new JoystickButton(operatorPad, 7).whileHeld(new ConveyAutomatic());
                 new InverseDigitalIOButton(STINGER_SWITCH_CHANNEL).whileHeld(new StingerExtend());
                 
-                new AnalogThresholdLowerButton(operatorPad, 4).whileHeld(new AcquirerAcquire());
-                new AnalogThresholdUpperButton(operatorPad, 4).whileHeld(new AcquirerReverse());
-                new AnalogThresholdLowerButton(operatorPad, 2).whileHeld(new ConveyManual());
-                new AnalogThresholdUpperButton(operatorPad, 2).whileHeld(new ConveyReverseManual());
+                new AnalogThresholdUpperButton(operatorPad, 4).whileHeld(new AcquirerAcquire());
+                new AnalogThresholdLowerButton(operatorPad, 4).whileHeld(new AcquirerReverse());
+                new AnalogThresholdUpperButton(operatorPad, 2).whileHeld(new ConveyManual());
+                new AnalogThresholdLowerButton(operatorPad, 2).whileHeld(new ConveyReverseManual());
             }
             new JoystickButton(shooterStick, 1).whileHeld(new ConveyManual());
             new JoystickButton(shooterStick, 4).whenPressed(new FlywheelStop());
