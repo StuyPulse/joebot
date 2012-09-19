@@ -14,6 +14,7 @@ public class OI {
     private Joystick rightStick;
     private Joystick shooterStick;
     private Joystick debugBox;
+    private Joystick gamepad;
     
     public static final int DISTANCE_BUTTON_KEY = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
@@ -63,6 +64,8 @@ public class OI {
         leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
         rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
 
+        gamepad = new Joystick(RobotMap.GAMEPAD_PORT);
+
         shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
         debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
         
@@ -93,10 +96,15 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            new JoystickButton(leftStick, 1).whenPressed(new DrivetrainSetGear(false));
-            new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(true));
-            new JoystickButton(rightStick, 1).whenPressed(new TusksExtend());
-            new JoystickButton(rightStick, 2).whenPressed(new TusksRetract());
+//            new JoystickButton(leftStick, 1).whenPressed(new DrivetrainSetGear(false));
+//            new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(true));
+//            new JoystickButton(rightStick, 1).whenPressed(new TusksExtend());
+//            new JoystickButton(rightStick, 2).whenPressed(new TusksRetract());
+
+            new JoystickButton(gamepad, 5).whenPressed(new DrivetrainSetGear(false));
+            new JoystickButton(gamepad, 6).whenPressed(new DrivetrainSetGear(true));
+            new JoystickButton(gamepad, 2).whenPressed(new TusksRetract());
+            new JoystickButton(gamepad, 4).whenPressed(new TusksExtend());
             
             // OI box switches
             new InverseDigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
@@ -217,9 +225,13 @@ public class OI {
     public Joystick getLeftStick() {
         return leftStick;
     }
-    
+
     public Joystick getRightStick() {
         return rightStick;
+    }
+
+    public Joystick getGamepad() {
+        return gamepad;
     }
     
     public Joystick getDebugBox() {

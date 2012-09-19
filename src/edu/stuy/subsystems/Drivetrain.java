@@ -5,13 +5,11 @@
 package edu.stuy.subsystems;
 
 import edu.stuy.RobotMap;
-import edu.stuy.commands.Autonomous;
-import edu.stuy.commands.DriveManualJoystickControl;
+import edu.stuy.commands.DriveManualGamepadControl;
 import edu.stuy.util.VictorRobotDrive;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
 
 /**
  *
@@ -45,7 +43,7 @@ public class Drivetrain extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new DriveManualJoystickControl());
+        setDefaultCommand(new DriveManualGamepadControl());
     }
 
     public Command getDefaultCommand() {
