@@ -18,9 +18,9 @@ public class InverseDigitalIOButton extends DigitalIOButton {
     }
     
     private NetworkTable table;
-    public NetworkTable getTable() {
+    public NetworkTable getTable(String key) {
         if (table == null) {
-            table = new NetworkTable();
+            table = NetworkTable.getTable(key);
             table.putBoolean("pressed", get());
         }
         return table;
