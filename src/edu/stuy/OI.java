@@ -20,7 +20,7 @@ public class OI {
     private Joystick driverPad;
     private Joystick operatorPad;
     
-    public static final boolean USE_GAMEPAD = false;
+    public static final boolean USE_GAMEPAD = true;
     
     public static final int DISTANCE_BUTTON_KEY = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
