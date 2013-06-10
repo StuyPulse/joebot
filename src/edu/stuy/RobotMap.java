@@ -59,25 +59,6 @@ public class RobotMap {
     public static final int STINGER_SOLENOID_EXTEND = 7;
     public static final int STINGER_SOLENOID_RETRACT = 8;
 
-    /* VIRSYSJ */
-    public static final int[] VIRSYS_OUTPUT_MAP = new int[15];
-    public static final int[] VIRSYS_INPUT_MAP = new int[15];
-
-
     /* ANALOG INPUTS */
     public static final int CURRENT_THING_CHANNEL = 2;
-
-    static {
-        for (int i = 0; i < VIRSYS_OUTPUT_MAP.length; i++) {
-            VIRSYS_OUTPUT_MAP[i] = -1;
-        }
-        VIRSYS_OUTPUT_MAP[FRONT_LEFT_MOTOR] = 0;
-        VIRSYS_OUTPUT_MAP[REAR_LEFT_MOTOR] = 0;
-        VIRSYS_OUTPUT_MAP[FRONT_RIGHT_MOTOR] = 1;
-        VIRSYS_OUTPUT_MAP[REAR_RIGHT_MOTOR] = 1;
-
-        for (int i = 0; i < VIRSYS_INPUT_MAP.length; i++) {
-            VIRSYS_INPUT_MAP[i] = 0;
-        }
-    }
 }
