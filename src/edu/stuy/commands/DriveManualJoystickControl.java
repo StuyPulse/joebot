@@ -28,12 +28,7 @@ public class DriveManualJoystickControl extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(OI.USE_GAMEPAD) {
-            drivetrain.tankDrive(-oi.getDriverPad().getRawAxis(2), -oi.getDriverPad().getRawAxis(4));
-        }
-        else {
-            drivetrain.tankDrive(-oi.getLeftStick().getY(), -oi.getRightStick().getY());
-        }
+        drivetrain.tankDrive(-oi.getDriverPad().getRawAxis(2), -oi.getDriverPad().getRawAxis(4));
     }
 
     // Make this return true when this Command no longer needs to run execute()

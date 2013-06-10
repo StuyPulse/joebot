@@ -13,15 +13,10 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 
-    private Joystick leftStick;
-    private Joystick rightStick;
-    private Joystick shooterStick;
     private Joystick debugBox;
     private Joystick driverPad;
     private Joystick operatorPad;
-    
-    public static final boolean USE_GAMEPAD = true;
-    
+        
     public static final int DISTANCE_BUTTON_KEY = 7;
     public static final int DISTANCE_BUTTON_FAR = 6;
     public static final int DISTANCE_BUTTON_FENDER_LENGTH = 5;
@@ -60,16 +55,10 @@ public class OI {
 
     public OI() {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();
+        
+        driverPad = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
+        operatorPad = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
 
-        if (!USE_GAMEPAD) {
-            leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
-            rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
-        } else {
-            driverPad = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
-            operatorPad = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
-        }
-
-        shooterStick = new Joystick(RobotMap.SHOOTER_JOYSTICK_PORT);
         debugBox = new Joystick(RobotMap.DEBUG_BOX_PORT);
 
         distanceButton = DISTANCE_BUTTON_STOP;
@@ -99,46 +88,23 @@ public class OI {
         }
 
         if (!Devmode.DEV_MODE) {
-            if (!USE_GAMEPAD) {
-                new JoystickButton(leftStick, 1).whenPressed(new DrivetrainSetGear(false));
-                new JoystickButton(leftStick, 2).whenPressed(new DrivetrainSetGear(true));
-                new JoystickButton(rightStick, 1).whenPressed(new TusksExtend());
-                new JoystickButton(rightStick, 2).whenPressed(new TusksRetract());
+            new JoystickButton(driverPad, 5).whenPressed(new DrivetrainSetGear(false));
+            new JoystickButton(driverPad, 7).whenPressed(new DrivetrainSetGear(false));
+            new JoystickButton(driverPad, 6).whenPressed(new DrivetrainSetGear(true));
+            new JoystickButton(driverPad, 8).whenPressed(new DrivetrainSetGear(true));
 
-                // OI box switches
-                new InverseDigitalIOButton(ACQUIRER_IN_SWITCH_CHANNEL).whileHeld(new AcquirerAcquire());
-                new InverseDigitalIOButton(ACQUIRER_OUT_SWITCH_CHANNEL).whileHeld(new AcquirerReverse());
-                new InverseDigitalIOButton(CONVEYOR_UP_SWITCH_CHANNEL).whileHeld(new ConveyManual());
-                new InverseDigitalIOButton(CONVEYOR_DOWN_SWITCH_CHANNEL).whileHeld(new ConveyReverseManual());
-                new InverseDigitalIOButton(SHOOTER_BUTTON_CHANNEL).whileHeld(new ConveyAutomatic());
-                new InverseDigitalIOButton(STINGER_SWITCH_CHANNEL).whileHeld(new StingerExtend());
+            new JoystickButton(operatorPad, 6).whenPressed(new TusksExtend());
+            new JoystickButton(operatorPad, 5).whenPressed(new TusksRetract());
 
-                // see getDistanceButton()
-            } else {
-                new JoystickButton(driverPad, 5).whenPressed(new DrivetrainSetGear(false));
-                new JoystickButton(driverPad, 7).whenPressed(new DrivetrainSetGear(false));
-                new JoystickButton(driverPad, 6).whenPressed(new DrivetrainSetGear(true));
-                new JoystickButton(driverPad, 8).whenPressed(new DrivetrainSetGear(true));
+            // OI box switches
+            new JoystickButton(operatorPad, 8).whileHeld(new AcquirerAcquire());
+            new JoystickButton(operatorPad, 7).whileHeld(new ConveyAutomatic());
+            new InverseDigitalIOButton(STINGER_SWITCH_CHANNEL).whileHeld(new StingerExtend());
 
-                new JoystickButton(operatorPad, 6).whenPressed(new TusksExtend());
-                new JoystickButton(operatorPad, 5).whenPressed(new TusksRetract());
-
-                // OI box switches
-                new JoystickButton(operatorPad, 8).whileHeld(new AcquirerAcquire());
-                new JoystickButton(operatorPad, 7).whileHeld(new ConveyAutomatic());
-                new InverseDigitalIOButton(STINGER_SWITCH_CHANNEL).whileHeld(new StingerExtend());
-                
-                new AnalogThresholdUpperButton(operatorPad, 4).whileHeld(new AcquirerAcquire());
-                new AnalogThresholdLowerButton(operatorPad, 4).whileHeld(new AcquirerReverse());
-                new AnalogThresholdUpperButton(operatorPad, 2).whileHeld(new ConveyManual());
-                new AnalogThresholdLowerButton(operatorPad, 2).whileHeld(new ConveyReverseManual());
-            }
-            new JoystickButton(shooterStick, 1).whileHeld(new ConveyManual());
-            new JoystickButton(shooterStick, 4).whenPressed(new FlywheelStop());
-            new JoystickButton(shooterStick, 5).whileHeld(new AcquirerReverse());
-            new JoystickButton(shooterStick, 6).whileHeld(new ConveyReverseManual());
-            new JoystickButton(shooterStick, 7).whileHeld(new AcquirerAcquire());
-            new JoystickButton(shooterStick, 8).whileHeld(new ConveyAutomatic());
+            new AnalogThresholdUpperButton(operatorPad, 4).whileHeld(new AcquirerAcquire());
+            new AnalogThresholdLowerButton(operatorPad, 4).whileHeld(new AcquirerReverse());
+            new AnalogThresholdUpperButton(operatorPad, 2).whileHeld(new ConveyManual());
+            new AnalogThresholdLowerButton(operatorPad, 2).whileHeld(new ConveyReverseManual());
 
             // Debug box switches
             new JoystickButton(debugBox, 1).whileHeld(new FlywheelRun(Flywheel.distances[Flywheel.FENDER_INDEX], Flywheel.speedsTopHoop));
@@ -182,40 +148,24 @@ public class OI {
      * button will be returned from the voltage (if it returns 0, no button is pressed).
      */
     public int getDistanceButton() {
-        if (USE_GAMEPAD) {
-            if(operatorPad.getRawButton(1) || operatorPad.getRawButton(3)) {
-                distanceButton = DISTANCE_BUTTON_KEY;
-            }
-            else if(operatorPad.getRawButton(2)) {
-                distanceButton = DISTANCE_BUTTON_FAR;
-            }
-            // JOE BLAY WANTS FENDER = CLOSE KEY
-            else if(operatorPad.getRawButton(4)) {
-                distanceButton = DISTANCE_BUTTON_FENDER;
-            }
-            else if(Math.abs(operatorPad.getRawAxis(6)) == 1) {
-                distanceButton = DISTANCE_BUTTON_FENDER_WIDTH;
-            }
-            else if(Math.abs(operatorPad.getRawAxis(5)) == 1) {
-                distanceButton = DISTANCE_BUTTON_STOP;
-            }
-            else {
-                distanceButton = distanceButton;
-            }
+        if(operatorPad.getRawButton(1) || operatorPad.getRawButton(3)) {
+            distanceButton = DISTANCE_BUTTON_KEY;
+        }
+        else if(operatorPad.getRawButton(2)) {
+            distanceButton = DISTANCE_BUTTON_FAR;
+        }
+        // JOE BLAY WANTS FENDER = CLOSE KEY
+        else if(operatorPad.getRawButton(4)) {
+            distanceButton = DISTANCE_BUTTON_FENDER;
+        }
+        else if(Math.abs(operatorPad.getRawAxis(6)) == 1) {
+            distanceButton = DISTANCE_BUTTON_FENDER_WIDTH;
+        }
+        else if(Math.abs(operatorPad.getRawAxis(5)) == 1) {
+            distanceButton = DISTANCE_BUTTON_STOP;
         }
         else {
-            if (shooterStick.getRawButton(9)) {
-                distanceButton = DISTANCE_BUTTON_STOP;
-            } else if (shooterStick.getRawButton(10)) {
-                distanceButton = DISTANCE_BUTTON_FENDER;
-            } else if (shooterStick.getRawButton(11)) {
-                distanceButton = DISTANCE_BUTTON_FAR;
-            }
-            int preValue = (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 8)) + 0.5);
-            // If no buttons are pressed, it does not update the distance.
-            if (preValue != 0) {
-                distanceButton = preValue;
-            }
+            distanceButton = distanceButton;
         }
         return distanceButton;
     }
@@ -252,15 +202,6 @@ public class OI {
                 break;
         }
         return distanceInches;
-    }
-
-    // Copied from last year's DesDroid code. 
-    public Joystick getLeftStick() {
-        return leftStick;
-    }
-
-    public Joystick getRightStick() {
-        return rightStick;
     }
 
     public Joystick getDriverPad() {
