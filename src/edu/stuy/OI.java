@@ -99,6 +99,8 @@ public class OI {
             // OI box switches
             new JoystickButton(operatorPad, 8).whileHeld(new AcquirerAcquire());
             new JoystickButton(operatorPad, 7).whileHeld(new ConveyAutomatic());
+            new JoystickButton(driverPad, 2).whenPressed(new StingerExtend());
+            new JoystickButton(driverPad, 4).whenPressed(new StingerRetract());
             new InverseDigitalIOButton(STINGER_SWITCH_CHANNEL).whileHeld(new StingerExtend());
 
             new AnalogThresholdUpperButton(operatorPad, 4).whileHeld(new AcquirerAcquire());
