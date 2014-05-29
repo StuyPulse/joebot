@@ -30,7 +30,7 @@ public class Flywheel extends Subsystem {
     public double lowerSetpoint;
     public double upperSetpoint;
     public static JaguarSpeed upperRoller;
-    public static JaguarSpeed lowerRoller;
+//    public static JaguarSpeed lowerRoller;
     public static final double TOP_HOOP_HEIGHT = 98.0;
     public static final double MIDDLE_HOOP_HEIGHT = 61.0;
     /**
@@ -145,7 +145,7 @@ public class Flywheel extends Subsystem {
     public Flywheel() {
         // speedLight = new Relay(RobotMap.SPEED_BAD_LIGHT);
         upperRoller = new JaguarSpeed(RobotMap.SHOOTER_UPPER_ROLLER, rpmTolerance, true);
-        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance, false);
+//        lowerRoller = new JaguarSpeed(RobotMap.SHOOTER_LOWER_ROLLER, rpmTolerance, false);
     }
 
     public void initDefaultCommand() {
@@ -155,7 +155,7 @@ public class Flywheel extends Subsystem {
 
     public void setFlywheelSpeeds(double upperRPM, double lowerRPM) {
         upperRoller.setRPM(upperRPM);
-        lowerRoller.setRPM(lowerRPM);
+//        lowerRoller.setRPM(lowerRPM);
         lowerSetpoint = lowerRPM;
         upperSetpoint = upperRPM;
     }
@@ -168,12 +168,12 @@ public class Flywheel extends Subsystem {
 
    public boolean isSpeedGood() {
         double upperError = Math.abs(upperSetpoint) - Math.abs(upperRoller.getRPM());
-        double lowerError = Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM());
+//        double lowerError = Math.abs(lowerSetpoint) - Math.abs(lowerRoller.getRPM());
         boolean speedGood =
-                Math.abs(upperError) < rpmTolerance
-             && Math.abs(lowerError) < rpmTolerance;
+                Math.abs(upperError) < rpmTolerance;
+ //            && Math.abs(lowerError) < rpmTolerance;
         SmartDashboard.putDouble("Upper error", Math.abs(upperError));
-        SmartDashboard.putDouble("Lower error", Math.abs(lowerError));
+ //       SmartDashboard.putDouble("Lower error", Math.abs(lowerError));
         return speedGood;
     }
 
@@ -271,7 +271,7 @@ public class Flywheel extends Subsystem {
      */
     public void resetJaguars() {
         try {
-            lowerRoller.jaguarInit();
+//            lowerRoller.jaguarInit();
             upperRoller.jaguarInit();
         } catch (CANTimeoutException e) {
             e.printStackTrace(); // not run in a continuous loop, so print statements shouldn't cause lag

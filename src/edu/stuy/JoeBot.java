@@ -42,7 +42,7 @@ public class JoeBot extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         if (!Devmode.DEV_MODE) {
-        //    AxisCamera.getInstance();
+        //    AxisCamera.getInstance();\
         }
         
         SmartDashboard.putBoolean("SDB auton drive tuning", false);
@@ -133,7 +133,7 @@ public class JoeBot extends IterativeRobot {
         SmartDashboard.putBoolean("Lower Conveyor Sensor: ", CommandBase.conveyor.ballAtBottom());
 
         SmartDashboard.putDouble("getRPMtop", Flywheel.upperRoller.getRPM());
-        SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
+//        SmartDashboard.putDouble("getRPMbottom", Flywheel.lowerRoller.getRPM());
 
         SmartDashboard.putDouble("Acquirer speed", CommandBase.acquirer.getRollerSpeed());
         

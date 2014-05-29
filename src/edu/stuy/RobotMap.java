@@ -34,7 +34,7 @@ public class RobotMap {
     
     /* CAN IDS */
     public static final int SHOOTER_UPPER_ROLLER = 3;
-    public static final int SHOOTER_LOWER_ROLLER = 2;
+    //public static final int SHOOTER_LOWER_ROLLER = 2;
 
     /* DIGITAL INPUTS */
     public static final int RIGHT_ENCODER_A = 3;
@@ -50,7 +50,6 @@ public class RobotMap {
     public static final int BALL_LIGHT = 3;
     public static final int UNDERBODY_LIGHTS = 4;
      
-
     /* SOLENOID */
     public static final int GEAR_SHIFT_LOW = 3;
     public static final int GEAR_SHIFT_HIGH = 4;
